@@ -1,51 +1,68 @@
 # ENNE — Engineering Neural Network Engine
 
-ENNEは、部品ごとに学習して後から組み合わせる日本語の言語モデルです。本体、記憶、検索、対話、判断の部品を別々に学習し、新しい部品を後から足していけます。本体の学習に誤差逆伝播（backprop）は使わず、局所的な予測誤差だけでノードが増えたり減ったりします。個人のGPU（RTX 3060 12GB）で、v0.1からv12.5まで開発してきた記録です。
+ENNEは、知能を「巨大なモデルを一度学習して完成させるもの」ではなく、「設計し、育て、後から機能を足していくシステム」として作る試みです。日本語を対象に、個人のGPU（RTX 3060 12GB）1枚でv0.1からv12.5まで開発してきました。
 
-> **English abstract.** ENNE is a modular, backprop-free Japanese language model built on a single consumer GPU (peak VRAM ≤ 8.4 GiB even at its largest, 6M-node configuration). Instead of training one monolithic network end-to-end, each part — a growing UTF-8 byte-level core, swappable knowledge memories, a lead-sentence retrieval index, dialogue adapters, and a growing local arbiter that chooses *grounded answer / abstain / chit-chat* — is trained separately in milliseconds to minutes, many on CPU only, and added without retraining the rest. Because every node is addressed by its structural path from the 256 byte roots, two separately trained graphs can be merged node-by-node: a separately trained 525k-node dialogue graph overlapped 87.6% with the base graph and was merged in 13.8 s without gradients, cutting GPU allocation from 7.3 GiB to 5.0 GiB. A fictional-knowledge memory builds in 3.9 ms and drops BPC on that text from 5.92 to 3.40 when mounted (back to 5.92 when removed). The core's raw BPC is still worse than a small Transformer's, yet the assembled system answers factual questions from retrieved sources, answers about newly mounted knowledge, and abstains on unknowns. Raw result JSONs are included; the source code will be released once the research settles.
+1. **個人でもゼロから知能を育てられる。** 高価なGPUクラスタも、大規模な事前学習済みモデルも使いません。家庭用GPUで独自のモデルを構築します。
+2. **知能を学習するだけでなく、設計できる。** 記憶・言語・判断などの機能を分け、それぞれに適した技術を採用します。独立した機構は交換や改良ができます。
+3. **知能を完成品ではなく、成長するシステムとして扱う。** 固定されたパラメータを調整するだけでなく、学習に伴って神経回路そのものが変化します。知識や認知機能を後から追加できます。
 
-## 4つの特徴
+> **English abstract.** ENNE treats a language model not as a monolithic network trained once, but as a system that is designed, grown, and extended. (1) **Built from scratch on one consumer GPU:** the core starts from only 256 UTF-8 byte nodes and grows without backprop, pretrained models, or an external tokenizer; peak VRAM stays at or below 8.4 GiB even at its largest 6M-node configuration on an RTX 3060. (2) **Designed, not only trained:** memory, language, and decision-making are separate mechanisms using different techniques — a growing byte-level graph, swappable CPU-side memories (mounting one drops BPC on a fictional document from 5.92 to 3.40; unmounting restores 5.92), a lead-sentence retrieval index, and a local arbiter choosing *grounded answer / abstain / chit-chat* — each trained separately in milliseconds to minutes. (3) **Grown, not finished:** nodes are born, pruned, and merged as the model learns; because each node is addressed by its structural path, a separately trained 525k-node dialogue graph (87.6% path overlap) was merged into the base graph in 13.8 s without gradients. The core's raw BPC still trails a small Transformer's, yet the assembled system answers factual questions from retrieved sources, answers about newly added knowledge, and abstains on unknowns. Raw result JSONs are included; source code will be released once the research settles.
 
-### 1. 部品ごとに学習でき、後から足せる
+## ① 個人でもゼロから知能を育てられる
 
-ENNEは1つの巨大なネットワークをまとめて学習しません。部品はそれぞれ独立に学習し、組み合わせて使います。
+**ゼロから。** 本体は、UTF-8の256バイトに対応する感覚ノードだけから始まり、中間のノードは0個です。事前学習済みのモデルや外部のトークナイザーは使わず、学習しながらノードが生まれていきます。
 
-| 部品 | 役割 | 足したときに変わること |
-|---|---|---|
-| 本体（成長するバイトDAG） | 次バイトの予測、文章の流暢さ | — |
-| 記憶カートリッジ | 分野知識・独自知識 | 本体を再学習せずに知識を着脱 |
-| 記事冒頭文索引 | 百科事典的な事実の検索 | 事実を問う質問に根拠つきで答える |
-| 対話記憶・読み出し適応 | 対話の文体、応答の終わり | 会話として応答し、適切に止まる |
-| 記憶ゲート・仲裁層 | 根拠回答・棄権・雑談の選択 | 知らないことに「情報がありません」と答える |
-
-開発の過程でも、役割表現、対話専用DAG、DAG統合などの部品を版ごとに足してきました。部品の構成は [docs/architecture.md](docs/architecture.md) を参照してください。
-
-### 2. 学習コストが低い
-
-**一般向けGPU 1枚で学習できます。** 開発はすべてRTX 3060（12GB）1枚で行いました。数百万ノード規模の学習でも、GPUのピーク使用量は次の程度です。
+**家庭用GPU 1枚で。** 開発はすべてRTX 3060（12GB）1枚で行いました。数百万ノード規模の学習でも、GPUのピーク使用量は次の程度です。
 
 | 実験 | 規模 | GPUピーク |
 |---|---|---:|
 | v1.4 継続学習（9,000万文字） | 生存ノード約314万 | 5,256 MiB |
 | v1.2 500万ノード枠 | 500万ノード | 5,725 MiB |
 | v2.2 600万ノード枠（最大構成） | 生存ノード約454万 | 8,562 MiB |
-| v12.5 推論（記憶・索引込み） | — | 7,323 MiB |
+| v12.5 推論時（記憶・索引込み） | — | 7,323 MiB |
 
 誤差逆伝播を使わないため、勾配やオプティマイザの状態を保持する必要がありません。
 
-**機能を足すときは、部品単位の短い学習で済みます。**
+**機能を足すときは、短い学習で済みます。**
 
 ![部品ごとの学習時間](figures/fig0_modules.png)
 
-新しい部品の学習・構築は数ミリ秒から数分で終わり、全体の再学習はいりません。記憶カートリッジ、索引、記憶ゲート、仲裁層はCPUだけで学習できます（ゲートと仲裁層の学習時のCUDA使用量は0 bytes）。知識を1つ足すだけなら、架空の設定文から記憶を作るのに3.9ミリ秒（v2.0）、独自知識の装着に0.10〜0.16ミリ秒（v6.2〜v6.4）でした。
+新しい部品の学習・構築は数ミリ秒から数分で終わり、全体の再学習はいりません。記憶カートリッジ、索引、記憶ゲート、仲裁層はCPUだけで学習できます（ゲートと仲裁層の学習時のCUDA使用量は0 bytes）。
+
+## ② 知能を学習するだけでなく、設計できる
+
+ENNEは1つの巨大なネットワークにすべてを学習させるのではなく、機能ごとに機構を分け、それぞれに合った技術を使います。
+
+| 機能 | 機構 | 採用した技術 |
+|---|---|---|
+| 言語 | 本体（成長するバイトDAG） | 局所予測誤差によるノードの新生・削除・統合 |
+| 言語（対話） | 対話用DAG、対話記憶、読み出し適応 | 対話データだけで別に育てたDAG、局所的な読み出し適応 |
+| 記憶 | 記憶カートリッジ | CPU RAM / mmap上の文脈統計。着脱可能 |
+| 記憶（事実） | 記事冒頭文索引 | 記事の定義文を優先するSQLite索引 |
+| 判断 | 記憶ゲート、成長型仲裁層 | ridge回帰、十分統計を使う局所回帰。根拠回答・棄権・雑談を選ぶ |
+| 推論 | 応答意図への経路選択（v9） | 探索段階。比較の説明や計算はまだできない |
+
+**機構は交換できます。** 知識は本体の外の記憶カートリッジに置いているので、本体を再学習せずに差し替えられます。
 
 ![外部記憶の着脱](figures/fig2_memory.png)
 
-その記憶を装着すると、設定文のBPCは5.92から3.40に下がり、外すと5.92に戻ります。Wikipedia記憶の収録量を5,000万文字から2億文字に増やすと、本体を固定したままBPCが4.693から4.660に下がりました。
+架空の設定文から記憶カートリッジを作るのに3.9ミリ秒でした。装着すると設定文のBPCは5.92から3.40に下がり、外すと5.92に戻ります。Wikipedia記憶の収録量を5,000万文字から2億文字に増やすと、本体を固定したままBPCが4.693から4.660に下がりました。
 
-### 3. 別々に学習した同じ種類の部品を、1つに統合できる
+**機構は個別に改良できます。** 検索の機構だけを、単純な6-gram索引から記事冒頭文を優先する索引に替えたところ、小規模QAで回答に含まれる評価語句が1/15から10/15に増えました。
 
-ENNEのノードは、256バイトを根とする「どの条件をたどって生まれたか」という経路で特定できます。そのため、別々に学習した2つのDAGでも、同じ経路のノード同士を対応付けて1つに重ね合わせられます。通常のニューラルネットの重みは、別々に学習するとニューロンの並び順が揃わず、そのままでは足し合わせられません。
+![冒頭文検索](figures/fig3_lead_qa.png)
+
+各機構の詳細は [docs/architecture.md](docs/architecture.md) を参照してください。
+
+## ③ 知能を完成品ではなく、成長するシステムとして扱う
+
+**神経回路そのものが変化します。** 本体は学習中に、予測を外した箇所でノードを新生し、役に立たないノードを削除し、似たノードを統合します。
+
+![本体の成長](figures/fig1_growth.png)
+
+9,000万文字までの継続学習では、各段階で57万〜166万のノードが生まれ、45万〜100万のノードが削除されながら、生存ノードが約259万から約314万に増えました。BPCはこの範囲ではほぼ横ばいです。
+
+**別々に育てた回路を、後から1つに統合できます。** ENNEのノードは、256バイトを根とする「どの条件をたどって生まれたか」という経路で特定できます。そのため、別々に学習したDAG同士でも、同じ経路のノードを対応付けて重ね合わせられます。通常のニューラルネットの重みは、別々に学習するとニューロンの並び順が揃わず、そのままでは足し合わせられません。
 
 v11では、対話データだけで別に育てた対話用DAGを、文章で育てた基盤DAGに統合しました。
 
@@ -66,11 +83,15 @@ v11では、対話データだけで別に育てた対話用DAGを、文章で�
 | 2つのDAGを並べて使う（v10.1） | 7,323 MiB | 3.8261 | 2.519 |
 | 1つに統合（v11.1） | 5,023 MiB | 3.8727 | 0.840 |
 
-統合でGPU割当は約3割減り、対話の予測は対話用DAG単体より良くなりました。2つを並べて使う構成と比べると、本文BPCはわずかに悪く、終了予測は大きく改善しました（v11.1では統合後に終了予測の読み出しを399秒かけて調整しています）。一方で、統合後の一般文章の予測（3分野平均BPC 5.47）には課題が残っており、対話への適応と一般文章の保持の両立は今後の課題です。
+統合でGPU割当は約3割減り、対話の予測は対話用DAG単体より良くなりました。2つを並べて使う構成と比べると、本文BPCはわずかに悪く、終了予測は大きく改善しました（v11.1では統合後に終了予測の読み出しを399秒かけて調整しています）。一方で、統合後の一般文章の予測（3分野平均BPC 5.47）には課題が残っています。
 
-### 4. BPCは高めでも、応答はできる
+**判断の機構も成長します。** v12.5の仲裁層は、学習中に33ノードが生まれ、10ノードが削除されて23ノードに落ち着きました。
 
-本体単独のBPC（1文字あたりのビット数）は、小さなTransformerより悪い値です（後述）。それでも、部品を組み合わせたシステムとしては質問に答えられます。以下はv12.5の実際の出力です。
+**知識や認知機能を後から足してきました。** 外部記憶（v2.0）、文章検索（v2.1）、役割表現（v6）、対話（v8〜v11）、冒頭文索引（v11.2）、棄権と判断（v12）と、版ごとに機能を追加しています。流れは [docs/history.md](docs/history.md) にあります。
+
+## 現在の到達点：BPCは高めでも、応答はできる
+
+本体単独のBPC（1文字あたりのビット数）は、小さなTransformerの参考値より悪い値です（限界を参照）。それでも、機構を組み合わせたシステムとしては質問に答えられます。以下はv12.5の実際の出力です。
 
 ```
 Q: 富士山とは何ですか？簡単に教えてください。
@@ -92,10 +113,6 @@ A: うまくいってるよ。
 ```
 
 31問の回帰評価では、指定した棄権9/9、UTF-8として正しい出力とEOTでの終了31/31でした。全31問の出力は [results/results_v125_arbiter.json](results/results_v125_arbiter.json) にあります。
-
-![冒頭文検索](figures/fig3_lead_qa.png)
-
-応答の質を大きく上げたのは記事冒頭文索引という部品です。小規模QA（6問・評価語句15個）で、回答に含まれる評価語句が1/15から10/15に増えました。
 
 ## 限界
 
