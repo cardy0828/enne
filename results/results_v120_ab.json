@@ -1,0 +1,1197 @@
+{
+  "results": [
+    {
+      "tag": "挨拶",
+      "q": "こんにちは！調子はどうですか？",
+      "gate": false,
+      "answer": "こんにちは、私はあなたのおしょうか。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "SOCIAL",
+        "want_hip": false,
+        "entities": [],
+        "agenda_heads": [],
+        "agenda_sources": [],
+        "agenda_preview": [],
+        "hop23_ms": 0.0,
+        "stopped_eot": true,
+        "decode_sec": 1.31,
+        "chars_per_sec": 13.72,
+        "fluency_bpc": 2.1913
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "tag": "挨拶",
+      "q": "こんにちは！調子はどうですか？",
+      "gate": true,
+      "answer": "こんにちは、私はあなたのことをご紹介しますよ。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.16999999999999998,
+        "use_memory_gate": true,
+        "gate_decisions": [],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "SOCIAL",
+        "want_hip": false,
+        "entities": [],
+        "agenda_heads": [],
+        "agenda_sources": [],
+        "agenda_preview": [],
+        "hop23_ms": 0.01,
+        "stopped_eot": true,
+        "decode_sec": 2.77,
+        "chars_per_sec": 8.3,
+        "fluency_bpc": 1.9003
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "tag": "用語説明(鉄道)",
+      "q": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "gate": false,
+      "answer": "東海道新幹線（とうかいどうしんかんせん）は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "東海道新幹線"
+        ],
+        "agenda_heads": [
+          "東海道新幹線"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_preview": [
+          "東海道新幹線（とうかいどうしんかんせん）は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。"
+        ],
+        "hop23_ms": 0.09,
+        "stopped_eot": true,
+        "decode_sec": 1.94,
+        "chars_per_sec": 36.61,
+        "fluency_bpc": 6.2114
+      },
+      "evid": 4,
+      "ans": 4,
+      "gold": [
+        "東京",
+        "新大阪",
+        "高速",
+        "JR"
+      ]
+    },
+    {
+      "tag": "用語説明(鉄道)",
+      "q": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "gate": true,
+      "answer": "東海道新幹線は、東京駅か?",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.16999999999999998,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "東海道新幹線",
+            "score": 0.7401040814667591,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "slot_progress": [
+          [
+            36,
+            2,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "東海道新幹線"
+        ],
+        "agenda_heads": [
+          "東海道新幹線"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_preview": [
+          "東海道新幹線（とうかいどうしんかんせん）は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。"
+        ],
+        "hop23_ms": 0.49,
+        "stopped_eot": true,
+        "decode_sec": 2.12,
+        "chars_per_sec": 6.14,
+        "fluency_bpc": 3.7478
+      },
+      "evid": 4,
+      "ans": 1,
+      "gold": [
+        "東京",
+        "新大阪",
+        "高速",
+        "JR"
+      ]
+    },
+    {
+      "tag": "科学説明(物理)",
+      "q": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "gate": false,
+      "answer": "一般相対性理論（いっぱんそうたいせいりろん、 ）は、アルベルト・アインシュタインが1905年の特殊相対性理論に続いて、それを発展させ1915年から1916年にかけて発表した物理学の理論である。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "一般相対性理論",
+          "量子力学"
+        ],
+        "agenda_heads": [
+          "一般相対性理論",
+          "量子力学"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia",
+          "lead:wikipedia"
+        ],
+        "agenda_preview": [
+          "一般相対性理論（いっぱんそうたいせいりろん、 ）は、アルベルト・アインシュタインが1905年の特殊相対性理論に続いて、それを発展させ1915年から1916年にかけて発表した物理学の理論である。一般相対論（いっぱんそうたいろん、）とも呼ばれる",
+          "量子力学において、励起状態（れいきじょうたい、）は、（原子、分子、あるいは原子核といった）系のハミルトニアンの固有状態のうち、基底状態より高いエネルギーの全ての固有状態（量子状態）を指す。"
+        ],
+        "hop23_ms": 0.2,
+        "stopped_eot": true,
+        "decode_sec": 3.01,
+        "chars_per_sec": 31.89,
+        "fluency_bpc": 4.3556
+      },
+      "evid": 1,
+      "ans": 1,
+      "gold": [
+        "アインシュタイン",
+        "重力",
+        "時空",
+        "確率"
+      ]
+    },
+    {
+      "tag": "科学説明(物理)",
+      "q": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "gate": true,
+      "answer": "一般相対性理論は、アルベルト・アインシュタインが1905年の特殊相対性理論に続いて、それを発展させ1915年から1916年にかけて発表した物理学の理論である。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.16999999999999998,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "一般相対性理論",
+            "score": 0.49719446214880014,
+            "active": true
+          },
+          {
+            "head": "量子力学",
+            "score": 0.46519903846706345,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "slot_progress": [
+          [
+            213,
+            19,
+            true
+          ],
+          [
+            0,
+            0,
+            false
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "一般相対性理論",
+          "量子力学"
+        ],
+        "agenda_heads": [
+          "一般相対性理論",
+          "量子力学"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia",
+          "lead:wikipedia"
+        ],
+        "agenda_preview": [
+          "一般相対性理論（いっぱんそうたいせいりろん、 ）は、アルベルト・アインシュタインが1905年の特殊相対性理論に続いて、それを発展させ1915年から1916年にかけて発表した物理学の理論である。一般相対論（いっぱんそうたいろん、）とも呼ばれる",
+          "量子力学において、励起状態（れいきじょうたい、）は、（原子、分子、あるいは原子核といった）系のハミルトニアンの固有状態のうち、基底状態より高いエネルギーの全ての固有状態（量子状態）を指す。"
+        ],
+        "hop23_ms": 0.78,
+        "stopped_eot": true,
+        "decode_sec": 6.06,
+        "chars_per_sec": 13.04,
+        "fluency_bpc": 3.1573
+      },
+      "evid": 1,
+      "ans": 1,
+      "gold": [
+        "アインシュタイン",
+        "重力",
+        "時空",
+        "確率"
+      ]
+    },
+    {
+      "tag": "歴史質問",
+      "q": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "gate": false,
+      "answer": "第二次世界大戦（だいにじせかいたいせん、略称：WWII）は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "第二次世界大戦"
+        ],
+        "agenda_heads": [
+          "第二次世界大戦"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_preview": [
+          "第二次世界大戦（だいにじせかいたいせん、略称：WWII）は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イ"
+        ],
+        "hop23_ms": 0.06,
+        "stopped_eot": true,
+        "decode_sec": 3.42,
+        "chars_per_sec": 50.28,
+        "fluency_bpc": 5.245
+      },
+      "evid": 2,
+      "ans": 2,
+      "gold": [
+        "1939",
+        "1945"
+      ]
+    },
+    {
+      "tag": "歴史質問",
+      "q": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "gate": true,
+      "answer": "第二次世界大戦は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。\n第二次世界大戦後の1945年8月31日まで行われました。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.16999999999999998,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "第二次世界大戦",
+            "score": 0.7392362561382665,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "slot_progress": [
+          [
+            413,
+            39,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "第二次世界大戦"
+        ],
+        "agenda_heads": [
+          "第二次世界大戦"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_preview": [
+          "第二次世界大戦（だいにじせかいたいせん、略称：WWII）は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イ"
+        ],
+        "hop23_ms": 0.47,
+        "stopped_eot": true,
+        "decode_sec": 3.73,
+        "chars_per_sec": 48.24,
+        "fluency_bpc": 3.9258
+      },
+      "evid": 2,
+      "ans": 2,
+      "gold": [
+        "1939",
+        "1945"
+      ]
+    },
+    {
+      "tag": "文学質問",
+      "q": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "gate": false,
+      "answer": "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。1905年（明治38年）1月、『ホトトギス』にて発表されたのだが、好評を博したため、翌1906年（明治39年）8月まで継続した。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "吾輩は猫である",
+          "小説"
+        ],
+        "agenda_heads": [
+          "吾輩は猫である"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_preview": [
+          "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。1905年（明治38年）1月、『ホトトギス』にて発表されたのだが、好評を博したため、翌1906年（明治39年）8月まで継続した。"
+        ],
+        "hop23_ms": 0.14,
+        "stopped_eot": true,
+        "decode_sec": 2.16,
+        "chars_per_sec": 50.09,
+        "fluency_bpc": 5.7767
+      },
+      "evid": 2,
+      "ans": 2,
+      "gold": [
+        "明治",
+        "長編",
+        "風刺",
+        "教師"
+      ]
+    },
+    {
+      "tag": "文学質問",
+      "q": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "gate": true,
+      "answer": "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.16999999999999998,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "吾輩は猫である",
+            "score": 0.7463828562258445,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "slot_progress": [
+          [
+            132,
+            18,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "吾輩は猫である",
+          "小説"
+        ],
+        "agenda_heads": [
+          "吾輩は猫である"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_preview": [
+          "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。1905年（明治38年）1月、『ホトトギス』にて発表されたのだが、好評を博したため、翌1906年（明治39年）8月まで継続した。"
+        ],
+        "hop23_ms": 0.49,
+        "stopped_eot": true,
+        "decode_sec": 2.53,
+        "chars_per_sec": 17.38,
+        "fluency_bpc": 5.5392
+      },
+      "evid": 2,
+      "ans": 1,
+      "gold": [
+        "明治",
+        "長編",
+        "風刺",
+        "教師"
+      ]
+    },
+    {
+      "tag": "日常質問",
+      "q": "日本の首都はどこですか？",
+      "gate": false,
+      "answer": "東京都（とうきょうと、）は、日本の首都。関東地方に位置する都。都庁所在地は新宿区。 区部（特別区23区）、多摩地域（26市と西多摩郡3町1村）および島嶼部（2町7村）からなる。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "首都",
+          "日本"
+        ],
+        "agenda_heads": [
+          "東京都"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_preview": [
+          "東京都（とうきょうと、）は、日本の首都。関東地方に位置する都。都庁所在地は新宿区。 区部（特別区23区）、多摩地域（26市と西多摩郡3町1村）および島嶼部（2町7村）からなる。"
+        ],
+        "hop23_ms": 0.13,
+        "stopped_eot": true,
+        "decode_sec": 1.68,
+        "chars_per_sec": 52.36,
+        "fluency_bpc": 8.6006
+      },
+      "evid": 1,
+      "ans": 1,
+      "gold": [
+        "東京"
+      ]
+    },
+    {
+      "tag": "日常質問",
+      "q": "日本の首都はどこですか？",
+      "gate": true,
+      "answer": "に位置する都。都庁所在地は新宿区。  多摩地域関東地方に位置する島嶼部に所在地は新宿区に本社を置く、都市である。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.16999999999999998,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "東京都",
+            "score": 0.717195422676394,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "slot_progress": [
+          [
+            190,
+            10,
+            false
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "首都",
+          "日本"
+        ],
+        "agenda_heads": [
+          "東京都"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_preview": [
+          "東京都（とうきょうと、）は、日本の首都。関東地方に位置する都。都庁所在地は新宿区。 区部（特別区23区）、多摩地域（26市と西多摩郡3町1村）および島嶼部（2町7村）からなる。"
+        ],
+        "hop23_ms": 0.48,
+        "stopped_eot": true,
+        "decode_sec": 5.03,
+        "chars_per_sec": 11.12,
+        "fluency_bpc": 3.9584
+      },
+      "evid": 1,
+      "ans": 0,
+      "gold": [
+        "東京"
+      ]
+    },
+    {
+      "tag": "Custom Direct QA",
+      "q": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+      "gate": false,
+      "answer": "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "量子重力エンジン",
+          "アストラX-99"
+        ],
+        "agenda_heads": [
+          "astra",
+          "astra"
+        ],
+        "agenda_sources": [
+          "custom:astra",
+          "custom:astra"
+        ],
+        "agenda_preview": [
+          "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+          "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。"
+        ],
+        "hop23_ms": 0.11,
+        "stopped_eot": true,
+        "decode_sec": 3.38,
+        "chars_per_sec": 15.11,
+        "fluency_bpc": 4.8395
+      },
+      "evid": 3,
+      "ans": 3,
+      "gold": [
+        "2042",
+        "つくば",
+        "推進"
+      ]
+    },
+    {
+      "tag": "Custom Direct QA",
+      "q": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+      "gate": true,
+      "answer": "ストラック開発された次世代推進装置である。アメリカの重力エンジン「アストラ研究所で開発された新エネルギー・アンド・ナーズ、トランジスター・ウッディー",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.16999999999999998,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "astra",
+            "score": 1.0,
+            "active": true
+          },
+          {
+            "head": "astra",
+            "score": 0.6310489376791011,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "slot_progress": [
+          [
+            137,
+            10,
+            false
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "量子重力エンジン",
+          "アストラX-99"
+        ],
+        "agenda_heads": [
+          "astra"
+        ],
+        "agenda_sources": [
+          "custom:astra"
+        ],
+        "agenda_preview": [
+          "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。"
+        ],
+        "hop23_ms": 0.53,
+        "stopped_eot": false,
+        "decode_sec": 2.92,
+        "chars_per_sec": 25.36,
+        "fluency_bpc": 3.3066
+      },
+      "evid": 3,
+      "ans": 1,
+      "gold": [
+        "2042",
+        "つくば",
+        "推進"
+      ]
+    },
+    {
+      "tag": "Custom Indirect QA",
+      "q": "アストラX-99の最大推力はどのくらいですか？",
+      "gate": false,
+      "answer": "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "アストラX-99",
+          "最大推力"
+        ],
+        "agenda_heads": [
+          "astra",
+          "astra"
+        ],
+        "agenda_sources": [
+          "custom:astra",
+          "custom:astra"
+        ],
+        "agenda_preview": [
+          "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+          "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。"
+        ],
+        "hop23_ms": 0.1,
+        "stopped_eot": true,
+        "decode_sec": 1.64,
+        "chars_per_sec": 35.34,
+        "fluency_bpc": 4.787
+      },
+      "evid": 3,
+      "ans": 3,
+      "gold": [
+        "400",
+        "イオン",
+        "18"
+      ]
+    },
+    {
+      "tag": "Custom Indirect QA",
+      "q": "アストラX-99の最大推力はどのくらいですか？",
+      "gate": true,
+      "answer": "の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.16999999999999998,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "astra",
+            "score": 0.9681732678865919,
+            "active": true
+          },
+          {
+            "head": "astra",
+            "score": 0.7881982290578432,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "slot_progress": [
+          [
+            156,
+            18,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "アストラX-99",
+          "最大推力"
+        ],
+        "agenda_heads": [
+          "astra"
+        ],
+        "agenda_sources": [
+          "custom:astra"
+        ],
+        "agenda_preview": [
+          "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。"
+        ],
+        "hop23_ms": 0.51,
+        "stopped_eot": true,
+        "decode_sec": 1.65,
+        "chars_per_sec": 30.33,
+        "fluency_bpc": 4.9831
+      },
+      "evid": 3,
+      "ans": 3,
+      "gold": [
+        "400",
+        "イオン",
+        "18"
+      ]
+    },
+    {
+      "tag": "助言",
+      "q": "眠れないときにできる簡単なリラックス方法を教えてください。",
+      "gate": false,
+      "answer": "も使われることがあります。これは、ある特定の状況や文脈によって異なる意味を持つことができます。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "きる簡単なリラックス方法"
+        ],
+        "agenda_heads": [],
+        "agenda_sources": [],
+        "agenda_preview": [],
+        "hop23_ms": 0.07,
+        "stopped_eot": true,
+        "decode_sec": 1.23,
+        "chars_per_sec": 38.35,
+        "fluency_bpc": 1.3915
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "tag": "助言",
+      "q": "眠れないときにできる簡単なリラックス方法を教えてください。",
+      "gate": true,
+      "answer": "もちろんですが、これはあくまで一般的な傾向であり、個々の状況や文脈によって意味が変わる可能性があります。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.16999999999999998,
+        "use_memory_gate": true,
+        "gate_decisions": [],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "SOCIAL",
+        "want_hip": false,
+        "entities": [],
+        "agenda_heads": [],
+        "agenda_sources": [],
+        "agenda_preview": [],
+        "hop23_ms": 0.0,
+        "stopped_eot": true,
+        "decode_sec": 1.53,
+        "chars_per_sec": 34.05,
+        "fluency_bpc": 1.1311
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "tag": "空",
+      "q": "なぜ空は青いのですか？",
+      "gate": false,
+      "answer": "なぜ空でしょうか。それは、あなたの質問に答えるのはとても良いでしょう。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "なぜ空"
+        ],
+        "agenda_heads": [],
+        "agenda_sources": [],
+        "agenda_preview": [],
+        "hop23_ms": 0.03,
+        "stopped_eot": true,
+        "decode_sec": 0.95,
+        "chars_per_sec": 36.97,
+        "fluency_bpc": 2.2444
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "tag": "空",
+      "q": "なぜ空は青いのですか？",
+      "gate": true,
+      "answer": "このよね。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.16999999999999998,
+        "use_memory_gate": true,
+        "gate_decisions": [],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "SOCIAL",
+        "want_hip": false,
+        "entities": [],
+        "agenda_heads": [],
+        "agenda_sources": [],
+        "agenda_preview": [],
+        "hop23_ms": 0.0,
+        "stopped_eot": true,
+        "decode_sec": 1.3,
+        "chars_per_sec": 3.85,
+        "fluency_bpc": 4.3031
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "tag": "言語比較",
+      "q": "PythonとC++の違いを教えてください。",
+      "gate": false,
+      "answer": "この表現は、具体的な文脈によって異なるため、その内容について教えてください。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "SOCIAL",
+        "want_hip": false,
+        "entities": [],
+        "agenda_heads": [],
+        "agenda_sources": [],
+        "agenda_preview": [],
+        "hop23_ms": 0.0,
+        "stopped_eot": true,
+        "decode_sec": 1.53,
+        "chars_per_sec": 24.77,
+        "fluency_bpc": 1.6847
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "tag": "言語比較",
+      "q": "PythonとC++の違いを教えてください。",
+      "gate": true,
+      "answer": "C++は、汎用プログラミング言語のひとつである。Pythonはインタープリタ型の高水準汎用プログラミング言語である。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.16999999999999998,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "Python",
+            "score": 0.42375602296629994,
+            "active": true
+          },
+          {
+            "head": "C++",
+            "score": 0.5016638466769944,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "slot_progress": [
+          [
+            90,
+            6,
+            true
+          ],
+          [
+            66,
+            5,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "Python",
+          "C++"
+        ],
+        "agenda_heads": [
+          "Python",
+          "C++"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia",
+          "lead:wikipedia"
+        ],
+        "agenda_preview": [
+          "Python（パイソン）はインタープリタ型の高水準汎用プログラミング言語である。",
+          "C++（シープラスプラス）は、汎用プログラミング言語のひとつである。"
+        ],
+        "hop23_ms": 0.57,
+        "stopped_eot": true,
+        "decode_sec": 1.75,
+        "chars_per_sec": 33.14,
+        "fluency_bpc": 3.8498
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "tag": "架空都市",
+      "q": "架空の都市「ネオアトランティス2099」の市長は誰ですか？",
+      "gate": false,
+      "answer": "架空の中世ファンタジー世界を舞台としたアクションゲームのストーリーを進めるストーリーパートの間に、戦闘を行うアクションパートが入る形となっている。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "ネオアトランティス2099",
+          "架空",
+          "都市"
+        ],
+        "agenda_heads": [
+          "架空",
+          "都市"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia",
+          "lead:wikipedia"
+        ],
+        "agenda_preview": [
+          "架空の中世ファンタジー世界を舞台としたアクションRPGである。ゲームの流れとしては、大別して、ストーリーを進めるストーリーパートの間に、戦闘を行うアクションパートが入る形となっている。",
+          "都市（とし、）とは、人口の集中した地域で、政治・経済・文化の中心になっている大きな \"まち\" 。多くの人口集団をもっており、家屋などの建造物が密集し、住民の生産がおもに第二次産業や第三次産業に依存して発達した集落。"
+        ],
+        "hop23_ms": 0.23,
+        "stopped_eot": true,
+        "decode_sec": 2.5,
+        "chars_per_sec": 29.18,
+        "fluency_bpc": 3.2707
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "tag": "架空都市",
+      "q": "架空の都市「ネオアトランティス2099」の市長は誰ですか？",
+      "gate": true,
+      "answer": "都市部では、ニューオーロライナ州の州都である。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.16999999999999998,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "都市",
+            "score": 0.0,
+            "active": false
+          },
+          {
+            "head": "架空",
+            "score": 0.0,
+            "active": false
+          }
+        ],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "ネオアトランティス2099",
+          "架空",
+          "都市"
+        ],
+        "agenda_heads": [],
+        "agenda_sources": [],
+        "agenda_preview": [],
+        "hop23_ms": 0.8,
+        "stopped_eot": true,
+        "decode_sec": 2.09,
+        "chars_per_sec": 11.0,
+        "fluency_bpc": 2.8131
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "tag": "算数",
+      "q": "リンゴが3つあります。1つ食べたら残りはいくつですか？",
+      "gate": false,
+      "answer": "リンゴ（林檎、学名：, ）は、バラ科リンゴ属の落葉高木、またはその果実のこと。植物学上ではセイヨウリンゴと呼ぶ。春、白または薄紅の花が咲く。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "1つ食べたら残り",
+          "リンゴ"
+        ],
+        "agenda_heads": [
+          "リンゴ"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_preview": [
+          "リンゴ（林檎、学名：, ）は、バラ科リンゴ属の落葉高木、またはその果実のこと。植物学上ではセイヨウリンゴと呼ぶ。春、白または薄紅の花が咲く。"
+        ],
+        "hop23_ms": 0.13,
+        "stopped_eot": true,
+        "decode_sec": 2.2,
+        "chars_per_sec": 31.82,
+        "fluency_bpc": 6.9329
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "tag": "算数",
+      "q": "リンゴが3つあります。1つ食べたら残りはいくつですか？",
+      "gate": true,
+      "answer": "リンゴはジュース、トマトソースからのクリームとしては、フランスのパリ・ストリートッピングとしても使われます。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.16999999999999998,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "リンゴ",
+            "score": 0.0,
+            "active": false
+          }
+        ],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "リンゴ"
+        ],
+        "agenda_heads": [],
+        "agenda_sources": [],
+        "agenda_preview": [],
+        "hop23_ms": 0.32,
+        "stopped_eot": true,
+        "decode_sec": 2.07,
+        "chars_per_sec": 26.12,
+        "fluency_bpc": 2.6696
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "tag": "追問",
+      "q": "そこの人口はどれくらいですか？",
+      "gate": false,
+      "answer": "そこは、暑い国でした。太陽の光が強く、青々とした木立や、丘の上を照らしていました。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "そこ"
+        ],
+        "agenda_heads": [
+          "そこ"
+        ],
+        "agenda_sources": [
+          "lead:easy_ja"
+        ],
+        "agenda_preview": [
+          "そこは、暑い国でした。太陽の光が強く、青々とした木立や、丘の上を照らしていました。 この国の動物園には、熱帯地方に住むいろいろな動物が、他の国の動物園ではめったに見られないほどたくさんいました。"
+        ],
+        "hop23_ms": 0.04,
+        "stopped_eot": true,
+        "decode_sec": 2.1,
+        "chars_per_sec": 19.53,
+        "fluency_bpc": 4.5406
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "tag": "追問",
+      "q": "そこの人口はどれくらいですか？",
+      "gate": true,
+      "answer": "東京都は、日本の首都。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.16999999999999998,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "東京都",
+            "score": 0.8234962883842739,
+            "active": true
+          }
+        ],
+        "carried": [
+          "東京都"
+        ],
+        "slot_progress": [
+          [
+            33,
+            2,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "東京都"
+        ],
+        "agenda_heads": [
+          "東京都"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_preview": [
+          "東京都（とうきょうと、）は、日本の首都。関東地方に位置する都。都庁所在地は新宿区。 区部（特別区23区）、多摩地域（26市と西多摩郡3町1村）および島嶼部（2町7村）からなる。"
+        ],
+        "hop23_ms": 0.34,
+        "stopped_eot": true,
+        "decode_sec": 5.45,
+        "chars_per_sec": 2.02,
+        "fluency_bpc": 4.9353
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    }
+  ],
+  "peak_rss_mib": 17132.95703125,
+  "peak_cuda_mib": 7323.193359375
+}

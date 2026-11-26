@@ -1,0 +1,255 @@
+{
+  "vocab_size": 4096,
+  "train_chars": 31196509,
+  "val_chars": 306179,
+  "peak_vram_mb": 687.0,
+  "total_train_sec": 832.3,
+  "scaling_curve": [
+    {
+      "chars_seen": 2400000,
+      "seg_sec": 63.3,
+      "cum_train_sec": 63.3,
+      "throughput_kchars_s": 37.9,
+      "train_bpc": 5.6758,
+      "ltm_active": 4684580,
+      "val_cortex": {
+        "bpc": 5.9909,
+        "ppl": 63.6,
+        "top1": 0.3388,
+        "top5": 0.5847,
+        "hard_bpc": 9.0832,
+        "hard_top1": 0.1254
+      },
+      "val_cortex_ltm": {
+        "bpc": 5.838,
+        "ppl": 57.2,
+        "top1": 0.3707,
+        "top5": 0.6066,
+        "hard_bpc": 8.9712,
+        "hard_top1": 0.1444
+      },
+      "val_full_4sys": {
+        "bpc": 5.6541,
+        "ppl": 50.36,
+        "top1": 0.3992,
+        "top5": 0.6295,
+        "hard_bpc": 8.42,
+        "hard_top1": 0.1902
+      }
+    },
+    {
+      "chars_seen": 8000000,
+      "seg_sec": 149.4,
+      "cum_train_sec": 212.7,
+      "throughput_kchars_s": 37.6,
+      "train_bpc": 5.5395,
+      "ltm_active": 7603712,
+      "val_cortex": {
+        "bpc": 5.7853,
+        "ppl": 55.15,
+        "top1": 0.3562,
+        "top5": 0.6067,
+        "hard_bpc": 9.2872,
+        "hard_top1": 0.1235
+      },
+      "val_cortex_ltm": {
+        "bpc": 5.5672,
+        "ppl": 47.41,
+        "top1": 0.3952,
+        "top5": 0.6373,
+        "hard_bpc": 9.1125,
+        "hard_top1": 0.1517
+      },
+      "val_full_4sys": {
+        "bpc": 5.4457,
+        "ppl": 43.58,
+        "top1": 0.4216,
+        "top5": 0.6555,
+        "hard_bpc": 8.6806,
+        "hard_top1": 0.1905
+      }
+    },
+    {
+      "chars_seen": 16000000,
+      "seg_sec": 213.8,
+      "cum_train_sec": 426.5,
+      "throughput_kchars_s": 37.5,
+      "train_bpc": 5.4837,
+      "ltm_active": 8106372,
+      "val_cortex": {
+        "bpc": 5.6737,
+        "ppl": 51.05,
+        "top1": 0.366,
+        "top5": 0.6157,
+        "hard_bpc": 9.3617,
+        "hard_top1": 0.1225
+      },
+      "val_cortex_ltm": {
+        "bpc": 5.4096,
+        "ppl": 42.51,
+        "top1": 0.413,
+        "top5": 0.6508,
+        "hard_bpc": 9.1288,
+        "hard_top1": 0.1593
+      },
+      "val_full_4sys": {
+        "bpc": 5.3126,
+        "ppl": 39.74,
+        "top1": 0.4356,
+        "top5": 0.6687,
+        "hard_bpc": 8.7526,
+        "hard_top1": 0.1951
+      }
+    },
+    {
+      "chars_seen": 31196509,
+      "seg_sec": 405.8,
+      "cum_train_sec": 832.3,
+      "throughput_kchars_s": 37.5,
+      "train_bpc": 5.4636,
+      "ltm_active": 8315368,
+      "val_cortex": {
+        "bpc": 5.718,
+        "ppl": 52.64,
+        "top1": 0.3632,
+        "top5": 0.6063,
+        "hard_bpc": 9.2564,
+        "hard_top1": 0.126
+      },
+      "val_cortex_ltm": {
+        "bpc": 5.4166,
+        "ppl": 42.71,
+        "top1": 0.4137,
+        "top5": 0.6435,
+        "hard_bpc": 8.9732,
+        "hard_top1": 0.1684
+      },
+      "val_full_4sys": {
+        "bpc": 5.2881,
+        "ppl": 39.07,
+        "top1": 0.4413,
+        "top5": 0.6648,
+        "hard_bpc": 8.6083,
+        "hard_top1": 0.2056
+      }
+    }
+  ],
+  "sleep_stats": {
+    "char4": {
+      "before": 2097151,
+      "after": 969175,
+      "pruned": 1127976
+    },
+    "char5": {
+      "before": 2097152,
+      "after": 756797,
+      "pruned": 1340355
+    },
+    "chunk": {
+      "before": 2023913,
+      "after": 796111,
+      "pruned": 1227802
+    },
+    "topic": {
+      "before": 2097152,
+      "after": 587977,
+      "pruned": 1509175
+    }
+  },
+  "final_val_full_306k": {
+    "bpc": 5.2881,
+    "ppl": 39.07,
+    "top1": 0.4412,
+    "top5": 0.6648,
+    "hard_bpc": 8.6081,
+    "hard_top1": 0.2056
+  },
+  "generations": {
+    "第二次世界大戦は、": {
+      "text": "第二次世界大戦は、世界で戦のときに、最後の仕事をしました。そのため、今の世の中に広まりました。そのため、世界的に有名な学者たちが、生活の現実の世界の中で、とても大きくなったと考えられています。ですから、とても悲しいことです。そして、日本の",
+      "info": {
+        "final_mode": 0,
+        "final_topics": [
+          "第二",
+          "次世",
+          "界大",
+          "戦の"
+        ],
+        "trace": [
+          "INIT PLAN ['戦の', '戦後', '界大', '次世', 'ドイ']",
+          "@5 ACHIEVED '戦の'",
+          "@5 PLAN ['戦の']",
+          "@10 ACHIEVED '戦の'",
+          "@10 PLAN ['戦の']"
+        ],
+        "achieved_count": 2
+      }
+    },
+    "ドイツの戦車は、": {
+      "text": "ドイツの戦車は、1999年に、1986年10月1日 - 2017年4月25日 - NHKYo Transation Live Genera Cartion Stree Station Software de Pressenseomon ",
+      "info": {
+        "final_mode": 19,
+        "final_topics": [
+          "ドイツ",
+          "車は"
+        ],
+        "trace": [
+          "INIT PLAN ['語で', '共和', '軍の', '海軍', '帝国']"
+        ],
+        "achieved_count": 0
+      }
+    },
+    "1945年8月": {
+      "text": "1945年8月28日 - 株式会社が運営する工事が行われました。2019年2月 - 町村制が始まりました。\n1968年、2006年10月1日 - 町村制が始まりました。2012年12月29日 - 駅 - 廃藩置県）は、岡山県高松市道（",
+      "info": {
+        "final_mode": 29,
+        "final_topics": [
+          "194",
+          "5年",
+          "8月",
+          "2年"
+        ],
+        "trace": [
+          "INIT PLAN ['3月', '7月', '6年', '9年', '8年']",
+          "@30 ACHIEVED '9年'",
+          "@30 PLAN ['2月']",
+          "@35 ACHIEVED '2月'",
+          "@55 ACHIEVED '8年'",
+          "@60 ACHIEVED '6年'",
+          "@60 PLAN ['4月', '7年', '2年']",
+          "@85 ACHIEVED '2年'"
+        ],
+        "achieved_count": 5
+      }
+    },
+    "日本の歴史は、": {
+      "text": "日本の歴史は、人間としてのまとめの名前です。\n歴史\nこのページでは、新しいけられました。そして、自分たちの力を持っていることがあります。\n歴史\n1939年から、日本の女性の文化の歴史の中で、一番大切な部分です。そのため、とても人気があ",
+      "info": {
+        "final_mode": 0,
+        "final_topics": [
+          "日本の",
+          "歴史",
+          "化の"
+        ],
+        "trace": [
+          "INIT PLAN ['競走', '封建', '化の', '民主', '洋服']",
+          "@85 ACHIEVED '化の'"
+        ],
+        "achieved_count": 1
+      }
+    },
+    "この言葉は、": {
+      "text": "この言葉は、この方法です。そのため、実際にはじめて、自分のお金を持っていると言われるようになりました。そのために、いろいろなくなりました。そのため、仕事を始めました。そして、私たちに生えていることがあります。\n\n『太平洋戦争中の19",
+      "info": {
+        "final_mode": 27,
+        "final_topics": [
+          "言葉"
+        ],
+        "trace": [
+          "INIT PLAN ['音に', '理屈', '音は', '方言', '読め']"
+        ],
+        "achieved_count": 0
+      }
+    }
+  }
+}

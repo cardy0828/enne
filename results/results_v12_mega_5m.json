@@ -1,0 +1,190 @@
+{
+  "stages": [
+    {
+      "stage": "S0_Transplant_v11",
+      "alive_hidden": 999744,
+      "ltm_active": 9211553,
+      "domains": {
+        "easy_ja": {
+          "bpb": 1.4961,
+          "bpc_lossless": 4.3444,
+          "ppl": 20.31,
+          "byte_top1": 0.7031,
+          "byte_top5": 0.9229
+        },
+        "aozora": {
+          "bpb": 1.824,
+          "bpc_lossless": 5.4248,
+          "ppl": 42.96,
+          "byte_top1": 0.6523,
+          "byte_top5": 0.8955
+        },
+        "wikipedia": {
+          "bpb": 1.8205,
+          "bpc_lossless": 4.8807,
+          "ppl": 29.46,
+          "byte_top1": 0.6579,
+          "byte_top5": 0.894
+        }
+      }
+    },
+    {
+      "stage": "S1_After_Wiki_30M",
+      "alive_hidden": 2187904,
+      "ltm_active": 33549160,
+      "domains": {
+        "easy_ja": {
+          "bpb": 1.5596,
+          "bpc_lossless": 4.5287,
+          "ppl": 23.08,
+          "byte_top1": 0.6932,
+          "byte_top5": 0.9227
+        },
+        "aozora": {
+          "bpb": 1.939,
+          "bpc_lossless": 5.7669,
+          "ppl": 54.45,
+          "byte_top1": 0.6332,
+          "byte_top5": 0.8908
+        },
+        "wikipedia": {
+          "bpb": 1.7629,
+          "bpc_lossless": 4.7263,
+          "ppl": 26.47,
+          "byte_top1": 0.6755,
+          "byte_top5": 0.8995
+        }
+      }
+    },
+    {
+      "stage": "S2_Final_ExecOFF",
+      "alive_hidden": 2349053,
+      "ltm_active": 16123108,
+      "domains": {
+        "easy_ja": {
+          "bpb": 1.5167,
+          "bpc_lossless": 4.4042,
+          "ppl": 21.17,
+          "byte_top1": 0.7062,
+          "byte_top5": 0.9231
+        },
+        "aozora": {
+          "bpb": 1.7861,
+          "bpc_lossless": 5.3122,
+          "ppl": 39.73,
+          "byte_top1": 0.6649,
+          "byte_top5": 0.8989
+        },
+        "wikipedia": {
+          "bpb": 1.8551,
+          "bpc_lossless": 4.9736,
+          "ppl": 31.42,
+          "byte_top1": 0.6641,
+          "byte_top5": 0.8961
+        }
+      }
+    },
+    {
+      "stage": "S3_Final_ExecON",
+      "alive_hidden": 2349053,
+      "ltm_active": 16123108,
+      "sleep_prune": {
+        "before": 33550342,
+        "after": 16123108,
+        "pruned": 17427234,
+        "prune_pct": 51.9
+      },
+      "domains": {
+        "easy_ja": {
+          "bpb": 1.5147,
+          "bpc_lossless": 4.3983,
+          "ppl": 21.09,
+          "byte_top1": 0.7062,
+          "byte_top5": 0.9231
+        },
+        "aozora": {
+          "bpb": 1.7846,
+          "bpc_lossless": 5.3076,
+          "ppl": 39.6,
+          "byte_top1": 0.6647,
+          "byte_top5": 0.8988
+        },
+        "wikipedia": {
+          "bpb": 1.8519,
+          "bpc_lossless": 4.9649,
+          "ppl": 31.23,
+          "byte_top1": 0.6645,
+          "byte_top5": 0.8961
+        }
+      }
+    }
+  ],
+  "exec_fit": {
+    "num_passages": 11264,
+    "num_modes": 24,
+    "min_mode_sz": 3,
+    "max_mode_sz": 1568
+  },
+  "sleep_prune": {
+    "before": 33550342,
+    "after": 16123108,
+    "pruned": 17427234,
+    "prune_pct": 51.9
+  },
+  "generations": {
+    "Wikipedia百科": {
+      "prompt": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて",
+      "exec_off": {
+        "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて、または自分で募らないからだ。いつの間にか、おまえがたまっていたところで、このような特徴がある。\n「その上の方には、どう�",
+        "valid": true,
+        "topic_cos": 0.126
+      },
+      "exec_on": {
+        "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて、用心しながら、まだ生きているということは、とても悲しい気持ちになりました。\nそのときです。そのため、この時代には、大き�",
+        "valid": true,
+        "topic_cos": 0.103
+      }
+    },
+    "青空文庫文学": {
+      "prompt": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。",
+      "exec_off": {
+        "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。すぐに分かりません。そのため、一部の地域では、小笠原宿に行ったことです。\n地理的に言うと、そのことがあったとはいえ、あの�",
+        "valid": true,
+        "topic_cos": 0.191
+      },
+      "exec_on": {
+        "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。たくさんの顔を見つめたまま、ぼんやりと笑っていた。\n「そうです。しかし、その後は、もうすぐらいではありません。そのうちに�",
+        "valid": true,
+        "topic_cos": 0.202
+      }
+    },
+    "科学・歴史": {
+      "prompt": "日本の東京は、江戸時代から続く歴史ある都市であり、",
+      "exec_off": {
+        "text": "日本の東京は、江戸時代から続く歴史ある都市であり、それぞれの部分からないということです。しかし、彼はこの人は、いまごろになると、その後は主に私の目に映っているところへ、い",
+        "valid": true,
+        "topic_cos": -0.037
+      },
+      "exec_on": {
+        "text": "日本の東京は、江戸時代から続く歴史ある都市であり、その後は、映画のようなものが、どこへ行ったのか、それとも、すべての星の世界には、みんなところです。それに、あの女はとても",
+        "valid": true,
+        "topic_cos": -0.037
+      }
+    },
+    "無限拡張🚀": {
+      "prompt": "薔薇と憂鬱と🚀について、",
+      "exec_off": {
+        "text": "薔薇と憂鬱と🚀について、それがないな、応仁の乱が起ったのである。\n彼は、少しも知らないでいる。\n同国の国際博覧会のことです。\n実際の人間が、ずっと前",
+        "valid": true,
+        "topic_cos": 0.085
+      },
+      "exec_on": {
+        "text": "薔薇と憂鬱と🚀について、その後は、この部屋には、木茂尻尾を挙げています。そのころのように、文学については、一度もありません。これはどうしたという",
+        "valid": true,
+        "topic_cos": 0.049
+      }
+    }
+  },
+  "peak_vram_mb": 5725.1,
+  "total_sec": 2031.3
+}

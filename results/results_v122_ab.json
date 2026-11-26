@@ -1,0 +1,2476 @@
+{
+  "results": [
+    {
+      "evid_full": 0,
+      "tag": "挨拶",
+      "q": "こんにちは！調子はどうですか？",
+      "gate": false,
+      "answer": "こんにちは、私はあなたのおしょうか。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "SOCIAL",
+        "want_hip": false,
+        "entities": [],
+        "agenda_heads": [],
+        "agenda_sources": [],
+        "agenda_passages": [],
+        "agenda_preview": [],
+        "hop23_ms": 0.0,
+        "stopped_eot": true,
+        "decode_sec": 1.26,
+        "chars_per_sec": 14.31,
+        "fluency_bpc": 2.1913
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "挨拶",
+      "q": "こんにちは！調子はどうですか？",
+      "gate": true,
+      "answer": "こんにちは、私はあなたのことをご紹介しますよ。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "SOCIAL",
+        "want_hip": false,
+        "entities": [],
+        "agenda_heads": [],
+        "agenda_sources": [],
+        "agenda_passages": [],
+        "agenda_preview": [],
+        "hop23_ms": 0.01,
+        "stopped_eot": true,
+        "decode_sec": 1.12,
+        "chars_per_sec": 20.53,
+        "fluency_bpc": 1.9003
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 4,
+      "tag": "用語説明(鉄道)",
+      "q": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "gate": false,
+      "answer": "東海道新幹線（とうかいどうしんかんせん）は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。 多くの列車が山陽新幹線（新大阪駅 - 博多駅間）に直通する運行体系がとられていることから、総称して「東海道・山陽新幹線」（とうかいどうしんかんか?",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "東海道新幹線"
+        ],
+        "agenda_heads": [
+          "東海道新幹線"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "東海道新幹線（とうかいどうしんかんせん）は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。 多くの列車が山陽新幹線（新大阪駅 - 博多駅間）に直通する運行体系がとられていることから、総称して「東海道・山陽新幹線」（とうかいどう・さんようしんかんせん）とも呼ばれる。"
+        ],
+        "agenda_preview": [
+          "東海道新幹線（とうかいどうしんかんせん）は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。 多くの列車が山陽新幹線（新大阪駅 - 博多駅間）に直通する運行体系がとられていることから、総称し"
+        ],
+        "hop23_ms": 0.11,
+        "stopped_eot": true,
+        "decode_sec": 3.52,
+        "chars_per_sec": 41.25,
+        "fluency_bpc": 6.1457
+      },
+      "evid": 4,
+      "ans": 4,
+      "gold": [
+        "東京",
+        "新大阪",
+        "高速",
+        "JR"
+      ]
+    },
+    {
+      "evid_full": 4,
+      "tag": "用語説明(鉄道)",
+      "q": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "gate": true,
+      "answer": "東海道新幹線は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。 多くの列車が山陽新幹線（新大阪駅 - 博多駅間）に直通する運行体系がとられていることから、総称して「東海道・山陽新幹線」（とうかいどう・さんようしんかんせん）とも呼ばれる。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "東海道新幹線",
+            "score": 0.753444848400189,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [
+          420
+        ],
+        "slot_progress": [
+          [
+            420,
+            38,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "東海道新幹線"
+        ],
+        "agenda_heads": [
+          "東海道新幹線"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "東海道新幹線（とうかいどうしんかんせん）は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。 多くの列車が山陽新幹線（新大阪駅 - 博多駅間）に直通する運行体系がとられていることから、総称して「東海道・山陽新幹線」（とうかいどう・さんようしんかんせん）とも呼ばれる。"
+        ],
+        "agenda_preview": [
+          "東海道新幹線（とうかいどうしんかんせん）は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。 多くの列車が山陽新幹線（新大阪駅 - 博多駅間）に直通する運行体系がとられていることから、総称し"
+        ],
+        "hop23_ms": 0.6,
+        "stopped_eot": true,
+        "decode_sec": 2.91,
+        "chars_per_sec": 49.41,
+        "fluency_bpc": 5.9116
+      },
+      "evid": 4,
+      "ans": 4,
+      "gold": [
+        "東京",
+        "新大阪",
+        "高速",
+        "JR"
+      ]
+    },
+    {
+      "evid_full": 1,
+      "tag": "科学説明(物理)",
+      "q": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "gate": false,
+      "answer": "一般相対性理論（いっぱんそうたいせいりろん、 ）は、アルベルト・アインシュタインが1905年の特殊相対性理論に続いて、それを発展させ1915年から1916年にかけて発表した物理学の理論である。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "一般相対性理論",
+          "量子力学"
+        ],
+        "agenda_heads": [
+          "一般相対性理論",
+          "量子力学"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia",
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "一般相対性理論（いっぱんそうたいせいりろん、 ）は、アルベルト・アインシュタインが1905年の特殊相対性理論に続いて、それを発展させ1915年から1916年にかけて発表した物理学の理論である。一般相対論（いっぱんそうたいろん、）とも呼ばれる。",
+          "量子力学は、マター（分子、原子）と素粒子（電子、陽子、中性子、クォークなど）の原子レベルでの物理的現実を記述する原理の集合である。量子力学によれば、波動と粒子の二重性で説明されるように、物質と放射エネルギーの両方が同時に波動的かつ粒子的に振る舞う。 古典力学では、位置・速度などの物体の状態を正確に測定・予測することができる。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。 量子力学は、原子レベルの現象の動きを記述するだけでなく、超流動や超伝導、嗅覚受容体の働きやタンパク質の構造といった生体システムなど、大規模な現象の理解にも役立っている。"
+        ],
+        "agenda_preview": [
+          "一般相対性理論（いっぱんそうたいせいりろん、 ）は、アルベルト・アインシュタインが1905年の特殊相対性理論に続いて、それを発展させ1915年から1916年にかけて発表した物理学の理論である。一般相対論（いっぱんそうたいろん、）とも呼ばれる",
+          "量子力学は、マター（分子、原子）と素粒子（電子、陽子、中性子、クォークなど）の原子レベルでの物理的現実を記述する原理の集合である。量子力学によれば、波動と粒子の二重性で説明されるように、物質と放射エネルギーの両方が同時に波動的かつ粒子的に振"
+        ],
+        "hop23_ms": 0.23,
+        "stopped_eot": true,
+        "decode_sec": 4.95,
+        "chars_per_sec": 19.39,
+        "fluency_bpc": 4.3556
+      },
+      "evid": 1,
+      "ans": 1,
+      "gold": [
+        "アインシュタイン",
+        "重力",
+        "時空",
+        "確率"
+      ]
+    },
+    {
+      "evid_full": 1,
+      "tag": "科学説明(物理)",
+      "q": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "gate": true,
+      "answer": "一般相対性理論は、アルベルト・アインシュタインが1905年の特殊相対性理論に続いて、それを発展させ1915年から1916年にかけて発表した物理学の理論である。量子力学は、マター（分子、原子）と素粒子（電子、陽子、中性子、クォークなど）の原子レベルでの物理的現実を記述する原理の集合である。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "一般相対性理論",
+            "score": 0.4544009108440687,
+            "active": true
+          },
+          {
+            "head": "量子力学",
+            "score": 0.5291747502889013,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [
+          213,
+          195
+        ],
+        "slot_progress": [
+          [
+            213,
+            19,
+            true
+          ],
+          [
+            195,
+            24,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "一般相対性理論",
+          "量子力学"
+        ],
+        "agenda_heads": [
+          "一般相対性理論",
+          "量子力学"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia",
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "一般相対性理論（いっぱんそうたいせいりろん、 ）は、アルベルト・アインシュタインが1905年の特殊相対性理論に続いて、それを発展させ1915年から1916年にかけて発表した物理学の理論である。一般相対論（いっぱんそうたいろん、）とも呼ばれる。",
+          "量子力学は、マター（分子、原子）と素粒子（電子、陽子、中性子、クォークなど）の原子レベルでの物理的現実を記述する原理の集合である。量子力学によれば、波動と粒子の二重性で説明されるように、物質と放射エネルギーの両方が同時に波動的かつ粒子的に振る舞う。 古典力学では、位置・速度などの物体の状態を正確に測定・予測することができる。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。 量子力学は、原子レベルの現象の動きを記述するだけでなく、超流動や超伝導、嗅覚受容体の働きやタンパク質の構造といった生体システムなど、大規模な現象の理解にも役立っている。"
+        ],
+        "agenda_preview": [
+          "一般相対性理論（いっぱんそうたいせいりろん、 ）は、アルベルト・アインシュタインが1905年の特殊相対性理論に続いて、それを発展させ1915年から1916年にかけて発表した物理学の理論である。一般相対論（いっぱんそうたいろん、）とも呼ばれる",
+          "量子力学は、マター（分子、原子）と素粒子（電子、陽子、中性子、クォークなど）の原子レベルでの物理的現実を記述する原理の集合である。量子力学によれば、波動と粒子の二重性で説明されるように、物質と放射エネルギーの両方が同時に波動的かつ粒子的に振"
+        ],
+        "hop23_ms": 1.35,
+        "stopped_eot": true,
+        "decode_sec": 3.02,
+        "chars_per_sec": 47.68,
+        "fluency_bpc": 4.8536
+      },
+      "evid": 1,
+      "ans": 1,
+      "gold": [
+        "アインシュタイン",
+        "重力",
+        "時空",
+        "確率"
+      ]
+    },
+    {
+      "evid_full": 2,
+      "tag": "歴史質問",
+      "q": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "gate": false,
+      "answer": "第二次世界大戦（だいにじせかいたいせん、略称：WWII）は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。連合国陣営の勝利に終わったが、第一次世界大戦以来の世界大戦となり、人類史上最大の死傷者を生んだ。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "第二次世界大戦"
+        ],
+        "agenda_heads": [
+          "第二次世界大戦"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "第二次世界大戦（だいにじせかいたいせん、略称：WWII）は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。連合国陣営の勝利に終わったが、第一次世界大戦以来の世界大戦となり、人類史上最大の死傷者を生んだ。"
+        ],
+        "agenda_preview": [
+          "第二次世界大戦（だいにじせかいたいせん、略称：WWII）は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イ"
+        ],
+        "hop23_ms": 0.07,
+        "stopped_eot": true,
+        "decode_sec": 3.94,
+        "chars_per_sec": 55.78,
+        "fluency_bpc": 5.0433
+      },
+      "evid": 2,
+      "ans": 2,
+      "gold": [
+        "1939",
+        "1945"
+      ]
+    },
+    {
+      "evid_full": 2,
+      "tag": "歴史質問",
+      "q": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "gate": true,
+      "answer": "第二次世界大戦は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "第二次世界大戦",
+            "score": 0.7046955528829308,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [
+          413
+        ],
+        "slot_progress": [
+          [
+            413,
+            39,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "第二次世界大戦"
+        ],
+        "agenda_heads": [
+          "第二次世界大戦"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "第二次世界大戦（だいにじせかいたいせん、略称：WWII）は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。連合国陣営の勝利に終わったが、第一次世界大戦以来の世界大戦となり、人類史上最大の死傷者を生んだ。"
+        ],
+        "agenda_preview": [
+          "第二次世界大戦（だいにじせかいたいせん、略称：WWII）は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イ"
+        ],
+        "hop23_ms": 0.6,
+        "stopped_eot": true,
+        "decode_sec": 2.89,
+        "chars_per_sec": 52.33,
+        "fluency_bpc": 4.3519
+      },
+      "evid": 2,
+      "ans": 2,
+      "gold": [
+        "1939",
+        "1945"
+      ]
+    },
+    {
+      "evid_full": 4,
+      "tag": "文学質問",
+      "q": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "gate": false,
+      "answer": "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。1905年（明治38年）1月、『ホトトギス』にて発表されたのだが、好評を博したため、翌1906年（明治39年）8月まで継続した。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "吾輩は猫である",
+          "夏目漱石",
+          "小説"
+        ],
+        "agenda_heads": [
+          "吾輩は猫である"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。1905年（明治38年）1月、『ホトトギス』にて発表されたのだが、好評を博したため、翌1906年（明治39年）8月まで継続した。上、1906年10月刊、中、1906年11月刊、下、1907年5月刊。 中学の英語教師苦沙弥先生の日常と、書斎に集まる美学者迷亭、理学者寒月、哲学者東風らといった明治の知識人たちの生活態度や思考を飼い猫の目を通して、ユーモアに満ちたエピソードとして描いた作品。 表面的にすぎない日本の近代化に対する、漱石の痛烈な文明批評・社会批判が表れている風刺小説。なお実際、本作品執筆前に、夏目家に猫が迷い込み、飼われることになった。その猫も、ずっと名前がなかったという。"
+        ],
+        "agenda_preview": [
+          "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。1905年（明治38年）1月、『ホトトギス』にて発表されたのだが、好評を博したため、翌1906年（明治39年）8月まで継続した。上、1906年10月刊、"
+        ],
+        "hop23_ms": 0.31,
+        "stopped_eot": true,
+        "decode_sec": 2.55,
+        "chars_per_sec": 42.31,
+        "fluency_bpc": 5.7767
+      },
+      "evid": 2,
+      "ans": 2,
+      "gold": [
+        "明治",
+        "長編",
+        "風刺",
+        "教師"
+      ]
+    },
+    {
+      "evid_full": 4,
+      "tag": "文学質問",
+      "q": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "gate": true,
+      "answer": "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。中学の英語教師苦沙弥先生の日常と、書斎に集まる美学者迷亭、理学者寒月、哲学者東風らといった明治の知識人たちの生活態度や思考を飼い猫の目を通して、ユーモアに満ちたエピソードとして描いた作品。表面的にすぎない日本の近代化に対する、漱石の痛烈な文明批評・社会批判が表れている風刺小説。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "吾輩は猫である",
+            "score": 0.8253623328724322,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [
+          549
+        ],
+        "slot_progress": [
+          [
+            549,
+            66,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "吾輩は猫である",
+          "夏目漱石",
+          "小説"
+        ],
+        "agenda_heads": [
+          "吾輩は猫である"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。中学の英語教師苦沙弥先生の日常と、書斎に集まる美学者迷亭、理学者寒月、哲学者東風らといった明治の知識人たちの生活態度や思考を飼い猫の目を通して、ユーモアに満ちたエピソードとして描いた作品。表面的にすぎない日本の近代化に対する、漱石の痛烈な文明批評・社会批判が表れている風刺小説。"
+        ],
+        "agenda_preview": [
+          "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。中学の英語教師苦沙弥先生の日常と、書斎に集まる美学者迷亭、理学者寒月、哲学者東風らといった明治の知識人たちの生活態度や思考を飼い猫の目を通して、ユーモア"
+        ],
+        "hop23_ms": 1.15,
+        "stopped_eot": true,
+        "decode_sec": 3.37,
+        "chars_per_sec": 54.22,
+        "fluency_bpc": 5.9754
+      },
+      "evid": 3,
+      "ans": 4,
+      "gold": [
+        "明治",
+        "長編",
+        "風刺",
+        "教師"
+      ]
+    },
+    {
+      "evid_full": 1,
+      "tag": "日常質問",
+      "q": "日本の首都はどこですか？",
+      "gate": false,
+      "answer": "東京都（とうきょうと、）は、日本の首都。関東地方に位置する都。都庁所在地は新宿区。 区部（特別区23区）、多摩地域（26市と西多摩郡3町1村）および島嶼部（2町7村）からなる。関東南西部にあって東西に細長い都域を有し、東部は東京湾に面する。西部は雲取山を最高峰とする関東山地となる。 行政機関、金融機関や大企業などが集中し、新聞・放送・出版などの文化面、大学・研究機関などの教育・学術面においても日本の中枢をなす。交通面でも鉄道網、道路網、航空路の中心。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "首都",
+          "日本"
+        ],
+        "agenda_heads": [
+          "東京都"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "東京都（とうきょうと、）は、日本の首都。関東地方に位置する都。都庁所在地は新宿区。 区部（特別区23区）、多摩地域（26市と西多摩郡3町1村）および島嶼部（2町7村）からなる。関東南西部にあって東西に細長い都域を有し、東部は東京湾に面する。西部は雲取山を最高峰とする関東山地となる。 行政機関、金融機関や大企業などが集中し、新聞・放送・出版などの文化面、大学・研究機関などの教育・学術面においても日本の中枢をなす。交通面でも鉄道網、道路網、航空路の中心。 東京都と周辺7県で首都圏を構成している。特に東京圏（東京都・神奈川県・千葉県・埼玉県）の総人口は約3500万人に達し、日本の人口の約30%が集中している。東京都市圏としては世界最大級の人口を有する国際的大都市である。"
+        ],
+        "agenda_preview": [
+          "東京都（とうきょうと、）は、日本の首都。関東地方に位置する都。都庁所在地は新宿区。 区部（特別区23区）、多摩地域（26市と西多摩郡3町1村）および島嶼部（2町7村）からなる。関東南西部にあって東西に細長い都域を有し、東部は東京湾に面する。"
+        ],
+        "hop23_ms": 0.2,
+        "stopped_eot": true,
+        "decode_sec": 3.86,
+        "chars_per_sec": 58.76,
+        "fluency_bpc": 6.8772
+      },
+      "evid": 1,
+      "ans": 1,
+      "gold": [
+        "東京"
+      ]
+    },
+    {
+      "evid_full": 1,
+      "tag": "日常質問",
+      "q": "日本の首都はどこですか？",
+      "gate": true,
+      "answer": "東京都は、日本の首都。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "東京都",
+            "score": 0.7128146027377773,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [
+          33
+        ],
+        "slot_progress": [
+          [
+            33,
+            2,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "首都",
+          "日本"
+        ],
+        "agenda_heads": [
+          "東京都"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "東京都（とうきょうと、）は、日本の首都。関東地方に位置する都。都庁所在地は新宿区。 区部（特別区23区）、多摩地域（26市と西多摩郡3町1村）および島嶼部（2町7村）からなる。関東南西部にあって東西に細長い都域を有し、東部は東京湾に面する。西部は雲取山を最高峰とする関東山地となる。 行政機関、金融機関や大企業などが集中し、新聞・放送・出版などの文化面、大学・研究機関などの教育・学術面においても日本の中枢をなす。交通面でも鉄道網、道路網、航空路の中心。 東京都と周辺7県で首都圏を構成している。特に東京圏（東京都・神奈川県・千葉県・埼玉県）の総人口は約3500万人に達し、日本の人口の約30%が集中している。東京都市圏としては世界最大級の人口を有する国際的大都市である。"
+        ],
+        "agenda_preview": [
+          "東京都（とうきょうと、）は、日本の首都。関東地方に位置する都。都庁所在地は新宿区。 区部（特別区23区）、多摩地域（26市と西多摩郡3町1村）および島嶼部（2町7村）からなる。関東南西部にあって東西に細長い都域を有し、東部は東京湾に面する。"
+        ],
+        "hop23_ms": 1.04,
+        "stopped_eot": true,
+        "decode_sec": 1.31,
+        "chars_per_sec": 8.43,
+        "fluency_bpc": 4.9889
+      },
+      "evid": 1,
+      "ans": 1,
+      "gold": [
+        "東京"
+      ]
+    },
+    {
+      "evid_full": 3,
+      "tag": "Custom Direct QA",
+      "q": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+      "gate": false,
+      "answer": "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "量子重力エンジン",
+          "アストラX-99"
+        ],
+        "agenda_heads": [
+          "astra",
+          "astra"
+        ],
+        "agenda_sources": [
+          "custom:astra",
+          "custom:astra"
+        ],
+        "agenda_passages": [
+          "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+          "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。"
+        ],
+        "agenda_preview": [
+          "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+          "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。"
+        ],
+        "hop23_ms": 0.13,
+        "stopped_eot": true,
+        "decode_sec": 3.27,
+        "chars_per_sec": 15.62,
+        "fluency_bpc": 4.8395
+      },
+      "evid": 3,
+      "ans": 3,
+      "gold": [
+        "2042",
+        "つくば",
+        "推進"
+      ]
+    },
+    {
+      "evid_full": 3,
+      "tag": "Custom Direct QA",
+      "q": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+      "gate": true,
+      "answer": "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "astra",
+            "score": 1.0,
+            "active": true
+          },
+          {
+            "head": "astra",
+            "score": 0.6531760696663667,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [
+          137
+        ],
+        "slot_progress": [
+          [
+            137,
+            13,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "量子重力エンジン",
+          "アストラX-99"
+        ],
+        "agenda_heads": [
+          "astra"
+        ],
+        "agenda_sources": [
+          "custom:astra"
+        ],
+        "agenda_passages": [
+          "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。"
+        ],
+        "agenda_preview": [
+          "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。"
+        ],
+        "hop23_ms": 0.61,
+        "stopped_eot": true,
+        "decode_sec": 1.13,
+        "chars_per_sec": 45.14,
+        "fluency_bpc": 4.8395
+      },
+      "evid": 3,
+      "ans": 3,
+      "gold": [
+        "2042",
+        "つくば",
+        "推進"
+      ]
+    },
+    {
+      "evid_full": 3,
+      "tag": "Custom Indirect QA",
+      "q": "アストラX-99の最大推力はどのくらいですか？",
+      "gate": false,
+      "answer": "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "アストラX-99",
+          "最大推力"
+        ],
+        "agenda_heads": [
+          "astra",
+          "astra"
+        ],
+        "agenda_sources": [
+          "custom:astra",
+          "custom:astra"
+        ],
+        "agenda_passages": [
+          "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+          "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。"
+        ],
+        "agenda_preview": [
+          "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+          "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。"
+        ],
+        "hop23_ms": 0.13,
+        "stopped_eot": true,
+        "decode_sec": 1.6,
+        "chars_per_sec": 36.35,
+        "fluency_bpc": 4.787
+      },
+      "evid": 3,
+      "ans": 3,
+      "gold": [
+        "400",
+        "イオン",
+        "18"
+      ]
+    },
+    {
+      "evid_full": 3,
+      "tag": "Custom Indirect QA",
+      "q": "アストラX-99の最大推力はどのくらいですか？",
+      "gate": true,
+      "answer": "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "astra",
+            "score": 0.9775427379113466,
+            "active": true
+          },
+          {
+            "head": "astra",
+            "score": 0.7576250521170591,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [
+          156
+        ],
+        "slot_progress": [
+          [
+            156,
+            19,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "アストラX-99",
+          "最大推力"
+        ],
+        "agenda_heads": [
+          "astra"
+        ],
+        "agenda_sources": [
+          "custom:astra"
+        ],
+        "agenda_passages": [
+          "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。"
+        ],
+        "agenda_preview": [
+          "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。"
+        ],
+        "hop23_ms": 0.64,
+        "stopped_eot": true,
+        "decode_sec": 1.09,
+        "chars_per_sec": 53.34,
+        "fluency_bpc": 4.787
+      },
+      "evid": 3,
+      "ans": 3,
+      "gold": [
+        "400",
+        "イオン",
+        "18"
+      ]
+    },
+    {
+      "evid_full": 0,
+      "tag": "助言",
+      "q": "眠れないときにできる簡単なリラックス方法を教えてください。",
+      "gate": false,
+      "answer": "も使われることがあります。これは、ある特定の状況や文脈によって異なる意味を持つことができます。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "きる簡単なリラックス方法"
+        ],
+        "agenda_heads": [],
+        "agenda_sources": [],
+        "agenda_passages": [],
+        "agenda_preview": [],
+        "hop23_ms": 0.08,
+        "stopped_eot": true,
+        "decode_sec": 1.21,
+        "chars_per_sec": 38.92,
+        "fluency_bpc": 1.3915
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "助言",
+      "q": "眠れないときにできる簡単なリラックス方法を教えてください。",
+      "gate": true,
+      "answer": "情報がありません。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": true,
+        "abstain_reason": "ungrounded_query",
+        "slot_targets": [
+          27
+        ],
+        "slot_progress": [
+          [
+            27,
+            2,
+            true
+          ]
+        ],
+        "intent_mode": "SOCIAL",
+        "want_hip": false,
+        "entities": [],
+        "agenda_heads": [
+          "epistemic_abstain"
+        ],
+        "agenda_sources": [
+          "epistemic:abstention"
+        ],
+        "agenda_passages": [
+          "情報がありません。"
+        ],
+        "agenda_preview": [
+          "情報がありません。"
+        ],
+        "hop23_ms": 0.0,
+        "stopped_eot": true,
+        "decode_sec": 0.44,
+        "chars_per_sec": 20.6,
+        "fluency_bpc": 2.8518
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "空",
+      "q": "なぜ空は青いのですか？",
+      "gate": false,
+      "answer": "なぜ空でしょうか。それは、あなたの質問に答えるのはとても良いでしょう。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "なぜ空"
+        ],
+        "agenda_heads": [],
+        "agenda_sources": [],
+        "agenda_passages": [],
+        "agenda_preview": [],
+        "hop23_ms": 0.04,
+        "stopped_eot": true,
+        "decode_sec": 0.9,
+        "chars_per_sec": 38.73,
+        "fluency_bpc": 2.2444
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "空",
+      "q": "なぜ空は青いのですか？",
+      "gate": true,
+      "answer": "情報がありません。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": true,
+        "abstain_reason": "ungrounded_query",
+        "slot_targets": [
+          27
+        ],
+        "slot_progress": [
+          [
+            27,
+            2,
+            true
+          ]
+        ],
+        "intent_mode": "SOCIAL",
+        "want_hip": false,
+        "entities": [],
+        "agenda_heads": [
+          "epistemic_abstain"
+        ],
+        "agenda_sources": [
+          "epistemic:abstention"
+        ],
+        "agenda_passages": [
+          "情報がありません。"
+        ],
+        "agenda_preview": [
+          "情報がありません。"
+        ],
+        "hop23_ms": 0.0,
+        "stopped_eot": true,
+        "decode_sec": 0.27,
+        "chars_per_sec": 33.0,
+        "fluency_bpc": 2.6553
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "言語比較",
+      "q": "PythonとC++の違いを教えてください。",
+      "gate": false,
+      "answer": "この表現は、具体的な文脈によって異なるため、その内容について教えてください。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "SOCIAL",
+        "want_hip": false,
+        "entities": [],
+        "agenda_heads": [],
+        "agenda_sources": [],
+        "agenda_passages": [],
+        "agenda_preview": [],
+        "hop23_ms": 0.0,
+        "stopped_eot": true,
+        "decode_sec": 1.47,
+        "chars_per_sec": 25.88,
+        "fluency_bpc": 1.6847
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "言語比較",
+      "q": "PythonとC++の違いを教えてください。",
+      "gate": true,
+      "answer": "C++は、汎用プログラミング言語のひとつである。Pythonはインタープリタ型の高水準汎用プログラミング言語である。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "Python",
+            "score": 0.3894750642492461,
+            "active": true
+          },
+          {
+            "head": "C++",
+            "score": 0.43938157641225717,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [
+          90,
+          66
+        ],
+        "slot_progress": [
+          [
+            90,
+            6,
+            true
+          ],
+          [
+            66,
+            5,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "Python",
+          "C++"
+        ],
+        "agenda_heads": [
+          "Python",
+          "C++"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia",
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "Python（パイソン）はインタープリタ型の高水準汎用プログラミング言語である。",
+          "C++（シープラスプラス）は、汎用プログラミング言語のひとつである。派生元であるC言語の機能や特徴を継承しつつ、表現力と効率性の向上のために、手続き型プログラミング・データ抽象・オブジェクト指向プログラミング・ジェネリックプログラミングといった複数のプログラミングパラダイムが組み合わされている。C言語のようにハードウェアを直接扱うような下位層向けの低水準言語としても、複雑なアプリケーションソフトウェアを開発するための上位層向け高水準言語としても使用可能である。アセンブリ言語以外の低水準言語を必要としないこと、使わない機能に時間的・空間的コストを必要としないことが、言語設計の重要な原則となっている。"
+        ],
+        "agenda_preview": [
+          "Python（パイソン）はインタープリタ型の高水準汎用プログラミング言語である。",
+          "C++（シープラスプラス）は、汎用プログラミング言語のひとつである。派生元であるC言語の機能や特徴を継承しつつ、表現力と効率性の向上のために、手続き型プログラミング・データ抽象・オブジェクト指向プログラミング・ジェネリックプログラミングとい"
+        ],
+        "hop23_ms": 1.12,
+        "stopped_eot": true,
+        "decode_sec": 1.77,
+        "chars_per_sec": 32.69,
+        "fluency_bpc": 3.8498
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "架空都市",
+      "q": "架空の都市「ネオアトランティス2099」の市長は誰ですか？",
+      "gate": false,
+      "answer": "架空の中世ファンタジー世界を舞台としたアクションRPGである。ゲームの流れとしては、大別して、ストーリーを進めるストーリーパートの間に、戦闘を行うアクションパートが入る形となっている。2周目以降に能力・アイテムの引継ぎが可能になっている。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "ネオアトランティス2099",
+          "架空",
+          "市長",
+          "都市"
+        ],
+        "agenda_heads": [
+          "架空",
+          "市長"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia",
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "架空の中世ファンタジー世界を舞台としたアクションRPGである。ゲームの流れとしては、大別して、ストーリーを進めるストーリーパートの間に、戦闘を行うアクションパートが入る形となっている。2周目以降に能力・アイテムの引継ぎが可能になっている。 アクションパートではクーノとマクルのコンビネーションにより二通りの攻撃が可能になっている。 クーノがナイフによる接近戦を行う。マクルは自動で支援をする。 マクルの魔法が自由に使用可能。遠距離攻撃を自在に撃てるようになるが接近戦攻撃が出来ない。 宮廷考古学者見習の主人公はある日、貴族でない主人公が取ってくるれば結婚が無くなるため幼馴染の王女ディアーネが結婚したくないために出された結婚条件、伝説の古代兵器『マクリウム』を取って来る事に協力させられる。",
+          "市長は、2011年6月からクリスティアン・シェーヌング (CDU) が務めている。彼は、2011年3月27日の選挙で 60.9 % の票を獲得して、当選した。"
+        ],
+        "agenda_preview": [
+          "架空の中世ファンタジー世界を舞台としたアクションRPGである。ゲームの流れとしては、大別して、ストーリーを進めるストーリーパートの間に、戦闘を行うアクションパートが入る形となっている。2周目以降に能力・アイテムの引継ぎが可能になっている。 ",
+          "市長は、2011年6月からクリスティアン・シェーヌング (CDU) が務めている。彼は、2011年3月27日の選挙で 60.9 % の票を獲得して、当選した。"
+        ],
+        "hop23_ms": 0.42,
+        "stopped_eot": true,
+        "decode_sec": 2.98,
+        "chars_per_sec": 39.99,
+        "fluency_bpc": 3.9094
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "架空都市",
+      "q": "架空の都市「ネオアトランティス2099」の市長は誰ですか？",
+      "gate": true,
+      "answer": "ネオアトランティス2099については情報がありません。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "市長",
+            "score": 0.0,
+            "active": false
+          },
+          {
+            "head": "都市",
+            "score": 0.0,
+            "active": false
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": true,
+        "abstain_reason": "gate_rejected",
+        "slot_targets": [
+          73
+        ],
+        "slot_progress": [
+          [
+            73,
+            6,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "ネオアトランティス2099",
+          "市長",
+          "都市"
+        ],
+        "agenda_heads": [
+          "epistemic_abstain"
+        ],
+        "agenda_sources": [
+          "epistemic:abstention"
+        ],
+        "agenda_passages": [
+          "ネオアトランティス2099については情報がありません。"
+        ],
+        "agenda_preview": [
+          "ネオアトランティス2099については情報がありません。"
+        ],
+        "hop23_ms": 1.2,
+        "stopped_eot": true,
+        "decode_sec": 0.68,
+        "chars_per_sec": 39.83,
+        "fluency_bpc": 2.2981
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "算数",
+      "q": "リンゴが3つあります。1つ食べたら残りはいくつですか？",
+      "gate": false,
+      "answer": "リンゴ（林檎、学名：, ）は、バラ科リンゴ属の落葉高木、またはその果実のこと。植物学上ではセイヨウリンゴと呼ぶ。春、白または薄紅の花が咲く。人との関わりは古く、紀元前から栽培されていたと見られ、16世紀以降に欧米での生産が盛んになり、日本においても平安時代には書物に記述がみられる。現在世界中で生産される品種は数千以上といわれ、栄養価の高い果実は生食されるほか、加工してリンゴ酒、ジャム、ジュース、菓子の材料などに利用されている。西洋美術、特に絵画ではモチーフとして昔からよく扱われる。その果実は生食される品種である。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "1つ食べたら残り",
+          "リンゴ"
+        ],
+        "agenda_heads": [
+          "リンゴ"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "リンゴ（林檎、学名：, ）は、バラ科リンゴ属の落葉高木、またはその果実のこと。植物学上ではセイヨウリンゴと呼ぶ。春、白または薄紅の花が咲く。人との関わりは古く、紀元前から栽培されていたと見られ、16世紀以降に欧米での生産が盛んになり、日本においても平安時代には書物に記述がみられる。現在世界中で生産される品種は数千以上といわれ、栄養価の高い果実は生食されるほか、加工してリンゴ酒、ジャム、ジュース、菓子の材料などに利用されている。西洋美術、特に絵画ではモチーフとして昔からよく扱われる。"
+        ],
+        "agenda_preview": [
+          "リンゴ（林檎、学名：, ）は、バラ科リンゴ属の落葉高木、またはその果実のこと。植物学上ではセイヨウリンゴと呼ぶ。春、白または薄紅の花が咲く。人との関わりは古く、紀元前から栽培されていたと見られ、16世紀以降に欧米での生産が盛んになり、日本に"
+        ],
+        "hop23_ms": 0.17,
+        "stopped_eot": true,
+        "decode_sec": 5.0,
+        "chars_per_sec": 51.79,
+        "fluency_bpc": 5.3421
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "算数",
+      "q": "リンゴが3つあります。1つ食べたら残りはいくつですか？",
+      "gate": true,
+      "answer": "情報がありません。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "リンゴ",
+            "score": 0.0,
+            "active": false
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": true,
+        "abstain_reason": "gate_rejected",
+        "slot_targets": [
+          27
+        ],
+        "slot_progress": [
+          [
+            27,
+            2,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "リンゴ"
+        ],
+        "agenda_heads": [
+          "epistemic_abstain"
+        ],
+        "agenda_sources": [
+          "epistemic:abstention"
+        ],
+        "agenda_passages": [
+          "情報がありません。"
+        ],
+        "agenda_preview": [
+          "情報がありません。"
+        ],
+        "hop23_ms": 0.66,
+        "stopped_eot": true,
+        "decode_sec": 0.32,
+        "chars_per_sec": 27.72,
+        "fluency_bpc": 2.5902
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "追問",
+      "q": "そこの人口はどれくらいですか？",
+      "gate": false,
+      "answer": "そこは、暑い国でした。太陽の光が強く、青々とした木立や、丘の上を照らしていました。 この国の動物園には、熱帯地方に住むいろいろな動物が、他の国の動物園ではめったに見られないほどたくさんいました。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "そこ"
+        ],
+        "agenda_heads": [
+          "そこ"
+        ],
+        "agenda_sources": [
+          "lead:easy_ja"
+        ],
+        "agenda_passages": [
+          "そこは、暑い国でした。太陽の光が強く、青々とした木立や、丘の上を照らしていました。 この国の動物園には、熱帯地方に住むいろいろな動物が、他の国の動物園ではめったに見られないほどたくさんいました。しかし、寒い国に住んでいる動物は、なかなかうまく育たないようで、あまり多くはありませんでした。その中に、一ぴきの白いくまがいて、みんなから珍しいと思われ、かわいがられていました。 木立の柔らかい葉が、きらきらと光っていました。いつかはあめのように溶けてしまいそうなほど暑い場所でした。ですから、寒い、寒い、氷山の上に住んでいるしろくまを飼うことは、まったく簡単ではありませんでした。 大きな水たまりを作って、その中に氷のかけらを投げ入れました。"
+        ],
+        "agenda_preview": [
+          "そこは、暑い国でした。太陽の光が強く、青々とした木立や、丘の上を照らしていました。 この国の動物園には、熱帯地方に住むいろいろな動物が、他の国の動物園ではめったに見られないほどたくさんいました。しかし、寒い国に住んでいる動物は、なかなかうま"
+        ],
+        "hop23_ms": 0.06,
+        "stopped_eot": true,
+        "decode_sec": 4.07,
+        "chars_per_sec": 23.85,
+        "fluency_bpc": 4.4309
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "追問",
+      "q": "そこの人口はどれくらいですか？",
+      "gate": true,
+      "answer": "東京都の人口については情報がありません。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "東京都",
+            "score": 0.7441084858900169,
+            "active": true
+          }
+        ],
+        "carried": [
+          "東京都"
+        ],
+        "epistemic_abstain": true,
+        "abstain_reason": "attribute_missing:人口",
+        "slot_targets": [
+          60
+        ],
+        "slot_progress": [
+          [
+            60,
+            3,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "東京都"
+        ],
+        "agenda_heads": [
+          "epistemic_abstain"
+        ],
+        "agenda_sources": [
+          "epistemic:abstention"
+        ],
+        "agenda_passages": [
+          "東京都の人口については情報がありません。"
+        ],
+        "agenda_preview": [
+          "東京都の人口については情報がありません。"
+        ],
+        "hop23_ms": 0.78,
+        "stopped_eot": true,
+        "decode_sec": 0.62,
+        "chars_per_sec": 32.19,
+        "fluency_bpc": 2.1068
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "未知:架空人物",
+      "q": "架空の科学者「ドクター・クロノス77」の出身地はどこですか？",
+      "gate": false,
+      "answer": "科学者（かがくしゃ、）とは、科学を専門とする人・学者のことである。特に自然科学を研究する人をこう呼ぶ傾向がある。ゲッティ・アイテムの引継ぎが可能です。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "ドクター・クロノス77",
+          "科学者",
+          "架空"
+        ],
+        "agenda_heads": [
+          "科学者",
+          "架空"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia",
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "科学者（かがくしゃ、）とは、科学を専門とする人・学者のことである。特に自然科学を研究する人をこう呼ぶ傾向がある。",
+          "架空の中世ファンタジー世界を舞台としたアクションRPGである。ゲームの流れとしては、大別して、ストーリーを進めるストーリーパートの間に、戦闘を行うアクションパートが入る形となっている。2周目以降に能力・アイテムの引継ぎが可能になっている。 アクションパートではクーノとマクルのコンビネーションにより二通りの攻撃が可能になっている。 クーノがナイフによる接近戦を行う。マクルは自動で支援をする。 マクルの魔法が自由に使用可能。遠距離攻撃を自在に撃てるようになるが接近戦攻撃が出来ない。 宮廷考古学者見習の主人公はある日、貴族でない主人公が取ってくるれば結婚が無くなるため幼馴染の王女ディアーネが結婚したくないために出された結婚条件、伝説の古代兵器『マクリウム』を取って来る事に協力させられる。"
+        ],
+        "agenda_preview": [
+          "科学者（かがくしゃ、）とは、科学を専門とする人・学者のことである。特に自然科学を研究する人をこう呼ぶ傾向がある。",
+          "架空の中世ファンタジー世界を舞台としたアクションRPGである。ゲームの流れとしては、大別して、ストーリーを進めるストーリーパートの間に、戦闘を行うアクションパートが入る形となっている。2周目以降に能力・アイテムの引継ぎが可能になっている。 "
+        ],
+        "hop23_ms": 0.29,
+        "stopped_eot": true,
+        "decode_sec": 2.71,
+        "chars_per_sec": 27.71,
+        "fluency_bpc": 5.499
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "未知:架空人物",
+      "q": "架空の科学者「ドクター・クロノス77」の出身地はどこですか？",
+      "gate": true,
+      "answer": "ドクター・クロノス77については情報がありません。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "科学者",
+            "score": 0.0,
+            "active": false
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": true,
+        "abstain_reason": "gate_rejected",
+        "slot_targets": [
+          71
+        ],
+        "slot_progress": [
+          [
+            71,
+            6,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "ドクター・クロノス77",
+          "科学者"
+        ],
+        "agenda_heads": [
+          "epistemic_abstain"
+        ],
+        "agenda_sources": [
+          "epistemic:abstention"
+        ],
+        "agenda_passages": [
+          "ドクター・クロノス77については情報がありません。"
+        ],
+        "agenda_preview": [
+          "ドクター・クロノス77については情報がありません。"
+        ],
+        "hop23_ms": 0.43,
+        "stopped_eot": true,
+        "decode_sec": 0.71,
+        "chars_per_sec": 35.09,
+        "fluency_bpc": 2.5775
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "未知:欠落属性",
+      "q": "東京都の人口はどれくらいですか？",
+      "gate": false,
+      "answer": "東京都（とうきょうと、）は、日本の首都。関東地方に位置する都。都庁所在地は新宿区。 区部（特別区23区）、多摩地域（26市と西多摩郡3町1村）および島嶼部（2町7村）からなる。関東南西部にあって東西に細長い都域を有し、東部は東京湾に面する。西部は雲取山を最高峰とする関東山地となる。 行政機関、金融機関や大企業などが集中し、新聞・放送・出版などの文化面、大学・研究機関などの教育・学術面においても日本の中枢をなす。交通面でも鉄道網、道路網、航空路の中心。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "東京都"
+        ],
+        "agenda_heads": [
+          "東京都"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "東京都（とうきょうと、）は、日本の首都。関東地方に位置する都。都庁所在地は新宿区。 区部（特別区23区）、多摩地域（26市と西多摩郡3町1村）および島嶼部（2町7村）からなる。関東南西部にあって東西に細長い都域を有し、東部は東京湾に面する。西部は雲取山を最高峰とする関東山地となる。 行政機関、金融機関や大企業などが集中し、新聞・放送・出版などの文化面、大学・研究機関などの教育・学術面においても日本の中枢をなす。交通面でも鉄道網、道路網、航空路の中心。 東京都と周辺7県で首都圏を構成している。特に東京圏（東京都・神奈川県・千葉県・埼玉県）の総人口は約3500万人に達し、日本の人口の約30%が集中している。東京都市圏としては世界最大級の人口を有する国際的大都市である。"
+        ],
+        "agenda_preview": [
+          "東京都（とうきょうと、）は、日本の首都。関東地方に位置する都。都庁所在地は新宿区。 区部（特別区23区）、多摩地域（26市と西多摩郡3町1村）および島嶼部（2町7村）からなる。関東南西部にあって東西に細長い都域を有し、東部は東京湾に面する。"
+        ],
+        "hop23_ms": 0.09,
+        "stopped_eot": true,
+        "decode_sec": 3.89,
+        "chars_per_sec": 58.42,
+        "fluency_bpc": 6.9033
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "未知:欠落属性",
+      "q": "東京都の人口はどれくらいですか？",
+      "gate": true,
+      "answer": "東京都の人口については情報がありません。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "東京都",
+            "score": 0.7251090384741834,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": true,
+        "abstain_reason": "attribute_missing:人口",
+        "slot_targets": [
+          60
+        ],
+        "slot_progress": [
+          [
+            60,
+            3,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "東京都"
+        ],
+        "agenda_heads": [
+          "epistemic_abstain"
+        ],
+        "agenda_sources": [
+          "epistemic:abstention"
+        ],
+        "agenda_passages": [
+          "東京都の人口については情報がありません。"
+        ],
+        "agenda_preview": [
+          "東京都の人口については情報がありません。"
+        ],
+        "hop23_ms": 0.8,
+        "stopped_eot": true,
+        "decode_sec": 0.48,
+        "chars_per_sec": 41.71,
+        "fluency_bpc": 2.3225
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 2,
+      "tag": "未知:百科事典",
+      "q": "富士山とは何ですか？簡単に教えてください。",
+      "gate": false,
+      "answer": "富士山（ふじさん）は、静岡県（富士宮市、富士市、裾野市、御殿場市、駿東郡小山町）と山梨県（富士吉田市、南都留郡鳴沢村）に跨る活火山である。標高3776.12 m、日本最高峰（剣ヶ峰）の独立峰で、その優美な風貌は日本国外でも日本の象徴として広く知られている。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "富士山"
+        ],
+        "agenda_heads": [
+          "富士山"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "富士山（ふじさん）は、静岡県（富士宮市、富士市、裾野市、御殿場市、駿東郡小山町）と山梨県（富士吉田市、南都留郡鳴沢村）に跨る活火山である。標高3776.12 m、日本最高峰（剣ヶ峰）の独立峰で、その優美な風貌は日本国外でも日本の象徴として広く知られている。 数多くの芸術作品の題材とされ芸術面のみならず、気候や地層など地質学的にも社会に大きな影響を与えている。懸垂曲線の山容を有した玄武岩質成層火山で構成され、その山体は駿河湾の海岸まで及ぶ。 古来霊峰とされ、特に山頂部は浅間大神が鎮座するとされたため、神聖視された。噴火を沈静化するため律令国家により浅間神社が祭祀され、浅間信仰が確立された。"
+        ],
+        "agenda_preview": [
+          "富士山（ふじさん）は、静岡県（富士宮市、富士市、裾野市、御殿場市、駿東郡小山町）と山梨県（富士吉田市、南都留郡鳴沢村）に跨る活火山である。標高3776.12 m、日本最高峰（剣ヶ峰）の独立峰で、その優美な風貌は日本国外でも日本の象徴として広"
+        ],
+        "hop23_ms": 0.08,
+        "stopped_eot": true,
+        "decode_sec": 3.87,
+        "chars_per_sec": 33.08,
+        "fluency_bpc": 7.8084
+      },
+      "evid": 2,
+      "ans": 2,
+      "gold": [
+        "日本",
+        "山"
+      ]
+    },
+    {
+      "evid_full": 2,
+      "tag": "未知:百科事典",
+      "q": "富士山とは何ですか？簡単に教えてください。",
+      "gate": true,
+      "answer": "富士山は、静岡県（富士宮市、富士市、裾野市、御殿場市、駿東郡小山町）と山梨県（富士吉田市、南都留郡鳴沢村）に跨る活火山である。標高3776.12 m、日本最高峰（剣ヶ峰）の独立峰で、その優美な風貌は日本国外でも日本の象徴として広く知られている。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "富士山",
+            "score": 0.7355974551663881,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [
+          348
+        ],
+        "slot_progress": [
+          [
+            348,
+            47,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "富士山"
+        ],
+        "agenda_heads": [
+          "富士山"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "富士山（ふじさん）は、静岡県（富士宮市、富士市、裾野市、御殿場市、駿東郡小山町）と山梨県（富士吉田市、南都留郡鳴沢村）に跨る活火山である。標高3776.12 m、日本最高峰（剣ヶ峰）の独立峰で、その優美な風貌は日本国外でも日本の象徴として広く知られている。 数多くの芸術作品の題材とされ芸術面のみならず、気候や地層など地質学的にも社会に大きな影響を与えている。懸垂曲線の山容を有した玄武岩質成層火山で構成され、その山体は駿河湾の海岸まで及ぶ。 古来霊峰とされ、特に山頂部は浅間大神が鎮座するとされたため、神聖視された。噴火を沈静化するため律令国家により浅間神社が祭祀され、浅間信仰が確立された。"
+        ],
+        "agenda_preview": [
+          "富士山（ふじさん）は、静岡県（富士宮市、富士市、裾野市、御殿場市、駿東郡小山町）と山梨県（富士吉田市、南都留郡鳴沢村）に跨る活火山である。標高3776.12 m、日本最高峰（剣ヶ峰）の独立峰で、その優美な風貌は日本国外でも日本の象徴として広"
+        ],
+        "hop23_ms": 0.79,
+        "stopped_eot": true,
+        "decode_sec": 2.62,
+        "chars_per_sec": 46.61,
+        "fluency_bpc": 7.4791
+      },
+      "evid": 2,
+      "ans": 2,
+      "gold": [
+        "日本",
+        "山"
+      ]
+    },
+    {
+      "evid_full": 0,
+      "tag": "未知:挨拶",
+      "q": "こんばんは！元気ですか？",
+      "gate": false,
+      "answer": "元気をだそう!（げんきをだそう!）とは、2011年3月31日から同年4月27日頃にかけてテレビ東京系列（TXN）で放送していたクロスプログラム及びスポットCMの名称。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "元気"
+        ],
+        "agenda_heads": [
+          "元気"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "元気をだそう!（げんきをだそう!）とは、2011年3月31日から同年4月27日頃にかけてテレビ東京系列（TXN）で放送していたクロスプログラム及びスポットCMの名称。"
+        ],
+        "agenda_preview": [
+          "元気をだそう!（げんきをだそう!）とは、2011年3月31日から同年4月27日頃にかけてテレビ東京系列（TXN）で放送していたクロスプログラム及びスポットCMの名称。"
+        ],
+        "hop23_ms": 0.06,
+        "stopped_eot": true,
+        "decode_sec": 1.68,
+        "chars_per_sec": 49.43,
+        "fluency_bpc": 6.229
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "未知:挨拶",
+      "q": "こんばんは！元気ですか？",
+      "gate": true,
+      "answer": "こんにちは!もちろんです!",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "SOCIAL",
+        "want_hip": false,
+        "entities": [],
+        "agenda_heads": [],
+        "agenda_sources": [],
+        "agenda_passages": [],
+        "agenda_preview": [],
+        "hop23_ms": 0.0,
+        "stopped_eot": true,
+        "decode_sec": 0.91,
+        "chars_per_sec": 14.34,
+        "fluency_bpc": 1.9597
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "新規:天体比較",
+      "q": "木星と土星の違いを教えてください。",
+      "gate": false,
+      "answer": "木星（もくせい、）は太陽系にある惑星の1つで、内側から5番目の公転軌道を周回している第5惑星である。太陽系の中で大きさ、質量ともに最大の惑星である。 木星およびそれと同様のガスを主成分とする惑星（ガス惑星）である土星のことを木星型惑星（巨大ガス惑星）と呼ぶ。かつては天王星、海王星も木星型惑星に含まれていたが、現在ではこれらの二惑星は太陽系にある惑星の公転されてきた。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "木星",
+          "土星"
+        ],
+        "agenda_heads": [
+          "木星"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "木星（もくせい、）は太陽系にある惑星の1つで、内側から5番目の公転軌道を周回している第5惑星である。太陽系の中で大きさ、質量ともに最大の惑星である。 木星およびそれと同様のガスを主成分とする惑星（ガス惑星）である土星のことを木星型惑星（巨大ガス惑星）と呼ぶ。かつては天王星、海王星も木星型惑星に含まれていたが、現在ではこれらの二惑星は天王星型惑星（巨大氷惑星）に分類されている。 木星は古代から知られ観測されてきた。そして多くの文明で神話や信仰の対象となった。英語Jupiter（ジュピター）は古代ローマ神話の神ユーピテルを語源とする。"
+        ],
+        "agenda_preview": [
+          "木星（もくせい、）は太陽系にある惑星の1つで、内側から5番目の公転軌道を周回している第5惑星である。太陽系の中で大きさ、質量ともに最大の惑星である。 木星およびそれと同様のガスを主成分とする惑星（ガス惑星）である土星のことを木星型惑星（巨大"
+        ],
+        "hop23_ms": 0.2,
+        "stopped_eot": true,
+        "decode_sec": 4.53,
+        "chars_per_sec": 40.59,
+        "fluency_bpc": 5.7535
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "新規:天体比較",
+      "q": "木星と土星の違いを教えてください。",
+      "gate": true,
+      "answer": "土星は、太陽から6番目の、太陽系の中では木星に次いで2番目に大きな惑星である。木星は太陽系にある惑星の1つで、内側から5番目の公転軌道を周回している第5惑星である。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "木星",
+            "score": 0.838854631966273,
+            "active": true
+          },
+          {
+            "head": "土星",
+            "score": 0.8505350972473513,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [
+          123,
+          113
+        ],
+        "slot_progress": [
+          [
+            123,
+            14,
+            true
+          ],
+          [
+            113,
+            10,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "木星",
+          "土星"
+        ],
+        "agenda_heads": [
+          "木星",
+          "土星"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia",
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "木星（もくせい、）は太陽系にある惑星の1つで、内側から5番目の公転軌道を周回している第5惑星である。太陽系の中で大きさ、質量ともに最大の惑星である。 木星およびそれと同様のガスを主成分とする惑星（ガス惑星）である土星のことを木星型惑星（巨大ガス惑星）と呼ぶ。かつては天王星、海王星も木星型惑星に含まれていたが、現在ではこれらの二惑星は天王星型惑星（巨大氷惑星）に分類されている。 木星は古代から知られ観測されてきた。そして多くの文明で神話や信仰の対象となった。英語Jupiter（ジュピター）は古代ローマ神話の神ユーピテルを語源とする。",
+          "土星（どせい、）は、太陽から6番目の、太陽系の中では木星に次いで2番目に大きな惑星である。巨大ガス惑星に属する土星の平均半径は地球の約9倍に当たる。平均密度は地球の1/8に過ぎないため、巨大な体積のわりに質量は地球の95倍程度である。そのため、木星型惑星の一種に分類されている。 土星の内部には鉄やニッケルおよびシリコンと酸素の化合物である岩石から成る中心核があり、そのまわりを金属水素が厚く覆っていると考えられ、中間層には液体の水素とヘリウムが、その外側はガスが取り巻いている。 惑星表面は、最上部にあるアンモニアの結晶に由来する白や黄色の縞が見られる。金属水素層で生じる電流が作り出す土星の固有磁場は地球磁場よりも若干弱く、木星磁場の1/12程度である。"
+        ],
+        "agenda_preview": [
+          "木星（もくせい、）は太陽系にある惑星の1つで、内側から5番目の公転軌道を周回している第5惑星である。太陽系の中で大きさ、質量ともに最大の惑星である。 木星およびそれと同様のガスを主成分とする惑星（ガス惑星）である土星のことを木星型惑星（巨大",
+          "土星（どせい、）は、太陽から6番目の、太陽系の中では木星に次いで2番目に大きな惑星である。巨大ガス惑星に属する土星の平均半径は地球の約9倍に当たる。平均密度は地球の1/8に過ぎないため、巨大な体積のわりに質量は地球の95倍程度である。そのた"
+        ],
+        "hop23_ms": 1.6,
+        "stopped_eot": true,
+        "decode_sec": 2.24,
+        "chars_per_sec": 36.64,
+        "fluency_bpc": 4.5238
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "新規:生物比較",
+      "q": "DNAとRNAの違いを教えてください。",
+      "gate": false,
+      "answer": "この表現は、特定の情報が必要であれば教えてください。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "SOCIAL",
+        "want_hip": false,
+        "entities": [],
+        "agenda_heads": [],
+        "agenda_sources": [],
+        "agenda_passages": [],
+        "agenda_preview": [],
+        "hop23_ms": 0.0,
+        "stopped_eot": true,
+        "decode_sec": 0.72,
+        "chars_per_sec": 36.22,
+        "fluency_bpc": 1.6038
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "新規:生物比較",
+      "q": "DNAとRNAの違いを教えてください。",
+      "gate": true,
+      "answer": "デオキシリボ核酸（デオキシリボかくさん、DNA）は、核酸の一種で、二重らせん構造。リボ核酸（RNA: Ribonucleic acid）は、リボースを糖成分とする核酸である。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "デオキシリボ核酸",
+            "score": 0.6029105481823557,
+            "active": true
+          },
+          {
+            "head": "リボ核酸",
+            "score": 0.79842036063998,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [
+          117,
+          96
+        ],
+        "slot_progress": [
+          [
+            117,
+            12,
+            true
+          ],
+          [
+            96,
+            15,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "RNA",
+          "DNA"
+        ],
+        "agenda_heads": [
+          "デオキシリボ核酸",
+          "リボ核酸"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia",
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "デオキシリボ核酸（デオキシリボかくさん、DNA）は、核酸の一種で、二重らせん構造。地球上の多くの生物において遺伝情報の継承と発現を担う高分子生体物質である。",
+          "リボ核酸（RNA: Ribonucleic acid）は、リボースを糖成分とする核酸である。リボヌクレオチドが多数重合したもので、一本鎖をなし、アデニン、グアニン、シトシン、ウラシルの四種の塩基を含む。 一般にDNA（デオキシリボ核酸）を鋳型として合成され、その遺伝情報の伝達やタンパク質の合成を行う。"
+        ],
+        "agenda_preview": [
+          "デオキシリボ核酸（デオキシリボかくさん、DNA）は、核酸の一種で、二重らせん構造。地球上の多くの生物において遺伝情報の継承と発現を担う高分子生体物質である。",
+          "リボ核酸（RNA: Ribonucleic acid）は、リボースを糖成分とする核酸である。リボヌクレオチドが多数重合したもので、一本鎖をなし、アデニン、グアニン、シトシン、ウラシルの四種の塩基を含む。 一般にDNA（デオキシリボ核酸）を鋳"
+        ],
+        "hop23_ms": 1.2,
+        "stopped_eot": true,
+        "decode_sec": 2.19,
+        "chars_per_sec": 39.77,
+        "fluency_bpc": 7.4105
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "新規:文学",
+      "q": "『源氏物語』とはどのような作品ですか？",
+      "gate": false,
+      "answer": "『源氏物語』（げんじものがたり）は、平安時代中期に成立した日本の長編物語を書きを通して、恋愛の物語、小説』の作品である。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "源氏物語",
+          "作品"
+        ],
+        "agenda_heads": [
+          "源氏物語"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "『源氏物語』（げんじものがたり）は、平安時代中期に成立した日本の長編物語、小説。文献初出は1008年（寛弘五年）。作者の紫式部にとって生涯で唯一の物語作品である。主人公の光源氏を通して、恋愛、栄光と没落、政治的欲望と権力闘争など、平安時代の貴族社会を描いた。 下級貴族出身の紫式部は、20代後半で藤原宣孝と結婚し一女をもうけたが、結婚後3年ほどで夫と死別し、その現実を忘れるために物語を書き始めた。これが『源氏物語』の始まりともいわれる。当時、紙は貴重で、紙の提供者がいればその都度書き、仲間内で批評し合うなどして楽しんでいたが、その物語の評判から藤原道長が娘の中宮彰子の家庭教師として紫式部を呼んだ。"
+        ],
+        "agenda_preview": [
+          "『源氏物語』（げんじものがたり）は、平安時代中期に成立した日本の長編物語、小説。文献初出は1008年（寛弘五年）。作者の紫式部にとって生涯で唯一の物語作品である。主人公の光源氏を通して、恋愛、栄光と没落、政治的欲望と権力闘争など、平安時代の"
+        ],
+        "hop23_ms": 0.18,
+        "stopped_eot": true,
+        "decode_sec": 3.27,
+        "chars_per_sec": 18.34,
+        "fluency_bpc": 4.9318
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "新規:文学",
+      "q": "『源氏物語』とはどのような作品ですか？",
+      "gate": true,
+      "answer": "『源氏物語』（げんじものがたり）は、平安時代中期に成立した日本の長編物語、小説。文献初出は1008年（寛弘五年）。作者の紫式部にとって生涯で唯一の物語作品である。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "源氏物語",
+            "score": 0.8544285584156994,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [
+          235
+        ],
+        "slot_progress": [
+          [
+            235,
+            29,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "源氏物語",
+          "作品"
+        ],
+        "agenda_heads": [
+          "源氏物語"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "『源氏物語』（げんじものがたり）は、平安時代中期に成立した日本の長編物語、小説。文献初出は1008年（寛弘五年）。作者の紫式部にとって生涯で唯一の物語作品である。"
+        ],
+        "agenda_preview": [
+          "『源氏物語』（げんじものがたり）は、平安時代中期に成立した日本の長編物語、小説。文献初出は1008年（寛弘五年）。作者の紫式部にとって生涯で唯一の物語作品である。"
+        ],
+        "hop23_ms": 0.91,
+        "stopped_eot": true,
+        "decode_sec": 1.54,
+        "chars_per_sec": 52.64,
+        "fluency_bpc": 6.5045
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "新規:架空",
+      "q": "架空の都市「ルメリア星港842」の市長は誰ですか？",
+      "gate": false,
+      "answer": "架空の中世ファンタジー世界を舞台としたアクションRPGである。ゲームの流れとしては、大別して、ストーリーを進めるストーリーパートの間に、戦闘を行うアクションパートが入る形となっている。2周目以降に能力・アイテムの引継ぎが可能になっている。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "ルメリア星港842",
+          "架空",
+          "市長",
+          "都市"
+        ],
+        "agenda_heads": [
+          "架空",
+          "市長"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia",
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "架空の中世ファンタジー世界を舞台としたアクションRPGである。ゲームの流れとしては、大別して、ストーリーを進めるストーリーパートの間に、戦闘を行うアクションパートが入る形となっている。2周目以降に能力・アイテムの引継ぎが可能になっている。 アクションパートではクーノとマクルのコンビネーションにより二通りの攻撃が可能になっている。 クーノがナイフによる接近戦を行う。マクルは自動で支援をする。 マクルの魔法が自由に使用可能。遠距離攻撃を自在に撃てるようになるが接近戦攻撃が出来ない。 宮廷考古学者見習の主人公はある日、貴族でない主人公が取ってくるれば結婚が無くなるため幼馴染の王女ディアーネが結婚したくないために出された結婚条件、伝説の古代兵器『マクリウム』を取って来る事に協力させられる。",
+          "市長は、2011年6月からクリスティアン・シェーヌング (CDU) が務めている。彼は、2011年3月27日の選挙で 60.9 % の票を獲得して、当選した。"
+        ],
+        "agenda_preview": [
+          "架空の中世ファンタジー世界を舞台としたアクションRPGである。ゲームの流れとしては、大別して、ストーリーを進めるストーリーパートの間に、戦闘を行うアクションパートが入る形となっている。2周目以降に能力・アイテムの引継ぎが可能になっている。 ",
+          "市長は、2011年6月からクリスティアン・シェーヌング (CDU) が務めている。彼は、2011年3月27日の選挙で 60.9 % の票を獲得して、当選した。"
+        ],
+        "hop23_ms": 0.4,
+        "stopped_eot": true,
+        "decode_sec": 2.9,
+        "chars_per_sec": 41.02,
+        "fluency_bpc": 3.894
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "新規:架空",
+      "q": "架空の都市「ルメリア星港842」の市長は誰ですか？",
+      "gate": true,
+      "answer": "ルメリア星港842については情報がありません。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "市長",
+            "score": 0.0,
+            "active": false
+          },
+          {
+            "head": "都市",
+            "score": 0.0,
+            "active": false
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": true,
+        "abstain_reason": "gate_rejected",
+        "slot_targets": [
+          63
+        ],
+        "slot_progress": [
+          [
+            63,
+            8,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "ルメリア星港842",
+          "市長",
+          "都市"
+        ],
+        "agenda_heads": [
+          "epistemic_abstain"
+        ],
+        "agenda_sources": [
+          "epistemic:abstention"
+        ],
+        "agenda_passages": [
+          "ルメリア星港842については情報がありません。"
+        ],
+        "agenda_preview": [
+          "ルメリア星港842については情報がありません。"
+        ],
+        "hop23_ms": 1.2,
+        "stopped_eot": true,
+        "decode_sec": 0.52,
+        "chars_per_sec": 44.35,
+        "fluency_bpc": 3.2879
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "新規:欠落属性",
+      "q": "富士山の入場者数はどれくらいですか？",
+      "gate": false,
+      "answer": "富士山（ふじさん）は、静岡県（富士宮市、富士市、裾野市、御殿場市、駿東郡小山町）と山梨県（富士吉田市、南都留郡鳴沢村）に跨る活火山である。標高3776.12 m、日本最高峰（剣ヶ峰）の独立峰で、その優美な風貌は日本国外でも日本の象徴として広く知られている。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "富士山",
+          "入場者数"
+        ],
+        "agenda_heads": [
+          "富士山"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "富士山（ふじさん）は、静岡県（富士宮市、富士市、裾野市、御殿場市、駿東郡小山町）と山梨県（富士吉田市、南都留郡鳴沢村）に跨る活火山である。標高3776.12 m、日本最高峰（剣ヶ峰）の独立峰で、その優美な風貌は日本国外でも日本の象徴として広く知られている。 数多くの芸術作品の題材とされ芸術面のみならず、気候や地層など地質学的にも社会に大きな影響を与えている。懸垂曲線の山容を有した玄武岩質成層火山で構成され、その山体は駿河湾の海岸まで及ぶ。 古来霊峰とされ、特に山頂部は浅間大神が鎮座するとされたため、神聖視された。噴火を沈静化するため律令国家により浅間神社が祭祀され、浅間信仰が確立された。"
+        ],
+        "agenda_preview": [
+          "富士山（ふじさん）は、静岡県（富士宮市、富士市、裾野市、御殿場市、駿東郡小山町）と山梨県（富士吉田市、南都留郡鳴沢村）に跨る活火山である。標高3776.12 m、日本最高峰（剣ヶ峰）の独立峰で、その優美な風貌は日本国外でも日本の象徴として広"
+        ],
+        "hop23_ms": 0.16,
+        "stopped_eot": true,
+        "decode_sec": 3.75,
+        "chars_per_sec": 34.13,
+        "fluency_bpc": 7.8141
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "新規:欠落属性",
+      "q": "富士山の入場者数はどれくらいですか？",
+      "gate": true,
+      "answer": "富士山の入場者数については情報がありません。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [
+          {
+            "head": "富士山",
+            "score": 0.5599464090869173,
+            "active": true
+          }
+        ],
+        "carried": [],
+        "epistemic_abstain": true,
+        "abstain_reason": "attribute_missing:入場者数",
+        "slot_targets": [
+          66
+        ],
+        "slot_progress": [
+          [
+            66,
+            5,
+            true
+          ]
+        ],
+        "intent_mode": "FACT_SINGLE",
+        "want_hip": true,
+        "entities": [
+          "富士山"
+        ],
+        "agenda_heads": [
+          "epistemic_abstain"
+        ],
+        "agenda_sources": [
+          "epistemic:abstention"
+        ],
+        "agenda_passages": [
+          "富士山の入場者数については情報がありません。"
+        ],
+        "agenda_preview": [
+          "富士山の入場者数については情報がありません。"
+        ],
+        "hop23_ms": 0.73,
+        "stopped_eot": true,
+        "decode_sec": 0.51,
+        "chars_per_sec": 43.16,
+        "fluency_bpc": 1.9713
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "新規:挨拶",
+      "q": "おはようございます！元気ですか？",
+      "gate": false,
+      "answer": "元気をだそう!（げんきをだそう!）とは、2011年3月31日から同年4月27日頃にかけてテレビ東京系列（TXN）で放送していたクロスプログラム及びスポットCMの名称。",
+      "valid": true,
+      "info": {
+        "tau_turn": null,
+        "use_memory_gate": false,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "ようござ",
+          "元気"
+        ],
+        "agenda_heads": [
+          "元気"
+        ],
+        "agenda_sources": [
+          "lead:wikipedia"
+        ],
+        "agenda_passages": [
+          "元気をだそう!（げんきをだそう!）とは、2011年3月31日から同年4月27日頃にかけてテレビ東京系列（TXN）で放送していたクロスプログラム及びスポットCMの名称。"
+        ],
+        "agenda_preview": [
+          "元気をだそう!（げんきをだそう!）とは、2011年3月31日から同年4月27日頃にかけてテレビ東京系列（TXN）で放送していたクロスプログラム及びスポットCMの名称。"
+        ],
+        "hop23_ms": 0.14,
+        "stopped_eot": true,
+        "decode_sec": 1.65,
+        "chars_per_sec": 50.43,
+        "fluency_bpc": 6.2069
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    },
+    {
+      "evid_full": 0,
+      "tag": "新規:挨拶",
+      "q": "おはようございます！元気ですか？",
+      "gate": true,
+      "answer": "はい、そうです。",
+      "valid": true,
+      "info": {
+        "tau_turn": 0.30999999999999994,
+        "use_memory_gate": true,
+        "gate_decisions": [],
+        "carried": [],
+        "epistemic_abstain": false,
+        "abstain_reason": null,
+        "slot_targets": [],
+        "slot_progress": [],
+        "intent_mode": "SOCIAL",
+        "want_hip": false,
+        "entities": [],
+        "agenda_heads": [],
+        "agenda_sources": [],
+        "agenda_passages": [],
+        "agenda_preview": [],
+        "hop23_ms": 0.0,
+        "stopped_eot": true,
+        "decode_sec": 0.4,
+        "chars_per_sec": 19.82,
+        "fluency_bpc": 1.8198
+      },
+      "evid": 0,
+      "ans": 0,
+      "gold": []
+    }
+  ],
+  "peak_rss_kib": 17483672,
+  "peak_cuda_bytes": 7678924800,
+  "peak_rss_mib": 17073.8984375,
+  "peak_cuda_mib": 7323.193359375
+}

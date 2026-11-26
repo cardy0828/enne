@@ -1,0 +1,414 @@
+{
+  "mean_fluency_bpc_v31": 3.0773,
+  "mean_decode_sec_v31": 27.83,
+  "prompts": {
+    "Wikipedia歴史": {
+      "prompt": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて",
+      "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけての第二次世界大戦中で、王家の谷の警備が厳しくない時に行われたとされる。その後、第二次世界大戦では、ヨーロッパの戦場で活動しました。1939年 - 第二次世界大戦：ドイツに対するイギリス空軍の攻撃が開始。",
+      "valid": true,
+      "info": {
+        "decode_sec": 22.95,
+        "plan_ms": 77.2,
+        "fluency_bpc": 3.4192,
+        "goals_woven": 3,
+        "steps": [
+          {
+            "kind": "overlap_splice",
+            "source": "ep_wikipedia_mega",
+            "bpc": 4.595,
+            "added": "の第二次世界大戦中で、王家の谷の警備が厳しくない時に行われたとされる。"
+          },
+          {
+            "kind": "speculative_clause",
+            "source": "ep_easy_ja",
+            "hop": 1,
+            "bridge": "その後、",
+            "bpc": 2.2582,
+            "added": "その後、第二次世界大戦では、ヨーロッパの戦場で活動しました。"
+          },
+          {
+            "kind": "speculative_clause",
+            "source": "ep_wikipedia_mega",
+            "hop": 1,
+            "bridge": "",
+            "bpc": 3.2304,
+            "added": "1939年 - 第二次世界大戦：ドイツに対するイギリス空軍の攻撃が開始。"
+          }
+        ]
+      }
+    },
+    "青空文庫文学": {
+      "prompt": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。",
+      "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。どこで生れたかとんと見当がつかぬ。どこで生れ、漱石は、いい格好をして口髭をひねりながら、「我輩は猫である、名前はまだ無い」と真面目な顔で書いています。しかし、どこで生まれたか、まったく分かりません。",
+      "valid": true,
+      "info": {
+        "decode_sec": 25.9,
+        "plan_ms": 102.7,
+        "fluency_bpc": 2.8504,
+        "goals_woven": 3,
+        "steps": [
+          {
+            "kind": "speculative_clause",
+            "source": "ep_wikipedia_mega",
+            "hop": 1,
+            "bridge": "",
+            "bpc": 1.1512,
+            "added": "どこで生れたかとんと見当がつかぬ。"
+          },
+          {
+            "kind": "speculative_clause",
+            "source": "ep_easy_ja",
+            "hop": 1,
+            "bridge": "どこで生れ、",
+            "bpc": 3.7051,
+            "added": "どこで生れ、漱石は、いい格好をして口髭をひねりながら、「我輩は猫である、名前はまだ無い」と真面目な顔で書いています。"
+          },
+          {
+            "kind": "speculative_clause",
+            "source": "ep_easy_ja",
+            "hop": 1,
+            "bridge": "しかし、",
+            "bpc": 2.0358,
+            "added": "しかし、どこで生まれたか、まったく分かりません。"
+          }
+        ]
+      }
+    },
+    "東京・江戸": {
+      "prompt": "日本の東京は、江戸時代から続く歴史ある都市であり、",
+      "text": "日本の東京は、江戸時代から続く歴史ある都市であり、それらを組み合わせたものです。ここでは、江戸時代からの江戸相撲の歴史について書きます。このように、大会としての相撲が組織化されたのは、江戸時代の初めごろ（17世紀）だと言われています。このように、国立宮殿やメキシコシティ・メトロポリタン大聖堂（カテドラル）などスペイン統治時代から続く歴史ある建物も多い。",
+      "valid": true,
+      "info": {
+        "decode_sec": 33.99,
+        "plan_ms": 75.7,
+        "fluency_bpc": 3.2938,
+        "goals_woven": 3,
+        "steps": [
+          {
+            "kind": "cortex_close_prompt",
+            "source": "GPU_Cortex_Beam",
+            "bpc": 1.3725,
+            "added": "それらを組み合わせたものです。"
+          },
+          {
+            "kind": "speculative_clause",
+            "source": "ep_easy_ja",
+            "hop": 1,
+            "bridge": "",
+            "bpc": 3.0116,
+            "added": "ここでは、江戸時代からの江戸相撲の歴史について書きます。"
+          },
+          {
+            "kind": "speculative_clause",
+            "source": "ep_easy_ja",
+            "hop": 1,
+            "bridge": "このように、",
+            "bpc": 3.1807,
+            "added": "このように、大会としての相撲が組織化されたのは、江戸時代の初めごろ（17世紀）だと言われています。"
+          },
+          {
+            "kind": "speculative_clause",
+            "source": "ep_wikipedia_mega",
+            "hop": 1,
+            "bridge": "このように、",
+            "bpc": 4.0535,
+            "added": "このように、国立宮殿やメキシコシティ・メトロポリタン大聖堂（カテドラル）などスペイン統治時代から続く歴史ある建物も多い。"
+          }
+        ]
+      }
+    },
+    "ドイツ工業": {
+      "prompt": "ドイツの自動車産業とエンジン技術は世界的に知られており、",
+      "text": "ドイツの自動車産業とエンジン技術は世界的に知られており、それらを組み合わせたものです。これは、この研究所は、バイオセーフティーレベル4の高度な設備を持っていて、世界的に知られています。これは、1948年から1991年までの43年間は、東ドイツの自動車産業の歴史の一部です。これらは、自動車産業という同じ産業の中での貿易です。",
+      "valid": true,
+      "info": {
+        "decode_sec": 26.49,
+        "plan_ms": 73.0,
+        "fluency_bpc": 2.8792,
+        "goals_woven": 3,
+        "steps": [
+          {
+            "kind": "cortex_close_prompt",
+            "source": "GPU_Cortex_Beam",
+            "bpc": 1.2045,
+            "added": "それらを組み合わせたものです。"
+          },
+          {
+            "kind": "speculative_clause",
+            "source": "ep_easy_ja",
+            "hop": 1,
+            "bridge": "これは、",
+            "bpc": 2.93,
+            "added": "これは、この研究所は、バイオセーフティーレベル4の高度な設備を持っていて、世界的に知られています。"
+          },
+          {
+            "kind": "speculative_clause",
+            "source": "ep_easy_ja",
+            "hop": 1,
+            "bridge": "これは、",
+            "bpc": 3.1658,
+            "added": "これは、1948年から1991年までの43年間は、東ドイツの自動車産業の歴史の一部です。"
+          },
+          {
+            "kind": "speculative_clause",
+            "source": "ep_easy_ja",
+            "hop": 1,
+            "bridge": "",
+            "bpc": 3.3587,
+            "added": "これらは、自動車産業という同じ産業の中での貿易です。"
+          }
+        ]
+      }
+    },
+    "新幹線・鉄道": {
+      "prompt": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、",
+      "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、それらを組み合わせたものです。3月22日：北海道新幹線が開通して、地上の設備を切り替えたため、次のように変更しました。そして、ちょうど日本で東海道新幹線がとても成功していました。彼女は、走り始めたときから、東海道新幹線に乗り換えて東京と九州を結ぶ仕組みになっていました。",
+      "valid": true,
+      "info": {
+        "decode_sec": 30.43,
+        "plan_ms": 83.1,
+        "fluency_bpc": 2.8763,
+        "goals_woven": 3,
+        "steps": [
+          {
+            "kind": "cortex_close_prompt",
+            "source": "GPU_Cortex_Beam",
+            "bpc": 1.4178,
+            "added": "それらを組み合わせたものです。"
+          },
+          {
+            "kind": "speculative_clause",
+            "source": "ep_easy_ja",
+            "hop": 1,
+            "bridge": "",
+            "bpc": 3.0402,
+            "added": "3月22日：北海道新幹線が開通して、地上の設備を切り替えたため、次のように変更しました。"
+          },
+          {
+            "kind": "speculative_clause",
+            "source": "ep_easy_ja",
+            "hop": 1,
+            "bridge": "そして、",
+            "bpc": 3.4442,
+            "added": "そして、ちょうど日本で東海道新幹線がとても成功していました。"
+          },
+          {
+            "kind": "speculative_clause",
+            "source": "ep_easy_ja",
+            "hop": 1,
+            "bridge": "彼女は、",
+            "bpc": 2.7945,
+            "added": "彼女は、走り始めたときから、東海道新幹線に乗り換えて東京と九州を結ぶ仕組みになっていました。"
+          }
+        ]
+      }
+    },
+    "量子重力": {
+      "prompt": "量子力学と一般相対性理論を統合する量子重力理論は、",
+      "text": "量子力学と一般相対性理論を統合する量子重力理論は、少年時代を過ごしました。その後、量子論は一般相対性理論と同様に物理学の基本的な理論の1つであると考えられている。一般相対性理論と量子力学を結びつけた量子重力論を提示している。一般相対性理論と量子力学の折り合いをつけた理論（量子重力理論）を構築することは、物理学者を悩ませていた大問題であった。",
+      "valid": true,
+      "info": {
+        "decode_sec": 27.24,
+        "plan_ms": 80.0,
+        "fluency_bpc": 3.1451,
+        "goals_woven": 3,
+        "steps": [
+          {
+            "kind": "cortex_close_prompt",
+            "source": "GPU_Cortex_Beam",
+            "bpc": 1.6899,
+            "added": "少年時代を過ごしました。"
+          },
+          {
+            "kind": "speculative_clause",
+            "source": "ep_wikipedia_mega",
+            "hop": 1,
+            "bridge": "その後、",
+            "bpc": 3.0002,
+            "added": "その後、量子論は一般相対性理論と同様に物理学の基本的な理論の1つであると考えられている。"
+          },
+          {
+            "kind": "speculative_clause",
+            "source": "ep_wikipedia_mega",
+            "hop": 1,
+            "bridge": "",
+            "bpc": 3.2509,
+            "added": "一般相対性理論と量子力学を結びつけた量子重力論を提示している。"
+          },
+          {
+            "kind": "speculative_clause",
+            "source": "ep_wikipedia_mega",
+            "hop": 1,
+            "bridge": "",
+            "bpc": 3.4264,
+            "added": "一般相対性理論と量子力学の折り合いをつけた理論（量子重力理論）を構築することは、物理学者を悩ませていた大問題であった。"
+          }
+        ]
+      }
+    }
+  },
+  "custom": {
+    "direct": {
+      "mounted": {
+        "text": "量子重力エンジン「アストラX-99」は2042年に仙台市青葉区の地下研究所で完成した超光速推進機関である。もっとも、黒木ミライ博士のチームは翌2043年に国際宇宙工学大賞を受賞し、仙台市は次世代宇宙開発の拠点となった。これは、開発責任者の黒木ミライ博士は、重力子結晶コイルの臨界温度をマイナス269度から常温の24度まで引き上げることに成功した。",
+        "info": {
+          "decode_sec": 22.76,
+          "plan_ms": 86.3,
+          "fluency_bpc": 5.256,
+          "goals_woven": 3,
+          "steps": [
+            {
+              "kind": "overlap_splice",
+              "source": "ep_custom_astra_x99",
+              "bpc": 5.1844,
+              "added": "2042年に仙台市青葉区の地下研究所で完成した超光速推進機関である。"
+            },
+            {
+              "kind": "speculative_clause",
+              "source": "ep_custom_astra_x99",
+              "hop": 1,
+              "bridge": "もっとも、",
+              "bpc": 5.2839,
+              "added": "もっとも、黒木ミライ博士のチームは翌2043年に国際宇宙工学大賞を受賞し、仙台市は次世代宇宙開発の拠点となった。"
+            },
+            {
+              "kind": "speculative_clause",
+              "source": "ep_custom_astra_x99",
+              "hop": 1,
+              "bridge": "これは、",
+              "bpc": 5.2934,
+              "added": "これは、開発責任者の黒木ミライ博士は、重力子結晶コイルの臨界温度をマイナス269度から常温の24度まで引き上げることに成功した。"
+            }
+          ]
+        }
+      },
+      "unmounted": {
+        "text": "量子重力エンジン「アストラX-99」は古代ギリシア語で書かれています。これらは、探検がかんたんにできるようになったのは、もちろん原子力エンジンが完成したからです。そのため、近年では、量子力学と一般相対性理論の結合、重力の量子化が試みられ、量子重力と呼ばれている。ショーン・キャロル（en）は、量子重力の問題に取り組んでいる多くの物理学者は意識していないが暗黙のうちに多世界理論を使っていると述べている。",
+        "info": {
+          "decode_sec": 36.86,
+          "plan_ms": 83.0,
+          "fluency_bpc": 3.5328,
+          "goals_woven": 3,
+          "steps": [
+            {
+              "kind": "cortex_close_prompt",
+              "source": "GPU_Cortex_Beam",
+              "bpc": 1.5866,
+              "added": "古代ギリシア語で書かれています。"
+            },
+            {
+              "kind": "speculative_clause",
+              "source": "ep_easy_ja",
+              "hop": 1,
+              "bridge": "これらは、",
+              "bpc": 3.4318,
+              "added": "これらは、探検がかんたんにできるようになったのは、もちろん原子力エンジンが完成したからです。"
+            },
+            {
+              "kind": "speculative_clause",
+              "source": "ep_wikipedia_mega",
+              "hop": 1,
+              "bridge": "そのため、",
+              "bpc": 3.721,
+              "added": "そのため、近年では、量子力学と一般相対性理論の結合、重力の量子化が試みられ、量子重力と呼ばれている。"
+            },
+            {
+              "kind": "speculative_clause",
+              "source": "ep_wikipedia_mega",
+              "hop": 1,
+              "bridge": "",
+              "bpc": 3.9289,
+              "added": "ショーン・キャロル（en）は、量子重力の問題に取り組んでいる多くの物理学者は意識していないが暗黙のうちに多世界理論を使っていると述べている。"
+            }
+          ]
+        }
+      }
+    },
+    "indirect_paraphrase": {
+      "mounted": {
+        "text": "黒木ミライ博士が開発した超光速推進機関について、自分の考え方を取り入れている。一方、量子重力エンジン「アストラX-99」は2042年に仙台市青葉区の地下研究所で完成した超光速推進機関である。アメリカで、黒木ミライ博士のチームは翌2043年に国際宇宙工学大賞を受賞し、仙台市は次世代宇宙開発の拠点となった。アメリカで、開発責任者の黒木ミライ博士は、重力子結晶コイルの臨界温度をマイナス269度から常温の24度まで引き上げることに成功した。",
+        "info": {
+          "decode_sec": 32.24,
+          "plan_ms": 63.2,
+          "fluency_bpc": 4.7698,
+          "goals_woven": 3,
+          "steps": [
+            {
+              "kind": "cortex_close_prompt",
+              "source": "GPU_Cortex_Beam",
+              "bpc": 1.6259,
+              "added": "自分の考え方を取り入れている。"
+            },
+            {
+              "kind": "speculative_clause",
+              "source": "ep_custom_astra_x99",
+              "hop": 1,
+              "bridge": "一方、",
+              "bpc": 4.953,
+              "added": "一方、量子重力エンジン「アストラX-99」は2042年に仙台市青葉区の地下研究所で完成した超光速推進機関である。"
+            },
+            {
+              "kind": "speculative_clause",
+              "source": "ep_custom_astra_x99",
+              "hop": 1,
+              "bridge": "アメリカで、",
+              "bpc": 4.9338,
+              "added": "アメリカで、黒木ミライ博士のチームは翌2043年に国際宇宙工学大賞を受賞し、仙台市は次世代宇宙開発の拠点となった。"
+            },
+            {
+              "kind": "speculative_clause",
+              "source": "ep_custom_astra_x99",
+              "hop": 1,
+              "bridge": "アメリカで、",
+              "bpc": 5.1734,
+              "added": "アメリカで、開発責任者の黒木ミライ博士は、重力子結晶コイルの臨界温度をマイナス269度から常温の24度まで引き上げることに成功した。"
+            }
+          ]
+        }
+      },
+      "unmounted": {
+        "text": "黒木ミライ博士が開発した超光速推進機関について、自分の考え方を取り入れている。操縦は陽以外には出来ないように設定されているが、第2話における村野博士の発言によれば、それを変更することは造作もないことだという。これは、1号機との最大の違いは使用されている合金にあり、2号機には村野博士が開発した超合金バロニウムが用いられている。これは、精神的交通機関についてもやはり同様で、皆無か具足か、どちらかを選ぶことにしなければ面倒は絶えない。",
+        "info": {
+          "decode_sec": 33.8,
+          "plan_ms": 66.8,
+          "fluency_bpc": 4.1331,
+          "goals_woven": 3,
+          "steps": [
+            {
+              "kind": "cortex_close_prompt",
+              "source": "GPU_Cortex_Beam",
+              "bpc": 1.6259,
+              "added": "自分の考え方を取り入れている。"
+            },
+            {
+              "kind": "speculative_clause",
+              "source": "ep_wikipedia_mega",
+              "hop": 1,
+              "bridge": "",
+              "bpc": 4.0246,
+              "added": "操縦は陽以外には出来ないように設定されているが、第2話における村野博士の発言によれば、それを変更することは造作もないことだという。"
+            },
+            {
+              "kind": "speculative_clause",
+              "source": "ep_wikipedia_mega",
+              "hop": 1,
+              "bridge": "これは、",
+              "bpc": 4.4238,
+              "added": "これは、1号機との最大の違いは使用されている合金にあり、2号機には村野博士が開発した超合金バロニウムが用いられている。"
+            },
+            {
+              "kind": "speculative_clause",
+              "source": "ep_aozora",
+              "hop": 1,
+              "bridge": "これは、",
+              "bpc": 4.5739,
+              "added": "これは、精神的交通機関についてもやはり同様で、皆無か具足か、どちらかを選ぶことにしなければ面倒は絶えない。"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "peak_vram_mb": 7323.2,
+  "total_sec": 362.4
+}

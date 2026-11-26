@@ -1,0 +1,458 @@
+{
+  "ep_stats": {
+    "ep_easy_ja": {
+      "episodes": 423440,
+      "postings": 35972474,
+      "build_sec": 3.75
+    },
+    "ep_aozora": {
+      "episodes": 450526,
+      "postings": 34915919,
+      "build_sec": 3.85
+    },
+    "ep_wikipedia": {
+      "episodes": 820359,
+      "postings": 86058861,
+      "build_sec": 7.8
+    }
+  },
+  "total_episodes": 1694325,
+  "ablation_unseen_passages": {
+    "bare_core": {
+      "easy_ja": {
+        "bpb": 1.4841,
+        "bpc_lossless": 4.3096,
+        "ppl": 19.83,
+        "byte_top1": 0.7029,
+        "byte_top5": 0.9237,
+        "ep_recall_rate": 0.0,
+        "ep_step_hit_rate": 0.0
+      },
+      "aozora": {
+        "bpb": 1.7443,
+        "bpc_lossless": 5.1879,
+        "ppl": 36.45,
+        "byte_top1": 0.6422,
+        "byte_top5": 0.9074,
+        "ep_recall_rate": 0.0,
+        "ep_step_hit_rate": 0.0
+      },
+      "wikipedia": {
+        "bpb": 1.6684,
+        "bpc_lossless": 4.4729,
+        "ppl": 22.21,
+        "byte_top1": 0.6641,
+        "byte_top5": 0.9111,
+        "ep_recall_rate": 0.0,
+        "ep_step_hit_rate": 0.0
+      }
+    },
+    "v20_byte_engram": {
+      "easy_ja": {
+        "bpb": 1.4624,
+        "bpc_lossless": 4.2464,
+        "ppl": 18.98,
+        "byte_top1": 0.7088,
+        "byte_top5": 0.9249,
+        "ep_recall_rate": 0.0,
+        "ep_step_hit_rate": 0.0
+      },
+      "aozora": {
+        "bpb": 1.7326,
+        "bpc_lossless": 5.1529,
+        "ppl": 35.58,
+        "byte_top1": 0.648,
+        "byte_top5": 0.9078,
+        "ep_recall_rate": 0.0,
+        "ep_step_hit_rate": 0.0
+      },
+      "wikipedia": {
+        "bpb": 1.6422,
+        "bpc_lossless": 4.4027,
+        "ppl": 21.15,
+        "byte_top1": 0.6738,
+        "byte_top5": 0.9123,
+        "ep_recall_rate": 0.0,
+        "ep_step_hit_rate": 0.0
+      }
+    },
+    "v21_byte_plus_episodic": {
+      "easy_ja": {
+        "bpb": 1.4491,
+        "bpc_lossless": 4.2079,
+        "ppl": 18.48,
+        "byte_top1": 0.7126,
+        "byte_top5": 0.9262,
+        "ep_recall_rate": 1.0,
+        "ep_step_hit_rate": 0.3793
+      },
+      "aozora": {
+        "bpb": 1.7254,
+        "bpc_lossless": 5.1317,
+        "ppl": 35.06,
+        "byte_top1": 0.6509,
+        "byte_top5": 0.9087,
+        "ep_recall_rate": 1.0,
+        "ep_step_hit_rate": 0.3151
+      },
+      "wikipedia": {
+        "bpb": 1.6412,
+        "bpc_lossless": 4.4,
+        "ppl": 21.11,
+        "byte_top1": 0.6744,
+        "byte_top5": 0.9124,
+        "ep_recall_rate": 1.0,
+        "ep_step_hit_rate": 0.2579
+      }
+    }
+  },
+  "topic_retention": {
+    "v20": 0,
+    "v21": 0
+  },
+  "generations": {
+    "Wikipedia歴史": {
+      "prompt": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて",
+      "v20": {
+        "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて、その口からアウグストゥスが初めて有効性を高めるために、大学に入りましたが、これらの仕事について、それを拾って、お目にかかります。そのため、",
+        "valid": true,
+        "topic_hits": []
+      },
+      "v21": {
+        "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて、本当にいたいと思っています。\n主になりました。「お前さんは、この時期には、大阪府大阪市区町村制が始まったころには国境細かいところを見ると、�",
+        "valid": true,
+        "topic_hits": [],
+        "info": {
+          "recall_us": 22184.6,
+          "recalled": [
+            {
+              "source": "ep_wikipedia",
+              "score": 1751.8,
+              "snippet": "第一次世界大戦（だいいちじせかいたいせん、略称："
+            },
+            {
+              "source": "ep_wikipedia",
+              "score": 1195.2,
+              "snippet": " フー・ファイター 第二次世界大戦中の1939年から1945"
+            },
+            {
+              "source": "ep_easy_ja",
+              "score": 1159.3,
+              "snippet": "ソーンさんの「太平洋戦争」についての考え方 第二"
+            }
+          ],
+          "active_entities": [
+            "：WWI",
+            "ら191",
+            "14年7",
+            "界規",
+            "央同",
+            "じせ",
+            "ちじ",
+            "び目",
+            "WWI）",
+            "認飛"
+          ],
+          "gen_entity_hits": [],
+          "num_gen_entity_hits": 0
+        }
+      }
+    },
+    "青空文庫文学": {
+      "prompt": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。",
+      "v20": {
+        "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。たまにはまだ生きているときに、とても大切にされたのである。彼は木曾福島の平和を守るために、これらの性質を利用して、みんなに年をとっていたが、",
+        "valid": true,
+        "topic_hits": []
+      },
+      "v21": {
+        "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。ためられている。同時に、彼女は又いだろう。私も同じことを話しました。\n「あれは、どこで生れたかとも考えられる。\nまた、一部のキャッシュカードを�",
+        "valid": true,
+        "topic_hits": [],
+        "info": {
+          "recall_us": 20510.8,
+          "recalled": [
+            {
+              "source": "ep_wikipedia",
+              "score": 4691.7,
+              "snippet": " 概要 「吾輩は猫である。名前はまだ無い。どこで生"
+            },
+            {
+              "source": "ep_wikipedia",
+              "score": 1873.1,
+              "snippet": " 小説 『贋作吾輩は猫である』（内田百閒、1949年） - "
+            },
+            {
+              "source": "ep_aozora",
+              "score": 1118.2,
+              "snippet": "もともと芸術家ってのは厚顔無恥の気障ったらしいも"
+            }
+          ],
+          "active_entities": [
+            "顔無",
+            "厚顔",
+            "野苦",
+            "真顔",
+            "閒、",
+            "『贋",
+            "作吾",
+            "障っ",
+            "輩は",
+            "珍野"
+          ],
+          "gen_entity_hits": [
+            "生れ"
+          ],
+          "num_gen_entity_hits": 1
+        }
+      }
+    },
+    "東京・江戸": {
+      "prompt": "日本の東京は、江戸時代から続く歴史ある都市であり、",
+      "v20": {
+        "text": "日本の東京は、江戸時代から続く歴史ある都市であり、それを取り出したものであり、その後を追いまわして、そのまま捨てられていたが、現在は一緒の主な活動を行っている。\n\n日本の法律では、江戸時代から�",
+        "valid": true,
+        "topic_hits": []
+      },
+      "v21": {
+        "text": "日本の東京は、江戸時代から続く歴史ある都市であり、その後も多少女時代から続く死んだと思っている。\n2006年（平成18年）10月1日：東海道本線）の中にある、東日本旅客鉄道（JR北海道）が第一次世界大戦のあ",
+        "valid": true,
+        "topic_hits": [],
+        "info": {
+          "recall_us": 17527.7,
+          "recalled": [
+            {
+              "source": "ep_wikipedia",
+              "score": 1308.8,
+              "snippet": "毎年、3月27日から28日の二日間、千葉県旭市の鎌数伊"
+            },
+            {
+              "source": "ep_wikipedia",
+              "score": 1287.4,
+              "snippet": "マルクスが生まれたトリーアは古代から続く歴史ある"
+            },
+            {
+              "source": "ep_easy_ja",
+              "score": 931.2,
+              "snippet": "登場人物  仙臺屋（せんだいや）は、岩手県遠野市に"
+            }
+          ],
+          "active_entities": [
+            "仙臺",
+            "数伊",
+            "臺屋",
+            "県旭",
+            "勢大",
+            "旭市",
+            "宝歴",
+            "756年",
+            "命戦",
+            "子店"
+          ],
+          "gen_entity_hits": [],
+          "num_gen_entity_hits": 0
+        }
+      }
+    },
+    "ドイツ工業": {
+      "prompt": "ドイツの自動車産業とエンジン技術は世界的に知られており、",
+      "v20": {
+        "text": "ドイツの自動車産業とエンジン技術は世界的に知られており、それらを含むす子が後ろにある小学校の先生の説明できるようになり、その後も発売された。\n\nスタジアムの特徴から、お父さんやりしているが、大変なこ�",
+        "valid": true,
+        "topic_hits": []
+      },
+      "v21": {
+        "text": "ドイツの自動車産業とエンジン技術は世界的に知られており、それらを組み合わせたものです。\n約数の和が壊れることもあるが、これらの問題を参照のこと）。\n\n国際線があります。\nアシタカが対象になりましたよ。�",
+        "valid": true,
+        "topic_hits": [],
+        "info": {
+          "recall_us": 19392.8,
+          "recalled": [
+            {
+              "source": "ep_easy_ja",
+              "score": 1463.3,
+              "snippet": "1948年から1991年までの43年間は、東ドイツの自動車産"
+            },
+            {
+              "source": "ep_easy_ja",
+              "score": 815.6,
+              "snippet": "系譜 エンジン型式一覧の自動車用エンジンの系譜を"
+            },
+            {
+              "source": "ep_aozora",
+              "score": 785.7,
+              "snippet": "◇  滝泉寺には比翼塚以外に有名の墓があるが、これ"
+            }
+          ],
+          "active_entities": [
+            "艶話",
+            "翼塚",
+            "滝泉",
+            "塚以",
+            "比翼",
+            "に喧",
+            "の艶",
+            "遊女",
+            "れ易",
+            "喧伝"
+          ],
+          "gen_entity_hits": [],
+          "num_gen_entity_hits": 0
+        }
+      }
+    },
+    "新幹線・鉄道": {
+      "prompt": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、",
+      "v20": {
+        "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、まるで夢中になりました。\n「うん、そうだろう。いや、それよりも、私は全部で体を同じように考えることもあります。\n分類\nアクションを作るために、ア",
+        "valid": true,
+        "topic_hits": []
+      },
+      "v21": {
+        "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、大切な役割を持っているから、広東省深味です。\n概要\n北海道新幹線は東京駅に姿を消した。\n\n記念日・年中行事\n二十四節気の状態を以下に示す。\n\n日本と�",
+        "valid": true,
+        "topic_hits": [],
+        "info": {
+          "recall_us": 18141.7,
+          "recalled": [
+            {
+              "source": "ep_easy_ja",
+              "score": 1180.3,
+              "snippet": " 廈深線は、中華人民共和国福建省アモイ市のアモイ"
+            },
+            {
+              "source": "ep_wikipedia",
+              "score": 1164.0,
+              "snippet": " 新幹線と商用周波数 東海道新幹線と北陸新幹線は、2"
+            },
+            {
+              "source": "ep_wikipedia",
+              "score": 1100.7,
+              "snippet": " さよなら東海道新幹線100系 2003年8月31日に東海道新幹"
+            }
+          ],
+          "active_entities": [
+            "廈深",
+            "西相",
+            "圳市",
+            "深線",
+            "数地",
+            "線100",
+            "省ア",
+            "深圳",
+            "イ北",
+            "国福"
+          ],
+          "gen_entity_hits": [
+            "省深"
+          ],
+          "num_gen_entity_hits": 1
+        }
+      }
+    }
+  },
+  "custom_indirect": {
+    "direct_prompt": {
+      "prompt": "量子重力エンジン「アストラX-99」は",
+      "mounted": "量子重力エンジン「アストラX-99」は上半身を起した。\nこの結果、アストライブに出ることになりました。\nこの地域の地下研究所で完成した超光速推進機関である。開発�",
+      "unmounted": "量子重力エンジン「アストラX-99」は古代ギリシアでは、重力の大きさは、本当にあるかを確かめることもあるが、実際にはその後にもわからない。しかし、この言葉は、",
+      "info": {
+        "recall_us": 16504.9,
+        "recalled": [
+          {
+            "source": "ep_custom_astra_x99",
+            "score": 29735.0,
+            "snippet": "量子重力エンジン「アストラX-99」は2042年に仙台市青"
+          },
+          {
+            "source": "ep_custom_astra_x99",
+            "score": 8085.7,
+            "snippet": "269度から常温の24度まで引き上げることに成功した。 "
+          },
+          {
+            "source": "ep_custom_astra_x99",
+            "score": 868.3,
+            "snippet": "黒木ミライ博士のチームは翌2043年に国際宇宙工学大"
+          }
+        ],
+        "active_entities": [
+          "エン",
+          "ンジ",
+          "スト",
+          "」は",
+          "の地",
+          "成し",
+          "した",
+          "であ",
+          "ある",
+          "者の"
+        ],
+        "gen_entity_hits": [
+          "スト",
+          "の地",
+          "成し",
+          "した",
+          "であ",
+          "ある",
+          "るこ",
+          "こと",
+          "とに",
+          "た。"
+        ],
+        "num_gen_entity_hits": 11
+      }
+    },
+    "indirect_paraphrase": {
+      "prompt": "黒木ミライ博士が開発した超光速推進機関について、",
+      "mounted": "黒木ミライ博士が開発した超光速推進機関について、考えることにした。\nこの結果、アストラインカの地下研究所で完成した超光速推進機関である。開発責任者の黒木ミライブラリは、�",
+      "unmounted": "黒木ミライ博士が開発した超光速推進機関について、一番古い建物が古くなったり、自分を大切にした赤・青・黄・終着したりして、それを自分の子供を教えることは出来ない。そのため",
+      "info": {
+        "recall_us": 17622.8,
+        "recalled": [
+          {
+            "source": "ep_custom_astra_x99",
+            "score": 27899.0,
+            "snippet": "量子重力エンジン「アストラX-99」は2042年に仙台市青"
+          },
+          {
+            "source": "ep_custom_astra_x99",
+            "score": 15224.0,
+            "snippet": "黒木ミライ博士のチームは翌2043年に国際宇宙工学大"
+          },
+          {
+            "source": "ep_custom_astra_x99",
+            "score": 3756.7,
+            "snippet": "269度から常温の24度まで引き上げることに成功した。 "
+          }
+        ],
+        "active_entities": [
+          "した",
+          "て、",
+          "エン",
+          "ンジ",
+          "スト",
+          "」は",
+          "の地",
+          "成し",
+          "であ",
+          "ある"
+        ],
+        "gen_entity_hits": [
+          "した",
+          "スト",
+          "の地",
+          "成し",
+          "であ",
+          "ある",
+          "者の",
+          "は、",
+          "た。",
+          "るこ"
+        ],
+        "num_gen_entity_hits": 10
+      }
+    }
+  },
+  "peak_vram_mb": 4426.0,
+  "total_sec": 287.0
+}

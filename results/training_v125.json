@@ -1,0 +1,739 @@
+{
+  "start": 0,
+  "born": 33,
+  "alive": 23,
+  "pruned": 10,
+  "split": 58117,
+  "dev": 200,
+  "nodes": [
+    {
+      "id": 0,
+      "train": 453,
+      "dev": 21,
+      "counts": [
+        290,
+        161,
+        2
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.37866662495499287,
+        "j_sem": 0.27477422168080473,
+        "j_prag": 0.03367897148090642,
+        "j_canon": 0.054218612855041835,
+        "cross_slot": 0.467565279717139,
+        "disagreement": 0.025244078486158388,
+        "min_vote": 0.035513309183202224
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "GROUNDED"
+    },
+    {
+      "id": 1,
+      "train": 54,
+      "dev": 1,
+      "counts": [
+        0,
+        4,
+        50
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.5,
+        "j_sem": 0.5,
+        "j_prag": 0.1,
+        "j_canon": 0.3,
+        "cross_slot": 1.0,
+        "disagreement": -0.1,
+        "min_vote": 0.2
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "SOCIAL"
+    },
+    {
+      "id": 2,
+      "train": 885,
+      "dev": 14,
+      "counts": [
+        2,
+        883,
+        0
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.09686776463851107,
+        "j_sem": 0.03741019474266799,
+        "j_prag": 0.036378587171669544,
+        "j_canon": 0.07468623207329296,
+        "cross_slot": 0.6933482563598338,
+        "disagreement": -0.03478378430559293,
+        "min_vote": -0.08540588279823835
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 3,
+      "train": 269,
+      "dev": 10,
+      "counts": [
+        142,
+        127,
+        0
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.9673956350905829,
+        "j_sem": 0.2927488118153218,
+        "j_prag": -0.05641913854242864,
+        "j_canon": 0.13319679541092785,
+        "cross_slot": 0.9989606683472396,
+        "disagreement": -0.052425225174641314,
+        "min_vote": 0.06224019155546382
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "GROUNDED"
+    },
+    {
+      "id": 4,
+      "train": 615,
+      "dev": 23,
+      "counts": [
+        593,
+        11,
+        11
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.2914258620693501,
+        "j_sem": 0.3917123592520005,
+        "j_prag": 0.010056577274766155,
+        "j_canon": 0.36487870980637616,
+        "cross_slot": 0.9813741502278522,
+        "disagreement": -0.07606492002240661,
+        "min_vote": 0.26633893876756143
+      },
+      "dominant_judge": "j_sem",
+      "dominant_mode": "GROUNDED"
+    },
+    {
+      "id": 5,
+      "train": 468,
+      "dev": 0,
+      "counts": [
+        0,
+        468,
+        0
+      ],
+      "survives": false,
+      "weights": {
+        "j_lex": 0.39508528914866153,
+        "j_sem": 0.19058223822689233,
+        "j_prag": 0.023830591642993473,
+        "j_canon": 0.17356874716808982,
+        "cross_slot": 1.0,
+        "disagreement": -0.13995541667289493,
+        "min_vote": 0.12617457931390258
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 6,
+      "train": 453,
+      "dev": 35,
+      "counts": [
+        0,
+        452,
+        1
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.5,
+        "j_sem": 0.5,
+        "j_prag": 0.1,
+        "j_canon": 0.3,
+        "cross_slot": 1.0,
+        "disagreement": -0.1,
+        "min_vote": 0.2
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 7,
+      "train": 381,
+      "dev": 10,
+      "counts": [
+        0,
+        356,
+        25
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.5,
+        "j_sem": 0.5,
+        "j_prag": 0.1,
+        "j_canon": 0.3,
+        "cross_slot": 1.0,
+        "disagreement": -0.1,
+        "min_vote": 0.2
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 8,
+      "train": 50,
+      "dev": 2,
+      "counts": [
+        0,
+        50,
+        0
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.44242427352134084,
+        "j_sem": 0.4335137602792771,
+        "j_prag": 0.044239826923361605,
+        "j_canon": 0.22591248034745,
+        "cross_slot": 1.0,
+        "disagreement": -0.1346308602928873,
+        "min_vote": 0.15482847379394646
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 9,
+      "train": 190,
+      "dev": 10,
+      "counts": [
+        177,
+        12,
+        1
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.5576506962301597,
+        "j_sem": 0.3715496098804636,
+        "j_prag": -0.18740736254920967,
+        "j_canon": 0.3660816619698359,
+        "cross_slot": 0.9242826082310194,
+        "disagreement": -0.057388247601923605,
+        "min_vote": 0.15091447428498417
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "GROUNDED"
+    },
+    {
+      "id": 10,
+      "train": 175,
+      "dev": 0,
+      "counts": [
+        0,
+        175,
+        0
+      ],
+      "survives": false,
+      "weights": {
+        "j_lex": 0.2745837340475125,
+        "j_sem": 0.27345094244920026,
+        "j_prag": 0.028304239993832542,
+        "j_canon": 0.13369804521840417,
+        "cross_slot": 1.0,
+        "disagreement": -0.09354410634286661,
+        "min_vote": 0.02915185506000821
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 11,
+      "train": 12,
+      "dev": 1,
+      "counts": [
+        0,
+        12,
+        0
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.5,
+        "j_sem": 0.5,
+        "j_prag": 0.1,
+        "j_canon": 0.3,
+        "cross_slot": 1.0,
+        "disagreement": -0.1,
+        "min_vote": 0.2
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 12,
+      "train": 73,
+      "dev": 1,
+      "counts": [
+        0,
+        73,
+        0
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.28649354564511836,
+        "j_sem": 0.23502908947710593,
+        "j_prag": 0.021288188398281397,
+        "j_canon": 0.18223225064592102,
+        "cross_slot": 0.9385934730107571,
+        "disagreement": -0.06685531059032486,
+        "min_vote": 0.018189453623495593
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 13,
+      "train": 148,
+      "dev": 0,
+      "counts": [
+        0,
+        148,
+        0
+      ],
+      "survives": false,
+      "weights": {
+        "j_lex": 0.23357794497546971,
+        "j_sem": 0.23690488017588676,
+        "j_prag": 0.006454158661257417,
+        "j_canon": 0.1424094720603194,
+        "cross_slot": 0.9951080388968737,
+        "disagreement": -0.04711098956509922,
+        "min_vote": -0.00775228088864692
+      },
+      "dominant_judge": "j_sem",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 14,
+      "train": 81,
+      "dev": 6,
+      "counts": [
+        0,
+        79,
+        2
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.4984400262339933,
+        "j_sem": 0.49655050302278947,
+        "j_prag": 0.08742795558303523,
+        "j_canon": 0.29310296598704344,
+        "cross_slot": 1.0,
+        "disagreement": -0.1110120706509582,
+        "min_vote": 0.19844002623399346
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 15,
+      "train": 221,
+      "dev": 4,
+      "counts": [
+        0,
+        221,
+        0
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.16432807135438676,
+        "j_sem": 0.03210137947430947,
+        "j_prag": 0.028981439783269933,
+        "j_canon": 0.10325036208503573,
+        "cross_slot": 0.6811662863716665,
+        "disagreement": -0.053843107779165886,
+        "min_vote": -0.06447645059152025
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 16,
+      "train": 141,
+      "dev": 18,
+      "counts": [
+        130,
+        10,
+        1
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.7022072993265642,
+        "j_sem": 0.2469812498842235,
+        "j_prag": 0.026724611381677,
+        "j_canon": 0.39732472251480017,
+        "cross_slot": 0.5774191263305193,
+        "disagreement": -0.17405691605051005,
+        "min_vote": 0.0728679812842999
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "GROUNDED"
+    },
+    {
+      "id": 17,
+      "train": 49,
+      "dev": 3,
+      "counts": [
+        0,
+        43,
+        6
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.5,
+        "j_sem": 0.5,
+        "j_prag": 0.1,
+        "j_canon": 0.3,
+        "cross_slot": 1.0,
+        "disagreement": -0.1,
+        "min_vote": 0.2
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 18,
+      "train": 171,
+      "dev": 14,
+      "counts": [
+        0,
+        171,
+        0
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.12845168066795004,
+        "j_sem": 0.05937137962684043,
+        "j_prag": 0.02235192327911713,
+        "j_canon": 0.06531445360349829,
+        "cross_slot": 0.8359117207072169,
+        "disagreement": -0.06978958741391782,
+        "min_vote": -0.09649475424568978
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 19,
+      "train": 319,
+      "dev": 0,
+      "counts": [
+        0,
+        319,
+        0
+      ],
+      "survives": false,
+      "weights": {
+        "j_lex": 0.29194815850486533,
+        "j_sem": 0.20529677384168404,
+        "j_prag": 0.021869888974471875,
+        "j_canon": 0.15477043956914324,
+        "cross_slot": 1.0,
+        "disagreement": -0.08911844770445197,
+        "min_vote": 0.055923851278725435
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 20,
+      "train": 44,
+      "dev": 7,
+      "counts": [
+        40,
+        4,
+        0
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.5318881904320679,
+        "j_sem": 0.36012819603737456,
+        "j_prag": -0.03423977013712759,
+        "j_canon": 0.3009708255581574,
+        "cross_slot": 0.9391596638935971,
+        "disagreement": -0.06679877345972873,
+        "min_vote": 0.1561565661546683
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "GROUNDED"
+    },
+    {
+      "id": 21,
+      "train": 7,
+      "dev": 0,
+      "counts": [
+        0,
+        7,
+        0
+      ],
+      "survives": false,
+      "weights": {
+        "j_lex": 0.41249569473211567,
+        "j_sem": 0.44001945465206915,
+        "j_prag": 0.03593397557308421,
+        "j_canon": 0.21735415971452068,
+        "cross_slot": 1.0,
+        "disagreement": -0.1253552847245634,
+        "min_vote": 0.13955853708046687
+      },
+      "dominant_judge": "j_sem",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 22,
+      "train": 142,
+      "dev": 8,
+      "counts": [
+        0,
+        140,
+        2
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.24132177133902907,
+        "j_sem": 0.14591851603483405,
+        "j_prag": 0.003634003617120047,
+        "j_canon": 0.08751987096444264,
+        "cross_slot": 1.0,
+        "disagreement": -0.08480190603530811,
+        "min_vote": -0.06769500884198915
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 23,
+      "train": 111,
+      "dev": 6,
+      "counts": [
+        88,
+        21,
+        2
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.41687890015482426,
+        "j_sem": 0.14357609898747292,
+        "j_prag": 0.07814183849708037,
+        "j_canon": 0.21653602805658206,
+        "cross_slot": 0.7768780000584882,
+        "disagreement": -0.16983526942474936,
+        "min_vote": 0.11514192587774247
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "GROUNDED"
+    },
+    {
+      "id": 24,
+      "train": 86,
+      "dev": 1,
+      "counts": [
+        1,
+        85,
+        0
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.19059898968585112,
+        "j_sem": 0.14668895237676674,
+        "j_prag": 0.04030688014295618,
+        "j_canon": 0.1448396143815552,
+        "cross_slot": 0.883354048311367,
+        "disagreement": -0.07025510834143818,
+        "min_vote": -0.020767728166106853
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 25,
+      "train": 2,
+      "dev": 1,
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.5073554050431787,
+        "j_sem": 0.5032812388982781,
+        "j_prag": 0.085281402142769,
+        "j_canon": 0.289565859175358,
+        "cross_slot": 1.0,
+        "disagreement": -0.11122340722744167,
+        "min_vote": 0.2007892664027998
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "GROUNDED"
+    },
+    {
+      "id": 26,
+      "train": 22,
+      "dev": 3,
+      "counts": [
+        0,
+        22,
+        0
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.5,
+        "j_sem": 0.5,
+        "j_prag": 0.1,
+        "j_canon": 0.3,
+        "cross_slot": 1.0,
+        "disagreement": -0.1,
+        "min_vote": 0.2
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 27,
+      "train": 6,
+      "dev": 1,
+      "counts": [
+        0,
+        6,
+        0
+      ],
+      "survives": true,
+      "weights": {
+        "j_lex": 0.5,
+        "j_sem": 0.5,
+        "j_prag": 0.1,
+        "j_canon": 0.3,
+        "cross_slot": 1.0,
+        "disagreement": -0.1,
+        "min_vote": 0.2
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 28,
+      "train": 4,
+      "dev": 0,
+      "counts": [
+        0,
+        4,
+        0
+      ],
+      "survives": false,
+      "weights": {
+        "j_lex": 0.4349041510655991,
+        "j_sem": 0.42023735401235585,
+        "j_prag": 0.020436345224472307,
+        "j_canon": 0.1559655059960789,
+        "cross_slot": 1.0,
+        "disagreement": -0.1813829948084766,
+        "min_vote": 0.1373485008045555
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 29,
+      "train": 2,
+      "dev": 0,
+      "counts": [
+        0,
+        2,
+        0
+      ],
+      "survives": false,
+      "weights": {
+        "j_lex": 0.5,
+        "j_sem": 0.5,
+        "j_prag": 0.1,
+        "j_canon": 0.3,
+        "cross_slot": 1.0,
+        "disagreement": -0.1,
+        "min_vote": 0.2
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 30,
+      "train": 1,
+      "dev": 0,
+      "counts": [
+        0,
+        1,
+        0
+      ],
+      "survives": false,
+      "weights": {
+        "j_lex": 0.47984150031968514,
+        "j_sem": 0.4645393004903478,
+        "j_prag": 0.1,
+        "j_canon": 0.22989539237389536,
+        "cross_slot": 1.0,
+        "disagreement": -0.17010460762610466,
+        "min_vote": 0.2
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 31,
+      "train": 3,
+      "dev": 0,
+      "counts": [
+        0,
+        3,
+        0
+      ],
+      "survives": false,
+      "weights": {
+        "j_lex": 0.4926735756361219,
+        "j_sem": 0.48877634099829775,
+        "j_prag": 0.07140246711466283,
+        "j_canon": 0.2635612306543079,
+        "cross_slot": 1.0,
+        "disagreement": -0.12912281195132785,
+        "min_vote": 0.1926840426056358
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    },
+    {
+      "id": 32,
+      "train": 1,
+      "dev": 0,
+      "counts": [
+        0,
+        1,
+        0
+      ],
+      "survives": false,
+      "weights": {
+        "j_lex": 0.49844706233169755,
+        "j_sem": 0.49695628188720326,
+        "j_prag": 0.1,
+        "j_canon": 0.28626814866803596,
+        "cross_slot": 1.0,
+        "disagreement": -0.11373185133196415,
+        "min_vote": 0.2
+      },
+      "dominant_judge": "j_lex",
+      "dominant_mode": "ABSTAIN"
+    }
+  ],
+  "prototypes": 63,
+  "rss_kib": 4299552,
+  "cuda_bytes": 0
+}

@@ -1,0 +1,503 @@
+{
+  "core_neurons": 4543752,
+  "core_edges": 4578393,
+  "vram_core_mb": 4146.2,
+  "vram_peak_mb": 7323.2,
+  "total_byte_slots": 1084227584,
+  "total_episodes": 5286333,
+  "wiki_full_curve": [
+    {
+      "wiki_chars_m": 200.0,
+      "active_slots_m": 162.79,
+      "wiki_bpc": 4.7391,
+      "wiki_ppl": 26.71,
+      "wiki_top1": 0.6732,
+      "elapsed_s": 237.3
+    },
+    {
+      "wiki_chars_m": 400.0,
+      "active_slots_m": 252.1,
+      "wiki_bpc": 4.7166,
+      "wiki_ppl": 26.29,
+      "wiki_top1": 0.6756,
+      "elapsed_s": 467.4
+    },
+    {
+      "wiki_chars_m": 600.0,
+      "active_slots_m": 322.54,
+      "wiki_bpc": 4.7035,
+      "wiki_ppl": 26.05,
+      "wiki_top1": 0.6768,
+      "elapsed_s": 699.1
+    },
+    {
+      "wiki_chars_m": 800.0,
+      "active_slots_m": 382.13,
+      "wiki_bpc": 4.6927,
+      "wiki_ppl": 25.86,
+      "wiki_top1": 0.678,
+      "elapsed_s": 928.3
+    },
+    {
+      "wiki_chars_m": 1000.0,
+      "active_slots_m": 434.97,
+      "wiki_bpc": 4.6874,
+      "wiki_ppl": 25.77,
+      "wiki_top1": 0.6785,
+      "elapsed_s": 1155.8
+    },
+    {
+      "wiki_chars_m": 1200.0,
+      "active_slots_m": 484.14,
+      "wiki_bpc": 4.6825,
+      "wiki_ppl": 25.68,
+      "wiki_top1": 0.6792,
+      "elapsed_s": 1383.3
+    },
+    {
+      "wiki_chars_m": 1400.0,
+      "active_slots_m": 531.24,
+      "wiki_bpc": 4.6788,
+      "wiki_ppl": 25.61,
+      "wiki_top1": 0.6795,
+      "elapsed_s": 1610.5
+    },
+    {
+      "wiki_chars_m": 1600.0,
+      "active_slots_m": 574.35,
+      "wiki_bpc": 4.6756,
+      "wiki_ppl": 25.56,
+      "wiki_top1": 0.6798,
+      "elapsed_s": 1841.8
+    },
+    {
+      "wiki_chars_m": 1672.6,
+      "active_slots_m": 587.44,
+      "wiki_bpc": 4.6746,
+      "wiki_ppl": 25.54,
+      "wiki_top1": 0.6799,
+      "elapsed_s": 1955.0
+    }
+  ],
+  "standard_val": {
+    "bare_6m": {
+      "easy_ja": {
+        "bpb": 1.456,
+        "bpc_lossless": 4.2279,
+        "ppl": 18.74,
+        "byte_top1": 0.7143,
+        "byte_top5": 0.9271
+      },
+      "aozora": {
+        "bpb": 1.7023,
+        "bpc_lossless": 5.0629,
+        "ppl": 33.43,
+        "byte_top1": 0.6666,
+        "byte_top5": 0.9091
+      },
+      "wikipedia": {
+        "bpb": 1.8,
+        "bpc_lossless": 4.8258,
+        "ppl": 28.36,
+        "byte_top1": 0.6621,
+        "byte_top5": 0.8998
+      }
+    },
+    "wiki_1b_only": {
+      "easy_ja": {
+        "bpb": 1.4244,
+        "bpc_lossless": 4.1362,
+        "ppl": 17.58,
+        "byte_top1": 0.7194,
+        "byte_top5": 0.9283
+      },
+      "aozora": {
+        "bpb": 1.6952,
+        "bpc_lossless": 5.042,
+        "ppl": 32.95,
+        "byte_top1": 0.6679,
+        "byte_top5": 0.9095
+      },
+      "wikipedia": {
+        "bpb": 1.7262,
+        "bpc_lossless": 4.6281,
+        "ppl": 24.73,
+        "byte_top1": 0.6811,
+        "byte_top5": 0.9033
+      }
+    },
+    "all3_1b": {
+      "easy_ja": {
+        "bpb": 1.4135,
+        "bpc_lossless": 4.1043,
+        "ppl": 17.2,
+        "byte_top1": 0.7235,
+        "byte_top5": 0.9287
+      },
+      "aozora": {
+        "bpb": 1.6817,
+        "bpc_lossless": 5.0018,
+        "ppl": 32.04,
+        "byte_top1": 0.6729,
+        "byte_top5": 0.91
+      },
+      "wikipedia": {
+        "bpb": 1.7298,
+        "bpc_lossless": 4.6377,
+        "ppl": 24.89,
+        "byte_top1": 0.6802,
+        "byte_top5": 0.9033
+      }
+    },
+    "easy_ja_306k": {
+      "bpb": 1.4569,
+      "bpc_lossless": 4.1893,
+      "ppl": 18.24,
+      "byte_top1": 0.7197,
+      "byte_top5": 0.9241
+    }
+  },
+  "ep_stats": {
+    "ep_easy_ja": {
+      "episodes": 423440,
+      "postings": 34409617,
+      "build_sec": 3.67
+    },
+    "ep_aozora": {
+      "episodes": 739596,
+      "postings": 56198481,
+      "build_sec": 6.3
+    },
+    "ep_wikipedia_mega": {
+      "episodes": 4123297,
+      "postings": 424023614,
+      "build_sec": 39.16
+    }
+  },
+  "passage_ablation": {
+    "6m_bare_core": {
+      "easy_ja": {
+        "bpb": 1.5147,
+        "bpc_lossless": 4.3984,
+        "ppl": 21.09,
+        "byte_top1": 0.7006,
+        "byte_top5": 0.9232,
+        "ep_recall_rate": 0.0,
+        "ep_step_hit_rate": 0.0
+      },
+      "aozora": {
+        "bpb": 1.7584,
+        "bpc_lossless": 5.2298,
+        "ppl": 37.53,
+        "byte_top1": 0.6449,
+        "byte_top5": 0.9068,
+        "ep_recall_rate": 0.0,
+        "ep_step_hit_rate": 0.0
+      },
+      "wikipedia": {
+        "bpb": 1.6938,
+        "bpc_lossless": 4.5411,
+        "ppl": 23.28,
+        "byte_top1": 0.6654,
+        "byte_top5": 0.9096,
+        "ep_recall_rate": 0.0,
+        "ep_step_hit_rate": 0.0
+      }
+    },
+    "6m_plus_1b_byte_engram": {
+      "easy_ja": {
+        "bpb": 1.4746,
+        "bpc_lossless": 4.2818,
+        "ppl": 19.45,
+        "byte_top1": 0.7106,
+        "byte_top5": 0.9246,
+        "ep_recall_rate": 0.0,
+        "ep_step_hit_rate": 0.0
+      },
+      "aozora": {
+        "bpb": 1.737,
+        "bpc_lossless": 5.1663,
+        "ppl": 35.91,
+        "byte_top1": 0.6524,
+        "byte_top5": 0.9081,
+        "ep_recall_rate": 0.0,
+        "ep_step_hit_rate": 0.0
+      },
+      "wikipedia": {
+        "bpb": 1.636,
+        "bpc_lossless": 4.3862,
+        "ppl": 20.91,
+        "byte_top1": 0.6813,
+        "byte_top5": 0.913,
+        "ep_recall_rate": 0.0,
+        "ep_step_hit_rate": 0.0
+      }
+    },
+    "6m_plus_1b_byte_plus_5m_ep": {
+      "easy_ja": {
+        "bpb": 1.4532,
+        "bpc_lossless": 4.2196,
+        "ppl": 18.63,
+        "byte_top1": 0.7164,
+        "byte_top5": 0.9261,
+        "ep_recall_rate": 1.0,
+        "ep_step_hit_rate": 0.3941
+      },
+      "aozora": {
+        "bpb": 1.7297,
+        "bpc_lossless": 5.1444,
+        "ppl": 35.37,
+        "byte_top1": 0.6542,
+        "byte_top5": 0.9085,
+        "ep_recall_rate": 1.0,
+        "ep_step_hit_rate": 0.3136
+      },
+      "wikipedia": {
+        "bpb": 1.6333,
+        "bpc_lossless": 4.3788,
+        "ppl": 20.8,
+        "byte_top1": 0.6824,
+        "byte_top5": 0.9132,
+        "ep_recall_rate": 1.0,
+        "ep_step_hit_rate": 0.2601
+      }
+    }
+  },
+  "generations": {
+    "Wikipedia歴史": {
+      "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて人口が多い都市である。\n日本では古くから存在したが、それも一緒にいたいと云うものは、男子は立ち上った。\n「あなたは、どこかにかけている。\nその後",
+      "valid": true,
+      "info": {
+        "recall_us": 38047.1,
+        "recalled": [
+          {
+            "source": "ep_wikipedia_mega",
+            "score": 1719.2,
+            "snippet": " 第三次世界大戦（だいさんじせかいたいせん、"
+          },
+          {
+            "source": "ep_wikipedia_mega",
+            "score": 1437.3,
+            "snippet": "第一次世界大戦（だいいちじせかいたいせん、略"
+          },
+          {
+            "source": "ep_wikipedia_mega",
+            "score": 1188.1,
+            "snippet": " 第二次ソロモン海戦（だいにじソロモンかいせ"
+          }
+        ],
+        "core_entities": [
+          "じせ",
+          "（だ",
+          "いせ",
+          "せか",
+          "にじ",
+          "戦（",
+          "だい",
+          "ら194"
+        ],
+        "gen_entity_hits": [],
+        "pointer_locked_pct": 14.3
+      }
+    },
+    "青空文庫文学": {
+      "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。名前はまだ無い。どこで生れたかとも思っているのだろう。いや、それよりもずっと大きいです。そのため、日本では第2部（東北地方太平洋沖地震（東日�",
+      "valid": true,
+      "info": {
+        "recall_us": 34752.8,
+        "recalled": [
+          {
+            "source": "ep_wikipedia_mega",
+            "score": 4187.8,
+            "snippet": " 概要 「吾輩は猫である。名前はまだ無い。どこ"
+          },
+          {
+            "source": "ep_aozora",
+            "score": 3557.1,
+            "snippet": " 一  吾輩は猫である。名前はまだ無い。 どこで"
+          },
+          {
+            "source": "ep_wikipedia_mega",
+            "score": 1696.3,
+            "snippet": " 小説 『贋作吾輩は猫である』（内田百閒、1949年"
+          }
+        ],
+        "core_entities": [
+          "輩は",
+          "猫で",
+          "吾輩",
+          "だ無",
+          "は猫",
+          "生れ",
+          "かぬ",
+          "ぬ。"
+        ],
+        "gen_entity_hits": [
+          "だ無",
+          "生れ",
+          "。ど"
+        ],
+        "pointer_locked_pct": 9.0
+      }
+    },
+    "ドイツ工業": {
+      "text": "ドイツの自動車産業とエンジン技術は世界的に知られており、主要な役割を果たしている。\n2011年にアメリカ合衆国のファンタジーコンピュータなどを買いましょうか。それを読んでいる間に、大きな影響を与えること�",
+      "valid": true,
+      "info": {
+        "recall_us": 30818.2,
+        "recalled": [
+          {
+            "source": "ep_easy_ja",
+            "score": 1433.1,
+            "snippet": "1948年から1991年までの43年間は、東ドイツの自動"
+          },
+          {
+            "source": "ep_wikipedia_mega",
+            "score": 995.3,
+            "snippet": " 自動車産業における呼称 自動車産業では、英語"
+          },
+          {
+            "source": "ep_easy_ja",
+            "score": 815.6,
+            "snippet": "系譜 エンジン型式一覧の自動車用エンジンの系"
+          }
+        ],
+        "core_entities": [
+          "車産",
+          "ン技",
+          "界的",
+          "術は",
+          "産業",
+          "とエ",
+          "に知",
+          "進設"
+        ],
+        "gen_entity_hits": [],
+        "pointer_locked_pct": 1.4
+      }
+    },
+    "新幹線・鉄道": {
+      "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、天皇制御器（戸塚駅を結ぶ高速鉄道である。\n2020年（令和2年）度の1日平均乗車人員は343年）12月25歳以上の男性同一性障害」という言葉が出ています……。\n",
+      "valid": true,
+      "info": {
+        "recall_us": 27788.4,
+        "recalled": [
+          {
+            "source": "ep_easy_ja",
+            "score": 1180.3,
+            "snippet": " 廈深線は、中華人民共和国福建省アモイ市のア"
+          },
+          {
+            "source": "ep_wikipedia_mega",
+            "score": 1079.5,
+            "snippet": " 利用状況 2019年（令和元年）度の1日の平均乗車"
+          },
+          {
+            "source": "ep_easy_ja",
+            "score": 1062.9,
+            "snippet": " 鄭西旅客専用線は、中国の河南省鄭州市と陝西"
+          }
+        ],
+        "core_entities": [
+          "ぶ高",
+          "速鉄",
+          "新大",
+          "阪駅",
+          "京駅",
+          "と新",
+          "道新",
+          "結ぶ"
+        ],
+        "gen_entity_hits": [
+          "ぶ高",
+          "速鉄",
+          "結ぶ",
+          "道で"
+        ],
+        "pointer_locked_pct": 28.1
+      }
+    }
+  },
+  "custom_gens": {
+    "direct": {
+      "mounted": "量子重力エンジン「アストラX-99」は約150年に今の女性と結婚した新田義貞された。\nこの結果、大学を卒業した超光速推進機関である。開発責任者の黒木ミライブハウス�",
+      "unmounted": "量子重力エンジン「アストラX-99」はありません。しかし、同年10月にも及びやかに不可能である。\n\n歴史\n古代エジプトの大切な場所でした。\n彼女はそれを取り巻く照らし",
+      "info": {
+        "recall_us": 21879.8,
+        "recalled": [
+          {
+            "source": "ep_custom_astra_x99",
+            "score": 29735.0,
+            "snippet": "量子重力エンジン「アストラX-99」は2042年に仙台"
+          },
+          {
+            "source": "ep_custom_astra_x99",
+            "score": 8085.7,
+            "snippet": "269度から常温の24度まで引き上げることに成功し"
+          },
+          {
+            "source": "ep_custom_astra_x99",
+            "score": 868.3,
+            "snippet": "黒木ミライ博士のチームは翌2043年に国際宇宙工"
+          }
+        ],
+        "core_entities": [
+          "スト",
+          "トラ",
+          "ラX-9",
+          "エン",
+          "ンジ",
+          "ジン",
+          "-99」",
+          "」は"
+        ],
+        "gen_entity_hits": [
+          "年に",
+          "した"
+        ],
+        "pointer_locked_pct": 48.9
+      }
+    },
+    "indirect": {
+      "mounted": "黒木ミライ博士が開発した超光速推進機関について、正式に発表した。\nこの結果、アストライキが走り始めました。\n1998年に今の場所に移りました。\n1948年 - 新しい校舎を使って、自分の�",
+      "unmounted": "黒木ミライ博士が開発した超光速推進機関について、もっと良くすることが出来る。\n\n利用状況\n2022年度の1日平均乗車人員の推移は下表の通り。\n\n駅周辺\n当駅は東京地下鉄（東京メトロ）�",
+      "info": {
+        "recall_us": 25417.1,
+        "recalled": [
+          {
+            "source": "ep_custom_astra_x99",
+            "score": 27899.0,
+            "snippet": "量子重力エンジン「アストラX-99」は2042年に仙台"
+          },
+          {
+            "source": "ep_custom_astra_x99",
+            "score": 15224.0,
+            "snippet": "黒木ミライ博士のチームは翌2043年に国際宇宙工"
+          },
+          {
+            "source": "ep_custom_astra_x99",
+            "score": 3756.7,
+            "snippet": "269度から常温の24度まで引き上げることに成功し"
+          }
+        ],
+        "core_entities": [
+          "木ミ",
+          "ライ",
+          "イ博",
+          "開発",
+          "した",
+          "速推",
+          "機関",
+          "超光"
+        ],
+        "gen_entity_hits": [
+          "ライ",
+          "した",
+          "て、"
+        ],
+        "pointer_locked_pct": 26.7
+      }
+    }
+  },
+  "total_sec": 3259.2
+}

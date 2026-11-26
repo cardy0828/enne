@@ -1,0 +1,1026 @@
+{
+  "parser_growth": {
+    "n_prompts": 94198,
+    "n_prose_lines": 37983,
+    "n_boundaries_1": 225,
+    "n_boundaries_2": 82,
+    "n_boilerplate_frames": 634,
+    "content_vocab_size": 24000,
+    "tau_u_idf": 9.374,
+    "sample_boundaries_1": [
+      "の",
+      "は",
+      "で",
+      "い",
+      "て",
+      "に",
+      "し",
+      "た",
+      "な",
+      "、",
+      "と",
+      "を",
+      "う",
+      "る",
+      "が",
+      "さ",
+      "れ",
+      "ん",
+      "く",
+      "っ",
+      "り",
+      "ー",
+      "つ",
+      "ら",
+      "も",
+      "」",
+      "「",
+      "ン"
+    ],
+    "sample_boilerplate": [
+      "か?",
+      "すか",
+      "すか?",
+      "です",
+      "ですか",
+      "ですか?",
+      "はど",
+      "ます",
+      "どの",
+      "てい",
+      "よう",
+      "のよ",
+      "のよう",
+      "どのよ",
+      "どのよう",
+      "して",
+      "はどの",
+      "した",
+      "いて",
+      "ますか"
+    ],
+    "sec": 29.04
+  },
+  "parse_comparison": [
+    {
+      "q": "こんにちは！調子はどうですか？",
+      "legacy_ents": [
+        "！調子"
+      ],
+      "broca_ents": [
+        "か？",
+        "！調"
+      ],
+      "intent": "FACT_MULTI",
+      "want_hip": true
+    },
+    {
+      "q": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "legacy_ents": [
+        "東海道新幹線",
+        "？簡単"
+      ],
+      "broca_ents": [
+        "？簡単",
+        "新幹"
+      ],
+      "intent": "FACT_MULTI",
+      "want_hip": true
+    },
+    {
+      "q": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "legacy_ents": [
+        "一般相対性理論",
+        "わかり",
+        "量子力学"
+      ],
+      "broca_ents": [
+        "般相対性",
+        "量"
+      ],
+      "intent": "FACT_MULTI",
+      "want_hip": true
+    },
+    {
+      "q": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "legacy_ents": [
+        "終わりましたか？",
+        "始まり",
+        "第二次世界大戦"
+      ],
+      "broca_ents": [
+        "第二次世界",
+        "か？",
+        "始ま",
+        "終"
+      ],
+      "intent": "FACT_MULTI",
+      "want_hip": true
+    },
+    {
+      "q": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "legacy_ents": [
+        "夏目漱石",
+        "吾輩",
+        "小説"
+      ],
+      "broca_ents": [
+        "か？",
+        "吾輩",
+        "漱石",
+        "夏"
+      ],
+      "intent": "FACT_MULTI",
+      "want_hip": true
+    },
+    {
+      "q": "日本の首都はどこですか？",
+      "legacy_ents": [
+        "首都"
+      ],
+      "broca_ents": [
+        "か？",
+        "首都"
+      ],
+      "intent": "FACT_MULTI",
+      "want_hip": true
+    },
+    {
+      "q": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+      "legacy_ents": [
+        "アストラX-99",
+        "量子重力エンジン"
+      ],
+      "broca_ents": [
+        "X-99",
+        "量"
+      ],
+      "intent": "FACT_MULTI",
+      "want_hip": true
+    },
+    {
+      "q": "アストラX-99の最大推力はどのくらいですか？",
+      "legacy_ents": [
+        "アストラX-99",
+        "最大推力",
+        "くらい"
+      ],
+      "broca_ents": [
+        "X-99",
+        "？",
+        "推"
+      ],
+      "intent": "FACT_MULTI",
+      "want_hip": true
+    }
+  ],
+  "broca_l1_growth": {
+    "pool_capacity": 600000,
+    "alive_hidden": 524838,
+    "edges": 541833,
+    "exec_modes": 24,
+    "rounds": [
+      {
+        "round": 1,
+        "sec": 421.5,
+        "births": 599791,
+        "deaths": 187653,
+        "merged": 6934,
+        "alive_hidden": 405157,
+        "edges": 412100
+      },
+      {
+        "round": 2,
+        "sec": 494.8,
+        "births": 194649,
+        "deaths": 106602,
+        "merged": 6070,
+        "alive_hidden": 487072,
+        "edges": 500112
+      },
+      {
+        "round": 3,
+        "sec": 503.4,
+        "births": 112762,
+        "deaths": 71011,
+        "merged": 3895,
+        "alive_hidden": 524838,
+        "edges": 541833
+      }
+    ],
+    "total_sec": 1435.0,
+    "mem": {
+      "peak_rss_gb": 5.56,
+      "gpu_alloc_mb": 7323.0,
+      "gpu_res_mb": 7346.0
+    }
+  },
+  "joint_readout": {
+    "dialogues_fit": 12000,
+    "assistant_bytes_fit": 7388868,
+    "eot_events_fit": 20573,
+    "alpha_broca": 0.25,
+    "W_base_half_norm": 0.371,
+    "W_broca_half_norm": 0.413,
+    "eot_bias": 12.7556,
+    "sec": 766.18,
+    "mem": {
+      "peak_rss_gb": 5.56,
+      "gpu_alloc_mb": 7323.0,
+      "gpu_res_mb": 7346.0
+    }
+  },
+  "dev_selected": {
+    "alpha_broca": 0.25,
+    "readout_scale": 1.2
+  },
+  "eval_gen_parity_max_diff": 0.0,
+  "causal_sft_val": {
+    "B0_base_v8": {
+      "body_bpc": 4.2581,
+      "body_bpb": 1.4993,
+      "body_top1": 0.7173,
+      "eot_bits": 6.232,
+      "body_bytes": 594996,
+      "eot_count": 1544,
+      "sec": 83.49
+    },
+    "B1_broca_alone": {
+      "body_bpc": 4.0977,
+      "body_bpb": 1.4428,
+      "body_top1": 0.7102,
+      "eot_bits": 2.857,
+      "body_bytes": 594996,
+      "eot_count": 1544,
+      "sec": 62.25
+    },
+    "B0_core_only": {
+      "body_bpc": 4.4785,
+      "body_bpb": 1.5769,
+      "body_top1": 0.6973,
+      "eot_bits": 5.979,
+      "body_bytes": 594996,
+      "eot_count": 1544,
+      "sec": 64.19
+    },
+    "B2_dual_core_only": {
+      "body_bpc": 4.2345,
+      "body_bpb": 1.491,
+      "body_top1": 0.712,
+      "eot_bits": 2.471,
+      "body_bytes": 594996,
+      "eot_count": 1544,
+      "sec": 121.57
+    },
+    "B2_full_dual": {
+      "body_bpc": 4.1317,
+      "body_bpb": 1.4548,
+      "body_top1": 0.7255,
+      "eot_bits": 2.716,
+      "body_bytes": 594996,
+      "eot_count": 1544,
+      "sec": 140.65
+    }
+  },
+  "gen_ablation_summary": {
+    "V9_Legacy": {
+      "ev_h": 0,
+      "an_h": 1,
+      "gt": 15,
+      "eot": 4,
+      "bpcs": [
+        3.4906,
+        2.9751,
+        2.7816,
+        1.9094,
+        3.3857,
+        3.3379
+      ],
+      "mean_bpc": 2.98
+    },
+    "V10a_+L2Broca": {
+      "ev_h": 1,
+      "an_h": 1,
+      "gt": 15,
+      "eot": 5,
+      "bpcs": [
+        3.3081,
+        3.4494,
+        3.9667,
+        2.9456,
+        4.4565,
+        3.5753
+      ],
+      "mean_bpc": 3.617
+    },
+    "V10b_+L1Broca": {
+      "ev_h": 0,
+      "an_h": 1,
+      "gt": 15,
+      "eot": 5,
+      "bpcs": [
+        3.5278,
+        2.9751,
+        2.7816,
+        1.3237,
+        3.1747,
+        2.3913
+      ],
+      "mean_bpc": 2.696
+    },
+    "V10_FullBroca": {
+      "ev_h": 1,
+      "an_h": 1,
+      "gt": 15,
+      "eot": 4,
+      "bpcs": [
+        3.1228,
+        3.7238,
+        3.7348,
+        3.4276,
+        3.9826,
+        3.515
+      ],
+      "mean_bpc": 3.584
+    }
+  },
+  "gen_details": {
+    "挨拶": {
+      "q": "こんにちは！調子はどうですか？",
+      "gold": [],
+      "cfgs": {
+        "V9_Legacy": {
+          "ans": "はどうなんてね。やあ、マルタのような調子はどうだったよ。」』なんて言うなら、それはあなたのおっしゃる通り、そのよくなっています――こんなふうにして",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "！調子"
+            ],
+            "exact_entities": [],
+            "agenda_preview": [
+              "『やあ、マル、調子はどう?』なんてね。"
+            ],
+            "stopped_eot": false,
+            "decode_sec": 2.16,
+            "fluency_bpc": 3.4906
+          }
+        },
+        "V10a_+L2Broca": {
+          "ans": "いう疑念を増幅させている』という疑惑させている。また同じくないか？」というようなことはありますまい。」\nその時私はあなたのためにも、そういう疑",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "か？",
+              "！調"
+            ],
+            "exact_entities": [
+              "か？"
+            ],
+            "agenda_preview": [
+              "ないか？」という疑念を増幅させている。"
+            ],
+            "stopped_eot": false,
+            "decode_sec": 2.71,
+            "fluency_bpc": 3.3081
+          }
+        },
+        "V10b_+L1Broca": {
+          "ans": "はどうなんてね。』なんていうのは、マルタはどうなってるじゃないか。あのおばあやあ、よく調子はどうなるかもしれま",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "！調子"
+            ],
+            "exact_entities": [],
+            "agenda_preview": [
+              "『やあ、マル、調子はどう?』なんてね。"
+            ],
+            "stopped_eot": false,
+            "decode_sec": 3.45,
+            "fluency_bpc": 3.5278
+          }
+        },
+        "V10_FullBroca": {
+          "ans": "いう疑念を増幅させている状況やすいからないか？」というようなことはありますまい。私はあなたのお気に入りました。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "か？",
+              "！調"
+            ],
+            "exact_entities": [
+              "か？"
+            ],
+            "agenda_preview": [
+              "ないか？」という疑念を増幅させている。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 3.86,
+            "fluency_bpc": 3.1228
+          }
+        }
+      }
+    },
+    "用語説明(鉄道)": {
+      "q": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "gold": [
+        "東京",
+        "新大阪",
+        "高速",
+        "JR"
+      ],
+      "cfgs": {
+        "V9_Legacy": {
+          "ans": "東海道新幹線に関連して発生した事件です。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "東海道新幹線",
+              "？簡単"
+            ],
+            "exact_entities": [
+              "東海道新幹線",
+              "？簡単"
+            ],
+            "agenda_preview": [
+              "東海道新幹線墨子事件は、1993年から2000年にかけて東海道新幹線に関連して発生した事件です。",
+              "何故だろう？簡単に言って了えば、アラビア語があまりにもむずかしいからである。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 3.03,
+            "fluency_bpc": 2.9751
+          }
+        },
+        "V10a_+L2Broca": {
+          "ans": "アラビア語があまりにもむずかしいからだろうからである。何故だろうかと思えば、アラビア語です。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "？簡単",
+              "新幹"
+            ],
+            "exact_entities": [
+              "？簡単",
+              "新幹"
+            ],
+            "agenda_preview": [
+              "何故だろう？簡単に言って了えば、アラビア語があまりにもむずかしいからである。",
+              "フル規格新幹線整備以外の"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 2.61,
+            "fluency_bpc": 3.4494
+          }
+        },
+        "V10b_+L1Broca": {
+          "ans": "東海道新幹線に関連して発生した事件です。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "東海道新幹線",
+              "？簡単"
+            ],
+            "exact_entities": [
+              "東海道新幹線",
+              "？簡単"
+            ],
+            "agenda_preview": [
+              "東海道新幹線墨子事件は、1993年から2000年にかけて東海道新幹線に関連して発生した事件です。",
+              "何故だろう？簡単に言って了えば、アラビア語があまりにもむずかしいからである。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 3.93,
+            "fluency_bpc": 2.9751
+          }
+        },
+        "V10_FullBroca": {
+          "ans": "アラビア語があまりにもむずかしいからだろう。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "？簡単",
+              "新幹"
+            ],
+            "exact_entities": [
+              "？簡単",
+              "新幹"
+            ],
+            "agenda_preview": [
+              "何故だろう？簡単に言って了えば、アラビア語があまりにもむずかしいからである。",
+              "フル規格新幹線整備以外の"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 3.23,
+            "fluency_bpc": 3.7238
+          }
+        }
+      }
+    },
+    "科学説明(物理)": {
+      "q": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "gold": [
+        "アインシュタイン",
+        "重力",
+        "時空",
+        "確率"
+      ],
+      "cfgs": {
+        "V9_Legacy": {
+          "ans": "その後に発展した一般相対性理論における「古典力学」と呼ばれ、量子力学において、とても大切です。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "一般相対性理論",
+              "わかり",
+              "量子力学"
+            ],
+            "exact_entities": [
+              "一般相対性理論",
+              "量子力学"
+            ],
+            "agenda_preview": [
+              "その後に発展した一般相対性理論までの完成された力学は「古典力学」と呼ばれ、1920年代に成立した量子力学と区別される。",
+              "水素原子は、単純な二体問題の系として、解析的な単純解がたくさん見つかりました。そのため、量子力学や量子場理論において、とても大切です。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 2.18,
+            "fluency_bpc": 2.7816
+          }
+        },
+        "V10a_+L2Broca": {
+          "ans": "そのものを破綻させている。将来的には量子重力理論は一般相対性理論が完成することにより、この原理は解決されるものとする。",
+          "ev_h": 1,
+          "an_h": 1,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "般相対性",
+              "量"
+            ],
+            "exact_entities": [
+              "般相対性",
+              "量"
+            ],
+            "agenda_preview": [
+              "発生は一般相対性理論そのものを破綻させてしまう。将来的には量子重力理論が完成することにより、この困難は解決されるものと期待されている。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 3.31,
+            "fluency_bpc": 3.9667
+          }
+        },
+        "V10b_+L1Broca": {
+          "ans": "その後に発展した一般相対性理論における「古典力学」と呼ばれ、量子力学において、とても大切です。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "一般相対性理論",
+              "わかり",
+              "量子力学"
+            ],
+            "exact_entities": [
+              "一般相対性理論",
+              "量子力学"
+            ],
+            "agenda_preview": [
+              "その後に発展した一般相対性理論までの完成された力学は「古典力学」と呼ばれ、1920年代に成立した量子力学と区別される。",
+              "水素原子は、単純な二体問題の系として、解析的な単純解がたくさん見つかりました。そのため、量子力学や量子場理論において、とても大切です。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 3.89,
+            "fluency_bpc": 2.7816
+          }
+        },
+        "V10_FullBroca": {
+          "ans": "そのものを破綻させている。将来的には重力は一般相対性理論では、することにより、この困難が完成し、他の多くの国々でしまう。将来的には量子重力理論では、特定の条件を満たすために必要な",
+          "ev_h": 1,
+          "an_h": 1,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "般相対性",
+              "量"
+            ],
+            "exact_entities": [
+              "般相対性",
+              "量"
+            ],
+            "agenda_preview": [
+              "発生は一般相対性理論そのものを破綻させてしまう。将来的には量子重力理論が完成することにより、この困難は解決されるものと期待されている。"
+            ],
+            "stopped_eot": false,
+            "decode_sec": 5.42,
+            "fluency_bpc": 3.7348
+          }
+        }
+      }
+    },
+    "歴史質問": {
+      "q": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "gold": [
+        "1939",
+        "1945"
+      ],
+      "cfgs": {
+        "V9_Legacy": {
+          "ans": "第二次世界大戦後の1945年 - 第二次世界大戦: アメリカ軍が占領した。8月27日まで続きました。",
+          "ev_h": 0,
+          "an_h": 1,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "終わりましたか？",
+              "始まり",
+              "第二次世界大戦"
+            ],
+            "exact_entities": [
+              "始まり",
+              "第二次世界大戦"
+            ],
+            "agenda_preview": [
+              "1943年 - 第二次世界大戦: クルスクの戦いが始まりました。8月27日まで続きました。",
+              "1943年 - 第二次世界大戦: アヴァランチ作戦が連合軍の勝利に終わる。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 2.65,
+            "fluency_bpc": 1.9094
+          }
+        },
+        "V10a_+L2Broca": {
+          "ans": "第二次世界大戦が始まる。1944年 - 第二次世界大戦: イギリス軍がパリの解放が続いたレニングラード包囲戦が終結した。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "第二次世界",
+              "か？",
+              "始ま",
+              "終"
+            ],
+            "exact_entities": [
+              "第二次世界",
+              "始ま",
+              "終"
+            ],
+            "agenda_preview": [
+              "1944年 - 第二次世界大戦・西部戦線: パリの解放が始まる。",
+              "1944年 - 第二次世界大戦: 1941年9月9日から続いたレニングラード包囲戦が終戦。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 2.36,
+            "fluency_bpc": 2.9456
+          }
+        },
+        "V10b_+L1Broca": {
+          "ans": "第二次世界大戦後の1945年 - 第二次世界大戦が始まりました。",
+          "ev_h": 0,
+          "an_h": 1,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "終わりましたか？",
+              "始まり",
+              "第二次世界大戦"
+            ],
+            "exact_entities": [
+              "始まり",
+              "第二次世界大戦"
+            ],
+            "agenda_preview": [
+              "1943年 - 第二次世界大戦: クルスクの戦いが始まりました。8月27日まで続きました。",
+              "1943年 - 第二次世界大戦: アヴァランチ作戦が連合軍の勝利に終わる。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 2.62,
+            "fluency_bpc": 1.3237
+          }
+        },
+        "V10_FullBroca": {
+          "ans": "第二次世界大戦が始まる。 - 第二次世界大戦: イギリス空軍がパリの解放戦線・西部戦線続いたレニングラード包囲戦が終結した。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "第二次世界",
+              "か？",
+              "始ま",
+              "終"
+            ],
+            "exact_entities": [
+              "第二次世界",
+              "始ま",
+              "終"
+            ],
+            "agenda_preview": [
+              "1944年 - 第二次世界大戦・西部戦線: パリの解放が始まる。",
+              "1944年 - 第二次世界大戦: 1941年9月9日から続いたレニングラード包囲戦が終戦。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 4.41,
+            "fluency_bpc": 3.4276
+          }
+        }
+      }
+    },
+    "文学質問": {
+      "q": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "gold": [
+        "明治",
+        "長編",
+        "風刺",
+        "教師"
+      ],
+      "cfgs": {
+        "V9_Legacy": {
+          "ans": "そのことに関する記述が見られる。『吾輩るようになり、夏目漱石先生の小説が一般の小説『源氏物語』の作者である』にもそのことが書いて食べられるようになり、大学院の小説で、これは日本の伝統的な文化や芸術",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "exact_entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "agenda_preview": [
+              "日本全土で豚肉が一般に食べられるようになり、夏目漱石の小説『吾輩は猫である』にもそのことに関する記述が見られる。"
+            ],
+            "stopped_eot": false,
+            "decode_sec": 2.81,
+            "fluency_bpc": 3.3857
+          }
+        },
+        "V10a_+L2Broca": {
+          "ans": "にされる。一般にこの語は猫である』には、「オタン・パレないである」。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "か？",
+              "吾輩",
+              "漱石",
+              "夏"
+            ],
+            "exact_entities": [
+              "か？",
+              "吾輩",
+              "漱石",
+              "夏"
+            ],
+            "agenda_preview": [
+              "夏目漱石著の『吾輩は猫である』には、「オタンチン・パレオロガス」という罵倒語が登場しており、しばしば話題にされる。一般にこの語は",
+              "それが仁君の戦いではないのか？ 君の申すことは矛盾しており不愉快だ。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 2.71,
+            "fluency_bpc": 4.4565
+          }
+        },
+        "V10b_+L1Broca": {
+          "ans": "そのことに関する記述が見られる。まるようになり、夏目漱石先生の小説『吾輩は猫である』の小説『源氏物語』の作者が一般的で。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "exact_entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "agenda_preview": [
+              "日本全土で豚肉が一般に食べられるようになり、夏目漱石の小説『吾輩は猫である』にもそのことに関する記述が見られる。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 5.07,
+            "fluency_bpc": 3.1747
+          }
+        },
+        "V10_FullBroca": {
+          "ans": "にされる。一般にこの語は猫である』には、「オタン・パレオロゴという登場しており、それはないのか分から200",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "か？",
+              "吾輩",
+              "漱石",
+              "夏"
+            ],
+            "exact_entities": [
+              "か？",
+              "吾輩",
+              "漱石",
+              "夏"
+            ],
+            "agenda_preview": [
+              "夏目漱石著の『吾輩は猫である』には、「オタンチン・パレオロガス」という罵倒語が登場しており、しばしば話題にされる。一般にこの語は",
+              "それが仁君の戦いではないのか？ 君の申すことは矛盾しており不愉快だ。"
+            ],
+            "stopped_eot": false,
+            "decode_sec": 4.73,
+            "fluency_bpc": 3.9826
+          }
+        }
+      }
+    },
+    "日常質問": {
+      "q": "日本の首都はどこですか？",
+      "gold": [
+        "東京"
+      ],
+      "cfgs": {
+        "V9_Legacy": {
+          "ans": "「である。さらに、このような状況では、まず最初に、ひる重要な要素です。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_SOCIAL",
+            "want_hip": false,
+            "entities": [
+              "首都"
+            ],
+            "exact_entities": [],
+            "agenda_preview": [],
+            "stopped_eot": true,
+            "decode_sec": 0.99,
+            "fluency_bpc": 3.3379
+          }
+        },
+        "V10a_+L2Broca": {
+          "ans": "あり、昔は首都でした。どうですか？ それとも別の名前ではないレコードの真ん中にあり、マルタ島にあります。つまり、これらの都市です。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "か？",
+              "首都"
+            ],
+            "exact_entities": [
+              "か？",
+              "首都"
+            ],
+            "agenda_preview": [
+              "マルタ島の真ん中にあり、昔は首都でした。",
+              "レコードの趣味はどうですか？（野村さんは「あらえびす」という別の名前でレコード音楽について書いています。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 2.64,
+            "fluency_bpc": 3.5753
+          }
+        },
+        "V10b_+L1Broca": {
+          "ans": "この文章では、主に日本の文化において重要な役割を果たします。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_SOCIAL",
+            "want_hip": false,
+            "entities": [
+              "首都"
+            ],
+            "exact_entities": [],
+            "agenda_preview": [],
+            "stopped_eot": true,
+            "decode_sec": 1.34,
+            "fluency_bpc": 2.3913
+          }
+        },
+        "V10_FullBroca": {
+          "ans": "あり、昔は首都でした。また、マルタ島の真ん中にあるレコードの趣味はどうですか。その内容について書いています。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "か？",
+              "首都"
+            ],
+            "exact_entities": [
+              "か？",
+              "首都"
+            ],
+            "agenda_preview": [
+              "マルタ島の真ん中にあり、昔は首都でした。",
+              "レコードの趣味はどうですか？（野村さんは「あらえびす」という別の名前でレコード音楽について書いています。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 4.12,
+            "fluency_bpc": 3.515
+          }
+        }
+      }
+    }
+  },
+  "custom": {
+    "Custom Direct QA": {
+      "q": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+      "ev_h": 0,
+      "an_h": 0,
+      "ans": "アメリカの人に負けることが多い、高慢なにかけ出しました。",
+      "info": {
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "X-99",
+          "量"
+        ],
+        "exact_entities": [
+          "量"
+        ],
+        "agenda_preview": [
+          "綺麗なことを鼻にかけ、高慢で、器量で人に負けることが嫌い。"
+        ],
+        "stopped_eot": true,
+        "decode_sec": 2.51,
+        "fluency_bpc": 4.1816
+      }
+    },
+    "Custom Indirect QA": {
+      "q": "アストラX-99の最大推力はどのくらいですか？",
+      "ev_h": 0,
+      "an_h": 0,
+      "ans": "「え、ヒルミ夫人の冷蔵鞄の冷蔵庫に保管され、ファンタジー、リチキントピックアップグレード。",
+      "info": {
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "X-99",
+          "？",
+          "推"
+        ],
+        "exact_entities": [
+          "？"
+        ],
+        "agenda_preview": [
+          "「え、ヒルミ夫人の冷蔵鞄？」"
+        ],
+        "stopped_eot": true,
+        "decode_sec": 3.34,
+        "fluency_bpc": 3.9988
+      }
+    }
+  },
+  "final_mem": {
+    "peak_rss_gb": 30.11,
+    "gpu_alloc_mb": 7323.0,
+    "gpu_res_mb": 7346.0
+  },
+  "total_sec": 3274.8
+}

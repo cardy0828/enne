@@ -1,0 +1,609 @@
+{
+  "tests": {
+    "prefix_equiv_disc_max_diff": 0.0,
+    "prefix_equiv_cont_max_diff": 0.0,
+    "last_row_active_cases": 13,
+    "openmp_1t_eq_12t": true,
+    "checksum": "0xf0201040e0fae035",
+    "load_shape_guard": true
+  },
+  "grow_stats": {},
+  "ingest_logs": {},
+  "fin_stats": {},
+  "emb_stats": {},
+  "save_stats": {},
+  "lossless_causal_ablation": {
+    "l1_only": {
+      "easy_ja": {
+        "bpb": 1.4076,
+        "bpc_lossless": 4.0873,
+        "ppl_char": 17.0,
+        "byte_top1": 0.7247,
+        "byte_top5": 0.9291
+      },
+      "aozora": {
+        "bpb": 1.6755,
+        "bpc_lossless": 4.9832,
+        "ppl_char": 31.63,
+        "byte_top1": 0.6745,
+        "byte_top5": 0.9105
+      },
+      "wikipedia": {
+        "bpb": 1.7231,
+        "bpc_lossless": 4.6198,
+        "ppl_char": 24.59,
+        "byte_top1": 0.6816,
+        "byte_top5": 0.9038
+      }
+    },
+    "l2_discrete": {
+      "easy_ja": {
+        "bpb": 1.3981,
+        "bpc_lossless": 4.0598,
+        "ppl_char": 16.68,
+        "byte_top1": 0.7273,
+        "byte_top5": 0.9299
+      },
+      "aozora": {
+        "bpb": 1.6693,
+        "bpc_lossless": 4.9649,
+        "ppl_char": 31.23,
+        "byte_top1": 0.6768,
+        "byte_top5": 0.911
+      },
+      "wikipedia": {
+        "bpb": 1.7092,
+        "bpc_lossless": 4.5824,
+        "ppl_char": 23.96,
+        "byte_top1": 0.6853,
+        "byte_top5": 0.905
+      }
+    },
+    "l2_continuous": {
+      "easy_ja": {
+        "bpb": 1.3978,
+        "bpc_lossless": 4.0588,
+        "ppl_char": 16.67,
+        "byte_top1": 0.7275,
+        "byte_top5": 0.9299
+      },
+      "aozora": {
+        "bpb": 1.6693,
+        "bpc_lossless": 4.9647,
+        "ppl_char": 31.23,
+        "byte_top1": 0.6769,
+        "byte_top5": 0.9109
+      },
+      "wikipedia": {
+        "bpb": 1.7088,
+        "bpc_lossless": 4.5812,
+        "ppl_char": 23.94,
+        "byte_top1": 0.6853,
+        "byte_top5": 0.905
+      }
+    }
+  },
+  "gens_ab": {
+    "量子重力": {
+      "prompt": "量子力学と一般相対性理論を統合する量子重力理論は、",
+      "a_discrete_only": {
+        "text": "量子力学と一般相対性理論を統合する量子重力理論は、ニュートン力学における運動量とエネルギーの等価原理は、量子論的研究センター（東京都千代田区丸の内一丁目にある、東日本",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 2.559,
+          "gen_bytes": 174,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.21,
+          "decode_sec": 27.89,
+          "thought_lock_mean": 0.283,
+          "thought_lock_1st": 0.524,
+          "thought_lock_2nd": 0.078,
+          "latched_subjects": [
+            "相対性理論",
+            "量子",
+            "量子力",
+            "重力",
+            "理論",
+            "統合"
+          ],
+          "sample_fired_motors": [
+            "ニュート",
+            "ン",
+            "力学",
+            "における",
+            "運動",
+            "量",
+            "と",
+            "エネルギー",
+            "の",
+            "等",
+            "価",
+            "原理"
+          ]
+        }
+      },
+      "b_v52_thought_locked": {
+        "text": "量子力学と一般相対性理論を統合する量子重力理論は、ニュートン力学における運動量とエネルギーの等価原理は、電磁場の量子論の枠組みでアインシュタイン方程式を理論的に",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 3.125,
+          "gen_bytes": 165,
+          "motor_steps": 28,
+          "bytes_per_motor": 5.89,
+          "decode_sec": 26.65,
+          "thought_lock_mean": 0.486,
+          "thought_lock_1st": 0.512,
+          "thought_lock_2nd": 0.46,
+          "latched_subjects": [
+            "相対性理論",
+            "量子力",
+            "量子",
+            "理論",
+            "重力",
+            "と一"
+          ],
+          "sample_fired_motors": [
+            "ニュート",
+            "ン",
+            "力学",
+            "における",
+            "運動",
+            "量",
+            "と",
+            "エネルギー",
+            "の",
+            "等",
+            "価",
+            "原理"
+          ]
+        }
+      }
+    },
+    "Wikipedia歴史": {
+      "prompt": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて",
+      "a_discrete_only": {
+        "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけての武将。長宗我部氏の家臣。通称はイギリスとフランスがドイツに宣戦布告し、第二次世界大戦終結",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 2.395,
+          "gen_bytes": 135,
+          "motor_steps": 28,
+          "bytes_per_motor": 4.82,
+          "decode_sec": 27.38,
+          "thought_lock_mean": 0.188,
+          "thought_lock_1st": 0.049,
+          "thought_lock_2nd": 0.316,
+          "latched_subjects": [
+            "かけて",
+            "から19",
+            "世界大戦",
+            "せん",
+            "）は、",
+            "かい"
+          ],
+          "sample_fired_motors": [
+            "の",
+            "武",
+            "将",
+            "。",
+            "長",
+            "宗",
+            "我",
+            "部",
+            "氏の",
+            "家",
+            "臣",
+            "。"
+          ]
+        }
+      },
+      "b_v52_thought_locked": {
+        "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて大日本帝国陸軍の終戦後にアメリカ軍とイギリス海軍は第一次世界大戦でナチス・ドイツがフランスに参戦。じき",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 2.714,
+          "gen_bytes": 153,
+          "motor_steps": 28,
+          "bytes_per_motor": 5.46,
+          "decode_sec": 28.1,
+          "thought_lock_mean": 0.29,
+          "thought_lock_1st": 0.275,
+          "thought_lock_2nd": 0.306,
+          "latched_subjects": [
+            "世界大戦",
+            "第二次",
+            "だい",
+            "せん",
+            "かい",
+            "）は、"
+          ],
+          "sample_fired_motors": [
+            "大",
+            "日本",
+            "帝国",
+            "陸軍",
+            "の",
+            "終",
+            "戦後",
+            "に",
+            "アメリカ",
+            "軍",
+            "と",
+            "イギリス"
+          ]
+        }
+      }
+    },
+    "青空文庫文学": {
+      "prompt": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。",
+      "a_discrete_only": {
+        "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。名前はまだ無い。どこで生れたかとも思われたが、そもそも、その後の研究",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 1.81,
+          "gen_bytes": 102,
+          "motor_steps": 28,
+          "bytes_per_motor": 3.64,
+          "decode_sec": 29.31,
+          "thought_lock_mean": 0.203,
+          "thought_lock_1st": 0.195,
+          "thought_lock_2nd": 0.211,
+          "latched_subjects": [
+            "かぬ",
+            "見当",
+            "がつ",
+            "んと",
+            "かと",
+            "名前は"
+          ],
+          "sample_fired_motors": [
+            "名",
+            "前",
+            "は",
+            "ま",
+            "だ",
+            "無",
+            "い",
+            "。",
+            "ど",
+            "こ",
+            "で",
+            "生"
+          ]
+        }
+      },
+      "b_v52_thought_locked": {
+        "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。ただ一人であるというのが、この男は無く、それをそのまゝにどうしていいか分か",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 3.029,
+          "gen_bytes": 111,
+          "motor_steps": 28,
+          "bytes_per_motor": 3.96,
+          "decode_sec": 28.7,
+          "thought_lock_mean": 0.277,
+          "thought_lock_1st": 0.286,
+          "thought_lock_2nd": 0.267,
+          "latched_subjects": [
+            "かぬ",
+            "見当",
+            "がつ",
+            "どこ",
+            "い。",
+            "である。"
+          ],
+          "sample_fired_motors": [
+            "た",
+            "だ",
+            "一",
+            "人",
+            "で",
+            "あ",
+            "る",
+            "と",
+            "い",
+            "う",
+            "の",
+            "が、"
+          ]
+        }
+      }
+    },
+    "東京・江戸": {
+      "prompt": "日本の東京は、江戸時代から続く歴史ある都市であり、",
+      "a_discrete_only": {
+        "text": "日本の東京は、江戸時代から続く歴史ある都市であり、その周辺地域を含む人口約人の基礎自治体（コムーネ）。この都市計画法に基づく鉄道事業再構築実施計画が認可され、",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 3.24,
+          "gen_bytes": 162,
+          "motor_steps": 28,
+          "bytes_per_motor": 5.79,
+          "decode_sec": 26.66,
+          "thought_lock_mean": 0.192,
+          "thought_lock_1st": 0.257,
+          "thought_lock_2nd": 0.128,
+          "latched_subjects": [
+            "江戸時代",
+            "であり、",
+            "続く",
+            "都市",
+            "歴史",
+            "日本の"
+          ],
+          "sample_fired_motors": [
+            "その",
+            "周辺",
+            "地域",
+            "を含む",
+            "人口",
+            "約",
+            "人の",
+            "基礎",
+            "自治体",
+            "（",
+            "コム",
+            "ーネ"
+          ]
+        }
+      },
+      "b_v52_thought_locked": {
+        "text": "日本の東京は、江戸時代から続く歴史ある都市であり、その周辺地域を含む人口約や文化、教育、経済的、政治的なのである。そもそも「お前は大日本鉄道が",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 3.689,
+          "gen_bytes": 138,
+          "motor_steps": 28,
+          "bytes_per_motor": 4.93,
+          "decode_sec": 28.51,
+          "thought_lock_mean": 0.304,
+          "thought_lock_1st": 0.287,
+          "thought_lock_2nd": 0.32,
+          "latched_subjects": [
+            "日本の",
+            "歴史",
+            "であり、",
+            "都市",
+            "江戸時代",
+            "ある"
+          ],
+          "sample_fired_motors": [
+            "その",
+            "周辺",
+            "地域",
+            "を含む",
+            "人口",
+            "約",
+            "や",
+            "文化",
+            "、",
+            "教育",
+            "、",
+            "経済"
+          ]
+        }
+      }
+    },
+    "ドイツ工業": {
+      "prompt": "ドイツの自動車産業とエンジン技術は世界的に知られており、",
+      "a_discrete_only": {
+        "text": "ドイツの自動車産業とエンジン技術は世界的に知られており、そのほとんどの列車が運行されている。また、オイルショック（もしくは、それほど使われてはいないが、ローマ建国紀元）がヨーロッパで広く",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 2.383,
+          "gen_bytes": 195,
+          "motor_steps": 25,
+          "bytes_per_motor": 7.8,
+          "decode_sec": 27.03,
+          "thought_lock_mean": 0.136,
+          "thought_lock_1st": 0.119,
+          "thought_lock_2nd": 0.15,
+          "latched_subjects": [
+            "知られて",
+            "は世界",
+            "おり、",
+            "エンジン",
+            "ドイツの",
+            "自動車"
+          ],
+          "sample_fired_motors": [
+            "その",
+            "ほとんど",
+            "の",
+            "列車が",
+            "運行",
+            "されている。",
+            "また、",
+            "オ",
+            "イル",
+            "ショック",
+            "（",
+            "もしくは"
+          ]
+        }
+      },
+      "b_v52_thought_locked": {
+        "text": "ドイツの自動車産業とエンジン技術は世界的に知られており、開発センター（もしくは、それほど使われてはいないが、ローマ建国やオートバイのメーカーが工業都市として発展を生産量産・販売",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 3.239,
+          "gen_bytes": 180,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.43,
+          "decode_sec": 28.46,
+          "thought_lock_mean": 0.305,
+          "thought_lock_1st": 0.194,
+          "thought_lock_2nd": 0.439,
+          "latched_subjects": [
+            "産業",
+            "技術",
+            "エンジン",
+            "は世界",
+            "自動車",
+            "知られて"
+          ],
+          "sample_fired_motors": [
+            "開発",
+            "センター",
+            "（",
+            "もしくは",
+            "、それ",
+            "ほど",
+            "使われて",
+            "はいない",
+            "が、",
+            "ローマ",
+            "建",
+            "国"
+          ]
+        }
+      }
+    },
+    "新幹線・鉄道": {
+      "prompt": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、",
+      "a_discrete_only": {
+        "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、その周辺地域を含む人口約人の基礎自治体（コムーネ）。駅ナンバリングが導入され、使用を開始する。（東京メトロ）に継承される。また、",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 2.664,
+          "gen_bytes": 192,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.86,
+          "decode_sec": 25.66,
+          "thought_lock_mean": 0.126,
+          "thought_lock_1st": 0.092,
+          "thought_lock_2nd": 0.16,
+          "latched_subjects": [
+            "を結ぶ",
+            "は東京",
+            "であり、",
+            "東海道",
+            "高速",
+            "新幹線"
+          ],
+          "sample_fired_motors": [
+            "その",
+            "周辺",
+            "地域",
+            "を含む",
+            "人口",
+            "約",
+            "人の",
+            "基礎",
+            "自治体",
+            "（",
+            "コム",
+            "ーネ"
+          ]
+        }
+      },
+      "b_v52_thought_locked": {
+        "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、鉄道線の駅である。駅番号はJR東海道本線・山陽本線・鹿児島本線経由で運行する高速バス路線が乗り入れ、接続",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 2.323,
+          "gen_bytes": 152,
+          "motor_steps": 28,
+          "bytes_per_motor": 5.43,
+          "decode_sec": 25.68,
+          "thought_lock_mean": 0.623,
+          "thought_lock_1st": 0.639,
+          "thought_lock_2nd": 0.605,
+          "latched_subjects": [
+            "を結ぶ",
+            "東海道",
+            "新幹線",
+            "高速",
+            "駅と",
+            "鉄道"
+          ],
+          "sample_fired_motors": [
+            "鉄道",
+            "線の",
+            "駅で",
+            "ある。",
+            "駅",
+            "番号",
+            "は",
+            "JR",
+            "東海道",
+            "本線",
+            "・",
+            "山陽"
+          ]
+        }
+      }
+    },
+    "無限拡張🚀": {
+      "prompt": "薔薇と憂鬱と🚀について、",
+      "a_discrete_only": {
+        "text": "薔薇と憂鬱と🚀について、いろいろな分野で使われています。そして、この家の主人が帰国した後に、この地域は、昔あった日本の会社です。本社は東京都",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 2.087,
+          "gen_bytes": 174,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.21,
+          "decode_sec": 30.1,
+          "thought_lock_mean": 0.055,
+          "thought_lock_1st": 0.07,
+          "thought_lock_2nd": 0.04,
+          "latched_subjects": [
+            "について、",
+            "憂鬱",
+            "薔薇"
+          ],
+          "sample_fired_motors": [
+            "いろいろな",
+            "分野",
+            "で",
+            "使われて",
+            "います。",
+            "そして、",
+            "この",
+            "家の",
+            "主人",
+            "が",
+            "帰",
+            "国"
+          ]
+        }
+      },
+      "b_v52_thought_locked": {
+        "text": "薔薇と憂鬱と🚀について、「自分の考えをなくして、一人でやる事故が発生。死者になり、その後",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 2.908,
+          "gen_bytes": 96,
+          "motor_steps": 28,
+          "bytes_per_motor": 3.43,
+          "decode_sec": 25.84,
+          "thought_lock_mean": 0.205,
+          "thought_lock_1st": 0.233,
+          "thought_lock_2nd": 0.179,
+          "latched_subjects": [
+            "憂鬱",
+            "薔薇",
+            "について、"
+          ],
+          "sample_fired_motors": [
+            "「",
+            "自分の",
+            "考え",
+            "を",
+            "な",
+            "く",
+            "し",
+            "て",
+            "、",
+            "一",
+            "人",
+            "で"
+          ]
+        }
+      }
+    }
+  },
+  "peak_vram_mb": 7323.2,
+  "elapsed_sec": 1307.1
+}

@@ -1,0 +1,325 @@
+{
+  "prefill": {
+    "b64": {
+      "bpb": 1.3978,
+      "bpc_lossless": 4.0588,
+      "ppl_char": 16.67,
+      "byte_top1": 0.7275,
+      "byte_top5": 0.9299
+    },
+    "s64": 15.67,
+    "b128": {
+      "bpb": 1.4023,
+      "bpc_lossless": 4.072,
+      "ppl_char": 16.82,
+      "byte_top1": 0.7266,
+      "byte_top5": 0.9296
+    },
+    "s128": 8.62
+  },
+  "gen": {
+    "HQ (W=6, cap=48)": {
+      "mean_decode_sec": 1.74,
+      "mean_critic_sec": 0.65,
+      "chars_per_sec": 33.19,
+      "speedup_vs_v63_preopt": 17.71,
+      "mean_bpc": 3.073,
+      "mean_2nd_lock_hroot": 0.392,
+      "samples": {
+        "新幹線・鉄道": {
+          "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、新幹線の東京駅 - 新大阪駅間の区間運転列車は当駅発着の列車も運行されている。本線・山陽本線・鹿児島本線経由",
+          "info": {
+            "fluency_bpc": 2.554,
+            "gen_bytes": 156,
+            "gen_chars": 54,
+            "motor_steps": 28,
+            "bytes_per_motor": 5.57,
+            "decode_sec": 1.84,
+            "critic_sec": 0.59,
+            "chars_per_sec": 29.27,
+            "hip_query_ms": 8.15,
+            "epi_conf": 1.0,
+            "ep_sources": [
+              "wikipedia",
+              "wikipedia",
+              "easy_ja"
+            ],
+            "thought_lock_2nd": 0.537,
+            "grounded_concept_rate": 0.5,
+            "max_verbatim_chars": 4
+          }
+        },
+        "量子重力": {
+          "text": "量子力学と一般相対性理論を統合する量子重力理論は、量子重力理論の基礎的研究と量子力学では、エネルギーの測定値の確率分布は、重力理論である。量子論の枠組みでしていない。",
+          "info": {
+            "fluency_bpc": 3.576,
+            "gen_bytes": 174,
+            "gen_chars": 58,
+            "motor_steps": 28,
+            "bytes_per_motor": 6.21,
+            "decode_sec": 2.03,
+            "critic_sec": 0.63,
+            "chars_per_sec": 28.61,
+            "hip_query_ms": 5.5,
+            "epi_conf": 1.0,
+            "ep_sources": [
+              "wikipedia",
+              "wikipedia",
+              "wikipedia"
+            ],
+            "thought_lock_2nd": 0.428,
+            "grounded_concept_rate": 0.571,
+            "max_verbatim_chars": 8
+          }
+        },
+        "Wikipedia歴史": {
+          "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて第一次世界大戦の終結から第二次世界大戦で日本が勃発し、ドイツ軍に占領され、戦後はイギリス海軍は第一次世界大戦後の19",
+          "info": {
+            "fluency_bpc": 2.683,
+            "gen_bytes": 170,
+            "gen_chars": 58,
+            "motor_steps": 28,
+            "bytes_per_motor": 6.07,
+            "decode_sec": 1.63,
+            "critic_sec": 0.67,
+            "chars_per_sec": 35.53,
+            "hip_query_ms": 12.58,
+            "epi_conf": 1.0,
+            "ep_sources": [
+              "wikipedia",
+              "easy_ja",
+              "wikipedia"
+            ],
+            "thought_lock_2nd": 0.347,
+            "grounded_concept_rate": 0.6,
+            "max_verbatim_chars": 8
+          }
+        },
+        "青空文庫文学": {
+          "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。名前がなかったという。名前は、その教師であるから。」というものはない。が始まり、中学校の生れたものも無い。私はそのときから",
+          "info": {
+            "fluency_bpc": 3.478,
+            "gen_bytes": 183,
+            "gen_chars": 61,
+            "motor_steps": 28,
+            "bytes_per_motor": 6.54,
+            "decode_sec": 1.46,
+            "critic_sec": 0.7,
+            "chars_per_sec": 41.83,
+            "hip_query_ms": 11.1,
+            "epi_conf": 1.0,
+            "ep_sources": [
+              "wikipedia",
+              "wikipedia"
+            ],
+            "thought_lock_2nd": 0.256,
+            "grounded_concept_rate": 0.762,
+            "max_verbatim_chars": 11
+          }
+        }
+      }
+    },
+    "Bal (W=3, cap=24)": {
+      "mean_decode_sec": 1.55,
+      "mean_critic_sec": 0.67,
+      "chars_per_sec": 39.13,
+      "speedup_vs_v63_preopt": 19.85,
+      "mean_bpc": 3.057,
+      "mean_2nd_lock_hroot": 0.439,
+      "samples": {
+        "新幹線・鉄道": {
+          "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、新幹線の東京駅 - 新大阪駅間の区間列車も設定されている。特急「直通運転区間が東京駅から東海道新幹線が新大阪駅発着",
+          "info": {
+            "fluency_bpc": 2.611,
+            "gen_bytes": 165,
+            "gen_chars": 57,
+            "motor_steps": 28,
+            "bytes_per_motor": 5.89,
+            "decode_sec": 1.69,
+            "critic_sec": 0.61,
+            "chars_per_sec": 33.63,
+            "hip_query_ms": 7.51,
+            "epi_conf": 1.0,
+            "ep_sources": [
+              "wikipedia",
+              "wikipedia",
+              "easy_ja"
+            ],
+            "thought_lock_2nd": 0.558,
+            "grounded_concept_rate": 0.783,
+            "max_verbatim_chars": 7
+          }
+        },
+        "量子重力": {
+          "text": "量子力学と一般相対性理論を統合する量子重力理論は、量子重力理論の基礎的研究、量子力学では、エネルギーの測定値としていない。現在の量子論は、理論物理学における力学（物理的",
+          "info": {
+            "fluency_bpc": 3.454,
+            "gen_bytes": 177,
+            "gen_chars": 59,
+            "motor_steps": 28,
+            "bytes_per_motor": 6.32,
+            "decode_sec": 1.71,
+            "critic_sec": 0.63,
+            "chars_per_sec": 34.49,
+            "hip_query_ms": 5.54,
+            "epi_conf": 1.0,
+            "ep_sources": [
+              "wikipedia",
+              "wikipedia",
+              "wikipedia"
+            ],
+            "thought_lock_2nd": 0.511,
+            "grounded_concept_rate": 0.545,
+            "max_verbatim_chars": 9
+          }
+        },
+        "Wikipedia歴史": {
+          "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて第一次世界大戦後のドイツと第二次世界大戦で日本が勃発した第二次世界大戦・太平洋戦争中の1943年（昭和18年）、）は、アメリカ陸軍の終",
+          "info": {
+            "fluency_bpc": 2.549,
+            "gen_bytes": 189,
+            "gen_chars": 67,
+            "motor_steps": 28,
+            "bytes_per_motor": 6.75,
+            "decode_sec": 1.52,
+            "critic_sec": 0.72,
+            "chars_per_sec": 44.21,
+            "hip_query_ms": 12.11,
+            "epi_conf": 1.0,
+            "ep_sources": [
+              "wikipedia",
+              "easy_ja",
+              "wikipedia"
+            ],
+            "thought_lock_2nd": 0.36,
+            "grounded_concept_rate": 0.636,
+            "max_verbatim_chars": 13
+          }
+        },
+        "青空文庫文学": {
+          "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。名前がなかったという。その名前は「この始まり、中学校の教師であるから。」というような、そのも無い。私は私のは珍らしいとい",
+          "info": {
+            "fluency_bpc": 3.614,
+            "gen_bytes": 180,
+            "gen_chars": 60,
+            "motor_steps": 28,
+            "bytes_per_motor": 6.43,
+            "decode_sec": 1.29,
+            "critic_sec": 0.71,
+            "chars_per_sec": 46.47,
+            "hip_query_ms": 11.01,
+            "epi_conf": 1.0,
+            "ep_sources": [
+              "wikipedia",
+              "wikipedia"
+            ],
+            "thought_lock_2nd": 0.325,
+            "grounded_concept_rate": 0.714,
+            "max_verbatim_chars": 11
+          }
+        }
+      }
+    },
+    "Fast (W=2, cap=14)": {
+      "mean_decode_sec": 1.49,
+      "mean_critic_sec": 0.64,
+      "chars_per_sec": 37.82,
+      "speedup_vs_v63_preopt": 20.71,
+      "mean_bpc": 3.231,
+      "mean_2nd_lock_hroot": 0.404,
+      "samples": {
+        "新幹線・鉄道": {
+          "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、新幹線の東京駅 - 新大阪駅間で運転区間（東海道新幹線が全線開業に伴い、駅は新幹線の線直通列車は当駅が停車駅と",
+          "info": {
+            "fluency_bpc": 3.131,
+            "gen_bytes": 159,
+            "gen_chars": 55,
+            "motor_steps": 28,
+            "bytes_per_motor": 5.68,
+            "decode_sec": 1.64,
+            "critic_sec": 0.59,
+            "chars_per_sec": 33.49,
+            "hip_query_ms": 7.53,
+            "epi_conf": 1.0,
+            "ep_sources": [
+              "wikipedia",
+              "wikipedia",
+              "easy_ja"
+            ],
+            "thought_lock_2nd": 0.597,
+            "grounded_concept_rate": 0.636,
+            "max_verbatim_chars": 7
+          }
+        },
+        "量子重力": {
+          "text": "量子力学と一般相対性理論を統合する量子重力理論は、量子重力理論の基礎的研究』に基づく一般相対性理論の応用していない。現在の量子論は、理論的な説明は重力理論物理学における",
+          "info": {
+            "fluency_bpc": 3.211,
+            "gen_bytes": 177,
+            "gen_chars": 59,
+            "motor_steps": 28,
+            "bytes_per_motor": 6.32,
+            "decode_sec": 1.67,
+            "critic_sec": 0.63,
+            "chars_per_sec": 35.38,
+            "hip_query_ms": 5.5,
+            "epi_conf": 1.0,
+            "ep_sources": [
+              "wikipedia",
+              "wikipedia",
+              "wikipedia"
+            ],
+            "thought_lock_2nd": 0.491,
+            "grounded_concept_rate": 0.625,
+            "max_verbatim_chars": 9
+          }
+        },
+        "Wikipedia歴史": {
+          "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて第一次世界大戦後のドイツと第二次世界大戦で日本が勃発し、）は、アメリカ陸軍の終結を宣言。ドイツ軍に占領され、戦後",
+          "info": {
+            "fluency_bpc": 3.262,
+            "gen_bytes": 168,
+            "gen_chars": 56,
+            "motor_steps": 28,
+            "bytes_per_motor": 6.0,
+            "decode_sec": 1.46,
+            "critic_sec": 0.66,
+            "chars_per_sec": 38.44,
+            "hip_query_ms": 12.12,
+            "epi_conf": 1.0,
+            "ep_sources": [
+              "wikipedia",
+              "easy_ja",
+              "wikipedia"
+            ],
+            "thought_lock_2nd": 0.299,
+            "grounded_concept_rate": 0.55,
+            "max_verbatim_chars": 8
+          }
+        },
+        "青空文庫文学": {
+          "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。名前はまだ珍の始まり、中学校から名前がなかったという。その、その教師である。」という名も無い。このために作られ",
+          "info": {
+            "fluency_bpc": 3.32,
+            "gen_bytes": 165,
+            "gen_chars": 55,
+            "motor_steps": 28,
+            "bytes_per_motor": 5.89,
+            "decode_sec": 1.18,
+            "critic_sec": 0.66,
+            "chars_per_sec": 46.65,
+            "hip_query_ms": 10.94,
+            "epi_conf": 1.0,
+            "ep_sources": [
+              "wikipedia",
+              "wikipedia"
+            ],
+            "thought_lock_2nd": 0.228,
+            "grounded_concept_rate": 0.739,
+            "max_verbatim_chars": 11
+          }
+        }
+      }
+    }
+  }
+}

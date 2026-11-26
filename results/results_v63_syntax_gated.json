@@ -1,0 +1,390 @@
+{
+  "role_stats": {
+    "num_emergent_roles": 19,
+    "events_trained": 37747158,
+    "discrete_role_keys": 47850,
+    "sec": 31.76
+  },
+  "hip_episodes": 2945562,
+  "benchmark1_ab": {
+    "新幹線・鉄道": {
+      "v62_ungated": {
+        "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、新幹線の東京駅 - 新大阪駅間で運転区間（東海道本線の駅である。駅番号は山陽本線がJR東海バス路線の区間が開通しました。",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 2.813,
+          "gen_bytes": 170,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.07,
+          "decode_sec": 30.03,
+          "hip_query_ms": 14.36,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "wikipedia",
+            "easy_ja"
+          ],
+          "thought_lock_2nd": 0.578,
+          "grounded_concept_rate": 0.739,
+          "max_verbatim_chars": 12
+        }
+      },
+      "v63_syntax_gated": {
+        "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、新幹線の東京駅 - 新大阪駅間で運転区間（東海道本線の駅である。駅番号はJR東海の鉄道路線が乗り入れ、接続駅と",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 2.555,
+          "gen_bytes": 155,
+          "motor_steps": 28,
+          "bytes_per_motor": 5.54,
+          "decode_sec": 29.99,
+          "hip_query_ms": 14.39,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "wikipedia",
+            "easy_ja"
+          ],
+          "thought_lock_2nd": 0.605,
+          "grounded_concept_rate": 0.682,
+          "max_verbatim_chars": 12
+        }
+      }
+    },
+    "ドイツ工業": {
+      "v62_ungated": {
+        "text": "ドイツの自動車産業とエンジン技術は世界的に知られており、世界的に有名な観光業が産業では、エンジンは、自動車産業の貿易センター化しつつある。英語圏における「呼び名も開発されている。使用する",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 3.363,
+          "gen_bytes": 195,
+          "motor_steps": 27,
+          "bytes_per_motor": 7.22,
+          "decode_sec": 30.54,
+          "hip_query_ms": 17.67,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "easy_ja",
+            "easy_ja"
+          ],
+          "thought_lock_2nd": 0.214,
+          "grounded_concept_rate": 0.762,
+          "max_verbatim_chars": 7
+        }
+      },
+      "v63_syntax_gated": {
+        "text": "ドイツの自動車産業とエンジン技術は世界的に知られており、世界的に有名な観光業が産業では、エンジンは、自動車産業の貿易センター（もしくは、それほど使われてはいないが、ローマ建国やオートバイ",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 3.111,
+          "gen_bytes": 195,
+          "motor_steps": 27,
+          "bytes_per_motor": 7.22,
+          "decode_sec": 30.0,
+          "hip_query_ms": 17.66,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "easy_ja",
+            "easy_ja"
+          ],
+          "thought_lock_2nd": 0.183,
+          "grounded_concept_rate": 0.364,
+          "max_verbatim_chars": 7
+        }
+      }
+    },
+    "量子重力": {
+      "v62_ungated": {
+        "text": "量子力学と一般相対性理論を統合する量子重力理論は、量子重力理論の基礎的研究と量子力学では、エネルギーの電子が原子核の質量とエネルギーの等価である。重力理論",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 3.448,
+          "gen_bytes": 156,
+          "motor_steps": 28,
+          "bytes_per_motor": 5.57,
+          "decode_sec": 32.18,
+          "hip_query_ms": 10.86,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "wikipedia",
+            "wikipedia"
+          ],
+          "thought_lock_2nd": 0.427,
+          "grounded_concept_rate": 0.429,
+          "max_verbatim_chars": 6
+        }
+      },
+      "v63_syntax_gated": {
+        "text": "量子力学と一般相対性理論を統合する量子重力理論は、量子重力理論の基礎的研究と量子力学では、エネルギーの測定値の確率分布は、重力理論である。量子論の枠組みでしていない。",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 3.576,
+          "gen_bytes": 174,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.21,
+          "decode_sec": 32.6,
+          "hip_query_ms": 10.82,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "wikipedia",
+            "wikipedia"
+          ],
+          "thought_lock_2nd": 0.462,
+          "grounded_concept_rate": 0.571,
+          "max_verbatim_chars": 8
+        }
+      }
+    },
+    "Wikipedia歴史": {
+      "v62_ungated": {
+        "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて第一次世界大戦の終結を宣言。同盟国との戦争で日本軍と第二次世界大戦中にアメリカ海軍が勃発。略称：）は、19",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 3.138,
+          "gen_bytes": 155,
+          "motor_steps": 28,
+          "bytes_per_motor": 5.54,
+          "decode_sec": 28.25,
+          "hip_query_ms": 21.22,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "wikipedia",
+            "wikipedia"
+          ],
+          "thought_lock_2nd": 0.366,
+          "grounded_concept_rate": 0.714,
+          "max_verbatim_chars": 8
+        }
+      },
+      "v63_syntax_gated": {
+        "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて第一次世界大戦の終結を宣言。）は、第二次世界大戦中の1944年（昭和19年）にかけて、連合国軍とアメリカ海軍は、第二次世界大戦",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 2.286,
+          "gen_bytes": 177,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.32,
+          "decode_sec": 28.48,
+          "hip_query_ms": 21.2,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "wikipedia",
+            "wikipedia"
+          ],
+          "thought_lock_2nd": 0.36,
+          "grounded_concept_rate": 0.682,
+          "max_verbatim_chars": 10
+        }
+      }
+    },
+    "青空文庫文学": {
+      "v62_ungated": {
+        "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。名前がなかったという。その名前は「吾輩の英語教師。珍らしい。」というようなも始まり、中学校から云うと、その猫である。「この",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 3.955,
+          "gen_bytes": 183,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.54,
+          "decode_sec": 31.55,
+          "hip_query_ms": 19.37,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "wikipedia"
+          ],
+          "thought_lock_2nd": 0.324,
+          "grounded_concept_rate": 0.773,
+          "max_verbatim_chars": 11
+        }
+      },
+      "v63_syntax_gated": {
+        "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。名前がなかったという。名前は、その教師であるから。」というものはない。が始まり、中学校の生れたものも無い。そのときから云う",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 3.561,
+          "gen_bytes": 183,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.54,
+          "decode_sec": 31.82,
+          "hip_query_ms": 19.24,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "wikipedia"
+          ],
+          "thought_lock_2nd": 0.313,
+          "grounded_concept_rate": 0.762,
+          "max_verbatim_chars": 11
+        }
+      }
+    },
+    "東京・江戸": {
+      "v62_ungated": {
+        "text": "日本の東京は、江戸時代から続く歴史ある都市であり、その周辺地域を含む人口がナポレオンは古代からの影響下には、マルクス主義や文化が生まれたとわたって大都市が置かれた。中には他の",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 3.598,
+          "gen_bytes": 186,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.64,
+          "decode_sec": 31.6,
+          "hip_query_ms": 12.56,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "easy_ja",
+            "wikipedia"
+          ],
+          "thought_lock_2nd": 0.348,
+          "grounded_concept_rate": 0.727,
+          "max_verbatim_chars": 5
+        }
+      },
+      "v63_syntax_gated": {
+        "text": "日本の東京は、江戸時代から続く歴史ある都市であり、その周辺地域を含む人口にわたって、ナポレオン戦争・文化の影響は、マルクス主義を批判し、国や地方公共団体が置かれた。中には",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 3.035,
+          "gen_bytes": 180,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.43,
+          "decode_sec": 31.55,
+          "hip_query_ms": 12.5,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "easy_ja",
+            "wikipedia"
+          ],
+          "thought_lock_2nd": 0.261,
+          "grounded_concept_rate": 0.476,
+          "max_verbatim_chars": 7
+        }
+      }
+    },
+    "無限拡張🚀": {
+      "v62_ungated": {
+        "text": "薔薇と憂鬱と🚀について、今もってくるのだった。彼は、その事柄はのことについて、「自分の考えや博士に聞きたい、とが、かわるがわるには、この人の心を感動を",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 4.126,
+          "gen_bytes": 189,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.75,
+          "decode_sec": 30.96,
+          "hip_query_ms": 2.16,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "aozora",
+            "wikipedia",
+            "wikipedia"
+          ],
+          "thought_lock_2nd": 0.255,
+          "grounded_concept_rate": 0.81,
+          "max_verbatim_chars": 12
+        }
+      },
+      "v63_syntax_gated": {
+        "text": "薔薇と憂鬱と🚀について、今ものだった。彼は、その事柄はのことについて、「自分の考えをもってくると、もう一と憂鬱になるフランスの博士に聞きただしい",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 3.819,
+          "gen_bytes": 180,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.43,
+          "decode_sec": 31.22,
+          "hip_query_ms": 2.1,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "aozora",
+            "wikipedia",
+            "wikipedia"
+          ],
+          "thought_lock_2nd": 0.376,
+          "grounded_concept_rate": 0.667,
+          "max_verbatim_chars": 8
+        }
+      }
+    }
+  },
+  "benchmark2_custom": {
+    "mount_ms": 0.15,
+    "mounted": {
+      "Direct Custom": {
+        "prompt": "次世代の超光速推進機関アストラX-99は、",
+        "text": "次世代の超光速推進機関アストラX-99は、博士が開発した推進機関の宇宙船エンジンをマイナスの量子化学研究所で開発した画期的な、研究開発機構をエンジンである。",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 3.901,
+          "gen_bytes": 171,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.11,
+          "decode_sec": 27.49,
+          "hip_query_ms": 7.04,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "custom_astra_x99",
+            "custom_astra_x99"
+          ],
+          "thought_lock_2nd": 0.286,
+          "grounded_concept_rate": 0.9,
+          "max_verbatim_chars": 12
+        }
+      },
+      "Indirect Custom": {
+        "prompt": "黒木ミライ博士が開発した推進機関の特徴は、",
+        "text": "黒木ミライ博士が開発した推進機関の特徴は、博士が開発することで、冷却したロケットエンジンの推進剤を成功させた。火星軌道は、黒木、研究開発した方式である。「液体の約400",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 3.784,
+          "gen_bytes": 183,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.54,
+          "decode_sec": 29.04,
+          "hip_query_ms": 11.64,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "custom_astra_x99",
+            "custom_astra_x99"
+          ],
+          "thought_lock_2nd": 0.234,
+          "grounded_concept_rate": 0.857,
+          "max_verbatim_chars": 7
+        }
+      }
+    },
+    "unmounted": {
+      "Direct Custom": {
+        "prompt": "次世代の超光速推進機関アストラX-99は、",
+        "text": "次世代の超光速推進機関アストラX-99は、ジャンプ・ドライブ・キャラクターの設定されていた宇宙船「スペースシップは、コンピューターゲームに共通する特徴として、はジェットエンジン",
+        "valid": true,
+        "info": {
+          "fluency_bpc": 2.966,
+          "gen_bytes": 201,
+          "motor_steps": 25,
+          "bytes_per_motor": 8.04,
+          "decode_sec": 26.42,
+          "hip_query_ms": 7.1,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "wikipedia",
+            "wikipedia"
+          ],
+          "thought_lock_2nd": 0.224,
+          "grounded_concept_rate": 0.611,
+          "max_verbatim_chars": 9
+        }
+      }
+    }
+  },
+  "peak_vram_mb": 7331.3,
+  "elapsed_sec": 606.9
+}

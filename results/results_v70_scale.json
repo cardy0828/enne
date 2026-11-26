@@ -1,0 +1,213 @@
+{
+  "build": {
+    "V_m": 48000,
+    "R": 17,
+    "bytes_ing": 1274063248,
+    "motors_ing": 206396156,
+    "build_sec": 398.4,
+    "finalize": {
+      "dir_ppmi_synapses": 2728026,
+      "sym_ppmi_synapses": 3690565,
+      "active_macro_slots": 32968790,
+      "tau_idf": 6.84,
+      "sec": 33.16
+    }
+  },
+  "bpc": {
+    "domains": {
+      "easy_ja": {
+        "discrete": {
+          "bpb": 1.3988,
+          "bpc_lossless": 4.0618,
+          "ppl_char": 16.7,
+          "byte_top1": 0.7272,
+          "byte_top5": 0.9299
+        },
+        "full_cont": {
+          "bpb": 1.3985,
+          "bpc_lossless": 4.0609,
+          "ppl_char": 16.69,
+          "byte_top1": 0.7274,
+          "byte_top5": 0.9299
+        }
+      },
+      "aozora": {
+        "discrete": {
+          "bpb": 1.6698,
+          "bpc_lossless": 4.9664,
+          "ppl_char": 31.26,
+          "byte_top1": 0.6765,
+          "byte_top5": 0.9109
+        },
+        "full_cont": {
+          "bpb": 1.6696,
+          "bpc_lossless": 4.9658,
+          "ppl_char": 31.25,
+          "byte_top1": 0.6767,
+          "byte_top5": 0.9109
+        }
+      },
+      "wikipedia": {
+        "discrete": {
+          "bpb": 1.7098,
+          "bpc_lossless": 4.584,
+          "ppl_char": 23.98,
+          "byte_top1": 0.6853,
+          "byte_top5": 0.9048
+        },
+        "full_cont": {
+          "bpb": 1.7092,
+          "bpc_lossless": 4.5825,
+          "ppl_char": 23.96,
+          "byte_top1": 0.6854,
+          "byte_top5": 0.9049
+        }
+      }
+    },
+    "mean_disc": 4.5374,
+    "mean_full": 4.5364
+  },
+  "gen": {
+    "mean_bpc": 2.444,
+    "mean_2nd_lock": 0.425,
+    "mean_decode_sec": 1.61,
+    "chars_per_sec": 36.7,
+    "samples": {
+      "新幹線・鉄道": {
+        "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、特急列車が停車駅を結ぶ路線。東京駅 - 新大阪駅間（主要地方道）である。この急行列車「JR東海道新幹線・山陽本線・山陽",
+        "info": {
+          "fluency_bpc": 2.652,
+          "gen_bytes": 167,
+          "gen_chars": 59,
+          "motor_steps": 28,
+          "bytes_per_motor": 5.96,
+          "decode_sec": 1.61,
+          "critic_sec": 0.62,
+          "chars_per_sec": 36.65,
+          "hip_query_ms": 6.67,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "wikipedia",
+            "easy_ja"
+          ],
+          "thought_lock_2nd": 0.631,
+          "grounded_concept_rate": 0.545,
+          "max_verbatim_chars": 6
+        }
+      },
+      "量子重力": {
+        "text": "量子力学と一般相対性理論を統合する量子重力理論は、ニュートン力学における運動方程式は、重力理論は、物理学的効果によっては、一般相対性理論と量子論におけるアインシュタイン方程式の解",
+        "info": {
+          "fluency_bpc": 2.64,
+          "gen_bytes": 192,
+          "gen_chars": 64,
+          "motor_steps": 26,
+          "bytes_per_motor": 7.38,
+          "decode_sec": 1.89,
+          "critic_sec": 0.69,
+          "chars_per_sec": 33.9,
+          "hip_query_ms": 5.17,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "wikipedia",
+            "wikipedia"
+          ],
+          "thought_lock_2nd": 0.487,
+          "grounded_concept_rate": 0.5,
+          "max_verbatim_chars": 12
+        }
+      },
+      "Wikipedia歴史": {
+        "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけての第二次世界大戦中の1943年（昭和18年）には大規模の第一次世界大戦が始まると、太平洋戦争勃発。）は、日本を占領した連合国軍最高司令官",
+        "info": {
+          "fluency_bpc": 2.315,
+          "gen_bytes": 192,
+          "gen_chars": 68,
+          "motor_steps": 25,
+          "bytes_per_motor": 7.68,
+          "decode_sec": 1.63,
+          "critic_sec": 0.74,
+          "chars_per_sec": 41.72,
+          "hip_query_ms": 11.28,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "wikipedia",
+            "easy_ja"
+          ],
+          "thought_lock_2nd": 0.23,
+          "grounded_concept_rate": 0.444,
+          "max_verbatim_chars": 9
+        }
+      },
+      "青空文庫文学": {
+        "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。そのとんと見当がつかなかった。その後はまだ無い。どこでもいいから、お前の夏目漱石のようにな",
+        "info": {
+          "fluency_bpc": 2.17,
+          "gen_bytes": 135,
+          "gen_chars": 45,
+          "motor_steps": 28,
+          "bytes_per_motor": 4.82,
+          "decode_sec": 1.3,
+          "critic_sec": 0.59,
+          "chars_per_sec": 34.49,
+          "hip_query_ms": 9.06,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "wikipedia"
+          ],
+          "thought_lock_2nd": 0.354,
+          "grounded_concept_rate": 0.318,
+          "max_verbatim_chars": 9
+        }
+      }
+    },
+    "custom": {
+      "Custom Direct": {
+        "text": "量子重力エンジン「アストラX-99」は20エネルギーは、重力エンジンとして開発された「物理学の研究所での最大の運動方程式を加速度の大きさはエネルギー量子仮説を提唱した。",
+        "info": {
+          "fluency_bpc": 3.208,
+          "gen_bytes": 191,
+          "gen_chars": 65,
+          "motor_steps": 25,
+          "bytes_per_motor": 7.64,
+          "decode_sec": 1.33,
+          "critic_sec": 0.62,
+          "chars_per_sec": 48.97,
+          "hip_query_ms": 4.55,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "custom_astra"
+          ],
+          "thought_lock_2nd": 0.487,
+          "grounded_concept_rate": 0.438,
+          "max_verbatim_chars": 6
+        }
+      },
+      "Custom Indirect": {
+        "text": "アストラX-99の最大推力は従来のイオンエンジンの推進装置である。が、中開発された「重力エンジンは次世代のハンバーガーの研究所で、トラクションコントロールシステム",
+        "info": {
+          "fluency_bpc": 3.693,
+          "gen_bytes": 201,
+          "gen_chars": 67,
+          "motor_steps": 25,
+          "bytes_per_motor": 8.04,
+          "decode_sec": 1.35,
+          "critic_sec": 0.61,
+          "chars_per_sec": 49.49,
+          "hip_query_ms": 2.04,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "custom_astra"
+          ],
+          "thought_lock_2nd": 0.257,
+          "grounded_concept_rate": 0.632,
+          "max_verbatim_chars": 11
+        }
+      }
+    }
+  }
+}

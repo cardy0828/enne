@@ -1,0 +1,920 @@
+{
+  "parser_v101": {
+    "n_prompts": 94198,
+    "n_prose_lines": 37983,
+    "n_boundaries_1": 42,
+    "n_boundaries_2": 17,
+    "n_boilerplate_frames": 2342,
+    "content_vocab_size": 24000,
+    "tau_u_idf": 8.814,
+    "discovered_boundaries_1": [
+      "!",
+      "\"",
+      "#",
+      "%",
+      "&",
+      "'",
+      "(",
+      ")",
+      ",",
+      ".",
+      "/",
+      ":",
+      ";",
+      "?",
+      "[",
+      "]",
+      "}",
+      "”",
+      "…",
+      "、",
+      "。",
+      "「",
+      "」",
+      "『",
+      "』",
+      "〔",
+      "〕",
+      "が",
+      "で",
+      "と"
+    ],
+    "sample_boilerplate": [
+      "か?",
+      "すか",
+      "すか?",
+      "です",
+      "ですか",
+      "ですか?",
+      "はど",
+      "ます",
+      "どの",
+      "てい",
+      "よう",
+      "のよ",
+      "のよう",
+      "どのよ",
+      "どのよう",
+      "して",
+      "はどの",
+      "した",
+      "いて",
+      "ますか"
+    ],
+    "sec": 25.46
+  },
+  "parse_comparison": [
+    {
+      "q": "こんにちは！調子はどうですか？",
+      "legacy_ents": [
+        "！調子"
+      ],
+      "broca_ents": [
+        "調子",
+        "こん"
+      ],
+      "intent": "FACT_MULTI",
+      "want_hip": true
+    },
+    {
+      "q": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "legacy_ents": [
+        "東海道新幹線",
+        "？簡単"
+      ],
+      "broca_ents": [
+        "東海道新幹線",
+        "簡単"
+      ],
+      "intent": "FACT_MULTI",
+      "want_hip": true
+    },
+    {
+      "q": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "legacy_ents": [
+        "一般相対性理論",
+        "わかり",
+        "量子力学"
+      ],
+      "broca_ents": [
+        "量子力学",
+        "わかり"
+      ],
+      "intent": "FACT_MULTI",
+      "want_hip": true
+    },
+    {
+      "q": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "legacy_ents": [
+        "終わりましたか？",
+        "始まり",
+        "第二次世界大戦"
+      ],
+      "broca_ents": [
+        "第二次世界大戦",
+        "終わ",
+        "始まり"
+      ],
+      "intent": "FACT_MULTI",
+      "want_hip": true
+    },
+    {
+      "q": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "legacy_ents": [
+        "夏目漱石",
+        "吾輩",
+        "小説"
+      ],
+      "broca_ents": [
+        "夏目漱石",
+        "吾輩",
+        "小説"
+      ],
+      "intent": "FACT_MULTI",
+      "want_hip": true
+    },
+    {
+      "q": "日本の首都はどこですか？",
+      "legacy_ents": [
+        "首都"
+      ],
+      "broca_ents": [
+        "首都"
+      ],
+      "intent": "FACT_SINGLE",
+      "want_hip": true
+    },
+    {
+      "q": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+      "legacy_ents": [
+        "アストラX-99",
+        "量子重力エンジン"
+      ],
+      "broca_ents": [
+        "量子重力エンジン",
+        "アストラX-99"
+      ],
+      "intent": "FACT_MULTI",
+      "want_hip": true
+    },
+    {
+      "q": "アストラX-99の最大推力はどのくらいですか？",
+      "legacy_ents": [
+        "アストラX-99",
+        "最大推力",
+        "くらい"
+      ],
+      "broca_ents": [
+        "アストラX-99",
+        "最大推力",
+        "く"
+      ],
+      "intent": "FACT_MULTI",
+      "want_hip": true
+    }
+  ],
+  "alpha_broca_selected": 0.5,
+  "val_1000_dual_opt": {
+    "body_bpc": 3.8261,
+    "body_bpb": 1.3472,
+    "body_top1": 0.7335,
+    "eot_bits": 2.519,
+    "body_bytes": 594996,
+    "eot_count": 1544,
+    "sec": 140.6
+  },
+  "gen_ablation_summary": {
+    "V9_Legacy": {
+      "ev_h": 0,
+      "an_h": 1,
+      "gt": 15,
+      "eot": 4,
+      "bpcs": [
+        3.4906,
+        2.9751,
+        2.7816,
+        1.9094,
+        3.3857,
+        3.3379
+      ],
+      "mean_bpc": 2.98
+    },
+    "V10a_+L2Broca": {
+      "ev_h": 0,
+      "an_h": 0,
+      "gt": 15,
+      "eot": 5,
+      "bpcs": [
+        4.8876,
+        2.8734,
+        3.9272,
+        3.8016,
+        3.2999,
+        2.8962
+      ],
+      "mean_bpc": 3.614
+    },
+    "V10b_+L1Broca": {
+      "ev_h": 0,
+      "an_h": 1,
+      "gt": 15,
+      "eot": 6,
+      "bpcs": [
+        4.6467,
+        2.9751,
+        3.5846,
+        2.12,
+        3.447,
+        2.6073
+      ],
+      "mean_bpc": 3.23
+    },
+    "V101_FullBroca": {
+      "ev_h": 0,
+      "an_h": 1,
+      "gt": 15,
+      "eot": 5,
+      "bpcs": [
+        3.6359,
+        2.8734,
+        3.9501,
+        2.3809,
+        3.447,
+        2.8545
+      ],
+      "mean_bpc": 3.19
+    }
+  },
+  "gen_details": {
+    "挨拶": {
+      "q": "こんにちは！調子はどうですか？",
+      "gold": [],
+      "cfgs": {
+        "V9_Legacy": {
+          "ans": "はどうなんてね。やあ、マルタのような調子はどうだったよ。」』なんて言うなら、それはあなたのおっしゃる通り、そのよくなっています――こんなふうにして",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "！調子"
+            ],
+            "exact_entities": [],
+            "agenda_preview": [
+              "『やあ、マル、調子はどう?』なんてね。"
+            ],
+            "stopped_eot": false,
+            "decode_sec": 2.18,
+            "fluency_bpc": 3.4906
+          }
+        },
+        "V10a_+L2Broca": {
+          "ans": "こんな話が出てきます。後は全部この調子だ。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "調子",
+              "こん"
+            ],
+            "exact_entities": [
+              "調子",
+              "こん"
+            ],
+            "agenda_preview": [
+              "もう後は全部この調子だと思って読んでいると、急にこんな話が出てきます。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 2.85,
+            "fluency_bpc": 4.8876
+          }
+        },
+        "V10b_+L1Broca": {
+          "ans": "はどうなんてね。やあ、マルタント』なんていってくれるこさんはどうなるかもしれません)です。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "！調子"
+            ],
+            "exact_entities": [],
+            "agenda_preview": [
+              "『やあ、マル、調子はどう?』なんてね。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 3.69,
+            "fluency_bpc": 4.6467
+          }
+        },
+        "V101_FullBroca": {
+          "ans": "こんな話が出てきます。後は全部だと思って読んでいると、急にこの調子だと思っています。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "調子",
+              "こん"
+            ],
+            "exact_entities": [
+              "調子",
+              "こん"
+            ],
+            "agenda_preview": [
+              "もう後は全部この調子だと思って読んでいると、急にこんな話が出てきます。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 2.27,
+            "fluency_bpc": 3.6359
+          }
+        }
+      }
+    },
+    "用語説明(鉄道)": {
+      "q": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "gold": [
+        "東京",
+        "新大阪",
+        "高速",
+        "JR"
+      ],
+      "cfgs": {
+        "V9_Legacy": {
+          "ans": "東海道新幹線に関連して発生した事件です。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "東海道新幹線",
+              "？簡単"
+            ],
+            "exact_entities": [
+              "東海道新幹線",
+              "？簡単"
+            ],
+            "agenda_preview": [
+              "東海道新幹線墨子事件は、1993年から2000年にかけて東海道新幹線に関連して発生した事件です。",
+              "何故だろう？簡単に言って了えば、アラビア語があまりにもむずかしいからである。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 3.0,
+            "fluency_bpc": 2.9751
+          }
+        },
+        "V10a_+L2Broca": {
+          "ans": "東海道新幹線に関連しています。年から2000年にかけて発生した事件です。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "東海道新幹線",
+              "簡単"
+            ],
+            "exact_entities": [
+              "東海道新幹線",
+              "簡単"
+            ],
+            "agenda_preview": [
+              "東海道新幹線墨子事件は、1993年から2000年にかけて東海道新幹線に関連して発生した事件です。",
+              "、簡単に本格的な新聞やチラシ・冊子が作成できます。個人や学校向けに特化しており、幅広い用途に対応しています。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 2.21,
+            "fluency_bpc": 2.8734
+          }
+        },
+        "V10b_+L1Broca": {
+          "ans": "東海道新幹線に関連して発生した事件です。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "東海道新幹線",
+              "？簡単"
+            ],
+            "exact_entities": [
+              "東海道新幹線",
+              "？簡単"
+            ],
+            "agenda_preview": [
+              "東海道新幹線墨子事件は、1993年から2000年にかけて東海道新幹線に関連して発生した事件です。",
+              "何故だろう？簡単に言って了えば、アラビア語があまりにもむずかしいからである。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 3.4,
+            "fluency_bpc": 2.9751
+          }
+        },
+        "V101_FullBroca": {
+          "ans": "東海道新幹線に関連しています。年から2000年にかけて発生した事件です。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "東海道新幹線",
+              "簡単"
+            ],
+            "exact_entities": [
+              "東海道新幹線",
+              "簡単"
+            ],
+            "agenda_preview": [
+              "東海道新幹線墨子事件は、1993年から2000年にかけて東海道新幹線に関連して発生した事件です。",
+              "、簡単に本格的な新聞やチラシ・冊子が作成できます。個人や学校向けに特化しており、幅広い用途に対応しています。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 4.74,
+            "fluency_bpc": 2.8734
+          }
+        }
+      }
+    },
+    "科学説明(物理)": {
+      "q": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "gold": [
+        "アインシュタイン",
+        "重力",
+        "時空",
+        "確率"
+      ],
+      "cfgs": {
+        "V9_Legacy": {
+          "ans": "その後に発展した一般相対性理論における「古典力学」と呼ばれ、量子力学において、とても大切です。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "一般相対性理論",
+              "わかり",
+              "量子力学"
+            ],
+            "exact_entities": [
+              "一般相対性理論",
+              "量子力学"
+            ],
+            "agenda_preview": [
+              "その後に発展した一般相対性理論までの完成された力学は「古典力学」と呼ばれ、1920年代に成立した量子力学と区別される。",
+              "水素原子は、単純な二体問題の系として、解析的な単純解がたくさん見つかりました。そのため、量子力学や量子場理論において、とても大切です。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 2.16,
+            "fluency_bpc": 2.7816
+          }
+        },
+        "V10a_+L2Broca": {
+          "ans": "数学的状態は波動関数もしくはわかりにくいベクトルにより表現される。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "量子力学",
+              "わかり"
+            ],
+            "exact_entities": [
+              "量子力学",
+              "わかり"
+            ],
+            "agenda_preview": [
+              "数学的には、量子力学的状態は波動関数もしくは(若干わかりにくいが）状態ベクトルにより表現される。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 2.24,
+            "fluency_bpc": 3.9272
+          }
+        },
+        "V10b_+L1Broca": {
+          "ans": "その後に発展した量子力学と区別される。」と呼ばれ、量子力学的な単純な二体問題の発展した一般相対性理論における「古典力学において、とても大切です。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "一般相対性理論",
+              "わかり",
+              "量子力学"
+            ],
+            "exact_entities": [
+              "一般相対性理論",
+              "量子力学"
+            ],
+            "agenda_preview": [
+              "その後に発展した一般相対性理論までの完成された力学は「古典力学」と呼ばれ、1920年代に成立した量子力学と区別される。",
+              "水素原子は、単純な二体問題の系として、解析的な単純解がたくさん見つかりました。そのため、量子力学や量子場理論において、とても大切です。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 6.01,
+            "fluency_bpc": 3.5846
+          }
+        },
+        "V101_FullBroca": {
+          "ans": "もしくは、量子力学的状態は波動関数 (S) - ベクトルにわかりにくい数学的には、量子力学的には波動関数もしくは特定の状況により表現",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "量子力学",
+              "わかり"
+            ],
+            "exact_entities": [
+              "量子力学",
+              "わかり"
+            ],
+            "agenda_preview": [
+              "数学的には、量子力学的状態は波動関数もしくは(若干わかりにくいが）状態ベクトルにより表現される。"
+            ],
+            "stopped_eot": false,
+            "decode_sec": 4.32,
+            "fluency_bpc": 3.9501
+          }
+        }
+      }
+    },
+    "歴史質問": {
+      "q": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "gold": [
+        "1939",
+        "1945"
+      ],
+      "cfgs": {
+        "V9_Legacy": {
+          "ans": "第二次世界大戦後の1945年 - 第二次世界大戦: アメリカ軍が占領した。8月27日まで続きました。",
+          "ev_h": 0,
+          "an_h": 1,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "終わりましたか？",
+              "始まり",
+              "第二次世界大戦"
+            ],
+            "exact_entities": [
+              "始まり",
+              "第二次世界大戦"
+            ],
+            "agenda_preview": [
+              "1943年 - 第二次世界大戦: クルスクの戦いが始まりました。8月27日まで続きました。",
+              "1943年 - 第二次世界大戦: アヴァランチ作戦が連合軍の勝利に終わる。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 2.63,
+            "fluency_bpc": 1.9094
+          }
+        },
+        "V10a_+L2Broca": {
+          "ans": "第二次世界大戦: アヴァランチの勝利に終わる。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "第二次世界大戦",
+              "終わ",
+              "始まり"
+            ],
+            "exact_entities": [
+              "第二次世界大戦",
+              "終わ",
+              "始まり"
+            ],
+            "agenda_preview": [
+              "1943年 - 第二次世界大戦: アヴァランチ作戦が連合軍の勝利に終わる。",
+              "1943年 - 第二次世界大戦: クルスクの戦いが始まりました。8月27日まで続きました。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 1.85,
+            "fluency_bpc": 3.8016
+          }
+        },
+        "V10b_+L1Broca": {
+          "ans": "第二次世界大戦の戦いが始まりました。この戦い - 第二次世界大戦後の1945年8月27日まで続きました。",
+          "ev_h": 0,
+          "an_h": 1,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "終わりましたか？",
+              "始まり",
+              "第二次世界大戦"
+            ],
+            "exact_entities": [
+              "始まり",
+              "第二次世界大戦"
+            ],
+            "agenda_preview": [
+              "1943年 - 第二次世界大戦: クルスクの戦いが始まりました。8月27日まで続きました。",
+              "1943年 - 第二次世界大戦: アヴァランチ作戦が連合軍の勝利に終わる。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 3.27,
+            "fluency_bpc": 2.12
+          }
+        },
+        "V101_FullBroca": {
+          "ans": " - 第二次世界大戦後の1945年8月27日まで続きました。",
+          "ev_h": 0,
+          "an_h": 1,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "第二次世界大戦",
+              "終わ",
+              "始まり"
+            ],
+            "exact_entities": [
+              "第二次世界大戦",
+              "終わ",
+              "始まり"
+            ],
+            "agenda_preview": [
+              "1943年 - 第二次世界大戦: アヴァランチ作戦が連合軍の勝利に終わる。",
+              "1943年 - 第二次世界大戦: クルスクの戦いが始まりました。8月27日まで続きました。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 3.21,
+            "fluency_bpc": 2.3809
+          }
+        }
+      }
+    },
+    "文学質問": {
+      "q": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "gold": [
+        "明治",
+        "長編",
+        "風刺",
+        "教師"
+      ],
+      "cfgs": {
+        "V9_Legacy": {
+          "ans": "そのことに関する記述が見られる。『吾輩るようになり、夏目漱石先生の小説が一般の小説『源氏物語』の作者である』にもそのことが書いて食べられるようになり、大学院の小説で、これは日本の伝統的な文化や芸術",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "exact_entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "agenda_preview": [
+              "日本全土で豚肉が一般に食べられるようになり、夏目漱石の小説『吾輩は猫である』にもそのことに関する記述が見られる。"
+            ],
+            "stopped_eot": false,
+            "decode_sec": 2.84,
+            "fluency_bpc": 3.3857
+          }
+        },
+        "V10a_+L2Broca": {
+          "ans": "そのことに関する記述が見られる。先生の小説『夏目漱石の小説家が一般的である。全土るようになり、夏目先生の小説『吾輩は猫である」は、多くの文学作品の中でも特に有名なのは",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "exact_entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "agenda_preview": [
+              "日本全土で豚肉が一般に食べられるようになり、夏目漱石の小説『吾輩は猫である』にもそのことに関する記述が見られる。"
+            ],
+            "stopped_eot": false,
+            "decode_sec": 3.33,
+            "fluency_bpc": 3.2999
+          }
+        },
+        "V10b_+L1Broca": {
+          "ans": "そのことに関する記述が見られる。猫である。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_FACT",
+            "want_hip": true,
+            "entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "exact_entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "agenda_preview": [
+              "日本全土で豚肉が一般に食べられるようになり、夏目漱石の小説『吾輩は猫である』にもそのことに関する記述が見られる。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 4.24,
+            "fluency_bpc": 3.447
+          }
+        },
+        "V101_FullBroca": {
+          "ans": "そのことに関する記述が見られる。猫である。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_MULTI",
+            "want_hip": true,
+            "entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "exact_entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "agenda_preview": [
+              "日本全土で豚肉が一般に食べられるようになり、夏目漱石の小説『吾輩は猫である』にもそのことに関する記述が見られる。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 4.96,
+            "fluency_bpc": 3.447
+          }
+        }
+      }
+    },
+    "日常質問": {
+      "q": "日本の首都はどこですか？",
+      "gold": [
+        "東京"
+      ],
+      "cfgs": {
+        "V9_Legacy": {
+          "ans": "「である。さらに、このような状況では、まず最初に、ひる重要な要素です。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_SOCIAL",
+            "want_hip": false,
+            "entities": [
+              "首都"
+            ],
+            "exact_entities": [],
+            "agenda_preview": [],
+            "stopped_eot": true,
+            "decode_sec": 0.98,
+            "fluency_bpc": 3.3379
+          }
+        },
+        "V10a_+L2Broca": {
+          "ans": "それでも首都ローマではありません。もしれませんが、それでも重要な役割を果たしています。都市です。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_SINGLE",
+            "want_hip": true,
+            "entities": [
+              "首都"
+            ],
+            "exact_entities": [
+              "首都"
+            ],
+            "agenda_preview": [
+              "経済首都とみなされるかもしれませんが、それでも首都ローマではありません。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 3.11,
+            "fluency_bpc": 2.8962
+          }
+        },
+        "V10b_+L1Broca": {
+          "ans": "この文章では、主に日本の文化や歴史を反映しています。これは、その地域の人々の生活において重要な役割を果たします。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "LEGACY_SOCIAL",
+            "want_hip": false,
+            "entities": [
+              "首都"
+            ],
+            "exact_entities": [],
+            "agenda_preview": [],
+            "stopped_eot": true,
+            "decode_sec": 2.17,
+            "fluency_bpc": 2.6073
+          }
+        },
+        "V101_FullBroca": {
+          "ans": "それでも首都ローマではありません。しかもしれませんが、それでも重要な役割を果たしています。されるかもしれません。しかし、これはあくまで一般的な傾向であり、個々の状況によります。",
+          "ev_h": 0,
+          "an_h": 0,
+          "info": {
+            "intent_mode": "FACT_SINGLE",
+            "want_hip": true,
+            "entities": [
+              "首都"
+            ],
+            "exact_entities": [
+              "首都"
+            ],
+            "agenda_preview": [
+              "経済首都とみなされるかもしれませんが、それでも首都ローマではありません。"
+            ],
+            "stopped_eot": true,
+            "decode_sec": 4.07,
+            "fluency_bpc": 2.8545
+          }
+        }
+      }
+    }
+  },
+  "custom": {
+    "Custom Direct QA": {
+      "q": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+      "ev_h": 3,
+      "an_h": 1,
+      "ans": "ストラップス開発された次世代推進装置である。",
+      "info": {
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "量子重力エンジン",
+          "アストラX-99"
+        ],
+        "exact_entities": [
+          "量子重力エンジン",
+          "アストラX-99"
+        ],
+        "agenda_preview": [
+          "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+          "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。"
+        ],
+        "stopped_eot": true,
+        "decode_sec": 5.13,
+        "fluency_bpc": 4.174
+      }
+    },
+    "Custom Indirect QA": {
+      "q": "アストラX-99の最大推力はどのくらいですか？",
+      "ev_h": 3,
+      "an_h": 2,
+      "ans": "エンジンの約400倍であり、火星までの航行時間をわずか10の最大推力は従来のイオンエンジンの推進装置である。",
+      "info": {
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "アストラX-99",
+          "最大推力",
+          "く"
+        ],
+        "exact_entities": [
+          "アストラX-99",
+          "最大推力",
+          "く"
+        ],
+        "agenda_preview": [
+          "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+          "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。"
+        ],
+        "stopped_eot": true,
+        "decode_sec": 3.99,
+        "fluency_bpc": 4.4654
+      }
+    }
+  },
+  "final_mem": {
+    "peak_rss_gb": 29.75,
+    "gpu_alloc_mb": 7323.0,
+    "gpu_res_mb": 7346.0
+  },
+  "total_sec": 552.7
+}

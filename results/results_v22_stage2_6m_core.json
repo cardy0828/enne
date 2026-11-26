@@ -1,0 +1,240 @@
+{
+  "s0_bare": {
+    "easy_ja": {
+      "bpb": 1.434,
+      "bpc_lossless": 4.164,
+      "ppl_char_equiv": 17.93,
+      "byte_top1": 0.7143,
+      "byte_top5": 0.9272,
+      "births": 0,
+      "divorces": 0,
+      "alive_hidden": 3141492,
+      "edges": 3163752,
+      "ltm_active": 0
+    },
+    "aozora": {
+      "bpb": 1.6879,
+      "bpc_lossless": 5.0201,
+      "ppl_char_equiv": 32.45,
+      "byte_top1": 0.6665,
+      "byte_top5": 0.9089,
+      "births": 0,
+      "divorces": 0,
+      "alive_hidden": 3141492,
+      "edges": 3163752,
+      "ltm_active": 0
+    },
+    "wikipedia": {
+      "bpb": 1.7726,
+      "bpc_lossless": 4.7523,
+      "ppl_char_equiv": 26.95,
+      "byte_top1": 0.6633,
+      "byte_top5": 0.9006,
+      "births": 0,
+      "divorces": 0,
+      "alive_hidden": 3141492,
+      "edges": 3163752,
+      "ltm_active": 0
+    }
+  },
+  "history": [
+    {
+      "round": 1,
+      "cum_chars_m": 105.0,
+      "sec": 930.7,
+      "births": 2858017,
+      "deaths": 2013870,
+      "merged": 4224,
+      "divorces": 305,
+      "alive_hidden": 3981650,
+      "edges": 4007872,
+      "peak_vram_mb": 8562.0,
+      "domains": {
+        "easy_ja": {
+          "bpb": 1.4361,
+          "bpc_lossless": 4.17,
+          "ppl_char_equiv": 18.0,
+          "byte_top1": 0.7133,
+          "byte_top5": 0.9271,
+          "births": 0,
+          "divorces": 0,
+          "alive_hidden": 3981650,
+          "edges": 4007872,
+          "ltm_active": 0
+        },
+        "aozora": {
+          "bpb": 1.6929,
+          "bpc_lossless": 5.0351,
+          "ppl_char_equiv": 32.79,
+          "byte_top1": 0.6661,
+          "byte_top5": 0.9092,
+          "births": 0,
+          "divorces": 0,
+          "alive_hidden": 3981650,
+          "edges": 4007872,
+          "ltm_active": 0
+        },
+        "wikipedia": {
+          "bpb": 1.778,
+          "bpc_lossless": 4.7668,
+          "ppl_char_equiv": 27.22,
+          "byte_top1": 0.6641,
+          "byte_top5": 0.9005,
+          "births": 0,
+          "divorces": 0,
+          "alive_hidden": 3981650,
+          "edges": 4007872,
+          "ltm_active": 0
+        }
+      }
+    },
+    {
+      "round": 2,
+      "cum_chars_m": 120.0,
+      "sec": 935.9,
+      "births": 2018005,
+      "deaths": 1657360,
+      "merged": 4545,
+      "divorces": 94,
+      "alive_hidden": 4337839,
+      "edges": 4368504,
+      "peak_vram_mb": 8562.0,
+      "domains": {
+        "easy_ja": {
+          "bpb": 1.4565,
+          "bpc_lossless": 4.2294,
+          "ppl_char_equiv": 18.76,
+          "byte_top1": 0.7106,
+          "byte_top5": 0.927,
+          "births": 0,
+          "divorces": 0,
+          "alive_hidden": 4337839,
+          "edges": 4368504,
+          "ltm_active": 0
+        },
+        "aozora": {
+          "bpb": 1.7142,
+          "bpc_lossless": 5.0983,
+          "ppl_char_equiv": 34.26,
+          "byte_top1": 0.6626,
+          "byte_top5": 0.9091,
+          "births": 0,
+          "divorces": 0,
+          "alive_hidden": 4337839,
+          "edges": 4368504,
+          "ltm_active": 0
+        },
+        "wikipedia": {
+          "bpb": 1.7984,
+          "bpc_lossless": 4.8214,
+          "ppl_char_equiv": 28.27,
+          "byte_top1": 0.6614,
+          "byte_top5": 0.9,
+          "births": 0,
+          "divorces": 0,
+          "alive_hidden": 4337839,
+          "edges": 4368504,
+          "ltm_active": 0
+        }
+      }
+    },
+    {
+      "round": 3,
+      "cum_chars_m": 135.0,
+      "sec": 934.9,
+      "births": 1661981,
+      "deaths": 1451998,
+      "merged": 3994,
+      "divorces": 42,
+      "alive_hidden": 4543752,
+      "edges": 4578393,
+      "peak_vram_mb": 8562.0,
+      "domains": {
+        "easy_ja": {
+          "bpb": 1.4562,
+          "bpc_lossless": 4.2285,
+          "ppl_char_equiv": 18.75,
+          "byte_top1": 0.7145,
+          "byte_top5": 0.9269,
+          "births": 0,
+          "divorces": 0,
+          "alive_hidden": 4543752,
+          "edges": 4578393,
+          "ltm_active": 0
+        },
+        "aozora": {
+          "bpb": 1.7145,
+          "bpc_lossless": 5.0993,
+          "ppl_char_equiv": 34.28,
+          "byte_top1": 0.6668,
+          "byte_top5": 0.909,
+          "births": 0,
+          "divorces": 0,
+          "alive_hidden": 4543752,
+          "edges": 4578393,
+          "ltm_active": 0
+        },
+        "wikipedia": {
+          "bpb": 1.807,
+          "bpc_lossless": 4.8447,
+          "ppl_char_equiv": 28.73,
+          "byte_top1": 0.6619,
+          "byte_top5": 0.8997,
+          "births": 0,
+          "divorces": 0,
+          "alive_hidden": 4543752,
+          "edges": 4578393,
+          "ltm_active": 0
+        }
+      }
+    }
+  ],
+  "final_bare": {
+    "easy_ja": {
+      "bpb": 1.456,
+      "bpc_lossless": 4.2279,
+      "ppl_char_equiv": 18.74,
+      "byte_top1": 0.7145,
+      "byte_top5": 0.927,
+      "births": 0,
+      "divorces": 0,
+      "alive_hidden": 4543752,
+      "edges": 4578393,
+      "ltm_active": 0
+    },
+    "aozora": {
+      "bpb": 1.7146,
+      "bpc_lossless": 5.0996,
+      "ppl_char_equiv": 34.29,
+      "byte_top1": 0.6669,
+      "byte_top5": 0.909,
+      "births": 0,
+      "divorces": 0,
+      "alive_hidden": 4543752,
+      "edges": 4578393,
+      "ltm_active": 0
+    },
+    "wikipedia": {
+      "bpb": 1.8075,
+      "bpc_lossless": 4.8459,
+      "ppl_char_equiv": 28.76,
+      "byte_top1": 0.6621,
+      "byte_top5": 0.8998,
+      "births": 0,
+      "divorces": 0,
+      "alive_hidden": 4543752,
+      "edges": 4578393,
+      "ltm_active": 0
+    }
+  },
+  "exec_fit": {
+    "num_passages": 11264,
+    "num_modes": 24,
+    "min_mode_sz": 2,
+    "max_mode_sz": 1361
+  },
+  "alive_hidden": 4543752,
+  "edges": 4578393,
+  "peak_vram_mb": 8562.0,
+  "total_sec": 3160.0
+}

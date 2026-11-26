@@ -1,0 +1,290 @@
+{
+  "tree": {
+    "name": "V8_Tree_NoMerge",
+    "final": {
+      "alive_hidden": 152374,
+      "edges": 152374,
+      "val_bpc": 4.4765,
+      "val_ppl": 22.26,
+      "val_top1": 0.405,
+      "val_top5": 0.643
+    }
+  },
+  "concept_dag": {
+    "name": "V87b_ConceptConvergent_DAG",
+    "elapsed_sec": 456.4,
+    "total_merges": 1529,
+    "total_divorces": 653,
+    "concept_clusters": [
+      {
+        "cluster": 4,
+        "size": 34,
+        "chars": [
+          "日",
+          "年",
+          "時",
+          "月",
+          "度",
+          "回",
+          "歳",
+          "号",
+          "万",
+          "円",
+          "位",
+          "紀",
+          "枚",
+          "午"
+        ]
+      },
+      {
+        "cluster": 42,
+        "size": 34,
+        "chars": [
+          " ",
+          "-",
+          "A",
+          "S",
+          "C",
+          "T",
+          "I",
+          "R",
+          "M",
+          "P",
+          "B",
+          "N",
+          ")",
+          "("
+        ]
+      },
+      {
+        "cluster": 19,
+        "size": 34,
+        "chars": [
+          "色",
+          "白",
+          "青",
+          "赤",
+          "黒",
+          "暗",
+          "雲",
+          "ぽ",
+          "黄",
+          "薄",
+          "緑",
+          "汚",
+          "濃",
+          "紫"
+        ]
+      },
+      {
+        "cluster": 8,
+        "size": 34,
+        "chars": [
+          "笑",
+          "進",
+          "悲",
+          "苦",
+          "飲",
+          "息",
+          "積",
+          "含",
+          "微",
+          "盗",
+          "踏",
+          "ぺ",
+          "沈",
+          "悩"
+        ]
+      },
+      {
+        "cluster": 52,
+        "size": 34,
+        "chars": [
+          "古",
+          "枯",
+          "希",
+          "桃",
+          "蛙",
+          "霜",
+          "桑",
+          "柿",
+          "楊",
+          "椿",
+          "桐",
+          "杏",
+          "乃",
+          "曽"
+        ]
+      },
+      {
+        "cluster": 137,
+        "size": 34,
+        "chars": [
+          "忘",
+          "振",
+          "抱",
+          "撮",
+          "拾",
+          "繰",
+          "垂",
+          "握",
+          "叱",
+          "釣",
+          "拶",
+          "縛",
+          "跳",
+          "刈"
+        ]
+      },
+      {
+        "cluster": 112,
+        "size": 32,
+        "chars": [
+          "恐",
+          "貧",
+          "仙",
+          "盤",
+          "〔",
+          "異",
+          "枕",
+          "延",
+          "乞",
+          "趣",
+          "幻",
+          "尋",
+          "項",
+          "翻"
+        ]
+      },
+      {
+        "cluster": 62,
+        "size": 30,
+        "chars": [
+          "性",
+          "質",
+          "腹",
+          "慢",
+          "痛",
+          "症",
+          "炎",
+          "臓",
+          "腸",
+          "脂",
+          "胃",
+          "腫",
+          "贅",
+          "肺"
+        ]
+      }
+    ],
+    "final": {
+      "round": 5,
+      "sec": 109.3,
+      "births": 101321,
+      "divorces": 121,
+      "alive_hidden": 234568,
+      "edges": 235424,
+      "edges_per_neuron": 1.004,
+      "val_concept_fire_rate": 3.422,
+      "val_exact_miss_saved_rate": 0.932,
+      "val_avg_depth": 2.42,
+      "val_bpc_concepts_off": 5.094,
+      "val_bpc": 4.462,
+      "val_ppl": 22.04,
+      "val_top1": 0.4075,
+      "val_top5": 0.6489
+    },
+    "history": [
+      {
+        "round": 1,
+        "sec": 81.9,
+        "births": 110912,
+        "deaths": 48982,
+        "merged": 415,
+        "divorces": 0,
+        "alive_hidden": 61515,
+        "edges": 61930,
+        "edges_per_neuron": 1.007,
+        "val_concept_fire_rate": 2.841,
+        "val_exact_miss_saved_rate": 0.782,
+        "val_avg_depth": 1.97,
+        "val_bpc": 4.8246,
+        "val_ppl": 28.34,
+        "val_top1": 0.3716,
+        "val_top5": 0.6168
+      },
+      {
+        "round": 2,
+        "sec": 86.6,
+        "births": 106692,
+        "deaths": 71636,
+        "merged": 494,
+        "divorces": 168,
+        "alive_hidden": 96245,
+        "edges": 96985,
+        "edges_per_neuron": 1.008,
+        "val_concept_fire_rate": 3.119,
+        "val_exact_miss_saved_rate": 0.86,
+        "val_avg_depth": 2.16,
+        "val_bpc": 4.6397,
+        "val_ppl": 24.93,
+        "val_top1": 0.3887,
+        "val_top5": 0.6331
+      },
+      {
+        "round": 3,
+        "sec": 88.0,
+        "births": 104526,
+        "deaths": 81702,
+        "merged": 337,
+        "divorces": 212,
+        "alive_hidden": 118944,
+        "edges": 119810,
+        "edges_per_neuron": 1.007,
+        "val_concept_fire_rate": 3.26,
+        "val_exact_miss_saved_rate": 0.901,
+        "val_avg_depth": 2.26,
+        "val_bpc": 4.5499,
+        "val_ppl": 23.42,
+        "val_top1": 0.3974,
+        "val_top5": 0.6415
+      },
+      {
+        "round": 4,
+        "sec": 90.1,
+        "births": 103571,
+        "deaths": 89258,
+        "merged": 283,
+        "divorces": 152,
+        "alive_hidden": 133126,
+        "edges": 134103,
+        "edges_per_neuron": 1.007,
+        "val_concept_fire_rate": 3.349,
+        "val_exact_miss_saved_rate": 0.927,
+        "val_avg_depth": 2.33,
+        "val_bpc": 4.4789,
+        "val_ppl": 22.3,
+        "val_top1": 0.4043,
+        "val_top5": 0.6483
+      },
+      {
+        "round": 5,
+        "sec": 109.3,
+        "births": 101321,
+        "divorces": 121,
+        "alive_hidden": 234568,
+        "edges": 235424,
+        "edges_per_neuron": 1.004,
+        "val_concept_fire_rate": 3.422,
+        "val_exact_miss_saved_rate": 0.932,
+        "val_avg_depth": 2.42,
+        "val_bpc_concepts_off": 5.094,
+        "val_bpc": 4.462,
+        "val_ppl": 22.04,
+        "val_top1": 0.4075,
+        "val_top5": 0.6489
+      }
+    ]
+  },
+  "peak_vram_mb": 1075.7
+}

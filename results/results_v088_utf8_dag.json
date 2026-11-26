@@ -1,0 +1,413 @@
+{
+  "elapsed_sec": 812.8,
+  "bytes_per_char_val": 2.9038,
+  "total_births": 628493,
+  "total_deaths": 340336,
+  "total_merges": 10754,
+  "total_divorces": 2341,
+  "final": {
+    "round": 5,
+    "sec": 162.9,
+    "births": 60748,
+    "divorces": 245,
+    "alive_hidden": 279744,
+    "edges": 287949,
+    "edges_per_neuron": 1.029,
+    "val_bpb": 1.632,
+    "val_bpc_lossless": 4.739,
+    "val_ppl_char_equiv": 26.7,
+    "val_byte_top1": 0.6736,
+    "val_byte_top5": 0.9059,
+    "val_avg_depth_bytes": 6.07,
+    "val_max_depth_bytes": 16
+  },
+  "history": [
+    {
+      "round": 1,
+      "sec": 150.4,
+      "births": 219246,
+      "deaths": 106680,
+      "merged": 3092,
+      "divorces": 0,
+      "alive_hidden": 109474,
+      "edges": 112566,
+      "edges_per_neuron": 1.028,
+      "val_bpb": 1.8055,
+      "val_bpc_lossless": 5.2427,
+      "val_ppl_char_equiv": 37.86,
+      "val_byte_top1": 0.6465,
+      "val_byte_top5": 0.8914,
+      "val_avg_depth_bytes": 5.26,
+      "val_max_depth_bytes": 16
+    },
+    {
+      "round": 2,
+      "sec": 163.0,
+      "births": 169120,
+      "deaths": 102457,
+      "merged": 2626,
+      "divorces": 1150,
+      "alive_hidden": 174661,
+      "edges": 179182,
+      "edges_per_neuron": 1.026,
+      "val_bpb": 1.7144,
+      "val_bpc_lossless": 4.9783,
+      "val_ppl_char_equiv": 31.52,
+      "val_byte_top1": 0.6588,
+      "val_byte_top5": 0.8995,
+      "val_avg_depth_bytes": 5.7,
+      "val_max_depth_bytes": 16
+    },
+    {
+      "round": 3,
+      "sec": 164.0,
+      "births": 104502,
+      "deaths": 72675,
+      "merged": 2567,
+      "divorces": 581,
+      "alive_hidden": 204502,
+      "edges": 210936,
+      "edges_per_neuron": 1.031,
+      "val_bpb": 1.671,
+      "val_bpc_lossless": 4.8521,
+      "val_ppl_char_equiv": 28.88,
+      "val_byte_top1": 0.6656,
+      "val_byte_top5": 0.9031,
+      "val_avg_depth_bytes": 5.89,
+      "val_max_depth_bytes": 16
+    },
+    {
+      "round": 4,
+      "sec": 164.7,
+      "births": 74877,
+      "deaths": 58524,
+      "merged": 2469,
+      "divorces": 365,
+      "alive_hidden": 218751,
+      "edges": 227201,
+      "edges_per_neuron": 1.039,
+      "val_bpb": 1.6412,
+      "val_bpc_lossless": 4.7656,
+      "val_ppl_char_equiv": 27.2,
+      "val_byte_top1": 0.67,
+      "val_byte_top5": 0.9052,
+      "val_avg_depth_bytes": 5.99,
+      "val_max_depth_bytes": 16
+    },
+    {
+      "round": 5,
+      "sec": 162.9,
+      "births": 60748,
+      "divorces": 245,
+      "alive_hidden": 279744,
+      "edges": 287949,
+      "edges_per_neuron": 1.029,
+      "val_bpb": 1.632,
+      "val_bpc_lossless": 4.739,
+      "val_ppl_char_equiv": 26.7,
+      "val_byte_top1": 0.6736,
+      "val_byte_top5": 0.9059,
+      "val_avg_depth_bytes": 6.07,
+      "val_max_depth_bytes": 16
+    }
+  ],
+  "deep_neurons": [
+    {
+      "node_id": 13444,
+      "depth_bytes": 16,
+      "fires": 9809,
+      "text": "«いました。»(81a6e38184e3)"
+    },
+    {
+      "node_id": 25270,
+      "depth_bytes": 16,
+      "fires": 7566,
+      "text": "«ました。そ»(e381bee38197)"
+    },
+    {
+      "node_id": 17137,
+      "depth_bytes": 16,
+      "fires": 6086,
+      "text": "«いました。»(e38184e381be)"
+    },
+    {
+      "node_id": 11647,
+      "depth_bytes": 16,
+      "fires": 5416,
+      "text": "«りました。»(81aae3828ae3)"
+    },
+    {
+      "node_id": 17382,
+      "depth_bytes": 16,
+      "fires": 5029,
+      "text": "«んでした。»(819be38293e3)"
+    },
+    {
+      "node_id": 21552,
+      "depth_bytes": 16,
+      "fires": 4568,
+      "text": "«りました。»(e3828ae381be)"
+    },
+    {
+      "node_id": 76057,
+      "depth_bytes": 16,
+      "fires": 4197,
+      "text": "«せんでした»(bee3819be382)"
+    },
+    {
+      "node_id": 16119,
+      "depth_bytes": 16,
+      "fires": 3992,
+      "text": "«りません。»(8182e3828ae3)"
+    },
+    {
+      "node_id": 135032,
+      "depth_bytes": 16,
+      "fires": 3632,
+      "text": "«ていました»(a3e381a6e381)"
+    },
+    {
+      "node_id": 140274,
+      "depth_bytes": 16,
+      "fires": 3620,
+      "text": "«いました。»(a6e38184e381)"
+    },
+    {
+      "node_id": 36822,
+      "depth_bytes": 16,
+      "fires": 3505,
+      "text": "«ありません»(afe38182e382)"
+    },
+    {
+      "node_id": 16928,
+      "depth_bytes": 16,
+      "fires": 3493,
+      "text": "«ています。»(81a3e381a6e3)"
+    }
+  ],
+  "merged_clusters": [
+    {
+      "node_id": 261535,
+      "depth": 3,
+      "fires": 37373,
+      "count": 12,
+      "aliases": [
+        "«し»(bee38197)",
+        "«引»(92e5bc95)",
+        "«引»(abe5bc95)",
+        "«知»(a6e79fa5)",
+        "«服»(aee69c8d)",
+        "«力»(84e58a9b)",
+        "«書»(a6e69bb8)",
+        "«方»(9be696b9)",
+        "«助»(92e58aa9)",
+        "«局»(bfe5b180)",
+        "«昼»(8ae698bc)",
+        "«家»(ace5aeb6)"
+      ]
+    },
+    {
+      "node_id": 142883,
+      "depth": 3,
+      "fires": 24034,
+      "count": 12,
+      "aliases": [
+        "«し»(bee38197)",
+        "«ー»(afe383bc)",
+        "«歩»(a7e6ada9)",
+        "«的»(bae79a84)",
+        "«形»(84e5bda2)",
+        "«少»(8ae5b091)",
+        "«手»(bee6898b)",
+        "«手»(9de6898b)",
+        "«過»(a6e9818e)",
+        "«黒»(8ce9bb92)",
+        "«垣»(b9e59ea3)",
+        "«沢»(85e6b2a2)"
+      ]
+    },
+    {
+      "node_id": 43673,
+      "depth": 3,
+      "fires": 18083,
+      "count": 12,
+      "aliases": [
+        "«う»(88e38186)",
+        "«質»(a7e8b3aa)",
+        "«失»(92e5a4b1)",
+        "«親»(b6e8a6aa)",
+        "«多»(aee5a49a)",
+        "«直»(a3e79bb4)",
+        "«情»(9fe68385)",
+        "«表»(92e8a1a8)",
+        "«屋»(8fe5b18b)",
+        "«事»(98e4ba8b)",
+        "«能»(8de883bd)",
+        "«酒»(8ae98592)"
+      ]
+    },
+    {
+      "node_id": 58266,
+      "depth": 4,
+      "fires": 16312,
+      "count": 12,
+      "aliases": [
+        "«し»(81bee38197)",
+        "«・»(83b3e383bb)",
+        "«身»(87aae8baab)",
+        "«知»(8282e79fa5)",
+        "«な»(8193e381aa)",
+        "«良»(81aee889af)",
+        "«書»(8392e69bb8)",
+        "«動»(8282e58b95)",
+        "«で»(b8bbe381a7)",
+        "«し»(8190e38197)",
+        "«砲»(a4a7e7a0b2)",
+        "«本»(a899e69cac)"
+      ]
+    },
+    {
+      "node_id": 250372,
+      "depth": 4,
+      "fires": 13935,
+      "count": 12,
+      "aliases": [
+        "«う»(8288e38186)",
+        "«で»(9381e381a7)",
+        "«大»(8197e5a4a7)",
+        "«友»(a6aae58f8b)",
+        "«良»(8282e889af)",
+        "«で»(81a7e381a7)",
+        "«長»(8890e995b7)",
+        "«会»(83bde4bc9a)",
+        "«や»(8282e38284)",
+        "«で»(94b7e381a7)",
+        "«ク»(82a3e382af)",
+        "«国»(9b9be59bbd)"
+      ]
+    },
+    {
+      "node_id": 177264,
+      "depth": 3,
+      "fires": 11264,
+      "count": 12,
+      "aliases": [
+        "«あ»(8ce38182)",
+        "«赤»(92e8b5a4)",
+        "«戒»(abe68892)",
+        "«垂»(92e59e82)",
+        "«白»(a8e799bd)",
+        "«会»(b6e4bc9a)",
+        "«会»(8ae4bc9a)",
+        "«玉»(aee78e89)",
+        "«・»(80e383bb)",
+        "«刷»(b0e588b7)",
+        "«竹»(84e7abb9)",
+        "«領»(96e9a098)"
+      ]
+    },
+    {
+      "node_id": 29748,
+      "depth": 4,
+      "fires": 8065,
+      "count": 12,
+      "aliases": [
+        "«り»(8182e3828a)",
+        "«と»(81abe381a8)",
+        "«岸»(b5b7e5b2b8)",
+        "«部»(9cace983a8)",
+        "«い»(a4b1e38184)",
+        "«は»(b395e381af)",
+        "«同»(81afe5908c)",
+        "«で»(beb4e381a7)",
+        "«細»(8282e7b4b0)",
+        "«\nや»(820ae38284)",
+        "«映»(81abe698a0)",
+        "«今»(828be4bb8a)"
+      ]
+    },
+    {
+      "node_id": 66323,
+      "depth": 3,
+      "fires": 8046,
+      "count": 12,
+      "aliases": [
+        "«っ»(bee381a3)",
+        "«ず»(9be3819a)",
+        "«写»(aee58699)",
+        "«計»(aee8a888)",
+        "«公»(81e585ac)",
+        "«千»(81e58d83)",
+        "«計»(8be8a888)",
+        "«事»(8de4ba8b)",
+        "«管»(8ce7aea1)",
+        "«丸»(aee4b8b8)",
+        "«、»(87e38081)",
+        "«理»(8ce79086)"
+      ]
+    },
+    {
+      "node_id": 266680,
+      "depth": 2,
+      "fires": 6917,
+      "count": 12,
+      "aliases": [
+        "'わ'",
+        "'濡'",
+        "'討'",
+        "'ぷ'",
+        "'誇'",
+        "'稼'",
+        "'篇'",
+        "'豹'",
+        "'臭'",
+        "'姥'",
+        "'捉'",
+        "'套'"
+      ]
+    },
+    {
+      "node_id": 19379,
+      "depth": 3,
+      "fires": 6150,
+      "count": 12,
+      "aliases": [
+        "«し»(bae38197)",
+        "«も»(bce38282)",
+        "«ば»(81e381b0)",
+        "«家»(8be5aeb6)",
+        "«機»(81e6a99f)",
+        "«分»(84e58886)",
+        "«砂»(aee7a082)",
+        "«相»(8be79bb8)",
+        "'\\n部'",
+        "«ぶ»(84e381b6)",
+        "«市»(a1e5b882)",
+        "«清»(abe6b885)"
+      ]
+    }
+  ],
+  "generations": {
+    "第二次世界大戦は、": {
+      "text": "第二次世界大戦は、どんなに着きました。そして、そのままにしておきます。マルクスバルザットの店で売っている人の男の話に出しまし�",
+      "valid_utf8": true
+    },
+    "1945年8月": {
+      "text": "1945年8月、本当にそのものはありません。しかし、とてもおかしいです。また、「大通りを止めて、弱くて、このことを知らな�",
+      "valid_utf8": true
+    },
+    "日本の歴史は、": {
+      "text": "日本の歴史は、わざと一緒に、美しさがある場所がないということは、どういうものだと思います。これは、いつものように逃げて、�",
+      "valid_utf8": true
+    },
+    "薔薇と鬱と🚀について、": {
+      "text": "薔薇と鬱と🚀について、いろいろな言葉の始まりとは違います。そのため、とても役に立たないのに、そのとき、どこからか、後から入ってき�",
+      "valid_utf8": true
+    },
+    "Hello NeuroGraph! 日本語では": {
+      "text": "Hello NeuroGraph! 日本語では、この頃に一人でしたが、小さなものはなくなってしまいました。\n「そこには、もうすく、生活の中で、心の中での生",
+      "valid_utf8": true
+    }
+  },
+  "peak_vram_mb": 1598.4
+}

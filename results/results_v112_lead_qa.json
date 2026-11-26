@@ -1,0 +1,490 @@
+{
+  "lead_index_stats": {
+    "total_chars_scanned": 1703814031,
+    "total_paragraphs": 4254929,
+    "unique_article_leads": 729779,
+    "db_size_mb": 401.3,
+    "sec": 33.63
+  },
+  "ablation_summary": {
+    "H0_Flat6gram": {
+      "ev_h": 3,
+      "an_h": 1,
+      "gt": 15,
+      "eot": 6,
+      "bpcs": [
+        2.1913,
+        4.205,
+        3.9807,
+        6.0127,
+        7.4693,
+        7.7136
+      ],
+      "ms": [
+        0.0,
+        0.8,
+        0.83,
+        1.14,
+        0.43,
+        0.3
+      ],
+      "mean_bpc": 5.262,
+      "mean_ms": 0.58
+    },
+    "H1_WikiLead": {
+      "ev_h": 10,
+      "an_h": 10,
+      "gt": 15,
+      "eot": 6,
+      "bpcs": [
+        2.1913,
+        6.2114,
+        4.3556,
+        5.245,
+        5.7767,
+        8.6006
+      ],
+      "ms": [
+        0.0,
+        0.09,
+        0.19,
+        0.06,
+        0.14,
+        0.13
+      ],
+      "mean_bpc": 5.397,
+      "mean_ms": 0.1
+    }
+  },
+  "ablation_details": {
+    "挨拶": {
+      "q": "こんにちは！調子はどうですか？",
+      "gold": [],
+      "H0_Flat6gram": {
+        "ans": "こんにちは、私はあなたのおしょうか。",
+        "ev_h": 0,
+        "an_h": 0,
+        "info": {
+          "intent_mode": "SOCIAL",
+          "want_hip": false,
+          "entities": [],
+          "agenda_heads": [],
+          "agenda_sources": [],
+          "agenda_preview": [],
+          "hop23_ms": 0.0,
+          "stopped_eot": true,
+          "decode_sec": 1.22,
+          "chars_per_sec": 14.78,
+          "fluency_bpc": 2.1913
+        }
+      },
+      "H1_WikiLead": {
+        "ans": "こんにちは、私はあなたのおしょうか。",
+        "ev_h": 0,
+        "an_h": 0,
+        "info": {
+          "intent_mode": "SOCIAL",
+          "want_hip": false,
+          "entities": [],
+          "agenda_heads": [],
+          "agenda_sources": [],
+          "agenda_preview": [],
+          "hop23_ms": 0.0,
+          "stopped_eot": true,
+          "decode_sec": 0.76,
+          "chars_per_sec": 23.75,
+          "fluency_bpc": 2.1913
+        }
+      }
+    },
+    "用語説明(鉄道)": {
+      "q": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "gold": [
+        "東京",
+        "新大阪",
+        "高速",
+        "JR"
+      ],
+      "H0_Flat6gram": {
+        "ans": "東海道新幹線100系\n2003年8月31日に東海道新幹線での定期運用を終了した100系が、同年9月13日・15日・16日の3日間、以下の臨時「ひかり」として東海道新幹線区間で運転さを終了さよなら東海道新幹線の開業した100系が、同年9月13日・15日まで行われました。",
+        "ev_h": 0,
+        "an_h": 0,
+        "info": {
+          "intent_mode": "FACT_SINGLE",
+          "want_hip": true,
+          "entities": [
+            "東海道新幹線"
+          ],
+          "agenda_heads": [
+            "wikipedia"
+          ],
+          "agenda_sources": [
+            "wikipedia"
+          ],
+          "agenda_preview": [
+            "さよなら東海道新幹線100系\n2003年8月31日に東海道新幹線での定期運用を終了した100系が、同年9月13日・15日・16日の3日間、以下の臨時「ひかり」として東海道新幹線区間で運転さ"
+          ],
+          "hop23_ms": 0.8,
+          "stopped_eot": true,
+          "decode_sec": 3.71,
+          "chars_per_sec": 36.15,
+          "fluency_bpc": 4.205
+        }
+      },
+      "H1_WikiLead": {
+        "ans": "東海道新幹線（とうかいどうしんかんせん）は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。",
+        "ev_h": 4,
+        "an_h": 4,
+        "info": {
+          "intent_mode": "FACT_SINGLE",
+          "want_hip": true,
+          "entities": [
+            "東海道新幹線"
+          ],
+          "agenda_heads": [
+            "東海道新幹線"
+          ],
+          "agenda_sources": [
+            "lead:wikipedia"
+          ],
+          "agenda_preview": [
+            "東海道新幹線（とうかいどうしんかんせん）は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。"
+          ],
+          "hop23_ms": 0.09,
+          "stopped_eot": true,
+          "decode_sec": 1.96,
+          "chars_per_sec": 36.3,
+          "fluency_bpc": 6.2114
+        }
+      }
+    },
+    "科学説明(物理)": {
+      "q": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "gold": [
+        "アインシュタイン",
+        "重力",
+        "時空",
+        "確率"
+      ],
+      "H0_Flat6gram": {
+        "ans": "一般相対性理論そのものを破綻させてしまう。将来的には量子重力理論が完成することにより、この困難は解決されるものと期待されている。",
+        "ev_h": 2,
+        "an_h": 1,
+        "info": {
+          "intent_mode": "FACT_MULTI",
+          "want_hip": true,
+          "entities": [
+            "一般相対性理論",
+            "量子力学"
+          ],
+          "agenda_heads": [
+            "wikipedia",
+            "wikipedia"
+          ],
+          "agenda_sources": [
+            "wikipedia",
+            "wikipedia"
+          ],
+          "agenda_preview": [
+            "発生は一般相対性理論そのものを破綻させてしまう。将来的には量子重力理論が完成することにより、この困難は解決されるものと期待されている。\n\n一般相対性理論が成立する",
+            "方程式が導かれる。\n\n電磁場中の粒子系\nを考える。\nとなり、ローレンツ力を再現する。\nとなる。\n\n一般相対性理論\n一般相対性理論においては、平坦な時空の計量は曲がった時空"
+          ],
+          "hop23_ms": 0.83,
+          "stopped_eot": true,
+          "decode_sec": 3.41,
+          "chars_per_sec": 18.76,
+          "fluency_bpc": 3.9807
+        }
+      },
+      "H1_WikiLead": {
+        "ans": "一般相対性理論（いっぱんそうたいせいりろん、 ）は、アルベルト・アインシュタインが1905年の特殊相対性理論に続いて、それを発展させ1915年から1916年にかけて発表した物理学の理論である。",
+        "ev_h": 1,
+        "an_h": 1,
+        "info": {
+          "intent_mode": "FACT_MULTI",
+          "want_hip": true,
+          "entities": [
+            "一般相対性理論",
+            "量子力学"
+          ],
+          "agenda_heads": [
+            "一般相対性理論",
+            "量子力学"
+          ],
+          "agenda_sources": [
+            "lead:wikipedia",
+            "lead:wikipedia"
+          ],
+          "agenda_preview": [
+            "一般相対性理論（いっぱんそうたいせいりろん、 ）は、アルベルト・アインシュタインが1905年の特殊相対性理論に続いて、それを発展させ1915年から1916年にかけて発表した物理学の理論である。一般相対論（いっぱんそうたいろん、）とも呼ばれる",
+            "量子力学において、励起状態（れいきじょうたい、）は、（原子、分子、あるいは原子核といった）系のハミルトニアンの固有状態のうち、基底状態より高いエネルギーの全ての固有状態（量子状態）を指す。"
+          ],
+          "hop23_ms": 0.19,
+          "stopped_eot": true,
+          "decode_sec": 3.04,
+          "chars_per_sec": 31.6,
+          "fluency_bpc": 4.3556
+        }
+      }
+    },
+    "歴史質問": {
+      "q": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "gold": [
+        "1939",
+        "1945"
+      ],
+      "H0_Flat6gram": {
+        "ans": "第二次世界大戦：ドイツがエストニア全土を占領。\n1942年 - 第二次世界大戦：ラビの戦い：日本軍が撤退。",
+        "ev_h": 0,
+        "an_h": 0,
+        "info": {
+          "intent_mode": "FACT_SINGLE",
+          "want_hip": true,
+          "entities": [
+            "第二次世界大戦"
+          ],
+          "agenda_heads": [
+            "wikipedia"
+          ],
+          "agenda_sources": [
+            "wikipedia"
+          ],
+          "agenda_preview": [
+            "1941年 - 第二次世界大戦：ドイツがエストニア全土を占領。\n1942年 - 第二次世界大戦：ラビの戦い：日本軍が撤退。\n1943年 - 第二次世界大戦：ラエ・サラモアの"
+          ],
+          "hop23_ms": 1.14,
+          "stopped_eot": true,
+          "decode_sec": 1.5,
+          "chars_per_sec": 35.4,
+          "fluency_bpc": 6.0127
+        }
+      },
+      "H1_WikiLead": {
+        "ans": "第二次世界大戦（だいにじせかいたいせん、略称：WWII）は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。",
+        "ev_h": 2,
+        "an_h": 2,
+        "info": {
+          "intent_mode": "FACT_SINGLE",
+          "want_hip": true,
+          "entities": [
+            "第二次世界大戦"
+          ],
+          "agenda_heads": [
+            "第二次世界大戦"
+          ],
+          "agenda_sources": [
+            "lead:wikipedia"
+          ],
+          "agenda_preview": [
+            "第二次世界大戦（だいにじせかいたいせん、略称：WWII）は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イ"
+          ],
+          "hop23_ms": 0.06,
+          "stopped_eot": true,
+          "decode_sec": 3.47,
+          "chars_per_sec": 49.6,
+          "fluency_bpc": 5.245
+        }
+      }
+    },
+    "文学質問": {
+      "q": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "gold": [
+        "明治",
+        "長編",
+        "風刺",
+        "教師"
+      ],
+      "H0_Flat6gram": {
+        "ans": "小説\n『贋作吾輩は猫である』（内田百閒、1949アニメ『君の森』の続編。",
+        "ev_h": 1,
+        "an_h": 0,
+        "info": {
+          "intent_mode": "FACT_MULTI",
+          "want_hip": true,
+          "entities": [
+            "吾輩は猫である",
+            "小説"
+          ],
+          "agenda_heads": [
+            "wikipedia",
+            "wikipedia"
+          ],
+          "agenda_sources": [
+            "wikipedia",
+            "wikipedia"
+          ],
+          "agenda_preview": [
+            "40.2%を記録した（ビデオリサーチ調べ）。\n\n小説\n『贋作吾輩は猫である』（内田百閒、1949年） - 『吾輩は猫である』の続編。\n\nアニメ\nアニメ『君の棲む街 ～文京編/早稲田編～』 ",
+            "その猫も、ずっと名前がなかったという。\n\n概要\n「吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。」という書き出しで始まり、中学校の英語教師である"
+          ],
+          "hop23_ms": 0.43,
+          "stopped_eot": true,
+          "decode_sec": 3.44,
+          "chars_per_sec": 10.48,
+          "fluency_bpc": 7.4693
+        }
+      },
+      "H1_WikiLead": {
+        "ans": "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。1905年（明治38年）1月、『ホトトギス』にて発表されたのだが、好評を博したため、翌1906年（明治39年）8月まで継続した。",
+        "ev_h": 2,
+        "an_h": 2,
+        "info": {
+          "intent_mode": "FACT_MULTI",
+          "want_hip": true,
+          "entities": [
+            "吾輩は猫である",
+            "小説"
+          ],
+          "agenda_heads": [
+            "吾輩は猫である"
+          ],
+          "agenda_sources": [
+            "lead:wikipedia"
+          ],
+          "agenda_preview": [
+            "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。1905年（明治38年）1月、『ホトトギス』にて発表されたのだが、好評を博したため、翌1906年（明治39年）8月まで継続した。"
+          ],
+          "hop23_ms": 0.14,
+          "stopped_eot": true,
+          "decode_sec": 2.18,
+          "chars_per_sec": 49.56,
+          "fluency_bpc": 5.7767
+        }
+      }
+    },
+    "日常質問": {
+      "q": "日本の首都はどこですか？",
+      "gold": [
+        "東京"
+      ],
+      "H0_Flat6gram": {
+        "ans": "日本鉱業八橋油田で上総式四号井が大噴油。\n7月30日 - 五能線全線開通。\n11月20日 - 尾去沢鉱山鉱滓ダム決壊、死者・行方不明者380名。",
+        "ev_h": 0,
+        "an_h": 0,
+        "info": {
+          "intent_mode": "FACT_MULTI",
+          "want_hip": true,
+          "entities": [
+            "首都",
+            "日本"
+          ],
+          "agenda_heads": [
+            "wikipedia",
+            "wikipedia"
+          ],
+          "agenda_sources": [
+            "wikipedia",
+            "wikipedia"
+          ],
+          "agenda_preview": [
+            "一翼を担った。\nしかしWRカーへ移行する中で最後までグループAにこだわった結果、苦戦が続き、マキネンの離脱や人材不足もあって混迷を極め、2003年に参戦休止。",
+            "1935年（昭和10年）3月20日 - 日本鉱業八橋油田で上総式四号井が大噴油。\n7月30日 - 五能線全線開通。\n11月20日 - 尾去沢鉱山鉱滓ダム決壊、死者・行方不明者380名。\n4月27日 - 雄物川"
+          ],
+          "hop23_ms": 0.3,
+          "stopped_eot": true,
+          "decode_sec": 2.32,
+          "chars_per_sec": 31.04,
+          "fluency_bpc": 7.7136
+        }
+      },
+      "H1_WikiLead": {
+        "ans": "東京都（とうきょうと、）は、日本の首都。関東地方に位置する都。都庁所在地は新宿区。 区部（特別区23区）、多摩地域（26市と西多摩郡3町1村）および島嶼部（2町7村）からなる。",
+        "ev_h": 1,
+        "an_h": 1,
+        "info": {
+          "intent_mode": "FACT_MULTI",
+          "want_hip": true,
+          "entities": [
+            "首都",
+            "日本"
+          ],
+          "agenda_heads": [
+            "東京都"
+          ],
+          "agenda_sources": [
+            "lead:wikipedia"
+          ],
+          "agenda_preview": [
+            "東京都（とうきょうと、）は、日本の首都。関東地方に位置する都。都庁所在地は新宿区。 区部（特別区23区）、多摩地域（26市と西多摩郡3町1村）および島嶼部（2町7村）からなる。"
+          ],
+          "hop23_ms": 0.13,
+          "stopped_eot": true,
+          "decode_sec": 1.7,
+          "chars_per_sec": 51.68,
+          "fluency_bpc": 8.6006
+        }
+      }
+    }
+  },
+  "custom": {
+    "Custom Direct QA": {
+      "q": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+      "ev_h": 3,
+      "an_h": 3,
+      "ans": "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+      "info": {
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "量子重力エンジン",
+          "アストラX-99"
+        ],
+        "agenda_heads": [
+          "astra",
+          "astra"
+        ],
+        "agenda_sources": [
+          "custom:astra",
+          "custom:astra"
+        ],
+        "agenda_preview": [
+          "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+          "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。"
+        ],
+        "hop23_ms": 0.1,
+        "stopped_eot": true,
+        "decode_sec": 3.43,
+        "chars_per_sec": 14.89,
+        "fluency_bpc": 4.8395
+      }
+    },
+    "Custom Indirect QA": {
+      "q": "アストラX-99の最大推力はどのくらいですか？",
+      "ev_h": 3,
+      "an_h": 3,
+      "ans": "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+      "info": {
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "アストラX-99",
+          "最大推力"
+        ],
+        "agenda_heads": [
+          "astra",
+          "astra"
+        ],
+        "agenda_sources": [
+          "custom:astra",
+          "custom:astra"
+        ],
+        "agenda_preview": [
+          "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+          "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。"
+        ],
+        "hop23_ms": 0.11,
+        "stopped_eot": true,
+        "decode_sec": 1.67,
+        "chars_per_sec": 34.81,
+        "fluency_bpc": 4.787
+      }
+    }
+  },
+  "final_mem": {
+    "peak_rss_gb": 14.46,
+    "gpu_alloc_mb": 7323.0,
+    "gpu_res_mb": 7346.0
+  },
+  "peak_cuda_alloc_mb": 7323.193359375,
+  "total_sec": 99.3
+}

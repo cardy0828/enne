@@ -1,0 +1,122 @@
+{
+  "suite_a": {
+    "rej_ingest": true,
+    "rej_fin": true,
+    "corrupt_rejected": 4
+  },
+  "suite_b": {
+    "R": 13,
+    "overlap": 0,
+    "swap_acc_topic": 1.0,
+    "swap_acc_shuf": 0.713,
+    "swap_acc_true": 1.0,
+    "swap_margin_topic": 0.0478,
+    "swap_margin_shuf": 0.0335,
+    "swap_margin_true": 0.0478,
+    "val_cos_topic": 0.292,
+    "val_cos_shuf": 0.2358,
+    "val_cos_true": 0.292
+  },
+  "suite_c": {
+    "mean_bpc": 2.763,
+    "mean_2nd_lock": 0.425,
+    "mean_decode_sec": 1.75,
+    "chars_per_sec": 34.76,
+    "custom_mount_ms": 0.1,
+    "custom_text": "量子重力エンジン「アストラX-99」は開発された時間を短縮力は従来のイオンエンジンの推進装置である。アストラム（量子重力理論とわずか18日で開発された。火星までの",
+    "samples": {
+      "新幹線・鉄道": {
+        "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、新幹線の東京駅 - 新大阪駅間で運転区間（東海道新幹線鉄道路線が乗り入れ、東京駅、名古屋市営地下鉄の路線である。開業",
+        "info": {
+          "fluency_bpc": 2.675,
+          "gen_bytes": 168,
+          "gen_chars": 58,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.0,
+          "decode_sec": 1.89,
+          "critic_sec": 0.62,
+          "chars_per_sec": 30.62,
+          "hip_query_ms": 7.54,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "easy_ja",
+            "wikipedia"
+          ],
+          "thought_lock_2nd": 0.546,
+          "grounded_concept_rate": 0.652,
+          "max_verbatim_chars": 6
+        }
+      },
+      "量子重力": {
+        "text": "量子力学と一般相対性理論を統合する量子重力理論は、量子重力理論の基礎的研究』に基づく一般相対性理論の効果を期待する重力理論である。量子論は、特殊相対性理論と量子力",
+        "info": {
+          "fluency_bpc": 2.94,
+          "gen_bytes": 168,
+          "gen_chars": 56,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.0,
+          "decode_sec": 2.03,
+          "critic_sec": 0.62,
+          "chars_per_sec": 27.56,
+          "hip_query_ms": 5.77,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "wikipedia",
+            "wikipedia"
+          ],
+          "thought_lock_2nd": 0.574,
+          "grounded_concept_rate": 0.682,
+          "max_verbatim_chars": 9
+        }
+      },
+      "Wikipedia歴史": {
+        "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて第一次世界大戦後の1945年にかけて、連合国軍とアメリカ海軍が第二次世界大戦で日本が戦争中の1943年（昭和18年）、）は、イタリア共和国",
+        "info": {
+          "fluency_bpc": 2.289,
+          "gen_bytes": 187,
+          "gen_chars": 69,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.68,
+          "decode_sec": 1.46,
+          "critic_sec": 0.72,
+          "chars_per_sec": 47.36,
+          "hip_query_ms": 12.4,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "easy_ja",
+            "wikipedia"
+          ],
+          "thought_lock_2nd": 0.334,
+          "grounded_concept_rate": 0.727,
+          "max_verbatim_chars": 10
+        }
+      },
+      "青空文庫文学": {
+        "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。名前はまだ無い。名前がなかったという。その前に、もった。そのうちには、この夏目漱石や猫が好きではなかった。が、一見してい",
+        "info": {
+          "fluency_bpc": 3.146,
+          "gen_bytes": 180,
+          "gen_chars": 60,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.43,
+          "decode_sec": 1.61,
+          "critic_sec": 0.7,
+          "chars_per_sec": 37.21,
+          "hip_query_ms": 10.12,
+          "epi_conf": 1.0,
+          "ep_sources": [
+            "wikipedia",
+            "wikipedia",
+            "wikipedia"
+          ],
+          "thought_lock_2nd": 0.246,
+          "grounded_concept_rate": 0.696,
+          "max_verbatim_chars": 11
+        }
+      }
+    }
+  }
+}

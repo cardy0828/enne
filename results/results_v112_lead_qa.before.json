@@ -1,0 +1,494 @@
+{
+  "lead_index_stats": {
+    "total_chars_scanned": 1703814031,
+    "total_paragraphs": 4254929,
+    "unique_article_leads": 762930,
+    "db_size_mb": 364.7,
+    "sec": 34.93
+  },
+  "ablation_summary": {
+    "H0_Flat6gram": {
+      "ev_h": 4,
+      "an_h": 2,
+      "gt": 15,
+      "eot": 5,
+      "bpcs": [
+        4.0574,
+        3.8667,
+        3.7988,
+        3.489,
+        5.3488,
+        1.2698
+      ],
+      "ms": [
+        0.09,
+        0.74,
+        0.82,
+        1.69,
+        0.44,
+        0.0
+      ],
+      "mean_bpc": 3.638,
+      "mean_ms": 0.63
+    },
+    "H1_WikiLead": {
+      "ev_h": 8,
+      "an_h": 3,
+      "gt": 15,
+      "eot": 5,
+      "bpcs": [
+        5.0998,
+        3.3979,
+        3.3919,
+        3.0267,
+        5.3847,
+        1.2698
+      ],
+      "ms": [
+        0.1,
+        0.05,
+        0.11,
+        0.33,
+        0.1,
+        0.0
+      ],
+      "mean_bpc": 3.595,
+      "mean_ms": 0.12
+    }
+  },
+  "ablation_details": {
+    "挨拶": {
+      "q": "こんにちは！調子はどうですか？",
+      "gold": [],
+      "H0_Flat6gram": {
+        "ans": "内における運用は2014年3月14日にちなっていた。これは、その置き換えに伴い、高崎線内における運用となっていた。",
+        "ev_h": 0,
+        "an_h": 0,
+        "info": {
+          "intent_mode": "FACT_SINGLE",
+          "want_hip": true,
+          "entities": [
+            "こん"
+          ],
+          "agenda_heads": [
+            "wikipedia"
+          ],
+          "agenda_sources": [
+            "wikipedia"
+          ],
+          "agenda_preview": [
+            "間にグリーン車を挟みこんだかのような外観となっていた。\nE233系への置き換えに伴い、高崎線内における運用は2014年3月14日をもって終了した。"
+          ],
+          "hop23_ms": 0.09,
+          "stopped_eot": true,
+          "decode_sec": 3.99,
+          "chars_per_sec": 14.3,
+          "fluency_bpc": 4.0574
+        }
+      },
+      "H1_WikiLead": {
+        "ans": "こんにちはあおぞらたのしです、新潟県、長野県、東北地方、新潟プロダクション制作にちは青空たのラジオ番組である。",
+        "ev_h": 0,
+        "an_h": 0,
+        "info": {
+          "intent_mode": "FACT_SINGLE",
+          "want_hip": true,
+          "entities": [
+            "こん"
+          ],
+          "agenda_heads": [
+            "こん"
+          ],
+          "agenda_sources": [
+            "lead:wikipedia"
+          ],
+          "agenda_preview": [
+            "こんにちは青空たのしです（こんにちはあおぞらたのしです）は、かしわプロダクション制作で、東北地方、新潟県、長野県のNRN系列各局へ配信中のラジオ番組である。"
+          ],
+          "hop23_ms": 0.1,
+          "stopped_eot": true,
+          "decode_sec": 3.25,
+          "chars_per_sec": 16.94,
+          "fluency_bpc": 5.0998
+        }
+      }
+    },
+    "用語説明(鉄道)": {
+      "q": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "gold": [
+        "東京",
+        "新大阪",
+        "高速",
+        "JR"
+      ],
+      "H0_Flat6gram": {
+        "ans": "東海道新幹線での定期運用を終了した。\nさよなら、「ひか?",
+        "ev_h": 0,
+        "an_h": 0,
+        "info": {
+          "intent_mode": "FACT_SINGLE",
+          "want_hip": true,
+          "entities": [
+            "東海道新幹線"
+          ],
+          "agenda_heads": [
+            "wikipedia"
+          ],
+          "agenda_sources": [
+            "wikipedia"
+          ],
+          "agenda_preview": [
+            "さよなら東海道新幹線100系\n2003年8月31日に東海道新幹線での定期運用を終了した100系が、同年9月13日・15日・16日の3日間、以下の臨時「ひかり」として東海道新幹線区間で運転さ"
+          ],
+          "hop23_ms": 0.74,
+          "stopped_eot": true,
+          "decode_sec": 2.76,
+          "chars_per_sec": 10.14,
+          "fluency_bpc": 3.8667
+        }
+      },
+      "H1_WikiLead": {
+        "ans": "大阪駅までを結ぶ東海道新幹線鉄道路線で運転されて新幹線開業しました。",
+        "ev_h": 4,
+        "an_h": 0,
+        "info": {
+          "intent_mode": "FACT_SINGLE",
+          "want_hip": true,
+          "entities": [
+            "東海道新幹線"
+          ],
+          "agenda_heads": [
+            "東海道新幹線"
+          ],
+          "agenda_sources": [
+            "lead:wikipedia"
+          ],
+          "agenda_preview": [
+            "東海道新幹線（とうかいどうしんかんせん）は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。"
+          ],
+          "hop23_ms": 0.05,
+          "stopped_eot": true,
+          "decode_sec": 2.73,
+          "chars_per_sec": 12.44,
+          "fluency_bpc": 3.3979
+        }
+      }
+    },
+    "科学説明(物理)": {
+      "q": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "gold": [
+        "アインシュタイン",
+        "重力",
+        "時空",
+        "確率"
+      ],
+      "H0_Flat6gram": {
+        "ans": "一般相対性理論が完成することにより、そのものを破は一般相対性理論においては、平坦しまう。将来的には量子重力理論が成立する場合:この困難は解決されるものと期待されている。",
+        "ev_h": 2,
+        "an_h": 1,
+        "info": {
+          "intent_mode": "FACT_MULTI",
+          "want_hip": true,
+          "entities": [
+            "一般相対性理論",
+            "量子力学"
+          ],
+          "agenda_heads": [
+            "wikipedia",
+            "wikipedia"
+          ],
+          "agenda_sources": [
+            "wikipedia",
+            "wikipedia"
+          ],
+          "agenda_preview": [
+            "発生は一般相対性理論そのものを破綻させてしまう。将来的には量子重力理論が完成することにより、この困難は解決されるものと期待されている。\n\n一般相対性理論が成立する",
+            "方程式が導かれる。\n\n電磁場中の粒子系\nを考える。\nとなり、ローレンツ力を再現する。\nとなる。\n\n一般相対性理論\n一般相対性理論においては、平坦な時空の計量は曲がった時空"
+          ],
+          "hop23_ms": 0.82,
+          "stopped_eot": true,
+          "decode_sec": 3.49,
+          "chars_per_sec": 24.1,
+          "fluency_bpc": 3.7988
+        }
+      },
+      "H1_WikiLead": {
+        "ans": "アインシュタイン方程式相対性理論におけるアルベルト・アインシュタイアインシュタイ語: 物理学においてフェルシュタイ、  \n量子力学におけるアインシュタイ引力学や物性物理学においてい",
+        "ev_h": 2,
+        "an_h": 1,
+        "info": {
+          "intent_mode": "FACT_MULTI",
+          "want_hip": true,
+          "entities": [
+            "一般相対性理論",
+            "量子力学"
+          ],
+          "agenda_heads": [
+            "一般相対性理論",
+            "量子力学"
+          ],
+          "agenda_sources": [
+            "lead:wikipedia",
+            "lead:wikipedia"
+          ],
+          "agenda_preview": [
+            "一般相対性理論におけるアインシュタイン方程式（アインシュタインほうていしき、 Einstein Field Equations）は、万有引力・重力場を記述する場の方程式である。アルベルト・アインシュタインによって導入された。",
+            "量子力学や物性物理学においてフェルミエネルギー (Fermi energy)あるいはフェルミ準位（Fermi level）とは、相互作用のないフェルミ粒子系（理想フェルミ気体）の絶対零度での化学ポテンシャル（または電気化学ポテンシャル）のこ"
+          ],
+          "hop23_ms": 0.11,
+          "stopped_eot": false,
+          "decode_sec": 3.69,
+          "chars_per_sec": 24.41,
+          "fluency_bpc": 3.3919
+        }
+      }
+    },
+    "歴史質問": {
+      "q": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "gold": [
+        "1939",
+        "1945"
+      ],
+      "H0_Flat6gram": {
+        "ans": "第二次世界大戦を占領した後の1945年 - 第二次世界大戦後、1941年11月1日本軍の戦いで戦中には、太平洋戦争中の1942年 - 第二次世界大戦後の1946年エストニア全土を占領・サラビの戦い：ラエ・サ",
+        "ev_h": 1,
+        "an_h": 1,
+        "info": {
+          "intent_mode": "FACT_MULTI",
+          "want_hip": true,
+          "entities": [
+            "第二次世界大戦",
+            "始まり",
+            "終わ"
+          ],
+          "agenda_heads": [
+            "wikipedia",
+            "wikipedia"
+          ],
+          "agenda_sources": [
+            "wikipedia",
+            "wikipedia"
+          ],
+          "agenda_preview": [
+            "1941年 - 第二次世界大戦：ドイツがエストニア全土を占領。\n1942年 - 第二次世界大戦：ラビの戦い：日本軍が撤退。\n1943年 - 第二次世界大戦：ラエ・サラモアの",
+            "1945年 - 第二次世界大戦・日本本土空襲: 深夜から翌日未明にかけて、秋田・伊勢崎・熊谷・小田原・岩国・光で空襲。第二次世界大戦最後の空襲。\n1945年 - 第二次世界大戦: 宮城"
+          ],
+          "hop23_ms": 1.69,
+          "stopped_eot": false,
+          "decode_sec": 4.63,
+          "chars_per_sec": 22.23,
+          "fluency_bpc": 3.489
+        }
+      },
+      "H1_WikiLead": {
+        "ans": "第二次世界大戦における連合国、イギリス、フランスはアメリカ国際連合国、イタリア、日本ソビエト連邦、中国が該当する。",
+        "ev_h": 0,
+        "an_h": 0,
+        "info": {
+          "intent_mode": "FACT_MULTI",
+          "want_hip": true,
+          "entities": [
+            "第二次世界大戦",
+            "始まり",
+            "終わ"
+          ],
+          "agenda_heads": [
+            "第二次世界大戦",
+            "始まり"
+          ],
+          "agenda_sources": [
+            "lead:wikipedia",
+            "lead:wikipedia"
+          ],
+          "agenda_preview": [
+            "第二次世界大戦における連合国（れんごうこく、または（現在の国際連合と同名））とは、枢軸国（ドイツ国、イタリア、日本など）と敵対した国家連合。具体的にはアメリカ、ソビエト連邦、中華民国、イギリス、フランスなど26カ国が該当する。",
+            "始まりは安土桃山時代初期の天正元年3月(1573年)。以降にいつ夏まつりは堀出神社の例大祭として現在まで伝わっている。 13時00分　御神楽の奉奏、この後本殿の扉が閉じられ堀出神社例大祭が終了する。"
+          ],
+          "hop23_ms": 0.33,
+          "stopped_eot": true,
+          "decode_sec": 4.5,
+          "chars_per_sec": 12.66,
+          "fluency_bpc": 3.0267
+        }
+      }
+    },
+    "文学質問": {
+      "q": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "gold": [
+        "明治",
+        "長編",
+        "風刺",
+        "教師"
+      ],
+      "H0_Flat6gram": {
+        "ans": "アニメ『君の森』の続編『吾輩の猫も、ずっと名前がなかった。",
+        "ev_h": 1,
+        "an_h": 0,
+        "info": {
+          "intent_mode": "FACT_MULTI",
+          "want_hip": true,
+          "entities": [
+            "吾輩は猫である",
+            "小説"
+          ],
+          "agenda_heads": [
+            "wikipedia",
+            "wikipedia"
+          ],
+          "agenda_sources": [
+            "wikipedia",
+            "wikipedia"
+          ],
+          "agenda_preview": [
+            "40.2%を記録した（ビデオリサーチ調べ）。\n\n小説\n『贋作吾輩は猫である』（内田百閒、1949年） - 『吾輩は猫である』の続編。\n\nアニメ\nアニメ『君の棲む街 ～文京編/早稲田編～』 ",
+            "その猫も、ずっと名前がなかったという。\n\n概要\n「吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。」という書き出しで始まり、中学校の英語教師である"
+          ],
+          "hop23_ms": 0.44,
+          "stopped_eot": true,
+          "decode_sec": 3.17,
+          "chars_per_sec": 9.14,
+          "fluency_bpc": 5.3488
+        }
+      },
+      "H1_WikiLead": {
+        "ans": "1905年（明治38年）100、夏目漱石の長編小説であり、処女』にて発表されたのだが、好評を博した。",
+        "ev_h": 2,
+        "an_h": 2,
+        "info": {
+          "intent_mode": "FACT_MULTI",
+          "want_hip": true,
+          "entities": [
+            "吾輩は猫である",
+            "小説"
+          ],
+          "agenda_heads": [
+            "吾輩は猫である"
+          ],
+          "agenda_sources": [
+            "lead:wikipedia"
+          ],
+          "agenda_preview": [
+            "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。1905年（明治38年）1月、『ホトトギス』にて発表されたのだが、好評を博したため、翌1906年（明治39年）8月まで継続した。"
+          ],
+          "hop23_ms": 0.1,
+          "stopped_eot": true,
+          "decode_sec": 2.25,
+          "chars_per_sec": 22.24,
+          "fluency_bpc": 5.3847
+        }
+      }
+    },
+    "日常質問": {
+      "q": "日本の首都はどこですか？",
+      "gold": [
+        "東京"
+      ],
+      "H0_Flat6gram": {
+        "ans": "もちろんです、喜んでお答えしますので、何でもお聞きください。",
+        "ev_h": 0,
+        "an_h": 0,
+        "info": {
+          "intent_mode": "SOCIAL",
+          "want_hip": false,
+          "entities": [],
+          "agenda_heads": [],
+          "agenda_sources": [],
+          "agenda_preview": [],
+          "hop23_ms": 0.0,
+          "stopped_eot": true,
+          "decode_sec": 0.83,
+          "chars_per_sec": 36.34,
+          "fluency_bpc": 1.2698
+        }
+      },
+      "H1_WikiLead": {
+        "ans": "もちろんです、喜んでお答えしますので、何でもお聞きください。",
+        "ev_h": 0,
+        "an_h": 0,
+        "info": {
+          "intent_mode": "SOCIAL",
+          "want_hip": false,
+          "entities": [],
+          "agenda_heads": [],
+          "agenda_sources": [],
+          "agenda_preview": [],
+          "hop23_ms": 0.0,
+          "stopped_eot": true,
+          "decode_sec": 0.81,
+          "chars_per_sec": 36.88,
+          "fluency_bpc": 1.2698
+        }
+      }
+    }
+  },
+  "custom": {
+    "Custom Direct QA": {
+      "q": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+      "ev_h": 3,
+      "an_h": 3,
+      "ans": "ストラック開発された次世代推進装置で「アストラティーナ・トランジ研究所で開発された次世代推力は従来のイ重力エンジン「アストラX-99」は2042年に日本のつくば",
+      "info": {
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "量子重力エンジン",
+          "アストラX-99"
+        ],
+        "agenda_heads": [
+          "astra",
+          "astra"
+        ],
+        "agenda_sources": [
+          "custom:astra",
+          "custom:astra"
+        ],
+        "agenda_preview": [
+          "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+          "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。"
+        ],
+        "hop23_ms": 0.09,
+        "stopped_eot": false,
+        "decode_sec": 2.98,
+        "chars_per_sec": 26.83,
+        "fluency_bpc": 5.1601
+      }
+    },
+    "Custom Indirect QA": {
+      "q": "アストラX-99の最大推力はどのくらいですか？",
+      "ev_h": 3,
+      "an_h": 2,
+      "ans": "エンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+      "info": {
+        "intent_mode": "FACT_MULTI",
+        "want_hip": true,
+        "entities": [
+          "アストラX-99",
+          "最大推力"
+        ],
+        "agenda_heads": [
+          "astra",
+          "astra"
+        ],
+        "agenda_sources": [
+          "custom:astra",
+          "custom:astra"
+        ],
+        "agenda_preview": [
+          "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+          "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。"
+        ],
+        "hop23_ms": 0.07,
+        "stopped_eot": true,
+        "decode_sec": 2.59,
+        "chars_per_sec": 14.7,
+        "fluency_bpc": 4.9585
+      }
+    }
+  },
+  "final_mem": {
+    "peak_rss_gb": 15.4,
+    "gpu_alloc_mb": 7323.0,
+    "gpu_res_mb": 7346.0
+  },
+  "total_sec": 106.9
+}

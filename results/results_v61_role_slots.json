@@ -1,0 +1,745 @@
+{
+  "discovered_slots": [
+    "の",
+    "、",
+    "。",
+    "は",
+    "が",
+    "に",
+    "を",
+    "・",
+    "（",
+    "で",
+    "と",
+    "「",
+    "や",
+    "から",
+    "も",
+    "は、"
+  ],
+  "train_stats": {
+    "num_role_slots": 16,
+    "feature_dim": 4352,
+    "events_trained": 39809422,
+    "discrete_role_keys": 49891,
+    "sec": 221.25
+  },
+  "minimal_pairs": {
+    "unbound_topic": {
+      "pair_acc": 0.5,
+      "wins": 8,
+      "total": 16,
+      "mean_margin": 0.0143,
+      "details": [
+        {
+          "tag": "新幹線⇄東京駅",
+          "margin": -0.0617,
+          "win": false
+        },
+        {
+          "tag": "ドイツ⇄自動車産業",
+          "margin": 0.3013,
+          "win": true
+        },
+        {
+          "tag": "夏目漱石⇄小説",
+          "margin": 0.1266,
+          "win": true
+        },
+        {
+          "tag": "警察⇄犯人",
+          "margin": -0.0305,
+          "win": false
+        },
+        {
+          "tag": "医者⇄患者",
+          "margin": 0.011,
+          "win": true
+        },
+        {
+          "tag": "教師⇄生徒",
+          "margin": -0.2025,
+          "win": false
+        },
+        {
+          "tag": "会社⇄社員",
+          "margin": 0.0086,
+          "win": true
+        },
+        {
+          "tag": "政府⇄国民",
+          "margin": 0.0391,
+          "win": true
+        },
+        {
+          "tag": "親⇄子供",
+          "margin": 0.0304,
+          "win": true
+        },
+        {
+          "tag": "猫⇄ねずみ",
+          "margin": -0.0155,
+          "win": false
+        },
+        {
+          "tag": "太陽⇄地球",
+          "margin": 0.0718,
+          "win": true
+        },
+        {
+          "tag": "東京⇄大阪(方向)",
+          "margin": 0.0608,
+          "win": true
+        },
+        {
+          "tag": "日本⇄アメリカ",
+          "margin": -0.0676,
+          "win": false
+        },
+        {
+          "tag": "監督⇄俳優",
+          "margin": -0.0172,
+          "win": false
+        },
+        {
+          "tag": "投手⇄打者",
+          "margin": -0.0237,
+          "win": false
+        },
+        {
+          "tag": "銀行⇄企業",
+          "margin": -0.0016,
+          "win": false
+        }
+      ]
+    },
+    "topic_ridge": {
+      "pair_acc": 0.5625,
+      "wins": 9,
+      "total": 16,
+      "mean_margin": 0.0181,
+      "details": [
+        {
+          "tag": "新幹線⇄東京駅",
+          "margin": -0.0325,
+          "win": false
+        },
+        {
+          "tag": "ドイツ⇄自動車産業",
+          "margin": 0.3013,
+          "win": true
+        },
+        {
+          "tag": "夏目漱石⇄小説",
+          "margin": 0.1625,
+          "win": true
+        },
+        {
+          "tag": "警察⇄犯人",
+          "margin": 0.0038,
+          "win": true
+        },
+        {
+          "tag": "医者⇄患者",
+          "margin": 0.0063,
+          "win": true
+        },
+        {
+          "tag": "教師⇄生徒",
+          "margin": -0.2142,
+          "win": false
+        },
+        {
+          "tag": "会社⇄社員",
+          "margin": 0.0066,
+          "win": true
+        },
+        {
+          "tag": "政府⇄国民",
+          "margin": 0.0205,
+          "win": true
+        },
+        {
+          "tag": "親⇄子供",
+          "margin": 0.0151,
+          "win": true
+        },
+        {
+          "tag": "猫⇄ねずみ",
+          "margin": -0.0058,
+          "win": false
+        },
+        {
+          "tag": "太陽⇄地球",
+          "margin": 0.0678,
+          "win": true
+        },
+        {
+          "tag": "東京⇄大阪(方向)",
+          "margin": 0.034,
+          "win": true
+        },
+        {
+          "tag": "日本⇄アメリカ",
+          "margin": -0.0421,
+          "win": false
+        },
+        {
+          "tag": "監督⇄俳優",
+          "margin": -0.0106,
+          "win": false
+        },
+        {
+          "tag": "投手⇄打者",
+          "margin": -0.0218,
+          "win": false
+        },
+        {
+          "tag": "銀行⇄企業",
+          "margin": -0.0011,
+          "win": false
+        }
+      ]
+    },
+    "slots_only": {
+      "pair_acc": 0.5,
+      "wins": 8,
+      "total": 16,
+      "mean_margin": 0.1536,
+      "details": [
+        {
+          "tag": "新幹線⇄東京駅",
+          "margin": -0.0637,
+          "win": false
+        },
+        {
+          "tag": "ドイツ⇄自動車産業",
+          "margin": 0.537,
+          "win": true
+        },
+        {
+          "tag": "夏目漱石⇄小説",
+          "margin": 0.2161,
+          "win": true
+        },
+        {
+          "tag": "警察⇄犯人",
+          "margin": 0.2575,
+          "win": true
+        },
+        {
+          "tag": "医者⇄患者",
+          "margin": 0.6837,
+          "win": true
+        },
+        {
+          "tag": "教師⇄生徒",
+          "margin": -0.2753,
+          "win": false
+        },
+        {
+          "tag": "会社⇄社員",
+          "margin": 0.4675,
+          "win": true
+        },
+        {
+          "tag": "政府⇄国民",
+          "margin": 0.2139,
+          "win": true
+        },
+        {
+          "tag": "親⇄子供",
+          "margin": 0.3921,
+          "win": true
+        },
+        {
+          "tag": "猫⇄ねずみ",
+          "margin": -0.0125,
+          "win": false
+        },
+        {
+          "tag": "太陽⇄地球",
+          "margin": 0.3205,
+          "win": true
+        },
+        {
+          "tag": "東京⇄大阪(方向)",
+          "margin": -0.041,
+          "win": false
+        },
+        {
+          "tag": "日本⇄アメリカ",
+          "margin": -0.0448,
+          "win": false
+        },
+        {
+          "tag": "監督⇄俳優",
+          "margin": -0.0259,
+          "win": false
+        },
+        {
+          "tag": "投手⇄打者",
+          "margin": 0.0,
+          "win": false
+        },
+        {
+          "tag": "銀行⇄企業",
+          "margin": -0.1676,
+          "win": false
+        }
+      ]
+    },
+    "joint": {
+      "pair_acc": 0.5625,
+      "wins": 9,
+      "total": 16,
+      "mean_margin": 0.1394,
+      "details": [
+        {
+          "tag": "新幹線⇄東京駅",
+          "margin": -0.0434,
+          "win": false
+        },
+        {
+          "tag": "ドイツ⇄自動車産業",
+          "margin": 0.3634,
+          "win": true
+        },
+        {
+          "tag": "夏目漱石⇄小説",
+          "margin": 0.1745,
+          "win": true
+        },
+        {
+          "tag": "警察⇄犯人",
+          "margin": 0.2538,
+          "win": true
+        },
+        {
+          "tag": "医者⇄患者",
+          "margin": 0.6773,
+          "win": true
+        },
+        {
+          "tag": "教師⇄生徒",
+          "margin": -0.2012,
+          "win": false
+        },
+        {
+          "tag": "会社⇄社員",
+          "margin": 0.5104,
+          "win": true
+        },
+        {
+          "tag": "政府⇄国民",
+          "margin": 0.2356,
+          "win": true
+        },
+        {
+          "tag": "親⇄子供",
+          "margin": 0.3816,
+          "win": true
+        },
+        {
+          "tag": "猫⇄ねずみ",
+          "margin": -0.0065,
+          "win": false
+        },
+        {
+          "tag": "太陽⇄地球",
+          "margin": 0.0948,
+          "win": true
+        },
+        {
+          "tag": "東京⇄大阪(方向)",
+          "margin": 0.0389,
+          "win": true
+        },
+        {
+          "tag": "日本⇄アメリカ",
+          "margin": -0.0484,
+          "win": false
+        },
+        {
+          "tag": "監督⇄俳優",
+          "margin": -0.0124,
+          "win": false
+        },
+        {
+          "tag": "投手⇄打者",
+          "margin": -0.0198,
+          "win": false
+        },
+        {
+          "tag": "銀行⇄企業",
+          "margin": -0.1689,
+          "win": false
+        }
+      ]
+    }
+  },
+  "causal_val_cosine": {
+    "easy_ja": {
+      "unbound_topic": 0.2229,
+      "topic_ridge": 0.2533,
+      "slots_only_v61": 0.1718,
+      "joint_v61": 0.2549
+    },
+    "aozora": {
+      "unbound_topic": 0.2104,
+      "topic_ridge": 0.253,
+      "slots_only_v61": 0.1982,
+      "joint_v61": 0.2524
+    },
+    "wikipedia": {
+      "unbound_topic": 0.2264,
+      "topic_ridge": 0.2542,
+      "slots_only_v61": 0.2016,
+      "joint_v61": 0.2555
+    }
+  },
+  "gens_ab": {
+    "新幹線・鉄道": {
+      "v52_unbound": {
+        "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、鉄道線の駅である。駅番号はJR東海道本線・山陽本線・鹿児島本線経由で運行する高速バス路線が乗り入れ、接続",
+        "info": {
+          "fluency_bpc": 2.323,
+          "gen_bytes": 152,
+          "motor_steps": 28,
+          "bytes_per_motor": 5.43,
+          "decode_sec": 25.85,
+          "thought_lock_mean": 0.623,
+          "thought_lock_1st": 0.639,
+          "thought_lock_2nd": 0.605,
+          "latched_subjects": [
+            "を結ぶ",
+            "東海道",
+            "新幹線",
+            "高速",
+            "駅と",
+            "鉄道"
+          ],
+          "sample_fired_motors": [
+            "鉄道",
+            "線の",
+            "駅で",
+            "ある。",
+            "駅",
+            "番号",
+            "は",
+            "JR",
+            "東海道",
+            "本線",
+            "・",
+            "山陽"
+          ]
+        }
+      },
+      "v61_dual_slots": {
+        "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、本線・山陽本線の駅である。駅番号はJR-A線直通列車は当駅が停車駅となる。本線（東京駅 - 新大阪",
+        "info": {
+          "fluency_bpc": 2.661,
+          "gen_bytes": 133,
+          "motor_steps": 28,
+          "bytes_per_motor": 4.75,
+          "decode_sec": 27.66,
+          "thought_lock_mean": 0.569,
+          "thought_lock_2nd": 0.551
+        }
+      }
+    },
+    "ドイツ工業": {
+      "v52_unbound": {
+        "text": "ドイツの自動車産業とエンジン技術は世界的に知られており、開発センター（もしくは、それほど使われてはいないが、ローマ建国やオートバイのメーカーが工業都市として発展を生産量産・販売",
+        "info": {
+          "fluency_bpc": 3.239,
+          "gen_bytes": 180,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.43,
+          "decode_sec": 28.67,
+          "thought_lock_mean": 0.305,
+          "thought_lock_1st": 0.194,
+          "thought_lock_2nd": 0.439,
+          "latched_subjects": [
+            "産業",
+            "技術",
+            "エンジン",
+            "は世界",
+            "自動車",
+            "知られて"
+          ],
+          "sample_fired_motors": [
+            "開発",
+            "センター",
+            "（",
+            "もしくは",
+            "、それ",
+            "ほど",
+            "使われて",
+            "はいない",
+            "が、",
+            "ローマ",
+            "建",
+            "国"
+          ]
+        }
+      },
+      "v61_dual_slots": {
+        "text": "ドイツの自動車産業とエンジン技術は世界的に知られており、開発センター（もしくは、それほど使われてはいないが、ローマ建国やガソリンエンジンの排気ガスを燃料噴射装置が搭載車とモーター",
+        "info": {
+          "fluency_bpc": 3.192,
+          "gen_bytes": 183,
+          "motor_steps": 28,
+          "bytes_per_motor": 6.54,
+          "decode_sec": 32.35,
+          "thought_lock_mean": 0.25,
+          "thought_lock_2nd": 0.31
+        }
+      }
+    },
+    "量子重力": {
+      "v52_unbound": {
+        "text": "量子力学と一般相対性理論を統合する量子重力理論は、ニュートン力学における運動量とエネルギーの等価原理は、電磁場の量子論の枠組みでアインシュタイン方程式を理論的に",
+        "info": {
+          "fluency_bpc": 3.125,
+          "gen_bytes": 165,
+          "motor_steps": 28,
+          "bytes_per_motor": 5.89,
+          "decode_sec": 26.65,
+          "thought_lock_mean": 0.486,
+          "thought_lock_1st": 0.512,
+          "thought_lock_2nd": 0.46,
+          "latched_subjects": [
+            "相対性理論",
+            "量子力",
+            "量子",
+            "理論",
+            "重力",
+            "と一"
+          ],
+          "sample_fired_motors": [
+            "ニュート",
+            "ン",
+            "力学",
+            "における",
+            "運動",
+            "量",
+            "と",
+            "エネルギー",
+            "の",
+            "等",
+            "価",
+            "原理"
+          ]
+        }
+      },
+      "v61_dual_slots": {
+        "text": "量子力学と一般相対性理論を統合する量子重力理論は、ニュートン力学における運動量とエネルギーの等価原理は、重力理論の基礎的研究』に基づく。量子論の枠組みで",
+        "info": {
+          "fluency_bpc": 3.273,
+          "gen_bytes": 153,
+          "motor_steps": 28,
+          "bytes_per_motor": 5.46,
+          "decode_sec": 30.83,
+          "thought_lock_mean": 0.436,
+          "thought_lock_2nd": 0.358
+        }
+      }
+    },
+    "Wikipedia歴史": {
+      "v52_unbound": {
+        "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて大日本帝国陸軍の終戦後にアメリカ軍とイギリス海軍は第一次世界大戦でナチス・ドイツがフランスに参戦。じき",
+        "info": {
+          "fluency_bpc": 2.714,
+          "gen_bytes": 153,
+          "motor_steps": 28,
+          "bytes_per_motor": 5.46,
+          "decode_sec": 28.16,
+          "thought_lock_mean": 0.29,
+          "thought_lock_1st": 0.275,
+          "thought_lock_2nd": 0.306,
+          "latched_subjects": [
+            "世界大戦",
+            "第二次",
+            "だい",
+            "せん",
+            "かい",
+            "）は、"
+          ],
+          "sample_fired_motors": [
+            "大",
+            "日本",
+            "帝国",
+            "陸軍",
+            "の",
+            "終",
+            "戦後",
+            "に",
+            "アメリカ",
+            "軍",
+            "と",
+            "イギリス"
+          ]
+        }
+      },
+      "v61_dual_slots": {
+        "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて大日本帝国海軍が勃発した第二次世界大戦の終結を宣言。ドイツ軍に占領され、戦後、）は、アメリカが戦争が始まる",
+        "info": {
+          "fluency_bpc": 3.04,
+          "gen_bytes": 159,
+          "motor_steps": 28,
+          "bytes_per_motor": 5.68,
+          "decode_sec": 31.29,
+          "thought_lock_mean": 0.336,
+          "thought_lock_2nd": 0.378
+        }
+      }
+    },
+    "青空文庫文学": {
+      "v52_unbound": {
+        "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。ただ一人であるというのが、この男は無く、それをそのまゝにどうしていいか分か",
+        "info": {
+          "fluency_bpc": 3.029,
+          "gen_bytes": 111,
+          "motor_steps": 28,
+          "bytes_per_motor": 3.96,
+          "decode_sec": 28.64,
+          "thought_lock_mean": 0.277,
+          "thought_lock_1st": 0.286,
+          "thought_lock_2nd": 0.267,
+          "latched_subjects": [
+            "かぬ",
+            "見当",
+            "がつ",
+            "どこ",
+            "い。",
+            "である。"
+          ],
+          "sample_fired_motors": [
+            "た",
+            "だ",
+            "一",
+            "人",
+            "で",
+            "あ",
+            "る",
+            "と",
+            "い",
+            "う",
+            "の",
+            "が、"
+          ]
+        }
+      },
+      "v61_dual_slots": {
+        "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。ただ一人であるという事実を云うと、自分のもなく、そのまゝにどうしていいか分らな",
+        "info": {
+          "fluency_bpc": 2.771,
+          "gen_bytes": 117,
+          "motor_steps": 28,
+          "bytes_per_motor": 4.18,
+          "decode_sec": 32.43,
+          "thought_lock_mean": 0.296,
+          "thought_lock_2nd": 0.342
+        }
+      }
+    },
+    "東京・江戸": {
+      "v52_unbound": {
+        "text": "日本の東京は、江戸時代から続く歴史ある都市であり、その周辺地域を含む人口約や文化、教育、経済的、政治的なのである。そもそも「お前は大日本鉄道が",
+        "info": {
+          "fluency_bpc": 3.689,
+          "gen_bytes": 138,
+          "motor_steps": 28,
+          "bytes_per_motor": 4.93,
+          "decode_sec": 28.44,
+          "thought_lock_mean": 0.304,
+          "thought_lock_1st": 0.287,
+          "thought_lock_2nd": 0.32,
+          "latched_subjects": [
+            "日本の",
+            "歴史",
+            "であり、",
+            "都市",
+            "江戸時代",
+            "ある"
+          ],
+          "sample_fired_motors": [
+            "その",
+            "周辺",
+            "地域",
+            "を含む",
+            "人口",
+            "約",
+            "や",
+            "文化",
+            "、",
+            "教育",
+            "、",
+            "経済"
+          ]
+        }
+      },
+      "v61_dual_slots": {
+        "text": "日本の東京は、江戸時代から続く歴史ある都市であり、その周辺地域を含む人口約や文化、教育、経済的、社会的、文化的、として発展した歴史書『大日本史の",
+        "info": {
+          "fluency_bpc": 3.646,
+          "gen_bytes": 141,
+          "motor_steps": 28,
+          "bytes_per_motor": 5.04,
+          "decode_sec": 32.12,
+          "thought_lock_mean": 0.34,
+          "thought_lock_2nd": 0.402
+        }
+      }
+    },
+    "無限拡張🚀": {
+      "v52_unbound": {
+        "text": "薔薇と憂鬱と🚀について、「自分の考えをなくして、一人でやる事故が発生。死者になり、その後",
+        "info": {
+          "fluency_bpc": 2.908,
+          "gen_bytes": 96,
+          "motor_steps": 28,
+          "bytes_per_motor": 3.43,
+          "decode_sec": 25.74,
+          "thought_lock_mean": 0.205,
+          "thought_lock_1st": 0.233,
+          "thought_lock_2nd": 0.179,
+          "latched_subjects": [
+            "憂鬱",
+            "薔薇",
+            "について、"
+          ],
+          "sample_fired_motors": [
+            "「",
+            "自分の",
+            "考え",
+            "を",
+            "な",
+            "く",
+            "し",
+            "て",
+            "、",
+            "一",
+            "人",
+            "で"
+          ]
+        }
+      },
+      "v61_dual_slots": {
+        "text": "薔薇と憂鬱と🚀について、「自分の考えをなくして、一人でやる事故が起った。そのときから見えないの",
+        "info": {
+          "fluency_bpc": 3.272,
+          "gen_bytes": 105,
+          "motor_steps": 28,
+          "bytes_per_motor": 3.75,
+          "decode_sec": 30.08,
+          "thought_lock_mean": 0.218,
+          "thought_lock_2nd": 0.205
+        }
+      }
+    }
+  },
+  "peak_vram_mb": 7331.3,
+  "elapsed_sec": 651.3
+}

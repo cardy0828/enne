@@ -1,0 +1,355 @@
+{
+  "train_stats": {
+    "engram": {
+      "total_stream_bytes": 52619656,
+      "assistant_bytes_ingested": 35692477,
+      "active_slots_before_prune": 19905468,
+      "active_slots_after_prune": 8754098,
+      "sec": 7.27,
+      "mem": {
+        "peak_rss_gb": 4.99,
+        "gpu_alloc_mb": 7323.0,
+        "gpu_res_mb": 7346.0
+      }
+    },
+    "readout": {
+      "dialogues_fit": 8000,
+      "assistant_bytes_fit": 4921925,
+      "eot_events_fit": 13702,
+      "effective_source_bytes": {
+        "magpie_ja": 2530640,
+        "wiki_conv_ja": 1506600,
+        "oasst1_ja": 399499,
+        "dolly_ja": 471484
+      },
+      "W_sft_norm": 0.534,
+      "eot_bias_raw": 11.5699,
+      "sec": 144.24,
+      "mem": {
+        "peak_rss_gb": 4.99,
+        "gpu_alloc_mb": 7323.0,
+        "gpu_res_mb": 7346.0
+      }
+    },
+    "layer2_qa": {
+      "pairs_processed": 77055,
+      "qa_vec_pairs": 77052,
+      "effective_source_pairs": {
+        "magpie_ja": 16995,
+        "wiki_conv_ja": 47935,
+        "oasst1_ja": 4433,
+        "dolly_ja": 7692
+      },
+      "sft_m1_keys": 25149,
+      "sft_m2_keys": 73594,
+      "eot_motor_priors": 534,
+      "sec": 39.61,
+      "mem": {
+        "peak_rss_gb": 4.99,
+        "gpu_alloc_mb": 7323.0,
+        "gpu_res_mb": 7346.0
+      }
+    },
+    "dev_cal": {
+      "0.15": {
+        "body_bpc": 4.2332,
+        "eot_bits": 14.094,
+        "total_bpb": 1.5164
+      },
+      "0.35": {
+        "body_bpc": 4.2278,
+        "eot_bits": 12.4588,
+        "total_bpb": 1.5099
+      },
+      "0.7": {
+        "body_bpc": 4.2239,
+        "eot_bits": 9.7375,
+        "total_bpb": 1.5009
+      },
+      "1.2": {
+        "body_bpc": 4.229,
+        "eot_bits": 6.1802,
+        "total_bpb": 1.4926
+      }
+    },
+    "best_readout_scale": 1.2,
+    "parity_diff": 0.0
+  },
+  "eval_ablations": {
+    "Base (L1 + 1.084B)": {
+      "body_bpc": 4.4362,
+      "body_bpb": 1.562,
+      "body_top1": 0.7033,
+      "eot_bits": 32.6434,
+      "total_bpb": 1.6424,
+      "scored_body_bytes": 594996,
+      "scored_body_chars": 209499,
+      "scored_eot_count": 1544,
+      "sec": 78.03,
+      "mem": {
+        "peak_rss_gb": 28.97,
+        "gpu_alloc_mb": 7323.0,
+        "gpu_res_mb": 7346.0
+      }
+    },
+    "+ SFT Behavioral Engram": {
+      "body_bpc": 4.3071,
+      "body_bpb": 1.5165,
+      "body_top1": 0.7152,
+      "eot_bits": 32.0956,
+      "total_bpb": 1.5957,
+      "scored_body_bytes": 594996,
+      "scored_body_chars": 209499,
+      "scored_eot_count": 1544,
+      "sec": 81.22,
+      "mem": {
+        "peak_rss_gb": 28.97,
+        "gpu_alloc_mb": 7323.0,
+        "gpu_res_mb": 7346.0
+      }
+    },
+    "+ Hebbian Readout Adapter": {
+      "body_bpc": 4.3593,
+      "body_bpb": 1.5349,
+      "body_top1": 0.707,
+      "eot_bits": 6.6494,
+      "total_bpb": 1.5482,
+      "scored_body_bytes": 594996,
+      "scored_body_chars": 209499,
+      "scored_eot_count": 1544,
+      "sec": 79.45,
+      "mem": {
+        "peak_rss_gb": 28.97,
+        "gpu_alloc_mb": 7323.0,
+        "gpu_res_mb": 7346.0
+      }
+    },
+    "v8.0 Full SFT (Both)": {
+      "body_bpc": 4.2581,
+      "body_bpb": 1.4993,
+      "body_top1": 0.7173,
+      "eot_bits": 6.2318,
+      "total_bpb": 1.5115,
+      "scored_body_bytes": 594996,
+      "scored_body_chars": 209499,
+      "scored_eot_count": 1544,
+      "sec": 83.25,
+      "mem": {
+        "peak_rss_gb": 28.97,
+        "gpu_alloc_mb": 7323.0,
+        "gpu_res_mb": 7346.0
+      }
+    }
+  },
+  "base_retention": {
+    "easy_ja": {
+      "bpb": 1.3985,
+      "bpc_lossless": 4.0609,
+      "ppl_char": 16.69,
+      "byte_top1": 0.7274,
+      "byte_top5": 0.9299
+    },
+    "aozora": {
+      "bpb": 1.6696,
+      "bpc_lossless": 4.9658,
+      "ppl_char": 31.25,
+      "byte_top1": 0.6767,
+      "byte_top5": 0.9109
+    },
+    "wikipedia": {
+      "bpb": 1.7092,
+      "bpc_lossless": 4.5825,
+      "ppl_char": 23.96,
+      "byte_top1": 0.6854,
+      "byte_top5": 0.9049
+    }
+  },
+  "qa_results": {
+    "挨拶": {
+      "q": "こんにちは！調子はどうですか？",
+      "base": {
+        "ans": "そろえてしょうか。」\n「そりゃあ、こちらへ走ってきました。そして「あ、そうですか？\n――こんにちは。」と言って、おばあちゃん！　あなたが",
+        "info": {
+          "stopped_eot": false,
+          "eot_lp": null,
+          "gen_chars": 68,
+          "gen_bytes": 200,
+          "decode_sec": 2.19,
+          "critic_sec": 0.65,
+          "chars_per_sec": 31.11,
+          "fluency_bpc": 2.5054,
+          "epi_conf": 1.0,
+          "query_ms": 4.85
+        }
+      },
+      "sft": {
+        "ans": "こんにちは。",
+        "info": {
+          "stopped_eot": true,
+          "eot_lp": -1.588,
+          "gen_chars": 6,
+          "gen_bytes": 18,
+          "decode_sec": 2.37,
+          "critic_sec": 0.16,
+          "chars_per_sec": 2.53,
+          "fluency_bpc": 2.5157,
+          "epi_conf": 1.0,
+          "query_ms": 4.87
+        }
+      }
+    },
+    "用語説明(鉄道)": {
+      "q": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "base": {
+        "ans": "というようになりました。\n「おい」\nと云わせてください」というように、この大会で運転する列車が停車する。\n\n歴史\n1929年（昭和4年）1",
+        "info": {
+          "stopped_eot": false,
+          "eot_lp": null,
+          "gen_chars": 69,
+          "gen_bytes": 185,
+          "decode_sec": 2.3,
+          "critic_sec": 0.67,
+          "chars_per_sec": 30.02,
+          "fluency_bpc": 2.0267,
+          "epi_conf": 1.0,
+          "query_ms": 7.49
+        }
+      },
+      "sft": {
+        "ans": "この表現は、より多くの車両センターです。\n概要\n東海道新幹線の開業によります。",
+        "info": {
+          "stopped_eot": true,
+          "eot_lp": -1.451,
+          "gen_chars": 39,
+          "gen_bytes": 113,
+          "decode_sec": 2.87,
+          "critic_sec": 0.48,
+          "chars_per_sec": 13.57,
+          "fluency_bpc": 2.5905,
+          "epi_conf": 1.0,
+          "query_ms": 7.41
+        }
+      }
+    },
+    "科学説明(物理)": {
+      "q": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "base": {
+        "ans": "ニュートン力学におけるアインシュタイン方程式は後述）。\n「いや、観測値（単位：人）。\n一般相対性理論によって異なるため、この日には、大学の",
+        "info": {
+          "stopped_eot": false,
+          "eot_lp": null,
+          "gen_chars": 69,
+          "gen_bytes": 203,
+          "decode_sec": 2.16,
+          "critic_sec": 0.77,
+          "chars_per_sec": 31.9,
+          "fluency_bpc": 2.9052,
+          "epi_conf": 1.0,
+          "query_ms": 8.91
+        }
+      },
+      "sft": {
+        "ans": "この文章では、特定の状況によって異なる意味を持つ。\nアインシュタインは、ニュートン力学における重要な要素である。\n\nこの項目では、国際的な視点に基づいたもので、その後は、特定の文脈によっては、と",
+        "info": {
+          "stopped_eot": false,
+          "eot_lp": null,
+          "gen_chars": 97,
+          "gen_bytes": 285,
+          "decode_sec": 2.44,
+          "critic_sec": 0.98,
+          "chars_per_sec": 39.83,
+          "fluency_bpc": 2.1842,
+          "epi_conf": 1.0,
+          "query_ms": 8.83
+        }
+      }
+    },
+    "歴史質問": {
+      "q": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "base": {
+        "ans": "フランスで作られました。\n1944年（昭和19年）1月、太平洋戦争中の1942年（昭和17年）には分かりませんが、とにかくその一つです。\n第二次世界大戦後の1946年（昭和21年）3月15日：大阪電気軌道が参宮急行電鉄",
+        "info": {
+          "stopped_eot": false,
+          "eot_lp": null,
+          "gen_chars": 109,
+          "gen_bytes": 279,
+          "decode_sec": 2.4,
+          "critic_sec": 0.92,
+          "chars_per_sec": 45.49,
+          "fluency_bpc": 1.793,
+          "epi_conf": 1.0,
+          "query_ms": 8.65
+        }
+      },
+      "sft": {
+        "ans": "フランスで作られました。また、第二次世界大戦後の1945年、太平洋戦争の終結後、ドイツでは、その後まで行われました。また、同じ年にフランスでは、ユダヤ人のことを示しています。これは、ある人が自分自身の人生の意味です。\n第二次世界大戦では、",
+        "info": {
+          "stopped_eot": false,
+          "eot_lp": null,
+          "gen_chars": 119,
+          "gen_bytes": 347,
+          "decode_sec": 2.78,
+          "critic_sec": 1.1,
+          "chars_per_sec": 42.83,
+          "fluency_bpc": 2.4171,
+          "epi_conf": 1.0,
+          "query_ms": 8.64
+        }
+      }
+    },
+    "文学質問": {
+      "q": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "base": {
+        "ans": "』の続編『吾輩は猫である」。\nアニメオリジナルキャラクターである』の放送では『機動戦士ガンダムSEED』（1999年） - アメリカ合衆国国",
+        "info": {
+          "stopped_eot": false,
+          "eot_lp": null,
+          "gen_chars": 70,
+          "gen_bytes": 186,
+          "decode_sec": 1.83,
+          "critic_sec": 0.69,
+          "chars_per_sec": 38.22,
+          "fluency_bpc": 2.2334,
+          "epi_conf": 1.0,
+          "query_ms": 5.7
+        }
+      },
+      "sft": {
+        "ans": "「文芸』の続編『源氏物語』は、日本のアニメや漫画、アニメーション作品である。\n\nこの項目では、国際的な表現としてよく知られる。\nアニメシリーズ』の作者である』",
+        "info": {
+          "stopped_eot": false,
+          "eot_lp": null,
+          "gen_chars": 79,
+          "gen_bytes": 231,
+          "decode_sec": 2.05,
+          "critic_sec": 0.81,
+          "chars_per_sec": 38.44,
+          "fluency_bpc": 2.6325,
+          "epi_conf": 1.0,
+          "query_ms": 5.61
+        }
+      }
+    }
+  },
+  "custom_qa": {
+    "q": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+    "ans": "この研究所で開発されたが、後には、重力エンジン「アストランド・アストラップス」\n「ヘエ、ネバダ州ラスベガウスです。",
+    "info": {
+      "stopped_eot": true,
+      "eot_lp": -0.802,
+      "gen_chars": 57,
+      "gen_bytes": 169,
+      "decode_sec": 2.02,
+      "critic_sec": 0.65,
+      "chars_per_sec": 28.24,
+      "fluency_bpc": 3.0575,
+      "epi_conf": 1.0,
+      "query_ms": 8.45
+    }
+  },
+  "final_mem": {
+    "peak_rss_gb": 31.33,
+    "gpu_alloc_mb": 7323.0,
+    "gpu_res_mb": 7346.0
+  }
+}

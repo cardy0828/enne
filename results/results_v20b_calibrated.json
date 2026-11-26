@@ -1,0 +1,178 @@
+{
+  "results": {
+    "bare": {
+      "easy_ja": {
+        "bpb": 1.434,
+        "bpc_lossless": 4.164,
+        "ppl": 17.93,
+        "byte_top1": 0.7143,
+        "byte_top5": 0.9272
+      },
+      "aozora": {
+        "bpb": 1.6879,
+        "bpc_lossless": 5.0201,
+        "ppl": 32.45,
+        "byte_top1": 0.6665,
+        "byte_top5": 0.9089
+      },
+      "wikipedia": {
+        "bpb": 1.7726,
+        "bpc_lossless": 4.7523,
+        "ppl": 26.95,
+        "byte_top1": 0.6633,
+        "byte_top5": 0.9006
+      }
+    },
+    "only_easy_eg": {
+      "easy_ja": {
+        "bpb": 1.4211,
+        "bpc_lossless": 4.1265,
+        "ppl": 17.47,
+        "byte_top1": 0.7184,
+        "byte_top5": 0.9276
+      },
+      "aozora": {
+        "bpb": 1.6877,
+        "bpc_lossless": 5.0197,
+        "ppl": 32.44,
+        "byte_top1": 0.6671,
+        "byte_top5": 0.9091
+      },
+      "wikipedia": {
+        "bpb": 1.7711,
+        "bpc_lossless": 4.7484,
+        "ppl": 26.88,
+        "byte_top1": 0.664,
+        "byte_top5": 0.9006
+      }
+    },
+    "only_aozora_eg": {
+      "easy_ja": {
+        "bpb": 1.4297,
+        "bpc_lossless": 4.1516,
+        "ppl": 17.77,
+        "byte_top1": 0.7154,
+        "byte_top5": 0.9275
+      },
+      "aozora": {
+        "bpb": 1.6782,
+        "bpc_lossless": 4.9913,
+        "ppl": 31.81,
+        "byte_top1": 0.6711,
+        "byte_top5": 0.9095
+      },
+      "wikipedia": {
+        "bpb": 1.7733,
+        "bpc_lossless": 4.7543,
+        "ppl": 26.99,
+        "byte_top1": 0.6637,
+        "byte_top5": 0.9006
+      }
+    },
+    "only_wiki_200m_eg": {
+      "easy_ja": {
+        "bpb": 1.425,
+        "bpc_lossless": 4.1378,
+        "ppl": 17.6,
+        "byte_top1": 0.7161,
+        "byte_top5": 0.9276
+      },
+      "aozora": {
+        "bpb": 1.6895,
+        "bpc_lossless": 5.025,
+        "ppl": 32.56,
+        "byte_top1": 0.6666,
+        "byte_top5": 0.9091
+      },
+      "wikipedia": {
+        "bpb": 1.7406,
+        "bpc_lossless": 4.6666,
+        "ppl": 25.4,
+        "byte_top1": 0.6731,
+        "byte_top5": 0.9022
+      }
+    },
+    "all3_blind_no_ent": {
+      "easy_ja": {
+        "bpb": 1.4201,
+        "bpc_lossless": 4.1237,
+        "ppl": 17.43,
+        "byte_top1": 0.7191,
+        "byte_top5": 0.9285
+      },
+      "aozora": {
+        "bpb": 1.6897,
+        "bpc_lossless": 5.0255,
+        "ppl": 32.57,
+        "byte_top1": 0.6705,
+        "byte_top5": 0.9099
+      },
+      "wikipedia": {
+        "bpb": 1.7414,
+        "bpc_lossless": 4.6686,
+        "ppl": 25.43,
+        "byte_top1": 0.6747,
+        "byte_top5": 0.9025
+      }
+    },
+    "all3_ctx_only": {
+      "easy_ja": {
+        "bpb": 1.4201,
+        "bpc_lossless": 4.1237,
+        "ppl": 17.43,
+        "byte_top1": 0.7191,
+        "byte_top5": 0.9285
+      },
+      "aozora": {
+        "bpb": 1.6896,
+        "bpc_lossless": 5.0251,
+        "ppl": 32.56,
+        "byte_top1": 0.6705,
+        "byte_top5": 0.9098
+      },
+      "wikipedia": {
+        "bpb": 1.7415,
+        "bpc_lossless": 4.669,
+        "ppl": 25.44,
+        "byte_top1": 0.6746,
+        "byte_top5": 0.9025
+      }
+    },
+    "all3_ctx_and_ent": {
+      "easy_ja": {
+        "bpb": 1.4173,
+        "bpc_lossless": 4.1154,
+        "ppl": 17.33,
+        "byte_top1": 0.7193,
+        "byte_top5": 0.9282
+      },
+      "aozora": {
+        "bpb": 1.6816,
+        "bpc_lossless": 5.0013,
+        "ppl": 32.03,
+        "byte_top1": 0.6703,
+        "byte_top5": 0.9096
+      },
+      "wikipedia": {
+        "bpb": 1.7449,
+        "bpc_lossless": 4.6782,
+        "ppl": 25.6,
+        "byte_top1": 0.6721,
+        "byte_top5": 0.9021
+      }
+    }
+  },
+  "easy_ja_306k": {
+    "bpb": 1.4707,
+    "bpc_lossless": 4.2288,
+    "ppl": 18.75,
+    "byte_top1": 0.7132,
+    "byte_top5": 0.9232
+  },
+  "custom_gen": {
+    "mounted": "量子重力エンジン「アストラX-99」は2010年には、同じく大切な場所にあります。\n昔は、平和にするために、スペインのカルセンターにより、アメリカ合衆�",
+    "unmounted": "量子重力エンジン「アストラX-99」は古代ギリシアの哲学者・白木の取扱いについて、その女性が激化した。\nサイトを見て、最後には、アイルランドの大半"
+  },
+  "peak_vram_mb": 4426.0,
+  "elapsed_sec": 1210.1
+}

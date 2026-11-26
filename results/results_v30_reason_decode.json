@@ -1,0 +1,571 @@
+{
+  "mean_fluency_bpc": {
+    "tier0_myopic": 2.06,
+    "tier1_char_beam": 1.1983,
+    "tier2_v30_full": 3.5426
+  },
+  "prompts": {
+    "Wikipedia歴史": {
+      "prompt": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて",
+      "tier0_myopic": {
+        "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて人口が多い都市であるドイツのプロテスタントの中でも、分けることができます。\n第23回夏季オリンピックでは、フランスのファンで",
+        "valid": true,
+        "fluency_bpc": 2.0573
+      },
+      "tier1_char_beam": {
+        "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて、アメリカ合衆国カリフォルニア州サンフランシスコ・ジャイアントパンダイナムコエンターテインメント）を作りました。\n1998年 - ",
+        "valid": true,
+        "info": {
+          "decode_sec": 25.39,
+          "fluency_bpc": 1.0513,
+          "goals_reached": 0,
+          "entities_grounded": [],
+          "plan": {
+            "plan_ms": 0.0,
+            "agenda": []
+          }
+        }
+      },
+      "tier2_v30_full": {
+        "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて小さんにおいて将来のたいて、英略号）にある。ことに、この出来事はさらに、1932年にはさんだ。いいかいませんかといいだし、第一次世",
+        "valid": true,
+        "info": {
+          "decode_sec": 25.97,
+          "fluency_bpc": 3.8495,
+          "goals_reached": 3,
+          "entities_grounded": [
+            "はさ",
+            "事は",
+            "来事",
+            "、193",
+            "英略",
+            "て将"
+          ],
+          "plan": {
+            "plan_ms": 76.1,
+            "hop1": 6,
+            "hop2": 4,
+            "agenda": [
+              {
+                "hop": 1,
+                "source": "ep_wikipedia_mega",
+                "custom": false,
+                "clause": "第三次世界大戦（だいさんじせかいたいせん、英略:WWⅢ）は、現時点において将来の、仮定上の世界大戦である。"
+              },
+              {
+                "hop": 1,
+                "source": "ep_wikipedia_mega",
+                "custom": false,
+                "clause": "この出来事はさらに、1939年から1945年にかけての第二次世界大"
+              },
+              {
+                "hop": 1,
+                "source": "ep_wikipedia_mega",
+                "custom": false,
+                "clause": "第二次ソロモン海戦（だいにじソロモンかいせん）は、第二次世界大戦（太平洋戦争）中、1942年8月24日にソロモン諸島の"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "青空文庫文学": {
+      "prompt": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。",
+      "tier0_myopic": {
+        "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。昔あった日本の城です。分岐器が出ていたこともあり、近年ではないと主張しているが、これはどういうことになるかもしれません。",
+        "valid": true,
+        "fluency_bpc": 1.9732
+      },
+      "tier1_char_beam": {
+        "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。ただし、これらを組み合わせることができます。\nこのような状況になりました。そして、そのままにしておくことはできない。そのため、この",
+        "valid": true,
+        "info": {
+          "decode_sec": 28.77,
+          "fluency_bpc": 1.3121,
+          "goals_reached": 0,
+          "entities_grounded": [],
+          "plan": {
+            "plan_ms": 0.0,
+            "agenda": []
+          }
+        }
+      },
+      "tier2_v30_full": {
+        "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。それでいいです。しかし「名古屋に連載した現在では珍らしい。した所でニャーニー・ジャーナリズムの中でも薄暗いでした。しばらくしていた",
+        "valid": true,
+        "info": {
+          "decode_sec": 27.52,
+          "fluency_bpc": 3.3974,
+          "goals_reached": 3,
+          "entities_grounded": [
+            "でニ",
+            "も薄",
+            "薄暗",
+            "暗い"
+          ],
+          "plan": {
+            "plan_ms": 83.3,
+            "hop1": 6,
+            "hop2": 4,
+            "agenda": [
+              {
+                "hop": 1,
+                "source": "ep_wikipedia_mega",
+                "custom": false,
+                "clause": "『贋作吾輩は猫である』（内田百閒、1949年） - 『吾輩は猫である』の続編。"
+              },
+              {
+                "hop": 1,
+                "source": "ep_aozora",
+                "custom": false,
+                "clause": "「吾輩は猫である」は雑誌ホトトギスに連載した続き物である。"
+              },
+              {
+                "hop": 1,
+                "source": "ep_aozora",
+                "custom": false,
+                "clause": "何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "東京・江戸": {
+      "prompt": "日本の東京は、江戸時代から続く歴史ある都市であり、",
+      "tier0_myopic": {
+        "text": "日本の東京は、江戸時代から続く歴史ある都市であり、正式に参加することができるかもしれません。しかし、そのときは、もう一度来るかと思って、すぐにお風呂に入りました。その後も",
+        "valid": true,
+        "fluency_bpc": 1.8984
+      },
+      "tier1_char_beam": {
+        "text": "日本の東京は、江戸時代から続く歴史ある都市であり、それらを組み合わせることができませんでした。そのため、これらの問題を解決するために使われています。しかし、そのような状況になりまし",
+        "valid": true,
+        "info": {
+          "decode_sec": 26.65,
+          "fluency_bpc": 1.3359,
+          "goals_reached": 0,
+          "entities_grounded": [],
+          "plan": {
+            "plan_ms": 0.0,
+            "agenda": []
+          }
+        }
+      },
+      "tier2_v30_full": {
+        "text": "日本の東京は、江戸時代から続く歴史ある都市であり、まれたまりまわったり、長く歩きまわり、フランスが、マルクスが生きてる間にわたってトリースにアクセスできまりがあったが、アルコールを",
+        "valid": true,
+        "info": {
+          "decode_sec": 25.48,
+          "fluency_bpc": 3.3813,
+          "goals_reached": 1,
+          "entities_grounded": [
+            "てト"
+          ],
+          "plan": {
+            "plan_ms": 92.5,
+            "hop1": 6,
+            "hop2": 4,
+            "agenda": [
+              {
+                "hop": 1,
+                "source": "ep_wikipedia_mega",
+                "custom": false,
+                "clause": "マルクスが生まれたトリーアは古代から続く歴史ある都市であり、長きにわたってトリーア大司教領の首都だったが、フラ"
+              },
+              {
+                "hop": 1,
+                "source": "ep_wikipedia_mega",
+                "custom": false,
+                "clause": "イン統治時代から続く歴史ある建物も多い。"
+              },
+              {
+                "hop": 1,
+                "source": "ep_wikipedia_mega",
+                "custom": false,
+                "clause": "脇田温泉：奈良時代から続く歴史がある温泉。"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "ドイツ工業": {
+      "prompt": "ドイツの自動車産業とエンジン技術は世界的に知られており、",
+      "tier0_myopic": {
+        "text": "ドイツの自動車産業とエンジン技術は世界的に知られており、同じように扱われる場合があります。\n南北朝時代に作られたものです。\n\n商業施設が建設されている。\nまた、同年10月1日には、専用�",
+        "valid": true,
+        "fluency_bpc": 2.3398
+      },
+      "tier1_char_beam": {
+        "text": "ドイツの自動車産業とエンジン技術は世界的に知られており、それらを組み合わせることも可能である。\nこれらの問題を解決するために使用されている。\n2006年（平成18年）4月1日：国鉄分割民",
+        "valid": true,
+        "info": {
+          "decode_sec": 24.58,
+          "fluency_bpc": 1.1171,
+          "goals_reached": 0,
+          "entities_grounded": [],
+          "plan": {
+            "plan_ms": 0.0,
+            "agenda": []
+          }
+        }
+      },
+      "tier2_v30_full": {
+        "text": "ドイツの自動車産業とエンジン技術は世界的に知られており、日本での一部です。または、英語圏における先生は「ある事が一般的に共通化しつつある。それを見てください。そしていろいろの自分を見つめ",
+        "valid": true,
+        "info": {
+          "decode_sec": 26.95,
+          "fluency_bpc": 3.1514,
+          "goals_reached": 3,
+          "entities_grounded": [
+            "圏に",
+            "語圏",
+            "通化",
+            "ださ",
+            "に共"
+          ],
+          "plan": {
+            "plan_ms": 84.8,
+            "hop1": 6,
+            "hop2": 4,
+            "agenda": [
+              {
+                "hop": 1,
+                "source": "ep_easy_ja",
+                "custom": false,
+                "clause": "1948年から1991年までの43年間は、東ドイツの自動車産業の歴史の一部です。"
+              },
+              {
+                "hop": 1,
+                "source": "ep_wikipedia_mega",
+                "custom": false,
+                "clause": "自動車産業では、英語圏における呼び名「」または「」を使用する事が世界的に共通化しつつある。"
+              },
+              {
+                "hop": 1,
+                "source": "ep_easy_ja",
+                "custom": false,
+                "clause": "エンジン型式一覧の自動車用エンジンの系譜を見てください。"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "新幹線・鉄道": {
+      "prompt": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、",
+      "tier0_myopic": {
+        "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、また日本で発売されました。\n歴史\n1998年（平成10年）には現在の本部を中心にして、南北朝時代に作られたと考えられている。\nその後",
+        "valid": true,
+        "fluency_bpc": 1.7871
+      },
+      "tier1_char_beam": {
+        "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、それらを組み合わせることになりました。\nその後、アメリカ合衆国カリフォルニア州サンフランシスコ・ジャイアントパンダイナムコゲームス",
+        "valid": true,
+        "info": {
+          "decode_sec": 25.46,
+          "fluency_bpc": 1.1734,
+          "goals_reached": 0,
+          "entities_grounded": [],
+          "plan": {
+            "plan_ms": 0.0,
+            "agenda": []
+          }
+        }
+      },
+      "tier2_v30_full": {
+        "text": "東海道新幹線は東京駅と新大阪駅を結ぶ高速鉄道であり、正式名称は名古屋駅、東海の駅である。\n日本の車内で、同じ名前の東京都内の売店で、川の流域は、大阪店と、両国駅と、一部の車両を使用。",
+        "valid": true,
+        "info": {
+          "decode_sec": 24.05,
+          "fluency_bpc": 4.0957,
+          "goals_reached": 3,
+          "entities_grounded": [
+            "駅、",
+            "じ名",
+            "屋駅"
+          ],
+          "plan": {
+            "plan_ms": 76.9,
+            "hop1": 6,
+            "hop2": 4,
+            "agenda": [
+              {
+                "hop": 1,
+                "source": "ep_wikipedia_mega",
+                "custom": false,
+                "clause": "JR東海の駅では名古屋駅、東京駅、新大阪駅、金山駅に次いで第5位（東京駅と新大阪駅は新幹線のみの数字）である。"
+              },
+              {
+                "hop": 1,
+                "source": "ep_easy_ja",
+                "custom": false,
+                "clause": "2009年3月1日から東京駅、品川駅、新横浜駅、名古屋駅、京都駅、新大阪駅の売店と、一部の東海道新幹線の車内で、同じ名"
+              },
+              {
+                "hop": 1,
+                "source": "ep_easy_ja",
+                "custom": false,
+                "clause": "廈深線は、中華人民共和国福建省アモイ市のアモイ北駅から、広東省深圳市の深圳北駅を結ぶ高速鉄道です。"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "量子重力": {
+      "prompt": "量子力学と一般相対性理論を統合する量子重力理論は、",
+      "tier0_myopic": {
+        "text": "量子力学と一般相対性理論を統合する量子重力理論は、小林少年と下表の通りである。\n日本では、小学校を卒業して、大分県主人にはとても強い力を持っている。\nその後、1984年に初めて見",
+        "valid": true,
+        "fluency_bpc": 2.3044
+      },
+      "tier1_char_beam": {
+        "text": "量子力学と一般相対性理論を統合する量子重力理論は、小学校を卒業した後、アメリカ合衆国カリフォルニア州サンフランシスコ・ジャイアントパンダイナムコエンターテインメント）が発売された。",
+        "valid": true,
+        "info": {
+          "decode_sec": 24.18,
+          "fluency_bpc": 1.2,
+          "goals_reached": 0,
+          "entities_grounded": [],
+          "plan": {
+            "plan_ms": 0.0,
+            "agenda": []
+          }
+        }
+      },
+      "tier2_v30_full": {
+        "text": "量子力学と一般相対性理論を統合する量子重力理論は、少年が自分自身の結合、重力の量子化が試みられている。\n日本での公式戦に物理学の基本的な理論の一般的な生物群であると考える。この場合",
+        "valid": true,
+        "info": {
+          "decode_sec": 24.14,
+          "fluency_bpc": 3.3803,
+          "goals_reached": 3,
+          "entities_grounded": [
+            "に物",
+            "重力",
+            "な理",
+            "子化",
+            "が試",
+            "量子"
+          ],
+          "plan": {
+            "plan_ms": 64.6,
+            "hop1": 6,
+            "hop2": 4,
+            "agenda": [
+              {
+                "hop": 1,
+                "source": "ep_wikipedia_mega",
+                "custom": false,
+                "clause": "近年では、量子力学と一般相対性理論の結合、重力の量子化が試みられ、量子重力と呼ばれている。"
+              },
+              {
+                "hop": 1,
+                "source": "ep_wikipedia_mega",
+                "custom": false,
+                "clause": "量子論は一般相対性理論と同様に物理学の基本的な理論の1つであると考えられている。"
+              },
+              {
+                "hop": 1,
+                "source": "ep_wikipedia_mega",
+                "custom": false,
+                "clause": "量子力学と一般相対性理論を量子重力の単一理論に統合するという半世紀以上におよぶ試みはまだ結実していない。"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "custom": {
+    "direct": {
+      "mounted": {
+        "text": "量子重力エンジン「アストラX-99」は、重力子結晶コイルの臨界温度をマイナス2世）。までの航行時間をわずか20周年。\n2023年1月1日に新しく建てまで引き上げることに成功した。こうした状",
+        "info": {
+          "decode_sec": 22.79,
+          "fluency_bpc": 4.1425,
+          "goals_reached": 3,
+          "entities_grounded": [
+            "イル",
+            "げる",
+            "上げ",
+            "こと",
+            "イナ",
+            "時間",
+            "引き",
+            "した",
+            "間を",
+            "ルの",
+            "成功",
+            "マイ",
+            "での",
+            "まで",
+            "るこ",
+            "とに"
+          ],
+          "plan": {
+            "plan_ms": 46.1,
+            "hop1": 6,
+            "hop2": 4,
+            "agenda": [
+              {
+                "hop": 1,
+                "source": "ep_custom_astra_x99",
+                "custom": true,
+                "clause": "開発責任者の黒木ミライ博士は、重力子結晶コイルの臨界温度をマイナス"
+              },
+              {
+                "hop": 1,
+                "source": "ep_custom_astra_x99",
+                "custom": true,
+                "clause": "この結果、アストラX-99は木星軌道エウロパ基地までの航行時間をわずか72時間に短縮し、人類初の外惑星定期便を実現した"
+              },
+              {
+                "hop": 1,
+                "source": "ep_custom_astra_x99",
+                "custom": true,
+                "clause": "269度から常温の24度まで引き上げることに成功した。"
+              }
+            ]
+          }
+        }
+      },
+      "unmounted": {
+        "text": "量子重力エンジン「アストラX-99」は、1998年には、量子力学と一般相対性理論では、重力の量子化が試みられている。また、フランチにような理論を量子量を重力理論と呼ぶが、20年現在はまだ構",
+        "info": {
+          "decode_sec": 23.83,
+          "fluency_bpc": 3.9434,
+          "goals_reached": 2,
+          "entities_grounded": [
+            "だ構",
+            "年現",
+            "子化",
+            "が試",
+            "性理",
+            "般相",
+            "対性",
+            "力理",
+            "力学",
+            "重力",
+            "を量",
+            "ぶが",
+            "量子",
+            "、量"
+          ],
+          "plan": {
+            "plan_ms": 60.2,
+            "hop1": 6,
+            "hop2": 4,
+            "agenda": [
+              {
+                "hop": 1,
+                "source": "ep_wikipedia_mega",
+                "custom": false,
+                "clause": "近年では、量子力学と一般相対性理論の結合、重力の量子化が試みられ、量子重力と呼ばれている。"
+              },
+              {
+                "hop": 1,
+                "source": "ep_wikipedia_mega",
+                "custom": false,
+                "clause": "うな理論を量子重力理論と呼ぶが、2020年現在では完全な量子重力理論はまだ構築されていないため、ビッグクランチによ"
+              },
+              {
+                "hop": 1,
+                "source": "ep_wikipedia_mega",
+                "custom": false,
+                "clause": "格子重力などさまざまな試みがあるが、実現は困難である。"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "indirect_paraphrase": {
+      "mounted": {
+        "text": "黒木ミライ博士が開発した超光速推進機関について、その自身の臨界温度をマイナス2世は、重力子結晶コイルの臨終の黒木綿花の花火の見方を示す。この地下研究所である。し、仙台市となった。同年に国際宇宙塵を受",
+        "info": {
+          "decode_sec": 25.62,
+          "fluency_bpc": 4.8567,
+          "goals_reached": 3,
+          "entities_grounded": [
+            "イル",
+            "年に",
+            "の地",
+            "宇宙",
+            "を受",
+            "し、",
+            "ルの",
+            "は、",
+            "国際",
+            "マイ",
+            "研究",
+            "イナ"
+          ],
+          "plan": {
+            "plan_ms": 45.2,
+            "hop1": 6,
+            "hop2": 4,
+            "agenda": [
+              {
+                "hop": 1,
+                "source": "ep_custom_astra_x99",
+                "custom": true,
+                "clause": "開発責任者の黒木ミライ博士は、重力子結晶コイルの臨界温度をマイナス"
+              },
+              {
+                "hop": 1,
+                "source": "ep_custom_astra_x99",
+                "custom": true,
+                "clause": "量子重力エンジン「アストラX-99」は2042年に仙台市青葉区の地下研究所で完成した超光速推進機関である。"
+              },
+              {
+                "hop": 1,
+                "source": "ep_custom_astra_x99",
+                "custom": true,
+                "clause": "黒木ミライ博士のチームは翌2043年に国際宇宙工学大賞を受賞し、仙台市は次世代宇宙開発の拠点となった。"
+              }
+            ]
+          }
+        }
+      },
+      "unmounted": {
+        "text": "黒木ミライ博士が開発した超光速推進機関について、プレイヤー・キャンプ・ド・ブラインド・ヨード・キン・キープ・フレイ・ドライブ・パークシャン・ジャパン・バンプレクイーン・メイン・スタンドン・ドール・ド",
+        "info": {
+          "decode_sec": 27.24,
+          "fluency_bpc": 3.3791,
+          "goals_reached": 1,
+          "entities_grounded": [],
+          "plan": {
+            "plan_ms": 52.8,
+            "hop1": 6,
+            "hop2": 4,
+            "agenda": [
+              {
+                "hop": 1,
+                "source": "ep_wikipedia_mega",
+                "custom": false,
+                "clause": "であり、プレイヤー・キャラクターは広大な恒星間国家〈帝国〉とその周辺宙域を、ジャンプ・ドライブと呼ばれる超光速"
+              },
+              {
+                "hop": 1,
+                "source": "ep_wikipedia_mega",
+                "custom": false,
+                "clause": "対レイヤスD5用にせわし博士が開発した超音波防御装置で、マジンガーZの全身をバリヤーで包んで超音波攻撃を遮断・無効"
+              },
+              {
+                "hop": 2,
+                "source": "ep_aozora",
+                "custom": false,
+                "clause": "屋の役人が或る魚を指さして、「これは御用だぞ」と云ったが最後、忌でも応でもその魚を納めなければならない。"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "peak_vram_mb": 7323.2,
+  "total_sec": 553.5
+}

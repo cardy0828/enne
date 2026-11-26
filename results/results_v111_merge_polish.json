@@ -1,0 +1,139 @@
+{
+  "topology_stats": {
+    "broca_hidden": 524838,
+    "base_hidden_input": 4543752,
+    "shared_nodes_merged": 459515,
+    "broca_only_nodes": 65323,
+    "base_only_nodes_grafted": 4051411,
+    "total_alive_hidden": 4576249,
+    "total_edges": 4625743,
+    "extra_base_convergent_edges": 32477,
+    "skipped_unmapped": 16,
+    "skipped_cap": 0,
+    "overlap_pct_of_broca": 87.55,
+    "align_stats": {
+      "logit_cos": 0.98824,
+      "rel_err": 0.1786,
+      "T_norm2": 1.343,
+      "eot_leak_before": 0.0753,
+      "eot_leak_after": 0.0
+    },
+    "topology_sec": 13.75
+  },
+  "dev_ortho_sweep": [
+    {
+      "w_new": 0.75,
+      "alpha_donor": 0.65,
+      "dev_sft": {
+        "body_bpc": 3.8948,
+        "body_bpb": 1.3624,
+        "body_top1": 0.7287,
+        "eot_bits": 7.36,
+        "body_bytes": 121043,
+        "eot_count": 343,
+        "sec": 27.16
+      },
+      "val_3dom": {
+        "easy_ja": 4.7748,
+        "aozora": 6.2144,
+        "wikipedia": 5.0272,
+        "mean": 5.3388
+      }
+    },
+    {
+      "w_new": 0.8,
+      "alpha_donor": 0.5,
+      "dev_sft": {
+        "body_bpc": 3.8719,
+        "body_bpb": 1.3544,
+        "body_top1": 0.7307,
+        "eot_bits": 6.4,
+        "body_bytes": 121043,
+        "eot_count": 343,
+        "sec": 25.8
+      },
+      "val_3dom": {
+        "easy_ja": 4.8137,
+        "aozora": 6.2932,
+        "wikipedia": 5.0414,
+        "mean": 5.3828
+      }
+    },
+    {
+      "w_new": 0.85,
+      "alpha_donor": 0.35,
+      "dev_sft": {
+        "body_bpc": 3.874,
+        "body_bpb": 1.3551,
+        "body_top1": 0.7303,
+        "eot_bits": 5.508,
+        "body_bytes": 121043,
+        "eot_count": 343,
+        "sec": 25.81
+      },
+      "val_3dom": {
+        "easy_ja": 4.8906,
+        "aozora": 6.4279,
+        "wikipedia": 5.0896,
+        "mean": 5.4694
+      }
+    }
+  ],
+  "selected_merge": {
+    "w_new": 0.85,
+    "alpha_donor": 0.35
+  },
+  "raw_ortho_val_1000": {
+    "body_bpc": 3.8745,
+    "body_bpb": 1.3642,
+    "body_top1": 0.7292,
+    "eot_bits": 5.592,
+    "body_bytes": 594996,
+    "eot_count": 1544,
+    "sec": 79.44
+  },
+  "polish_fit": {
+    "dialogues_fit": 12000,
+    "assistant_bytes_fit": 7388868,
+    "eot_events_fit": 20573,
+    "W_norm": 0.533,
+    "eot_bias": 2.0162,
+    "sec": 399.32,
+    "mem": {
+      "peak_rss_gb": 29.66,
+      "gpu_alloc_mb": 5023.0,
+      "gpu_res_mb": 5066.0
+    }
+  },
+  "selected_readout_scale": 0.6,
+  "v111_val_core_only": {
+    "body_bpc": 3.9754,
+    "body_bpb": 1.3998,
+    "body_top1": 0.7193,
+    "eot_bits": 0.777,
+    "body_bytes": 594996,
+    "eot_count": 1544,
+    "sec": 61.59
+  },
+  "v111_val_full": {
+    "body_bpc": 3.8727,
+    "body_bpb": 1.3636,
+    "body_top1": 0.7308,
+    "eot_bits": 0.84,
+    "body_bytes": 594996,
+    "eot_count": 1544,
+    "sec": 80.18
+  },
+  "v111_3dom": {
+    "easy_ja": 4.8906,
+    "aozora": 6.4279,
+    "wikipedia": 5.0896,
+    "mean": 5.4694
+  },
+  "final_mem": {
+    "peak_rss_gb": 29.66,
+    "gpu_alloc_mb": 5023.0,
+    "gpu_res_mb": 5066.0
+  },
+  "total_sec": 1428.1
+}

@@ -1,0 +1,194 @@
+{
+  "topology_stats": {
+    "broca_hidden": 524838,
+    "base_hidden_input": 4543752,
+    "shared_nodes_merged": 459515,
+    "broca_only_nodes": 65323,
+    "base_only_nodes_grafted": 4051411,
+    "total_alive_hidden": 4576249,
+    "total_edges": 4625743,
+    "extra_base_convergent_edges": 32477,
+    "skipped_unmapped": 16,
+    "skipped_cap": 0,
+    "overlap_pct_of_broca": 87.55,
+    "align_stats": {
+      "logit_cos": 0.98831,
+      "rel_err": 0.177,
+      "T_norm2": 1.343
+    },
+    "topology_sec": 13.78
+  },
+  "broca_alone_plus_engram": {
+    "sft_val": {
+      "body_bpc": 3.9794,
+      "body_bpb": 1.4012,
+      "body_top1": 0.7234,
+      "eot_bits": 3.145,
+      "body_bytes": 594996,
+      "eot_count": 1544,
+      "sec": 80.46
+    },
+    "val_3dom": {
+      "easy_ja": 5.2934,
+      "aozora": 7.0636,
+      "wikipedia": 5.3905,
+      "mean": 5.9158
+    }
+  },
+  "dev_sweep": [
+    {
+      "w_new": 0.65,
+      "alpha_donor": 0.55,
+      "apply_sec": 2.13,
+      "dev_sft": {
+        "body_bpc": 4.0138,
+        "body_bpb": 1.404,
+        "body_top1": 0.7207,
+        "eot_bits": 9.447,
+        "body_bytes": 121043,
+        "eot_count": 343,
+        "sec": 26.96
+      },
+      "val_3dom": {
+        "easy_ja": 4.8016,
+        "aozora": 6.2345,
+        "wikipedia": 5.0582,
+        "mean": 5.3648
+      }
+    },
+    {
+      "w_new": 0.75,
+      "alpha_donor": 0.5,
+      "apply_sec": 2.14,
+      "dev_sft": {
+        "body_bpc": 3.9002,
+        "body_bpb": 1.3643,
+        "body_top1": 0.7281,
+        "eot_bits": 7.423,
+        "body_bytes": 121043,
+        "eot_count": 343,
+        "sec": 25.99
+      },
+      "val_3dom": {
+        "easy_ja": 4.7924,
+        "aozora": 6.2537,
+        "wikipedia": 5.0278,
+        "mean": 5.358
+      }
+    },
+    {
+      "w_new": 0.8,
+      "alpha_donor": 0.45,
+      "apply_sec": 2.13,
+      "dev_sft": {
+        "body_bpc": 3.8743,
+        "body_bpb": 1.3552,
+        "body_top1": 0.7306,
+        "eot_bits": 6.467,
+        "body_bytes": 121043,
+        "eot_count": 343,
+        "sec": 25.97
+      },
+      "val_3dom": {
+        "easy_ja": 4.8221,
+        "aozora": 6.3122,
+        "wikipedia": 5.0427,
+        "mean": 5.3923
+      }
+    },
+    {
+      "w_new": 0.85,
+      "alpha_donor": 0.35,
+      "apply_sec": 2.13,
+      "dev_sft": {
+        "body_bpc": 3.8724,
+        "body_bpb": 1.3546,
+        "body_top1": 0.7304,
+        "eot_bits": 5.569,
+        "body_bytes": 121043,
+        "eot_count": 343,
+        "sec": 25.88
+      },
+      "val_3dom": {
+        "easy_ja": 4.8881,
+        "aozora": 6.4262,
+        "wikipedia": 5.086,
+        "mean": 5.4668
+      }
+    },
+    {
+      "w_new": 0.75,
+      "alpha_donor": 0.7,
+      "apply_sec": 2.12,
+      "dev_sft": {
+        "body_bpc": 3.89,
+        "body_bpb": 1.3607,
+        "body_top1": 0.7289,
+        "eot_bits": 7.479,
+        "body_bytes": 121043,
+        "eot_count": 343,
+        "sec": 25.89
+      },
+      "val_3dom": {
+        "easy_ja": 4.7674,
+        "aozora": 6.2026,
+        "wikipedia": 5.0205,
+        "mean": 5.3302
+      }
+    },
+    {
+      "w_new": 0.9,
+      "alpha_donor": 0.25,
+      "apply_sec": 2.14,
+      "dev_sft": {
+        "body_bpc": 3.8898,
+        "body_bpb": 1.3606,
+        "body_top1": 0.7294,
+        "eot_bits": 4.671,
+        "body_bytes": 121043,
+        "eot_count": 343,
+        "sec": 25.95
+      },
+      "val_3dom": {
+        "easy_ja": 4.9812,
+        "aozora": 6.5774,
+        "wikipedia": 5.1535,
+        "mean": 5.5707
+      }
+    }
+  ],
+  "selected": {
+    "w_new": 0.85,
+    "alpha_donor": 0.35
+  },
+  "merged_single_val_core_only": {
+    "body_bpc": 3.9816,
+    "body_bpb": 1.4019,
+    "body_top1": 0.7166,
+    "eot_bits": 5.447,
+    "body_bytes": 594996,
+    "eot_count": 1544,
+    "sec": 61.31
+  },
+  "merged_single_val_full": {
+    "body_bpc": 3.8728,
+    "body_bpb": 1.3636,
+    "body_top1": 0.7292,
+    "eot_bits": 5.652,
+    "body_bytes": 594996,
+    "eot_count": 1544,
+    "sec": 79.63
+  },
+  "merged_single_3dom": {
+    "easy_ja": 4.8881,
+    "aozora": 6.4262,
+    "wikipedia": 5.086,
+    "mean": 5.4668
+  },
+  "final_mem": {
+    "peak_rss_gb": 29.55,
+    "gpu_alloc_mb": 5031.0,
+    "gpu_res_mb": 5066.0
+  },
+  "total_sec": 1570.3
+}

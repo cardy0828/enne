@@ -1,0 +1,218 @@
+{
+  "ablation": [
+    {
+      "steps": 119968,
+      "bpc": 5.7254504685480505,
+      "ppl": 52.909338247850805,
+      "top1": 0.34647572686049616,
+      "top5": 0.5940000666844492,
+      "hard_bpc": 8.801856157910706,
+      "hard_ppl": 446.295719072895,
+      "hard_top1": 0.13711989124974142,
+      "hard_frac": 0.28206688450253403,
+      "bindings": 0,
+      "overwrites": 0,
+      "recalls": 0,
+      "reconsolidations": 0,
+      "name": "C0_Cortex_Only_NoMemory",
+      "sec": 16.94
+    },
+    {
+      "steps": 119968,
+      "bpc": 5.656868167367835,
+      "ppl": 50.45300056315708,
+      "top1": 0.36445552147239263,
+      "top5": 0.6086039610562817,
+      "hard_bpc": 8.551147206349675,
+      "hard_ppl": 375.1040959442507,
+      "hard_top1": 0.16345045657377583,
+      "hard_frac": 0.28206688450253403,
+      "bindings": 115063,
+      "overwrites": 113015,
+      "recalls": 18660,
+      "reconsolidations": 8028,
+      "name": "C1_Mem64_NoSurpriseGate_BindAll",
+      "sec": 21.91
+    },
+    {
+      "steps": 119968,
+      "bpc": 5.650833458773358,
+      "ppl": 50.24239939924965,
+      "top1": 0.3640054014403841,
+      "top5": 0.6086623099493198,
+      "hard_bpc": 8.54682202583928,
+      "hard_ppl": 373.98122288268763,
+      "hard_top1": 0.16321404296817282,
+      "hard_frac": 0.28206688450253403,
+      "bindings": 89015,
+      "overwrites": 86967,
+      "recalls": 18185,
+      "reconsolidations": 7453,
+      "name": "C2_Mem64_SurpriseGated",
+      "sec": 21.93
+    },
+    {
+      "steps": 119968,
+      "bpc": 5.617211719434291,
+      "ppl": 49.0850479457447,
+      "top1": 0.3755084689250467,
+      "top5": 0.6168561616431049,
+      "hard_bpc": 8.391907779017087,
+      "hard_ppl": 335.90460855493217,
+      "hard_top1": 0.17920151304707585,
+      "hard_frac": 0.28206688450253403,
+      "bindings": 84471,
+      "overwrites": 76279,
+      "recalls": 35327,
+      "reconsolidations": 17059,
+      "name": "C3_Mem256_SurpriseGated",
+      "sec": 19.98
+    },
+    {
+      "steps": 119968,
+      "bpc": 5.638773901066735,
+      "ppl": 49.82417118000415,
+      "top1": 0.380634835956255,
+      "top5": 0.6216574419845292,
+      "hard_bpc": 8.403256322329804,
+      "hard_ppl": 338.5573247485735,
+      "hard_top1": 0.19249977836224474,
+      "hard_frac": 0.28206688450253403,
+      "bindings": 84084,
+      "overwrites": 75892,
+      "recalls": 35045,
+      "reconsolidations": 16200,
+      "name": "C4_Mem256_Surprise_Plus_UncertaintyGate",
+      "sec": 20.29
+    }
+  ],
+  "demo": {
+    "article_len": 2200,
+    "cortex_bpc": 6.5767,
+    "with_mem_bpc": 6.4471,
+    "bindings": 1668,
+    "reconsolidations": 224,
+    "big_wins": [
+      {
+        "pos": 120,
+        "context": "語の読み方は「",
+        "next_char": "グ",
+        "p_cortex": 0.0,
+        "p_with_mem": 0.0038,
+        "gain_bits": 6.58
+      },
+      {
+        "pos": 121,
+        "context": "の読み方は「グ",
+        "next_char": "リ",
+        "p_cortex": 0.0898,
+        "p_with_mem": 0.9886,
+        "gain_bits": 3.46
+      },
+      {
+        "pos": 122,
+        "context": "読み方は「グリ",
+        "next_char": "レ",
+        "p_cortex": 0.0003,
+        "p_with_mem": 0.0032,
+        "gain_bits": 3.28
+      },
+      {
+        "pos": 172,
+        "context": "1です。\nグリ",
+        "next_char": "レ",
+        "p_cortex": 0.0003,
+        "p_with_mem": 0.025,
+        "gain_bits": 6.16
+      },
+      {
+        "pos": 198,
+        "context": "H) で、38",
+        "next_char": "(",
+        "p_cortex": 0.0001,
+        "p_with_mem": 0.0013,
+        "gain_bits": 4.56
+      },
+      {
+        "pos": 199,
+        "context": ") で、38(",
+        "next_char": "t",
+        "p_cortex": 0.0003,
+        "p_with_mem": 0.0915,
+        "gain_bits": 8.19
+      },
+      {
+        "pos": 200,
+        "context": " で、38(t",
+        "next_char": ")",
+        "p_cortex": 0.038,
+        "p_with_mem": 0.8829,
+        "gain_bits": 4.54
+      },
+      {
+        "pos": 201,
+        "context": "で、38(t)",
+        "next_char": "戦",
+        "p_cortex": 0.0001,
+        "p_with_mem": 0.0456,
+        "gain_bits": 8.26
+      },
+      {
+        "pos": 202,
+        "context": "、38(t)戦",
+        "next_char": "車",
+        "p_cortex": 0.0339,
+        "p_with_mem": 0.9144,
+        "gain_bits": 4.75
+      },
+      {
+        "pos": 229,
+        "context": "んでした）の車",
+        "next_char": "体",
+        "p_cortex": 0.0009,
+        "p_with_mem": 0.0148,
+        "gain_bits": 4.07
+      },
+      {
+        "pos": 289,
+        "context": "II号自走重歩",
+        "next_char": "兵",
+        "p_cortex": 0.0063,
+        "p_with_mem": 0.1129,
+        "gain_bits": 4.16
+      },
+      {
+        "pos": 290,
+        "context": "I号自走重歩兵",
+        "next_char": "砲",
+        "p_cortex": 0.0001,
+        "p_with_mem": 0.0129,
+        "gain_bits": 7.04
+      }
+    ],
+    "top_memories": [
+      "[Mac]->  (str=1.50, hits=0)",
+      "[は、M]->a (str=1.49, hits=0)",
+      "[では、]->M (str=1.48, hits=0)",
+      "[スでは]->、 (str=1.47, hits=0)",
+      "[ックス]->で (str=1.47, hits=0)",
+      "[ラボボ]->ッ (str=1.45, hits=0)",
+      "[コラボ]->ボ (str=1.45, hits=0)",
+      "[のコラ]->ボ (str=1.44, hits=0)",
+      "[、Ma]->c (str=1.44, hits=0)",
+      "[とのコ]->ラ (str=1.43, hits=0)",
+      "[eとの]->コ (str=1.43, hits=0)",
+      "[ore]->と (str=1.42, hits=0)"
+    ],
+    "cortex_gens": {
+      "グリレは、": "グリレは、今回ものがいたくなんだか、私たちはまた、そんなには、それもう一度もあります。そして、私はこう言いました。\n「いうことは、",
+      "38(t)": "38(t) ne oun （ Reane Teathe Tos と同じような気がします。\nその間は、もっときっとしたが、それを見る",
+      "自走砲": "自走砲の手かみたり、そんなになったのところには、一つの生まれたいていました。そのため、一番大切なって、どうしても、もしかし、私"
+    },
+    "mem_gens": {
+      "グリレは、": "グリレは、このような気がしているそうです。\nこのような、空の家になったことが多いです。\nこのようなも、あるのは、このようなものがと",
+      "38(t)": "38(t) に、2つのことが多いです。\nこのようなこのようなもともとにも、わたいと思います。\nこのような気がしました。それは「誰も",
+      "自走砲": "自走砲身分かりません。\nこのような気持ちで、自分の家に帰っていることが多いです。\nこのような、このようなものだという言葉を使う"
+    }
+  }
+}

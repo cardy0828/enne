@@ -1,0 +1,381 @@
+{
+  "vram_core_mb": 2420.9,
+  "vram_peak_mb": 4426.0,
+  "total_cpu_slots": 354418688,
+  "total_cpu_ram_gb": 7.59,
+  "stage0_bare": {
+    "easy_ja": {
+      "bpb": 1.434,
+      "bpc_lossless": 4.164,
+      "ppl": 17.93,
+      "byte_top1": 0.7143,
+      "byte_top5": 0.9272,
+      "engram_hits_per_step": 0.0,
+      "engram_mean_gate": 0.0
+    },
+    "aozora": {
+      "bpb": 1.6879,
+      "bpc_lossless": 5.0201,
+      "ppl": 32.45,
+      "byte_top1": 0.6665,
+      "byte_top5": 0.9089,
+      "engram_hits_per_step": 0.0,
+      "engram_mean_gate": 0.0
+    },
+    "wikipedia": {
+      "bpb": 1.7726,
+      "bpc_lossless": 4.7523,
+      "ppl": 26.95,
+      "byte_top1": 0.6633,
+      "byte_top5": 0.9006,
+      "engram_hits_per_step": 0.0,
+      "engram_mean_gate": 0.0
+    }
+  },
+  "distill": {
+    "easy_ja": {
+      "bytes": 89218154,
+      "kept": 79758702,
+      "sec": 25.3,
+      "mb_per_sec": 3.5
+    },
+    "aozora": {
+      "bytes": 166370180,
+      "kept": 147021437,
+      "sec": 48.6,
+      "mb_per_sec": 3.4
+    },
+    "easy_sleep": {
+      "before": 31389210,
+      "after": 16000151,
+      "pruned": 15389059,
+      "prune_pct": 49.0
+    },
+    "aozora_sleep": {
+      "before": 62007582,
+      "after": 31220354,
+      "pruned": 30787228,
+      "prune_pct": 49.7
+    }
+  },
+  "wiki_scaling_curve": [
+    {
+      "wiki_chars_m": 50.0,
+      "active_slots": 43943767,
+      "wiki_val": {
+        "bpb": 1.7506,
+        "bpc_lossless": 4.6934,
+        "ppl": 25.87,
+        "byte_top1": 0.6756,
+        "byte_top5": 0.9024,
+        "engram_hits_per_step": 2.896,
+        "engram_mean_gate": 2.292
+      },
+      "distill": {
+        "bytes": 139962523,
+        "kept": 130390098,
+        "sec": 44.8,
+        "mb_per_sec": 3.1
+      }
+    },
+    {
+      "wiki_chars_m": 100.0,
+      "active_slots": 69570667,
+      "wiki_val": {
+        "bpb": 1.7468,
+        "bpc_lossless": 4.6831,
+        "ppl": 25.69,
+        "byte_top1": 0.6773,
+        "byte_top5": 0.9029,
+        "engram_hits_per_step": 3.009,
+        "engram_mean_gate": 2.303
+      },
+      "distill": {
+        "bytes": 140554891,
+        "kept": 130910909,
+        "sec": 44.1,
+        "mb_per_sec": 3.2
+      }
+    },
+    {
+      "wiki_chars_m": 150.0,
+      "active_slots": 89569429,
+      "wiki_val": {
+        "bpb": 1.7419,
+        "bpc_lossless": 4.6701,
+        "ppl": 25.46,
+        "byte_top1": 0.6793,
+        "byte_top5": 0.9034,
+        "engram_hits_per_step": 3.083,
+        "engram_mean_gate": 2.304
+      },
+      "distill": {
+        "bytes": 139859264,
+        "kept": 130463079,
+        "sec": 44.1,
+        "mb_per_sec": 3.2
+      }
+    },
+    {
+      "wiki_chars_m": 200.0,
+      "active_slots": 106150134,
+      "wiki_val": {
+        "bpb": 1.7382,
+        "bpc_lossless": 4.6602,
+        "ppl": 25.29,
+        "byte_top1": 0.6803,
+        "byte_top5": 0.9038,
+        "engram_hits_per_step": 3.132,
+        "engram_mean_gate": 2.301
+      },
+      "distill": {
+        "bytes": 140274287,
+        "kept": 130804271,
+        "sec": 44.3,
+        "mb_per_sec": 3.2
+      }
+    }
+  ],
+  "hot_swap": {
+    "only_easy_ja": {
+      "easy_ja": {
+        "bpb": 1.4402,
+        "bpc_lossless": 4.182,
+        "ppl": 18.15,
+        "byte_top1": 0.7184,
+        "byte_top5": 0.9282,
+        "engram_hits_per_step": 3.041,
+        "engram_mean_gate": 2.201
+      },
+      "aozora": {
+        "bpb": 1.7149,
+        "bpc_lossless": 5.1004,
+        "ppl": 34.31,
+        "byte_top1": 0.6659,
+        "byte_top5": 0.9094,
+        "engram_hits_per_step": 2.239,
+        "engram_mean_gate": 2.29
+      },
+      "wikipedia": {
+        "bpb": 1.7874,
+        "bpc_lossless": 4.792,
+        "ppl": 27.7,
+        "byte_top1": 0.6625,
+        "byte_top5": 0.9007,
+        "engram_hits_per_step": 1.973,
+        "engram_mean_gate": 2.153
+      }
+    },
+    "only_aozora": {
+      "easy_ja": {
+        "bpb": 1.4597,
+        "bpc_lossless": 4.2387,
+        "ppl": 18.88,
+        "byte_top1": 0.7114,
+        "byte_top5": 0.928,
+        "engram_hits_per_step": 2.781,
+        "engram_mean_gate": 2.399
+      },
+      "aozora": {
+        "bpb": 1.7041,
+        "bpc_lossless": 5.0683,
+        "ppl": 33.55,
+        "byte_top1": 0.6734,
+        "byte_top5": 0.9103,
+        "engram_hits_per_step": 2.946,
+        "engram_mean_gate": 2.395
+      },
+      "wikipedia": {
+        "bpb": 1.7919,
+        "bpc_lossless": 4.804,
+        "ppl": 27.94,
+        "byte_top1": 0.6617,
+        "byte_top5": 0.9007,
+        "engram_hits_per_step": 1.704,
+        "engram_mean_gate": 2.346
+      }
+    },
+    "only_wiki_200m": {
+      "easy_ja": {
+        "bpb": 1.4437,
+        "bpc_lossless": 4.1923,
+        "ppl": 18.28,
+        "byte_top1": 0.7124,
+        "byte_top5": 0.9281,
+        "engram_hits_per_step": 2.813,
+        "engram_mean_gate": 2.379
+      },
+      "aozora": {
+        "bpb": 1.7166,
+        "bpc_lossless": 5.1056,
+        "ppl": 34.43,
+        "byte_top1": 0.6637,
+        "byte_top5": 0.9091,
+        "engram_hits_per_step": 2.206,
+        "engram_mean_gate": 2.465
+      },
+      "wikipedia": {
+        "bpb": 1.7382,
+        "bpc_lossless": 4.6602,
+        "ppl": 25.29,
+        "byte_top1": 0.6803,
+        "byte_top5": 0.9038,
+        "engram_hits_per_step": 3.132,
+        "engram_mean_gate": 2.301
+      }
+    },
+    "all3_blind_gate_OFF": {
+      "easy_ja": {
+        "bpb": 1.4571,
+        "bpc_lossless": 4.2311,
+        "ppl": 18.78,
+        "byte_top1": 0.717,
+        "byte_top5": 0.9293,
+        "engram_hits_per_step": 8.635,
+        "engram_mean_gate": 2.394
+      },
+      "aozora": {
+        "bpb": 1.7295,
+        "bpc_lossless": 5.1439,
+        "ppl": 35.36,
+        "byte_top1": 0.6701,
+        "byte_top5": 0.9104,
+        "engram_hits_per_step": 7.39,
+        "engram_mean_gate": 2.456
+      },
+      "wikipedia": {
+        "bpb": 1.7581,
+        "bpc_lossless": 4.7134,
+        "ppl": 26.23,
+        "byte_top1": 0.6776,
+        "byte_top5": 0.9037,
+        "engram_hits_per_step": 6.809,
+        "engram_mean_gate": 2.37
+      }
+    },
+    "all3_context_gate_ON": {
+      "easy_ja": {
+        "bpb": 1.4553,
+        "bpc_lossless": 4.2258,
+        "ppl": 18.71,
+        "byte_top1": 0.7172,
+        "byte_top5": 0.9292,
+        "engram_hits_per_step": 8.635,
+        "engram_mean_gate": 2.323
+      },
+      "aozora": {
+        "bpb": 1.7274,
+        "bpc_lossless": 5.1375,
+        "ppl": 35.2,
+        "byte_top1": 0.6701,
+        "byte_top5": 0.9104,
+        "engram_hits_per_step": 7.39,
+        "engram_mean_gate": 2.384
+      },
+      "wikipedia": {
+        "bpb": 1.7566,
+        "bpc_lossless": 4.7096,
+        "ppl": 26.17,
+        "byte_top1": 0.6774,
+        "byte_top5": 0.9037,
+        "engram_hits_per_step": 6.809,
+        "engram_mean_gate": 2.269
+      }
+    }
+  },
+  "easy_ja_306k": {
+    "bpb": 1.5056,
+    "bpc_lossless": 4.3294,
+    "ppl": 20.1,
+    "byte_top1": 0.7111,
+    "byte_top5": 0.9242,
+    "engram_hits_per_step": 8.336,
+    "engram_mean_gate": 2.312
+  },
+  "custom_cartridge": {
+    "build_ms": 3.9,
+    "before": {
+      "bpb": 2.1387,
+      "bpc_lossless": 5.924,
+      "ppl": 60.72,
+      "byte_top1": 0.5865,
+      "byte_top5": 0.8462,
+      "engram_hits_per_step": 0.0,
+      "engram_mean_gate": 0.0
+    },
+    "mounted": {
+      "bpb": 1.2279,
+      "bpc_lossless": 3.4011,
+      "ppl": 10.56,
+      "byte_top1": 0.7917,
+      "byte_top5": 0.9391,
+      "engram_hits_per_step": 5.75,
+      "engram_mean_gate": 0.573
+    },
+    "unmounted": {
+      "bpb": 2.1387,
+      "bpc_lossless": 5.924,
+      "ppl": 60.72,
+      "byte_top1": 0.5865,
+      "byte_top5": 0.8462,
+      "engram_hits_per_step": 0.0,
+      "engram_mean_gate": 0.0
+    }
+  },
+  "generations": {
+    "Wikipedia歴史": {
+      "prompt": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて",
+      "bare": {
+        "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて、辻堂があります。\n経歴\n1965年から1945年にかけて、自分の家へ帰りました。\nそういうときには、上半身をやりたいと思っているので�",
+        "valid": true
+      },
+      "engram": {
+        "text": "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて、いろいろな分野を合わせて、一生懸命に書いてあることを認めると、その子の頭にあります。\nこれらを含めて、まるで夢のような�",
+        "valid": true,
+        "lookup_us": 2575.4
+      }
+    },
+    "青空文庫文学": {
+      "prompt": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。",
+      "bare": {
+        "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。ただし、イギリス側にホームスタジアムで行われたが、火の粉を数えると、ジャック・キングコーヒーの要素を取り入れました。名前",
+        "valid": true
+      },
+      "engram": {
+        "text": "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。正二くんは、お前が盛り上りのように、上りました。\n「あら、おじさんが、まるで夢中になり、その後、日本の大手私鉄の一つであ�",
+        "valid": true,
+        "lookup_us": 2567.6
+      }
+    },
+    "東京・都市": {
+      "prompt": "日本の東京は、江戸時代から続く歴史ある都市であり、",
+      "bare": {
+        "text": "日本の東京は、江戸時代から続く歴史ある都市であり、それが小さくなりますが、初念入りに感心したようであった。\n午後に帰ってきませんでした。\n彼が太平洋戦争が始まりました。そし�",
+        "valid": true
+      },
+      "engram": {
+        "text": "日本の東京は、江戸時代から続く歴史ある都市であり、その後も多くの場合、大学を卒業して、大声で叫びました。\n「あれは、なんのために、これらを共用すると考えられる。\nこれらの事�",
+        "valid": true,
+        "lookup_us": 2568.0
+      }
+    },
+    "ドイツ工業": {
+      "prompt": "ドイツの自動車産業とエンジン技術は世界的に知られており、",
+      "bare": {
+        "text": "ドイツの自動車産業とエンジン技術は世界的に知られており、その内容は夢のようでしたが、何も持っています。周りには白髪の老婆さんが監督に就任した。また、オーストラリアで一番大切なも",
+        "valid": true
+      },
+      "engram": {
+        "text": "ドイツの自動車産業とエンジン技術は世界的に知られており、それを取り出し、その後も多くの大多数が多いです。\n概要\n第二次世界大戦の後、アルゼンチンのベランダムに変わりました。そのた�",
+        "valid": true,
+        "lookup_us": 2614.0
+      }
+    },
+    "custom_mounted": {
+      "prompt": "量子重力エンジン「アストラX-99」は",
+      "text": "量子重力エンジン「アストラX-99」はありません。\nそのうちに、こんなもんだ。これを受けて、これらを合わせて、大切な役割を持っているのです�",
+      "valid": true
+    }
+  },
+  "total_sec": 1528.4
+}

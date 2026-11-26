@@ -1,0 +1,150 @@
+{
+  "stages": [
+    {
+      "stage": "S0_Expanded_EasyJA_Only",
+      "alive_hidden": 377140,
+      "edges": 376715,
+      "ltm_active": 5940336,
+      "domains": {
+        "easy_ja": {
+          "bpb": 1.4446,
+          "bpc_lossless": 4.1947,
+          "ppl": 18.31,
+          "byte_top1": 0.7065,
+          "byte_top5": 0.9251
+        },
+        "aozora": {
+          "bpb": 2.097,
+          "bpc_lossless": 6.2369,
+          "ppl": 75.42,
+          "byte_top1": 0.6089,
+          "byte_top5": 0.8779
+        },
+        "wikipedia": {
+          "bpb": 2.073,
+          "bpc_lossless": 5.5577,
+          "ppl": 47.1,
+          "byte_top1": 0.6049,
+          "byte_top5": 0.8749
+        }
+      }
+    },
+    {
+      "stage": "S1_After_Aozora_6M",
+      "alive_hidden": 692845,
+      "edges": 694806,
+      "ltm_active": 16385991,
+      "domains": {
+        "easy_ja": {
+          "bpb": 1.5321,
+          "bpc_lossless": 4.4488,
+          "ppl": 21.84,
+          "byte_top1": 0.6922,
+          "byte_top5": 0.9227
+        },
+        "aozora": {
+          "bpb": 1.7535,
+          "bpc_lossless": 5.2153,
+          "ppl": 37.15,
+          "byte_top1": 0.6612,
+          "byte_top5": 0.9002
+        },
+        "wikipedia": {
+          "bpb": 2.1366,
+          "bpc_lossless": 5.7282,
+          "ppl": 53.01,
+          "byte_top1": 0.5989,
+          "byte_top5": 0.8718
+        }
+      }
+    },
+    {
+      "stage": "S2_After_Wikipedia_10M",
+      "alive_hidden": 833858,
+      "edges": 838657,
+      "ltm_active": 16709847,
+      "domains": {
+        "easy_ja": {
+          "bpb": 1.5457,
+          "bpc_lossless": 4.4885,
+          "ppl": 22.45,
+          "byte_top1": 0.6928,
+          "byte_top5": 0.9223
+        },
+        "aozora": {
+          "bpb": 1.8918,
+          "bpc_lossless": 5.6267,
+          "ppl": 49.41,
+          "byte_top1": 0.6386,
+          "byte_top5": 0.8935
+        },
+        "wikipedia": {
+          "bpb": 1.7673,
+          "bpc_lossless": 4.7381,
+          "ppl": 26.69,
+          "byte_top1": 0.6675,
+          "byte_top5": 0.8963
+        }
+      }
+    },
+    {
+      "stage": "S3_Final_Replay_Sleep",
+      "alive_hidden": 999744,
+      "edges": 1004481,
+      "ltm_active": 9211553,
+      "sleep_prune": {
+        "before": 16709847,
+        "after": 9211553,
+        "pruned": 7498294,
+        "prune_pct": 44.9
+      },
+      "domains": {
+        "easy_ja": {
+          "bpb": 1.4949,
+          "bpc_lossless": 4.3408,
+          "ppl": 20.26,
+          "byte_top1": 0.7046,
+          "byte_top5": 0.9231
+        },
+        "aozora": {
+          "bpb": 1.8249,
+          "bpc_lossless": 5.4276,
+          "ppl": 43.04,
+          "byte_top1": 0.6536,
+          "byte_top5": 0.8957
+        },
+        "wikipedia": {
+          "bpb": 1.82,
+          "bpc_lossless": 4.8794,
+          "ppl": 29.43,
+          "byte_top1": 0.6589,
+          "byte_top5": 0.8942
+        }
+      }
+    }
+  ],
+  "generations": {
+    "Wikipedia風": {
+      "prompt": "第二次世界大戦（だいにじせかいたいせん）は、",
+      "text": "第二次世界大戦（だいにじせかいたいせん）は、大阪の対応している。これは円札を得たとか、一度に個人の言語には国連にいたことになる。\nなお、このころから、いきなります。�",
+      "valid_utf8": true
+    },
+    "青空文庫風": {
+      "prompt": "吾輩は猫である。名前はまだ無い。どこで生れたか",
+      "text": "吾輩は猫である。名前はまだ無い。どこで生れたからである。彼はその時には、このような大きな石があるかもしれない。しかし、大きな声で、御規則において、その女の子であるとは",
+      "valid_utf8": true
+    },
+    "歴史年表風": {
+      "prompt": "1945年8月15日、",
+      "text": "1945年8月15日、目的の義務分などについては、「八卦の番組が結ばれている。これは、新しい別の方で呼ばれることがある。その中には、このような",
+      "valid_utf8": true
+    },
+    "無限拡張テスト": {
+      "prompt": "薔薇と憂鬱と🚀について、",
+      "text": "薔薇と憂鬱と🚀について、この有名な台の機能があります。また、この機械語にある周期の大学は、そのためには、この小説の最後、小泉社長は、最後には、多",
+      "valid_utf8": true
+    }
+  },
+  "peak_vram_mb": 2630.6,
+  "total_sec": 1535.1
+}

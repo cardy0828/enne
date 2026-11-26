@@ -1,0 +1,159 @@
+{
+  "挨拶": {
+    "q": "こんにちは！調子はどうですか？",
+    "ans": "おもいいでしょう。しょうか。これはいいですか」と、あなたがたがあったから、どんなことでもお聞きください。私はあなたのもいいですね。どのような状況でしょうか。」\n「それもよいでしょう。私のような者で",
+    "info": {
+      "stopped_eot": false,
+      "eot_lp": null,
+      "gen_chars": 98,
+      "gen_bytes": 292,
+      "decode_sec": 2.69,
+      "critic_sec": 0.88,
+      "chars_per_sec": 36.43,
+      "fluency_bpc": 2.9308,
+      "epi_conf": 0.0,
+      "recalled_src": [],
+      "recalled_preview": "",
+      "query_ms": 0.36
+    }
+  },
+  "用語説明(鉄道)": {
+    "q": "東海道新幹線とは何ですか？簡単に教えてください。",
+    "ans": "東海道新幹線と並行する区間は、名古屋市西区に新幹線の開業し、当駅に乗り入れ。\n新幹線ホームには山陽本線の駅です。駅番号はJR東海道本線・山陽新幹線の",
+    "info": {
+      "stopped_eot": false,
+      "eot_lp": null,
+      "gen_chars": 74,
+      "gen_bytes": 216,
+      "decode_sec": 2.62,
+      "critic_sec": 0.75,
+      "chars_per_sec": 28.27,
+      "fluency_bpc": 2.7529,
+      "epi_conf": 0.0,
+      "recalled_src": [],
+      "recalled_preview": "",
+      "query_ms": 3.27
+    }
+  },
+  "科学説明(物理)": {
+    "q": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+    "ans": "アインシュタインの特殊相対性理論では、重力によって相対性理論において、物体が持つ量子力学において、物理現象的な理論的な構成要素であり、実際の使用では、特定の条件を満たすと考えられている。この表現は、",
+    "info": {
+      "stopped_eot": false,
+      "eot_lp": null,
+      "gen_chars": 99,
+      "gen_bytes": 297,
+      "decode_sec": 3.94,
+      "critic_sec": 1.01,
+      "chars_per_sec": 25.15,
+      "fluency_bpc": 2.7156,
+      "epi_conf": 1.0,
+      "recalled_src": [
+        "wikipedia",
+        "wikipedia"
+      ],
+      "recalled_preview": "内部自由度を記述し切れていないことに起因すると考えられている。  相対性理論 アインシュタインによる相対性理論において、物体が持つ",
+      "query_ms": 2.22
+    }
+  },
+  "歴史質問": {
+    "q": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+    "ans": " - 第二次世界大戦: イギリス空軍と戦後の1946年（昭和21年）3月15日：東亜戦争終結した。",
+    "info": {
+      "stopped_eot": true,
+      "eot_lp": -0.301,
+      "gen_chars": 49,
+      "gen_bytes": 119,
+      "decode_sec": 2.52,
+      "critic_sec": 0.49,
+      "chars_per_sec": 19.47,
+      "fluency_bpc": 2.3987,
+      "epi_conf": 1.0,
+      "recalled_src": [
+        "wikipedia",
+        "wikipedia"
+      ],
+      "recalled_preview": " 1944年 - 第二次世界大戦: ドラグーン作戦が始まる。 1945年 - 第二次世界大戦: 未明、宮城事件が鎮圧される。 19",
+      "query_ms": 8.5
+    }
+  },
+  "文学質問": {
+    "q": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+    "ans": "夏目漱石の小説『源氏物語』の作者である』と書いた。\n『機動戦士ガンダム』によれば、この映画は、主人公の少女・芥川龍之介の短編小説。",
+    "info": {
+      "stopped_eot": true,
+      "eot_lp": -0.661,
+      "gen_chars": 65,
+      "gen_bytes": 193,
+      "decode_sec": 1.77,
+      "critic_sec": 0.7,
+      "chars_per_sec": 36.65,
+      "fluency_bpc": 2.944,
+      "epi_conf": 0.0,
+      "recalled_src": [],
+      "recalled_preview": "",
+      "query_ms": 2.5
+    }
+  },
+  "日常質問": {
+    "q": "日本の首都はどこですか？",
+    "ans": "といえる。したがって、首都はバイラム・チャンピ州にある都市です。",
+    "info": {
+      "stopped_eot": true,
+      "eot_lp": -1.606,
+      "gen_chars": 32,
+      "gen_bytes": 96,
+      "decode_sec": 2.23,
+      "critic_sec": 0.35,
+      "chars_per_sec": 14.37,
+      "fluency_bpc": 3.3694,
+      "epi_conf": 1.0,
+      "recalled_src": [
+        "wikipedia",
+        "wikipedia"
+      ],
+      "recalled_preview": "国家全体が首都といえる。  首都と主要都市 首都は、国政の中心として交通の便が良い場所が選定されることが多い。したがって、首都と最",
+      "query_ms": 0.93
+    }
+  },
+  "Custom Direct QA": {
+    "q": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+    "ans": "研究所で開発されたもので、物理学の最大推力は従来のイオンエンジンの推進装置換反応用エンジン「アストラット・モーターズ (",
+    "info": {
+      "stopped_eot": true,
+      "eot_lp": -1.923,
+      "gen_chars": 60,
+      "gen_bytes": 176,
+      "decode_sec": 2.5,
+      "critic_sec": 0.66,
+      "chars_per_sec": 23.96,
+      "fluency_bpc": 3.4136,
+      "epi_conf": 1.0,
+      "recalled_src": [
+        "custom_astra"
+      ],
+      "recalled_preview": "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。アストラX-99の最大推力は",
+      "query_ms": 4.85
+    }
+  },
+  "Custom Indirect QA": {
+    "q": "アストラX-99の最大推力はどのくらいですか？",
+    "ans": "研究所で開発された次世代の最大推力は従来のイオンエンジンの推進装置である。アステカのアーティスト名ク。",
+    "info": {
+      "stopped_eot": true,
+      "eot_lp": -0.519,
+      "gen_chars": 51,
+      "gen_bytes": 153,
+      "decode_sec": 2.65,
+      "critic_sec": 0.56,
+      "chars_per_sec": 19.23,
+      "fluency_bpc": 3.78,
+      "epi_conf": 1.0,
+      "recalled_src": [
+        "custom_astra"
+      ],
+      "recalled_preview": "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。アストラX-99の最大推力は",
+      "query_ms": 2.84
+    }
+  }
+}

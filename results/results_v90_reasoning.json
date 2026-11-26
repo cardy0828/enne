@@ -1,0 +1,1428 @@
+{
+  "growth": {
+    "turns_processed": 60088,
+    "nodes_born": 96,
+    "nodes_survived_apoptosis": 42,
+    "tau_user_idf": 5.2,
+    "hip_need_range": [
+      0.009,
+      0.786
+    ],
+    "sec": 57.03
+  },
+  "bridge": {
+    "answers_aligned": 3000,
+    "W_bridge_norm": 1.297,
+    "val_centered_bridge_cos": 0.7295,
+    "val_centered_unbridged_cos": 0.0129,
+    "sec": 9.83,
+    "mem": {
+      "peak_rss_gb": 4.4,
+      "gpu_alloc_mb": 7323.0,
+      "gpu_res_mb": 7346.0
+    }
+  },
+  "top_nodes": [
+    {
+      "id": 0,
+      "fires": 21199,
+      "hip_need": 0.155,
+      "multi_ent": 0.826,
+      "p25_b": 95.0,
+      "examples": [
+        "他にどのような原因が(1)の記述につながりうるか:「市の識字率はここ3年間上昇している。例を3つ挙げてください。",
+        "新しい車の購入を考えているのですが、なかなか決めかねています。車の選択肢はいくつかありますが、どれを選ぶべきか悩んでいま",
+        "自動車メーカーが日本かアメリカかを識別する:ライラ、リンカーン"
+      ]
+    },
+    {
+      "id": 1,
+      "fires": 20569,
+      "hip_need": 0.149,
+      "multi_ent": 0.818,
+      "p25_b": 93.0,
+      "examples": [
+        "山下葉子さんはどのくらいの身長ですか?",
+        "山下葉子さんの体重は何キロですか?",
+        "山下葉子さんの趣味は何ですか?"
+      ]
+    },
+    {
+      "id": 2,
+      "fires": 4455,
+      "hip_need": 0.423,
+      "multi_ent": 0.749,
+      "p25_b": 218.8,
+      "examples": [
+        "正三角形(3辺)の辺の長さが1つしかない場合の面積の求め方を教えてください。",
+        "王立天文台の歴史について教えてください。",
+        "ウルグアイの軍事について教えてください。"
+      ]
+    },
+    {
+      "id": 3,
+      "fires": 3172,
+      "hip_need": 0.151,
+      "multi_ent": 0.864,
+      "p25_b": 92.0,
+      "examples": [
+        "この段落から考えると、\"Greenmantle \"は誰が書いたのでしょうか?\nグリーンマントル』は、リチャード・ハネイを",
+        "タイピングの練習のために、この英文をよく使われるフレーズに解読できるかな?\ntcnmeahkfprzeboetyqrxd",
+        "この不具合の結果はどうなったのでしょうか?"
+      ]
+    },
+    {
+      "id": 4,
+      "fires": 1445,
+      "hip_need": 0.776,
+      "multi_ent": 0.938,
+      "p25_b": 793.5,
+      "examples": [
+        "「語学」という単語は「言語学習」を指す意味と、「言語研究」を指す意味の両方を持っています。この二つの意味の違いについて詳",
+        "「Unified Memory」について説明します。",
+        "「会話」とは、ある特定の言語を用いて行われる、人々の間での情報交換や意見交換のことを指します。日常会話では、家族や友人、"
+      ]
+    },
+    {
+      "id": 5,
+      "fires": 1015,
+      "hip_need": 0.363,
+      "multi_ent": 0.728,
+      "p25_b": 209.5,
+      "examples": [
+        "「高齢化社会」と呼ばれる現象は、日本を含む多くの国々で深刻な問題となっています。この現象は、人口構造の変化によって引き起",
+        "こんにちは、助けてください。",
+        "あなたならどちらを選ぶか、具体的な理由とともに答えてください。"
+      ]
+    },
+    {
+      "id": 6,
+      "fires": 838,
+      "hip_need": 0.784,
+      "multi_ent": 0.996,
+      "p25_b": 487.5,
+      "examples": [
+        "自分の地域に根ざした伝統芸能や行事、文化について知りたいと思っています。地元で開催されるイベントに関する情報も提供してい",
+        "すみませんが、私の質問はもう少し深掘りされた内容についてです。具体的な例や詳細な説明を求めているため、一般的な回答ではな",
+        "日本語には、英語や他の言語と比べて独特な表現や言い回しが多く存在します。例えば、「お疲れ様です」や「よろしくお願いします"
+      ]
+    },
+    {
+      "id": 7,
+      "fires": 697,
+      "hip_need": 0.727,
+      "multi_ent": 0.927,
+      "p25_b": 633.0,
+      "examples": [
+        "サトウキビから作られる糖蜜について説明します。",
+        "人工知能にとって、学習データの質と量がどのように重要であるかについて説明します。",
+        "“安全対策”と“防災対策”の違いについて詳しく説明してください。"
+      ]
+    },
+    {
+      "id": 8,
+      "fires": 613,
+      "hip_need": 0.122,
+      "multi_ent": 0.995,
+      "p25_b": 138.5,
+      "examples": [
+        "これらの都市がテキサス州にあるかどうか教えてください:オースティン、ヒューストン、ニューヨーク、シカゴ、マイアミ、ダラス",
+        "ジュース、ポテトチップス、ケーキ、チーズのうち、甘いものと塩辛いものはどれか教えてください。",
+        "絵画、彫刻、建築、音楽、詩など、ファインアートの媒体の例として、これらが挙げられるか教えてください。"
+      ]
+    },
+    {
+      "id": 9,
+      "fires": 465,
+      "hip_need": 0.131,
+      "multi_ent": 0.54,
+      "p25_b": 132.0,
+      "examples": [
+        "映画なのか映画監督なのか、教えてください:ショーレイ」サタジット・レイ、「マニ・ラトナム」ラガーン、「ヤシュ・チョプラ」",
+        "ヴィルヘルム・ヴィーンについて教えてください",
+        "ヴィルヘルム・ヴィーンの経歴について教えてください"
+      ]
+    },
+    {
+      "id": 10,
+      "fires": 403,
+      "hip_need": 0.459,
+      "multi_ent": 0.995,
+      "p25_b": 210.0,
+      "examples": [
+        "4段落のLorem Ipsumを作成してください。",
+        "\"おくのほそ道\" の冒頭",
+        "少数民族教育の改善に焦点を当てた国際会議で、特に重要な役割を果たした人物について知りたいです。"
+      ]
+    },
+    {
+      "id": 11,
+      "fires": 310,
+      "hip_need": 0.342,
+      "multi_ent": 0.958,
+      "p25_b": 142.2,
+      "examples": [
+        "タブニアはどこにあったのか\nタブニアは、古代都市であり、ローマ帝国北アフリカの旧司教区で、現在もラテン・カトリックの首長",
+        "これらの州や県がカナダかアメリカか教えてください:アラバマ州、オンタリオ州、ブリティッシュコロンビア州、サウスダコタ州、",
+        "どれが鳥か魚か:レッドフィンパーチ、レッドビーストマーガンサー"
+      ]
+    },
+    {
+      "id": 12,
+      "fires": 300,
+      "hip_need": 0.023,
+      "multi_ent": 0.987,
+      "p25_b": 89.8,
+      "examples": [
+        "Allauchはどこですか?\nアラウフ(フランス語発音:[alo]、オック語:Alaug)は、フランスのプロバンス=アル",
+        "ネバダ州ワブスカについてのこのパラグラフを考えると、この町に初めて郵便局が開設されたのはいつですか?\nワブスカはアメリカ",
+        "5つのスカンダとは何ですか?\n仏教では、渇愛や執着の発生に関与する5つの物質的・精神的要因である「執着の5つの集合体(P"
+      ]
+    },
+    {
+      "id": 13,
+      "fires": 277,
+      "hip_need": 0.516,
+      "multi_ent": 0.986,
+      "p25_b": 193.0,
+      "examples": [
+        "私はアメリカ版の『The Office』をほとんど理不尽なまでに憎んでいる。とはいえ、オリジナルのイギリス版も含めて、ち",
+        "鼻をほじることの過程と意味を、高度に洗練された学術的な言葉で詳細に説明し、読者に嫌悪感と不愉快な意識を残してください。適",
+        "あなたが結婚して、ウェディングケーキの試食会に参加すると想像してください。試食する5種類の味を、ケーキとフロスティングの"
+      ]
+    },
+    {
+      "id": 14,
+      "fires": 238,
+      "hip_need": 0.597,
+      "multi_ent": 0.979,
+      "p25_b": 231.2,
+      "examples": [
+        "この字句「係船浮標」とは、船舶が停泊する際に使用される構造物のことを指します。具体的には、船舶が水面に正確に停泊するため",
+        "「申し訳ありませんが、あなたの意見には反対です」というフレーズについて考えてみましょう。このフレーズは、相手の意見を尊重",
+        "人工知能が人間の労働力を代替する可能性について考えてみましょう。この議論において、倫理的な観点からも考慮する必要がありま"
+      ]
+    },
+    {
+      "id": 15,
+      "fires": 229,
+      "hip_need": 0.415,
+      "multi_ent": 0.873,
+      "p25_b": 151.0,
+      "examples": [
+        "先生に大阪府立体育会館の愛称は何か聞いてみようかな。",
+        "【本文】",
+        "ノキアの失敗を招いた7つの要因"
+      ]
+    },
+    {
+      "id": 16,
+      "fires": 228,
+      "hip_need": 0.557,
+      "multi_ent": 0.978,
+      "p25_b": 255.5,
+      "examples": [
+        "その文を使ったときの会話の流れがスムーズにいくように、自然な感じの日本語表現を用いました。たとえば、「ごめんなさい」とい",
+        "数学において「整数」という言葉は、一般的にゼロを含む自然数の集合を指します。一方で、「自然数」という用語は、正の整数を指",
+        "私の家族は遠くに住んでいて、私はガールフレンドとのひどい別れのためにすべての友人を失いました。"
+      ]
+    },
+    {
+      "id": 17,
+      "fires": 222,
+      "hip_need": 0.059,
+      "multi_ent": 1.0,
+      "p25_b": 111.0,
+      "examples": [
+        "赤と青を基調とし、南ロンドンを本拠地とするプロサッカーチームはどこでしょう?\nクリスタル・パレス・フットボール・クラブ、",
+        "グリーンベイパッカーズはなぜパッカーズと呼ばれているのですか?\nチームの創設者であるカーリー・ランボーは、新チームに必要",
+        "楽器はいつからあるのですか?\n楽器とされるものが初めて作られた時期や起源については、議論があります。一部の学者が楽器と呼"
+      ]
+    },
+    {
+      "id": 18,
+      "fires": 221,
+      "hip_need": 0.009,
+      "multi_ent": 1.0,
+      "p25_b": 57.0,
+      "examples": [
+        "どの動物種が生きているか、あるいは絶滅しているかを特定する:ヴェロキラプトル、パシフィックサーモン",
+        "どの楽器が弦楽器なのか、打楽器なのかを確認する:グベドゥ、ギタレレ",
+        "どの楽器が弦楽器なのか、打楽器なのかを確認する:スカベラム、ニッケルハルパ"
+      ]
+    },
+    {
+      "id": 19,
+      "fires": 201,
+      "hip_need": 0.701,
+      "multi_ent": 0.955,
+      "p25_b": 604.0,
+      "examples": [
+        "『華麗なるギャツビー』の作者F・スコット・フィッツジェラルドは、彼が書いた作品の中で、登場人物たちに対してどのような視点",
+        "新規投資家のための基本的な投資戦略にはどのようなものがあるか",
+        "「おなじみ」という言葉は、一般的に使われることが多いですが、実際にはどのような意味を持っているので、どのように使うのが適"
+      ]
+    }
+  ],
+  "ablation_summary": {
+    "C0_Control": {
+      "evid_hits": 1,
+      "ans_hits": 1,
+      "gold_tot": 15,
+      "eot_ok": 5,
+      "bpcs": [
+        4.6771,
+        2.9905,
+        4.0194,
+        1.9297,
+        4.9177,
+        3.8369
+      ],
+      "mean_bpc": 3.729
+    },
+    "C1_+AND_Hip": {
+      "evid_hits": 0,
+      "ans_hits": 0,
+      "gold_tot": 15,
+      "eot_ok": 5,
+      "bpcs": [
+        3.5405,
+        2.6479,
+        2.865,
+        2.1958,
+        2.988,
+        3.2547
+      ],
+      "mean_bpc": 2.915
+    },
+    "C2_+Node": {
+      "evid_hits": 0,
+      "ans_hits": 1,
+      "gold_tot": 15,
+      "eot_ok": 4,
+      "bpcs": [
+        3.5405,
+        2.8273,
+        2.7816,
+        1.9094,
+        3.4268,
+        2.5037
+      ],
+      "mean_bpc": 2.832
+    },
+    "C3_Full_v90": {
+      "evid_hits": 0,
+      "ans_hits": 1,
+      "gold_tot": 15,
+      "eot_ok": 4,
+      "bpcs": [
+        3.5405,
+        2.8273,
+        2.7816,
+        1.9094,
+        3.4268,
+        2.4182
+      ],
+      "mean_bpc": 2.817
+    }
+  },
+  "ab": {
+    "挨拶": {
+      "q": "こんにちは！調子はどうですか？",
+      "gold_novel": [],
+      "configs": {
+        "C0_Control": {
+          "ans": "長男の忠兵衛によって高田郷に移った上野公園に従って八代郡高田馬場駅 - 大宮駅に自分の家へ帰郷に移ったのを入れると、",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": -1,
+            "reasoning_node_sim": 0.0,
+            "node_hip_need": -1.0,
+            "node_multi_ent": -1.0,
+            "want_hip": true,
+            "node_min_eot_b": 42,
+            "entities": [
+              "！調子"
+            ],
+            "exact_entities": [],
+            "partial_entities": [],
+            "uncovered_entities": [
+              "！調子"
+            ],
+            "agenda_sources": [
+              "wikipedia"
+            ],
+            "agenda_scores": [
+              169.18
+            ],
+            "agenda_preview": [
+              "立孝を入れる）とした。 この時、忠興に従って八代郡高田郷に移った上野喜蔵と長男の忠兵衛によって高田焼が創始された。 忠興は立孝に自分の"
+            ],
+            "hop23_ms": 0.39,
+            "stopped_eot": false,
+            "gen_chars": 58,
+            "decode_sec": 2.52,
+            "chars_per_sec": 23.02,
+            "fluency_bpc": 4.6771
+          }
+        },
+        "C1_+AND_Hip": {
+          "ans": "はどうなんてね。やあ、マルタはどう調子はどうだったよ。』\n『おいておく」というような言い方がありますから、調子はどうしよくなってい",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": -1,
+            "reasoning_node_sim": 0.0,
+            "node_hip_need": -1.0,
+            "node_multi_ent": -1.0,
+            "want_hip": true,
+            "node_min_eot_b": 42,
+            "entities": [
+              "！調子"
+            ],
+            "exact_entities": [],
+            "partial_entities": [
+              "！調子"
+            ],
+            "uncovered_entities": [],
+            "agenda_sources": [
+              "wikipedia"
+            ],
+            "agenda_scores": [
+              13.68
+            ],
+            "agenda_preview": [
+              "『やあ、マル、調子はどう?』なんてね。"
+            ],
+            "hop23_ms": 5.16,
+            "stopped_eot": false,
+            "gen_chars": 65,
+            "decode_sec": 2.32,
+            "chars_per_sec": 28.02,
+            "fluency_bpc": 3.5405
+          }
+        },
+        "C2_+Node": {
+          "ans": "はどうなんてね。やあ、マルタはどう調子はどうだったよ。』\n『おいておく」というような言い方がありますから、調子はどうしよくなってい",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": 16,
+            "reasoning_node_sim": 0.564,
+            "node_hip_need": 0.557,
+            "node_multi_ent": 0.978,
+            "want_hip": true,
+            "node_min_eot_b": 66,
+            "entities": [
+              "！調子"
+            ],
+            "exact_entities": [],
+            "partial_entities": [
+              "！調子"
+            ],
+            "uncovered_entities": [],
+            "agenda_sources": [
+              "wikipedia"
+            ],
+            "agenda_scores": [
+              13.75
+            ],
+            "agenda_preview": [
+              "『やあ、マル、調子はどう?』なんてね。"
+            ],
+            "hop23_ms": 5.07,
+            "stopped_eot": false,
+            "gen_chars": 65,
+            "decode_sec": 2.2,
+            "chars_per_sec": 29.48,
+            "fluency_bpc": 3.5405
+          }
+        },
+        "C3_Full_v90": {
+          "ans": "はどうなんてね。やあ、マルタはどう調子はどうだったよ。』\n『おいておく」というような言い方がありますから、調子はどうしよくなってい",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": 16,
+            "reasoning_node_sim": 0.564,
+            "node_hip_need": 0.557,
+            "node_multi_ent": 0.978,
+            "want_hip": true,
+            "node_min_eot_b": 66,
+            "entities": [
+              "！調子"
+            ],
+            "exact_entities": [],
+            "partial_entities": [
+              "！調子"
+            ],
+            "uncovered_entities": [],
+            "agenda_sources": [
+              "wikipedia"
+            ],
+            "agenda_scores": [
+              13.75
+            ],
+            "agenda_preview": [
+              "『やあ、マル、調子はどう?』なんてね。"
+            ],
+            "hop23_ms": 5.06,
+            "stopped_eot": false,
+            "gen_chars": 65,
+            "decode_sec": 2.23,
+            "chars_per_sec": 29.09,
+            "fluency_bpc": 3.5405
+          }
+        }
+      }
+    },
+    "用語説明(鉄道)": {
+      "q": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "gold_novel": [
+        "東京",
+        "新大阪",
+        "高速",
+        "JR"
+      ],
+      "configs": {
+        "C0_Control": {
+          "ans": "東海道新幹線に関連して発生した事件は、1993年から2000年にかけて東海道新幹線の開業する者が、治療薬として発生した事件で運転する列車がある。",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": -1,
+            "reasoning_node_sim": 0.0,
+            "node_hip_need": -1.0,
+            "node_multi_ent": -1.0,
+            "want_hip": true,
+            "node_min_eot_b": 42,
+            "entities": [
+              "東海道新幹線",
+              "？簡単"
+            ],
+            "exact_entities": [
+              "東海道新幹線"
+            ],
+            "partial_entities": [],
+            "uncovered_entities": [
+              "？簡単"
+            ],
+            "agenda_sources": [
+              "sft_factual_ans"
+            ],
+            "agenda_scores": [
+              1599.2
+            ],
+            "agenda_preview": [
+              "、薬を管理する者が、治療を受けるために患者の命を縮めるよう強制することである。 東海道新幹線墨子事件は、1993年から2000年にかけて東海道新幹線に"
+            ],
+            "hop23_ms": 2.77,
+            "stopped_eot": true,
+            "gen_chars": 72,
+            "decode_sec": 2.51,
+            "chars_per_sec": 28.7,
+            "fluency_bpc": 2.9905
+          }
+        },
+        "C1_+AND_Hip": {
+          "ans": "東海道新幹線に関連事件は、1993年から2000年にかけて発生した事件です。",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": -1,
+            "reasoning_node_sim": 0.0,
+            "node_hip_need": -1.0,
+            "node_multi_ent": -1.0,
+            "want_hip": true,
+            "node_min_eot_b": 42,
+            "entities": [
+              "東海道新幹線",
+              "？簡単"
+            ],
+            "exact_entities": [
+              "東海道新幹線"
+            ],
+            "partial_entities": [],
+            "uncovered_entities": [
+              "？簡単"
+            ],
+            "agenda_sources": [
+              "sft_factual_ans"
+            ],
+            "agenda_scores": [
+              20.82
+            ],
+            "agenda_preview": [
+              "東海道新幹線墨子事件は、1993年から2000年にかけて東海道新幹線に関連して発生した事件です。"
+            ],
+            "hop23_ms": 24.55,
+            "stopped_eot": true,
+            "gen_chars": 38,
+            "decode_sec": 2.22,
+            "chars_per_sec": 17.11,
+            "fluency_bpc": 2.6479
+          }
+        },
+        "C2_+Node": {
+          "ans": "東海道新幹線に関連して発生した事件は、1993年から2000年にかけての新幹線の開業によって事件です。",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": 2,
+            "reasoning_node_sim": 0.868,
+            "node_hip_need": 0.423,
+            "node_multi_ent": 0.749,
+            "want_hip": true,
+            "node_min_eot_b": 66,
+            "entities": [
+              "東海道新幹線",
+              "？簡単"
+            ],
+            "exact_entities": [
+              "東海道新幹線",
+              "？簡単"
+            ],
+            "partial_entities": [],
+            "uncovered_entities": [],
+            "agenda_sources": [
+              "sft_factual_ans",
+              "wikipedia"
+            ],
+            "agenda_scores": [
+              20.75,
+              16.32
+            ],
+            "agenda_preview": [
+              "東海道新幹線墨子事件は、1993年から2000年にかけて東海道新幹線に関連して発生した事件です。",
+              "何故だろう？簡単に言って了えば、アラビア語があまりにもむずかしいからである。"
+            ],
+            "hop23_ms": 24.78,
+            "stopped_eot": true,
+            "gen_chars": 51,
+            "decode_sec": 2.82,
+            "chars_per_sec": 18.09,
+            "fluency_bpc": 2.8273
+          }
+        },
+        "C3_Full_v90": {
+          "ans": "東海道新幹線に関連して発生した事件は、1993年から2000年にかけての新幹線の開業によって事件です。",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": 2,
+            "reasoning_node_sim": 0.868,
+            "node_hip_need": 0.423,
+            "node_multi_ent": 0.749,
+            "want_hip": true,
+            "node_min_eot_b": 66,
+            "entities": [
+              "東海道新幹線",
+              "？簡単"
+            ],
+            "exact_entities": [
+              "東海道新幹線",
+              "？簡単"
+            ],
+            "partial_entities": [],
+            "uncovered_entities": [],
+            "agenda_sources": [
+              "sft_factual_ans",
+              "wikipedia"
+            ],
+            "agenda_scores": [
+              20.75,
+              16.32
+            ],
+            "agenda_preview": [
+              "東海道新幹線墨子事件は、1993年から2000年にかけて東海道新幹線に関連して発生した事件です。",
+              "何故だろう？簡単に言って了えば、アラビア語があまりにもむずかしいからである。"
+            ],
+            "hop23_ms": 24.66,
+            "stopped_eot": true,
+            "gen_chars": 51,
+            "decode_sec": 2.85,
+            "chars_per_sec": 17.89,
+            "fluency_bpc": 2.8273
+          }
+        }
+      }
+    },
+    "科学説明(物理)": {
+      "q": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "gold_novel": [
+        "アインシュタイン",
+        "重力",
+        "時空",
+        "確率"
+      ],
+      "configs": {
+        "C0_Control": {
+          "ans": "そのものを相対性理論が成立することにより、この困難は一般的には量子重力理論が提唱した。",
+          "evid_hits": 1,
+          "ans_hits": 1,
+          "info": {
+            "reasoning_node_id": -1,
+            "reasoning_node_sim": 0.0,
+            "node_hip_need": -1.0,
+            "node_multi_ent": -1.0,
+            "want_hip": true,
+            "node_min_eot_b": 42,
+            "entities": [
+              "一般相対性理論",
+              "わかり",
+              "量子力学"
+            ],
+            "exact_entities": [
+              "一般相対性理論"
+            ],
+            "partial_entities": [],
+            "uncovered_entities": [
+              "わかり",
+              "量子力学"
+            ],
+            "agenda_sources": [
+              "wikipedia"
+            ],
+            "agenda_scores": [
+              1511.63
+            ],
+            "agenda_preview": [
+              "発生は一般相対性理論そのものを破綻させてしまう。将来的には量子重力理論が完成することにより、この困難は解決されるものと期待されている。  一般相対性理"
+            ],
+            "hop23_ms": 3.54,
+            "stopped_eot": true,
+            "gen_chars": 43,
+            "decode_sec": 3.05,
+            "chars_per_sec": 14.08,
+            "fluency_bpc": 4.0194
+          }
+        },
+        "C1_+AND_Hip": {
+          "ans": "その後に発展した一般相対性理論における「古典力学と区別される。",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": -1,
+            "reasoning_node_sim": 0.0,
+            "node_hip_need": -1.0,
+            "node_multi_ent": -1.0,
+            "want_hip": true,
+            "node_min_eot_b": 42,
+            "entities": [
+              "一般相対性理論",
+              "わかり",
+              "量子力学"
+            ],
+            "exact_entities": [
+              "一般相対性理論",
+              "量子力学"
+            ],
+            "partial_entities": [],
+            "uncovered_entities": [
+              "わかり"
+            ],
+            "agenda_sources": [
+              "wikipedia"
+            ],
+            "agenda_scores": [
+              41.1
+            ],
+            "agenda_preview": [
+              "その後に発展した一般相対性理論までの完成された力学は「古典力学」と呼ばれ、1920年代に成立した量子力学と区別される。"
+            ],
+            "hop23_ms": 36.19,
+            "stopped_eot": true,
+            "gen_chars": 31,
+            "decode_sec": 2.94,
+            "chars_per_sec": 10.56,
+            "fluency_bpc": 2.865
+          }
+        },
+        "C2_+Node": {
+          "ans": "その後に発展した一般相対性理論における「古典力学」と呼ばれ、量子力学において、とても大切です。",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": 20,
+            "reasoning_node_sim": 0.802,
+            "node_hip_need": 0.711,
+            "node_multi_ent": 0.917,
+            "want_hip": true,
+            "node_min_eot_b": 66,
+            "entities": [
+              "一般相対性理論",
+              "わかり",
+              "量子力学"
+            ],
+            "exact_entities": [
+              "一般相対性理論",
+              "量子力学"
+            ],
+            "partial_entities": [
+              "わかり"
+            ],
+            "uncovered_entities": [],
+            "agenda_sources": [
+              "wikipedia",
+              "easy_ja"
+            ],
+            "agenda_scores": [
+              41.05,
+              33.27
+            ],
+            "agenda_preview": [
+              "その後に発展した一般相対性理論までの完成された力学は「古典力学」と呼ばれ、1920年代に成立した量子力学と区別される。",
+              "水素原子は、単純な二体問題の系として、解析的な単純解がたくさん見つかりました。そのため、量子力学や量子場理論において、とても大切です。"
+            ],
+            "hop23_ms": 36.44,
+            "stopped_eot": true,
+            "gen_chars": 47,
+            "decode_sec": 2.08,
+            "chars_per_sec": 22.59,
+            "fluency_bpc": 2.7816
+          }
+        },
+        "C3_Full_v90": {
+          "ans": "その後に発展した一般相対性理論における「古典力学」と呼ばれ、量子力学において、とても大切です。",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": 20,
+            "reasoning_node_sim": 0.802,
+            "node_hip_need": 0.711,
+            "node_multi_ent": 0.917,
+            "want_hip": true,
+            "node_min_eot_b": 66,
+            "entities": [
+              "一般相対性理論",
+              "わかり",
+              "量子力学"
+            ],
+            "exact_entities": [
+              "一般相対性理論",
+              "量子力学"
+            ],
+            "partial_entities": [
+              "わかり"
+            ],
+            "uncovered_entities": [],
+            "agenda_sources": [
+              "wikipedia",
+              "easy_ja"
+            ],
+            "agenda_scores": [
+              41.05,
+              33.27
+            ],
+            "agenda_preview": [
+              "その後に発展した一般相対性理論までの完成された力学は「古典力学」と呼ばれ、1920年代に成立した量子力学と区別される。",
+              "水素原子は、単純な二体問題の系として、解析的な単純解がたくさん見つかりました。そのため、量子力学や量子場理論において、とても大切です。"
+            ],
+            "hop23_ms": 36.33,
+            "stopped_eot": true,
+            "gen_chars": 47,
+            "decode_sec": 2.1,
+            "chars_per_sec": 22.4,
+            "fluency_bpc": 2.7816
+          }
+        }
+      }
+    },
+    "歴史質問": {
+      "q": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "gold_novel": [
+        "1939",
+        "1945"
+      ],
+      "configs": {
+        "C0_Control": {
+          "ans": "第二次世界大戦終結後の1942年 - 第二次世界大戦: イギリス空軍が撤退した。",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": -1,
+            "reasoning_node_sim": 0.0,
+            "node_hip_need": -1.0,
+            "node_multi_ent": -1.0,
+            "want_hip": true,
+            "node_min_eot_b": 42,
+            "entities": [
+              "終わりましたか？",
+              "始まり",
+              "第二次世界大戦"
+            ],
+            "exact_entities": [
+              "第二次世界大戦"
+            ],
+            "partial_entities": [],
+            "uncovered_entities": [
+              "終わりましたか？",
+              "始まり"
+            ],
+            "agenda_sources": [
+              "wikipedia"
+            ],
+            "agenda_scores": [
+              1376.61
+            ],
+            "agenda_preview": [
+              "1941年 - 第二次世界大戦：ドイツがエストニア全土を占領。 1942年 - 第二次世界大戦：ラビの戦い：日本軍が撤退。 1943年 - 第二次世界"
+            ],
+            "hop23_ms": 8.2,
+            "stopped_eot": true,
+            "gen_chars": 40,
+            "decode_sec": 2.33,
+            "chars_per_sec": 17.18,
+            "fluency_bpc": 1.9297
+          }
+        },
+        "C1_+AND_Hip": {
+          "ans": "第二次世界大戦後の1946年 - 第二次世界大戦: クルスクの戦いが始まりました。この戦い (1943年8月27日まで行われました。",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": -1,
+            "reasoning_node_sim": 0.0,
+            "node_hip_need": -1.0,
+            "node_multi_ent": -1.0,
+            "want_hip": true,
+            "node_min_eot_b": 42,
+            "entities": [
+              "終わりましたか？",
+              "始まり",
+              "第二次世界大戦"
+            ],
+            "exact_entities": [
+              "始まり",
+              "第二次世界大戦"
+            ],
+            "partial_entities": [],
+            "uncovered_entities": [
+              "終わりましたか？"
+            ],
+            "agenda_sources": [
+              "easy_ja"
+            ],
+            "agenda_scores": [
+              39.48
+            ],
+            "agenda_preview": [
+              "1943年 - 第二次世界大戦: クルスクの戦いが始まりました。8月27日まで続きました。"
+            ],
+            "hop23_ms": 48.4,
+            "stopped_eot": true,
+            "gen_chars": 66,
+            "decode_sec": 2.13,
+            "chars_per_sec": 30.95,
+            "fluency_bpc": 2.1958
+          }
+        },
+        "C2_+Node": {
+          "ans": "第二次世界大戦後の1945年 - 第二次世界大戦: アメリカ軍が占領した。8月27日まで続きました。",
+          "evid_hits": 0,
+          "ans_hits": 1,
+          "info": {
+            "reasoning_node_id": 15,
+            "reasoning_node_sim": 0.236,
+            "node_hip_need": 0.415,
+            "node_multi_ent": 0.873,
+            "want_hip": true,
+            "node_min_eot_b": 66,
+            "entities": [
+              "終わりましたか？",
+              "始まり",
+              "第二次世界大戦"
+            ],
+            "exact_entities": [
+              "始まり",
+              "第二次世界大戦"
+            ],
+            "partial_entities": [
+              "終わりましたか？"
+            ],
+            "uncovered_entities": [],
+            "agenda_sources": [
+              "easy_ja",
+              "wikipedia"
+            ],
+            "agenda_scores": [
+              39.34,
+              20.14
+            ],
+            "agenda_preview": [
+              "1943年 - 第二次世界大戦: クルスクの戦いが始まりました。8月27日まで続きました。",
+              "1943年 - 第二次世界大戦: アヴァランチ作戦が連合軍の勝利に終わる。"
+            ],
+            "hop23_ms": 48.32,
+            "stopped_eot": true,
+            "gen_chars": 50,
+            "decode_sec": 2.52,
+            "chars_per_sec": 19.88,
+            "fluency_bpc": 1.9094
+          }
+        },
+        "C3_Full_v90": {
+          "ans": "第二次世界大戦後の1945年 - 第二次世界大戦: アメリカ軍が占領した。8月27日まで続きました。",
+          "evid_hits": 0,
+          "ans_hits": 1,
+          "info": {
+            "reasoning_node_id": 15,
+            "reasoning_node_sim": 0.236,
+            "node_hip_need": 0.415,
+            "node_multi_ent": 0.873,
+            "want_hip": true,
+            "node_min_eot_b": 66,
+            "entities": [
+              "終わりましたか？",
+              "始まり",
+              "第二次世界大戦"
+            ],
+            "exact_entities": [
+              "始まり",
+              "第二次世界大戦"
+            ],
+            "partial_entities": [
+              "終わりましたか？"
+            ],
+            "uncovered_entities": [],
+            "agenda_sources": [
+              "easy_ja",
+              "wikipedia"
+            ],
+            "agenda_scores": [
+              39.34,
+              20.14
+            ],
+            "agenda_preview": [
+              "1943年 - 第二次世界大戦: クルスクの戦いが始まりました。8月27日まで続きました。",
+              "1943年 - 第二次世界大戦: アヴァランチ作戦が連合軍の勝利に終わる。"
+            ],
+            "hop23_ms": 48.31,
+            "stopped_eot": true,
+            "gen_chars": 50,
+            "decode_sec": 2.54,
+            "chars_per_sec": 19.71,
+            "fluency_bpc": 1.9094
+          }
+        }
+      }
+    },
+    "文学質問": {
+      "q": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "gold_novel": [
+        "明治",
+        "長編",
+        "風刺",
+        "教師"
+      ],
+      "configs": {
+        "C0_Control": {
+          "ans": "小説を執筆するも断念して夏目漱石を訪問した手の連載小説を依頼される。",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": -1,
+            "reasoning_node_sim": 0.0,
+            "node_hip_need": -1.0,
+            "node_multi_ent": -1.0,
+            "want_hip": true,
+            "node_min_eot_b": 42,
+            "entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "exact_entities": [
+              "夏目漱石",
+              "小説"
+            ],
+            "partial_entities": [],
+            "uncovered_entities": [
+              "吾輩"
+            ],
+            "agenda_sources": [
+              "wikipedia"
+            ],
+            "agenda_scores": [
+              634.84
+            ],
+            "agenda_preview": [
+              "12月末日、武者小路実篤を介して夏目漱石から東京朝日新聞の連載小説を依頼される。 正月、夏目漱石を訪問。 5月から松江に移り小説を執筆するも断念。7月"
+            ],
+            "hop23_ms": 0.66,
+            "stopped_eot": true,
+            "gen_chars": 34,
+            "decode_sec": 2.61,
+            "chars_per_sec": 13.05,
+            "fluency_bpc": 4.9177
+          }
+        },
+        "C1_+AND_Hip": {
+          "ans": "そのことに関する記述がある。",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": -1,
+            "reasoning_node_sim": 0.0,
+            "node_hip_need": -1.0,
+            "node_multi_ent": -1.0,
+            "want_hip": true,
+            "node_min_eot_b": 42,
+            "entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "exact_entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "partial_entities": [],
+            "uncovered_entities": [],
+            "agenda_sources": [
+              "wikipedia"
+            ],
+            "agenda_scores": [
+              39.79
+            ],
+            "agenda_preview": [
+              "日本全土で豚肉が一般に食べられるようになり、夏目漱石の小説『吾輩は猫である』にもそのことに関する記述が見られる。"
+            ],
+            "hop23_ms": 17.83,
+            "stopped_eot": true,
+            "gen_chars": 14,
+            "decode_sec": 2.7,
+            "chars_per_sec": 5.18,
+            "fluency_bpc": 2.988
+          }
+        },
+        "C2_+Node": {
+          "ans": "そのことに関する記述が見られる。『吾輩るようになり、夏目漱石先生の小説が一般の小説『源氏物語』の作者である』にもそのことが書や猫である』によれば、この小説で、食べられるようになり、大学院で",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": 19,
+            "reasoning_node_sim": 0.674,
+            "node_hip_need": 0.701,
+            "node_multi_ent": 0.955,
+            "want_hip": true,
+            "node_min_eot_b": 66,
+            "entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "exact_entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "partial_entities": [],
+            "uncovered_entities": [],
+            "agenda_sources": [
+              "wikipedia"
+            ],
+            "agenda_scores": [
+              39.81
+            ],
+            "agenda_preview": [
+              "日本全土で豚肉が一般に食べられるようになり、夏目漱石の小説『吾輩は猫である』にもそのことに関する記述が見られる。"
+            ],
+            "hop23_ms": 17.87,
+            "stopped_eot": false,
+            "gen_chars": 94,
+            "decode_sec": 2.68,
+            "chars_per_sec": 35.09,
+            "fluency_bpc": 3.4268
+          }
+        },
+        "C3_Full_v90": {
+          "ans": "そのことに関する記述が見られる。『吾輩るようになり、夏目漱石先生の小説が一般の小説『源氏物語』の作者である』にもそのことが書や猫である』によれば、この小説で、食べられるようになり、大学院で",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": 19,
+            "reasoning_node_sim": 0.674,
+            "node_hip_need": 0.701,
+            "node_multi_ent": 0.955,
+            "want_hip": true,
+            "node_min_eot_b": 66,
+            "entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "exact_entities": [
+              "夏目漱石",
+              "吾輩",
+              "小説"
+            ],
+            "partial_entities": [],
+            "uncovered_entities": [],
+            "agenda_sources": [
+              "wikipedia"
+            ],
+            "agenda_scores": [
+              39.81
+            ],
+            "agenda_preview": [
+              "日本全土で豚肉が一般に食べられるようになり、夏目漱石の小説『吾輩は猫である』にもそのことに関する記述が見られる。"
+            ],
+            "hop23_ms": 17.87,
+            "stopped_eot": false,
+            "gen_chars": 94,
+            "decode_sec": 2.71,
+            "chars_per_sec": 34.69,
+            "fluency_bpc": 3.4268
+          }
+        }
+      }
+    },
+    "日常質問": {
+      "q": "日本の首都はどこですか？",
+      "gold_novel": [
+        "東京"
+      ],
+      "configs": {
+        "C0_Control": {
+          "ans": "ワシントンDCである。オルテガのアメリカ映画監督。)は、アメリカの作家は米国の首都である。1950年4月18日生まれです。",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": -1,
+            "reasoning_node_sim": 0.0,
+            "node_hip_need": -1.0,
+            "node_multi_ent": -1.0,
+            "want_hip": true,
+            "node_min_eot_b": 42,
+            "entities": [
+              "首都"
+            ],
+            "exact_entities": [
+              "首都"
+            ],
+            "partial_entities": [],
+            "uncovered_entities": [],
+            "agenda_sources": [
+              "sft_factual_ans"
+            ],
+            "agenda_scores": [
+              50.74
+            ],
+            "agenda_preview": [
+              "ワシントンDCは米国の首都です ケネス・ジョン・オルテガ(1950年4月18日生まれ)は、アメリカの映画監督、ツアー・マネージャー、振付師である。"
+            ],
+            "hop23_ms": 0.57,
+            "stopped_eot": true,
+            "gen_chars": 61,
+            "decode_sec": 1.72,
+            "chars_per_sec": 35.48,
+            "fluency_bpc": 3.8369
+          }
+        },
+        "C1_+AND_Hip": {
+          "ans": "それでも首都ローマではありません。もしれませんが、それでも重要な要素です。",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": -1,
+            "reasoning_node_sim": 0.0,
+            "node_hip_need": -1.0,
+            "node_multi_ent": -1.0,
+            "want_hip": true,
+            "node_min_eot_b": 42,
+            "entities": [
+              "首都"
+            ],
+            "exact_entities": [
+              "首都"
+            ],
+            "partial_entities": [],
+            "uncovered_entities": [],
+            "agenda_sources": [
+              "sft_factual_ans"
+            ],
+            "agenda_scores": [
+              18.3
+            ],
+            "agenda_preview": [
+              "経済首都とみなされるかもしれませんが、それでも首都ローマではありません。"
+            ],
+            "hop23_ms": 15.12,
+            "stopped_eot": true,
+            "gen_chars": 37,
+            "decode_sec": 2.84,
+            "chars_per_sec": 13.05,
+            "fluency_bpc": 3.2547
+          }
+        },
+        "C2_+Node": {
+          "ans": "「首都であり、特に重要な役割を果たしている。しかし、これらの問題に対する理解である。\n現在の日本の文化や社会の中です。",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": 1,
+            "reasoning_node_sim": 0.545,
+            "node_hip_need": 0.149,
+            "node_multi_ent": 0.818,
+            "want_hip": false,
+            "node_min_eot_b": 6,
+            "entities": [
+              "首都"
+            ],
+            "exact_entities": [],
+            "partial_entities": [],
+            "uncovered_entities": [
+              "首都"
+            ],
+            "agenda_sources": [],
+            "agenda_scores": [],
+            "agenda_preview": [],
+            "hop23_ms": 0.0,
+            "stopped_eot": true,
+            "gen_chars": 59,
+            "decode_sec": 2.26,
+            "chars_per_sec": 26.08,
+            "fluency_bpc": 2.5037
+          }
+        },
+        "C3_Full_v90": {
+          "ans": "「首都であり、特に重要な役割を果たしている。しかし、これらの問題に対する理解である。\n現在の日本の文化や社会の中で最も重要なのは、それぞれの地域です。",
+          "evid_hits": 0,
+          "ans_hits": 0,
+          "info": {
+            "reasoning_node_id": 1,
+            "reasoning_node_sim": 0.545,
+            "node_hip_need": 0.149,
+            "node_multi_ent": 0.818,
+            "want_hip": false,
+            "node_min_eot_b": 6,
+            "entities": [
+              "首都"
+            ],
+            "exact_entities": [],
+            "partial_entities": [],
+            "uncovered_entities": [
+              "首都"
+            ],
+            "agenda_sources": [],
+            "agenda_scores": [],
+            "agenda_preview": [],
+            "hop23_ms": 0.0,
+            "stopped_eot": true,
+            "gen_chars": 75,
+            "decode_sec": 1.63,
+            "chars_per_sec": 46.0,
+            "fluency_bpc": 2.4182
+          }
+        }
+      }
+    }
+  },
+  "custom": {
+    "Custom Direct QA": {
+      "q": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+      "gold": [
+        "2042",
+        "つくば",
+        "推進"
+      ],
+      "evid_hits": 3,
+      "ans_hits": 2,
+      "ans": "ストラ開発された次世代推進装置である。重力エンジン「アストラX-99」は2010つくば研究所で開発されたもので、日本のつくば理論的な構成要素であり、火星までの航行時間をわずか18日",
+      "info": {
+        "reasoning_node_id": 5,
+        "reasoning_node_sim": 0.806,
+        "node_hip_need": 0.363,
+        "node_multi_ent": 0.728,
+        "want_hip": true,
+        "node_min_eot_b": 66,
+        "entities": [
+          "アストラX-99",
+          "量子重力エンジン"
+        ],
+        "exact_entities": [
+          "アストラX-99",
+          "量子重力エンジン"
+        ],
+        "partial_entities": [],
+        "uncovered_entities": [],
+        "agenda_sources": [
+          "custom_astra",
+          "custom_astra"
+        ],
+        "agenda_scores": [
+          149.87,
+          80.52
+        ],
+        "agenda_preview": [
+          "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+          "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。"
+        ],
+        "hop23_ms": 34.56,
+        "stopped_eot": false,
+        "gen_chars": 90,
+        "decode_sec": 2.89,
+        "chars_per_sec": 31.19,
+        "fluency_bpc": 4.2784
+      }
+    },
+    "Custom Indirect QA": {
+      "q": "アストラX-99の最大推力はどのくらいですか？",
+      "gold": [
+        "400",
+        "イオン",
+        "18"
+      ],
+      "evid_hits": 3,
+      "ans_hits": 2,
+      "ans": "エンジンの約400倍であり、火星の最大推力は従来のイオン半径10時30分に短縮できる。",
+      "info": {
+        "reasoning_node_id": 15,
+        "reasoning_node_sim": 0.297,
+        "node_hip_need": 0.415,
+        "node_multi_ent": 0.873,
+        "want_hip": true,
+        "node_min_eot_b": 66,
+        "entities": [
+          "アストラX-99",
+          "最大推力",
+          "くらい"
+        ],
+        "exact_entities": [
+          "アストラX-99",
+          "最大推力"
+        ],
+        "partial_entities": [
+          "くらい"
+        ],
+        "uncovered_entities": [],
+        "agenda_sources": [
+          "custom_astra",
+          "easy_ja"
+        ],
+        "agenda_scores": [
+          121.67,
+          14.12
+        ],
+        "agenda_preview": [
+          "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+          "アストリアは第二次世界大戦での活躍で、5個の従軍星章をもらいました。"
+        ],
+        "hop23_ms": 32.6,
+        "stopped_eot": true,
+        "gen_chars": 43,
+        "decode_sec": 1.85,
+        "chars_per_sec": 23.2,
+        "fluency_bpc": 3.8705
+      }
+    }
+  },
+  "final_mem": {
+    "peak_rss_gb": 18.61,
+    "gpu_alloc_mb": 7323.0,
+    "gpu_res_mb": 7346.0
+  }
+}
