@@ -2,9 +2,9 @@
 
 ENNEは、部品ごとに学習して後から組み合わせる日本語の言語モデルです。本体、記憶、検索、対話、判断の部品を別々に学習し、新しい部品を後から足していけます。本体の学習に誤差逆伝播（backprop）は使わず、局所的な予測誤差だけでノードが増えたり減ったりします。個人のGPU（RTX 3060 12GB）で、v0.1からv12.5まで開発してきた記録です。
 
-> **English abstract.** ENNE is a modular, backprop-free Japanese language model built on a single consumer GPU (peak VRAM ≤ 8.4 GiB even at its largest, 6M-node configuration). Instead of training one monolithic network end-to-end, each part — a growing UTF-8 byte-level core, swappable knowledge memories, a lead-sentence retrieval index, dialogue adapters, and a growing local arbiter that chooses *grounded answer / abstain / chit-chat* — is trained separately in milliseconds to minutes, many on CPU only, and added without retraining the rest. A fictional-knowledge memory builds in 3.9 ms and drops BPC on that text from 5.92 to 3.40 when mounted (back to 5.92 when removed). The core's raw BPC is still worse than a small Transformer's, yet the assembled system answers factual questions from retrieved sources, answers about newly mounted knowledge, and abstains on unknowns. Raw result JSONs are included; the source code will be released once the research settles.
+> **English abstract.** ENNE is a modular, backprop-free Japanese language model built on a single consumer GPU (peak VRAM ≤ 8.4 GiB even at its largest, 6M-node configuration). Instead of training one monolithic network end-to-end, each part — a growing UTF-8 byte-level core, swappable knowledge memories, a lead-sentence retrieval index, dialogue adapters, and a growing local arbiter that chooses *grounded answer / abstain / chit-chat* — is trained separately in milliseconds to minutes, many on CPU only, and added without retraining the rest. Because every node is addressed by its structural path from the 256 byte roots, two separately trained graphs can be merged node-by-node: a separately trained 525k-node dialogue graph overlapped 87.6% with the base graph and was merged in 13.8 s without gradients, cutting GPU allocation from 7.3 GiB to 5.0 GiB. A fictional-knowledge memory builds in 3.9 ms and drops BPC on that text from 5.92 to 3.40 when mounted (back to 5.92 when removed). The core's raw BPC is still worse than a small Transformer's, yet the assembled system answers factual questions from retrieved sources, answers about newly mounted knowledge, and abstains on unknowns. Raw result JSONs are included; the source code will be released once the research settles.
 
-## 3つの特徴
+## 4つの特徴
 
 ### 1. 部品ごとに学習でき、後から足せる
 
@@ -43,7 +43,32 @@ ENNEは1つの巨大なネットワークをまとめて学習しません。部
 
 その記憶を装着すると、設定文のBPCは5.92から3.40に下がり、外すと5.92に戻ります。Wikipedia記憶の収録量を5,000万文字から2億文字に増やすと、本体を固定したままBPCが4.693から4.660に下がりました。
 
-### 3. BPCは高めでも、応答はできる
+### 3. 別々に学習した同じ種類の部品を、1つに統合できる
+
+ENNEのノードは、256バイトを根とする「どの条件をたどって生まれたか」という経路で特定できます。そのため、別々に学習した2つのDAGでも、同じ経路のノード同士を対応付けて1つに重ね合わせられます。通常のニューラルネットの重みは、別々に学習するとニューロンの並び順が揃わず、そのままでは足し合わせられません。
+
+v11では、対話データだけで別に育てた対話用DAGを、文章で育てた基盤DAGに統合しました。
+
+| 項目 | 値 |
+|---|---:|
+| 対話用DAGのノード | 524,838 |
+| うち基盤DAGと経路が一致したノード | 459,515（87.6%） |
+| 対話用DAGにしかないノード | 65,323 |
+| 基盤DAGから移植したノード | 4,051,411 |
+| 対応が取れずに外したノード | 16 |
+| 経路の対応付けにかかった時間 | 13.8秒（勾配計算なし） |
+
+2つのDAGの表現の向きは、256×256の座標変換（ridge回帰で一度解くだけ）でそろえました。変換後の出力の一致度（logitのcos類似度）は0.988です。
+
+| 構成 | GPU割当 | 対話本文BPC | 終了予測 EOT bits |
+|---|---:|---:|---:|
+| 対話用DAG単体（記憶あり） | — | 3.9794 | 3.145 |
+| 2つのDAGを並べて使う（v10.1） | 7,323 MiB | 3.8261 | 2.519 |
+| 1つに統合（v11.1） | 5,023 MiB | 3.8727 | 0.840 |
+
+統合でGPU割当は約3割減り、対話の予測は対話用DAG単体より良くなりました。2つを並べて使う構成と比べると、本文BPCはわずかに悪く、終了予測は大きく改善しました（v11.1では統合後に終了予測の読み出しを399秒かけて調整しています）。一方で、統合後の一般文章の予測（3分野平均BPC 5.47）には課題が残っており、対話への適応と一般文章の保持の両立は今後の課題です。
+
+### 4. BPCは高めでも、応答はできる
 
 本体単独のBPC（1文字あたりのビット数）は、小さなTransformerより悪い値です（後述）。それでも、部品を組み合わせたシステムとしては質問に答えられます。以下はv12.5の実際の出力です。
 
