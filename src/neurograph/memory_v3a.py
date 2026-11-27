@@ -1,20 +1,4 @@
-"""NeuroGraph v0.3a: Short-Term Episodic Memory Neurons (Hippocampal Fast-Binding).
-
-Separates fast, one-shot episodic memory neurons from slower semantic/syntactic
-thinking neurons (NeuroGraphV2):
-1. Memory neurons remain dormant until the thinking neurons experience high surprise
-   (prediction error > threshold), e.g., encountering an unseen proper noun, number,
-   or novel context binding.
-2. On surprise, a dormant (or lowest-energy forgotten) memory neuron wakes up and
-   one-shot binds the active firing pattern (recent sensory chars + active chunks)
-   to the surprising outcome.
-3. During subsequent reading or generation, incoming thought patterns broadcast to
-   all M memory neurons; those whose bound pattern strongly resonates fire via
-   pattern completion and inject a recall wave into the output membrane potentials
-   (optionally modulated by thinking uncertainty / entropy).
-4. Recalled memories get reconsolidated (refreshed energy), while unused memories
-   gradually decay and get recycled—automatic forgetting & zero backprop.
-"""
+"""短期記憶ノード（v0.3a）。"""
 
 from __future__ import annotations
 
@@ -31,17 +15,16 @@ from neurograph.model_v2 import NeuroGraphV2
 @dataclass
 class EpisodicMemoryConfig:
     enabled: bool = True
-    num_memory_neurons: int = 128   # M episodic memory neurons per stream
-    surprise_threshold: float = 0.55 # only bind when thinking neurons are surprised (0.0 = bind everything)
-    memory_decay: float = 0.9965     # gradual forgetting per char step
-    recall_gain: float = 2.6         # amplitude of recall wave into output logits
-    reconsolidate_boost: float = 0.45 # strengthen memory neuron when successfully recalled
-    use_uncertainty_gate: bool = True # scale recall wave by thinking-neuron entropy
-    min_resonance: float = 1.5       # firing threshold (prevents weak 1-char false alarms)
+    num_memory_neurons: int = 128
+    surprise_threshold: float = 0.55
+    memory_decay: float = 0.9965
+    recall_gain: float = 2.6
+    reconsolidate_boost: float = 0.45
+    use_uncertainty_gate: bool = True
+    min_resonance: float = 1.5
 
 
 class ShortTermMemoryBank:
-    """Vectorized GPU bank of M fine-grained episodic memory neurons per parallel stream."""
 
     def __init__(self, batch_size: int, cfg: EpisodicMemoryConfig, device: torch.device):
         self.B = batch_size
@@ -49,21 +32,16 @@ class ShortTermMemoryBank:
         self.cfg = cfg
         self.device = device
 
-        # Bound trigger pattern per memory neuron:
-        #   k1 = x_t, k2 = x_{t-1}, k3 = x_{t-2}, kc = cur_chunk, kp = prev_chunk
         self.k1 = torch.full((batch_size, self.M), -1, dtype=torch.int64, device=device)
         self.k2 = torch.full((batch_size, self.M), -1, dtype=torch.int64, device=device)
         self.k3 = torch.full((batch_size, self.M), -1, dtype=torch.int64, device=device)
         self.kc = torch.full((batch_size, self.M), -1, dtype=torch.int64, device=device)
         self.kp = torch.full((batch_size, self.M), -1, dtype=torch.int64, device=device)
 
-        # Bound target outcome neuron (next char)
         self.target = torch.full((batch_size, self.M), -1, dtype=torch.int64, device=device)
-        # Metabolic strength / recency (0 = dormant)
         self.strength = torch.zeros((batch_size, self.M), dtype=torch.float32, device=device)
         self.recall_hits = torch.zeros((batch_size, self.M), dtype=torch.int32, device=device)
 
-        # Telemetry
         self.total_bindings = 0
         self.total_overwrites = 0
         self.total_recalls = 0
@@ -72,20 +50,14 @@ class ShortTermMemoryBank:
     @torch.no_grad()
     def recall(
         self,
-        c1: torch.Tensor,         # [B] current char x_t
-        c2: torch.Tensor,         # [B] prev char x_{t-1}
-        c3: torch.Tensor,         # [B] prev2 char x_{t-2}
-        cur_chunk: torch.Tensor,  # [B] current chunk neuron
-        prev_chunk: torch.Tensor, # [B] previous chunk neuron
+        c1: torch.Tensor,
+        c2: torch.Tensor,
+        c3: torch.Tensor,
+        cur_chunk: torch.Tensor,
+        prev_chunk: torch.Tensor,
         vocab_size: int,
-        base_logits: torch.Tensor, # [B, V] thinking neurons' membrane potential (for uncertainty gate)
+        base_logits: torch.Tensor,
     ) -> Tuple[torch.Tensor, torch.Tensor]:
-        """Broadcast current thought pattern to all M memory neurons and collect recall wave.
-
-        Returns:
-          recall_wave: [B, V] float32 additive membrane wave for output neurons
-          resonance:   [B, M] float32 per-memory-neuron firing strength (for reconsolidation)
-        """
         B, M = self.B, self.M
         cfg = self.cfg
         recall_wave = torch.zeros((B, vocab_size), dtype=torch.float32, device=self.device)
@@ -96,20 +68,13 @@ class ShortTermMemoryBank:
         if not alive.any():
             return recall_wave, torch.zeros((B, M), dtype=torch.float32, device=self.device)
 
-        # Pattern completion matching across all M memory neurons in parallel
         m1 = (self.k1 == c1.unsqueeze(1)) & (c1.unsqueeze(1) >= 0)
         m2 = (self.k2 == c2.unsqueeze(1)) & (c2.unsqueeze(1) >= 0)
         m3 = (self.k3 == c3.unsqueeze(1)) & (c3.unsqueeze(1) >= 0)
         mc = (self.kc == cur_chunk.unsqueeze(1)) & (cur_chunk.unsqueeze(1) >= vocab_size)
         mp = (self.kp == prev_chunk.unsqueeze(1)) & (prev_chunk.unsqueeze(1) >= vocab_size)
 
-        # Require at least the immediate anchor (m1 or mc) so pattern completion stays sharp
         anchor = m1 | mc
-        # Graded resonance:
-        #   m1 & m2 & m3 -> 4.2 (exact 3-char context match!)
-        #   m1 & m2      -> 1.8 (2-char match)
-        #   mc & m1      -> 2.2 extra (chunk match)
-        #   mp & m1      -> 1.0 extra (word-to-word context match)
         score = (
             m1.to(torch.float32) * 0.6
             + (m1 & m2).to(torch.float32) * 1.2
@@ -124,20 +89,15 @@ class ShortTermMemoryBank:
 
         self.total_recalls += int(fired.any(dim=1).sum().item())
 
-        # Firing amplitude per memory neuron
         res = torch.where(fired, score * self.strength.clamp(0.0, 2.5), torch.zeros_like(score))
 
-        # Scatter-add into candidate output neurons, then compress smoothly via log1p
         safe_tgt = self.target.clamp(0, vocab_size - 1)
         recall_wave.scatter_add_(1, safe_tgt, res)
         recall_wave = torch.log1p(recall_wave)
 
-        # Optional Uncertainty Gate (Noradrenaline-like):
-        # Listen more strongly to episodic memory when thinking neurons are uncertain (high entropy)
         if cfg.use_uncertainty_gate:
             probs = torch.softmax(base_logits, dim=-1)
-            entropy = -(probs * torch.log(probs.clamp(min=1e-9))).sum(dim=-1, keepdim=True)  # [B, 1]
-            # Smooth gate in [0.35, 1.45] centered around entropy ~2.5 nats
+            entropy = -(probs * torch.log(probs.clamp(min=1e-9))).sum(dim=-1, keepdim=True)
             gate = (0.35 + 0.30 * entropy).clamp(0.35, 1.45)
             recall_wave = recall_wave * (cfg.recall_gain * gate)
         else:
@@ -148,27 +108,21 @@ class ShortTermMemoryBank:
     @torch.no_grad()
     def bind_on_surprise(
         self,
-        c1: torch.Tensor,         # [B]
-        c2: torch.Tensor,         # [B]
-        c3: torch.Tensor,         # [B]
-        cur_chunk: torch.Tensor,  # [B]
-        prev_chunk: torch.Tensor, # [B]
-        y_t: torch.Tensor,        # [B] true next char
-        surprise: torch.Tensor,   # [B] 1 - p_true from combined or thinking prediction
-        resonance: torch.Tensor,  # [B, M] which memory neurons fired at this step
+        c1: torch.Tensor,
+        c2: torch.Tensor,
+        c3: torch.Tensor,
+        cur_chunk: torch.Tensor,
+        prev_chunk: torch.Tensor,
+        y_t: torch.Tensor,
+        surprise: torch.Tensor,
+        resonance: torch.Tensor,
     ) -> torch.Tensor:
-        """Decay memories, reconsolidate accurate recalls, and one-shot bind surprising events.
-
-        Returns bool mask [B] indicating which streams created/updated a memory binding.
-        """
         cfg = self.cfg
         if not cfg.enabled:
             return torch.zeros(self.B, dtype=torch.bool, device=self.device)
 
-        # 1) Gradual forgetting (metabolic decay)
         self.strength.mul_(cfg.memory_decay)
 
-        # 2) Reconsolidation: if a fired memory neuron actually matched y_t, strengthen it!
         hit_mem = (resonance > 0.0) & (self.target == y_t.unsqueeze(1))
         if hit_mem.any():
             self.strength = torch.where(
@@ -179,19 +133,16 @@ class ShortTermMemoryBank:
             self.recall_hits.add_(hit_mem.to(torch.int32))
             self.total_reconsolidations += int(hit_mem.sum().item())
 
-        # Mildly weaken memories that fired strongly for the WRONG target (interference suppression)
         wrong_mem = (resonance > 0.5) & (self.target != y_t.unsqueeze(1))
         if wrong_mem.any():
             self.strength = torch.where(wrong_mem, self.strength * 0.85, self.strength)
 
-        # 3) Surprise-gated one-shot binding
         need_bind = (surprise >= cfg.surprise_threshold) & (y_t > 0) & (c1 >= 0) & (c2 >= 0)
         if not need_bind.any():
             return need_bind
 
         b_idx = torch.nonzero(need_bind, as_tuple=False).squeeze(1)
 
-        # Check if exact same (k1, k2, k3, target) memory already exists -> refresh instead of duplicating
         dup = (
             (self.k1[b_idx] == c1[b_idx].unsqueeze(1))
             & (self.k2[b_idx] == c2[b_idx].unsqueeze(1))
@@ -207,11 +158,9 @@ class ShortTermMemoryBank:
             self.kc[d_b, d_slot] = cur_chunk[d_b]
             self.kp[d_b, d_slot] = prev_chunk[d_b]
 
-        # Mint new one-shot memory in dormant or weakest slot
         is_new = ~has_dup
         if is_new.any():
             n_b = b_idx[is_new]
-            # Dormant slots have strength 0.0 so argmin picks dormant first, then oldest/weakest
             slot = self.strength[n_b].argmin(dim=1)
             was_occupied = self.target[n_b, slot] >= 0
             self.total_overwrites += int(was_occupied.sum().item())
@@ -223,7 +172,6 @@ class ShortTermMemoryBank:
             self.kc[n_b, slot] = cur_chunk[n_b]
             self.kp[n_b, slot] = prev_chunk[n_b]
             self.target[n_b, slot] = y_t[n_b]
-            # Initial binding strength scales with surprise
             self.strength[n_b, slot] = (0.75 + 0.75 * surprise[n_b]).clamp(0.5, 1.8)
             self.recall_hits[n_b, slot] = 0
 
@@ -237,11 +185,6 @@ def evaluate_with_short_term_memory(
     mem_cfg: EpisodicMemoryConfig,
     batch_streams: int = 32,
 ) -> Dict[str, float]:
-    """Evaluate a frozen thinking-neuron cortex paired with real-time short-term memory neurons.
-
-    Crucially, cortex weights are completely frozen; only the episodic memory neurons
-    wake up, bind surprises on the fly, and recall via pattern completion!
-    """
     cfg = cortex.cfg
     device = cortex.device
     V = cortex.V
@@ -279,7 +222,6 @@ def evaluate_with_short_term_memory(
     total_nll = 0.0
     total_top1 = 0
     total_top5 = 0
-    # Track high-uncertainty (content word / hard) positions separately!
     hard_nll = 0.0
     hard_top1 = 0
     hard_steps = 0
@@ -312,7 +254,6 @@ def evaluate_with_short_term_memory(
         char_fatigue.mul_(cfg.char_fatigue_decay)
         char_fatigue[arange_B, x_t] += cfg.char_fatigue_inc
 
-        # Multi-hop thinking wave
         if cfg.n_hops > 0 and membrane is not None and node_fatigue is not None:
             membrane.mul_(cfg.membrane_decay)
             node_fatigue.mul_(cfg.node_fatigue_decay)
@@ -345,7 +286,6 @@ def evaluate_with_short_term_memory(
                 membrane.clamp_(0.0, 5.0)
                 node_fatigue.clamp_(0.0, 5.0)
 
-        # 1) Thinking neurons (cortex) membrane potential
         logits_cortex.copy_(cortex.out_bias.unsqueeze(0))
         for d_idx, d in enumerate(cfg.char_delays):
             src = char_hist[:, (cur_hist_idx - (d - 1)) % max_delay]
@@ -361,17 +301,14 @@ def evaluate_with_short_term_memory(
             cortex._apply_relay_readout(hop_winners, logits_cortex)
         logits_cortex.sub_(char_fatigue)
 
-        # Compute cortex entropy to identify hard / content-word decision points
         cortex_log_p = torch.log_softmax(logits_cortex, dim=-1)
         cortex_p = torch.exp(cortex_log_p)
-        cortex_ent = -(cortex_p * cortex_log_p).sum(dim=-1)  # [B]
+        cortex_ent = -(cortex_p * cortex_log_p).sum(dim=-1)
         is_hard = cortex_ent > 3.5
 
-        # 2) Short-Term Episodic Memory Recall Wave
         recall_wave, resonance = memory.recall(c1, c2, c3, cur_chunk, prev_chunk, V, logits_cortex)
         logits_total = logits_cortex + recall_wave
 
-        # 3) Causal Evaluation (strictly BEFORE binding y_t!)
         log_probs = torch.log_softmax(logits_total, dim=-1)
         nll = -log_probs[arange_B, y_t]
         total_nll += float(nll.sum().item())
@@ -387,7 +324,6 @@ def evaluate_with_short_term_memory(
             hard_top1 += int(hit1[is_hard].sum().item())
             hard_steps += int(is_hard.sum().item())
 
-        # 4) Surprise-Gated One-Shot Binding AFTER seeing true y_t
         p_true = torch.exp(log_probs[arange_B, y_t])
         surprise = 1.0 - p_true
         memory.bind_on_surprise(c1, c2, c3, cur_chunk, prev_chunk, y_t, surprise, resonance)
@@ -421,9 +357,6 @@ def demo_oneshot_article(
     encode_fn,
     decode_fn,
 ) -> Dict[str, object]:
-    """Read a single unseen article (e.g. 'グリレ' article from easy_ja.val) in real time,
-    comparing cortex-only vs cortex + short-term memory neurons on the exact same text
-    and then generating continuations from article-specific prompts!"""
     cfg = cortex.cfg
     device = cortex.device
     V = cortex.V
@@ -512,7 +445,7 @@ def demo_oneshot_article(
 
     cortex_nll_sum = 0.0
     mem_nll_sum = 0.0
-    big_wins = []  # moments where memory neurons dramatically beat cortex alone
+    big_wins = []
 
     T = len(article_ids)
     for t in range(T - 1):
@@ -541,14 +474,12 @@ def demo_oneshot_article(
         surprise = torch.tensor([1.0 - math.exp(lp_m)], dtype=torch.float32, device=device)
         memory.bind_on_surprise(*keys, y_t, surprise, res)
 
-    # Save snapshot of memory state after reading the article, then test generation
     mem_gens = {}
     cortex_gens = {}
     for p in prompt_after:
         p_ids = encode_fn(p)
         cortex_gens[p] = decode_fn(cortex.generate(p_ids, max_new_chars=60, temperature=0.5, top_k=12))
 
-        # Generate using the learned episodic memories (without mutating saved memories)
         saved_str = memory.strength.clone()
         char_hist.fill_(-1)
         cur_chunk.fill_(-1)
@@ -575,7 +506,6 @@ def demo_oneshot_article(
         memory.strength.copy_(saved_str)
         mem_gens[p] = decode_fn(out)
 
-    # Inspect strongest surviving episodic memories
     top_mems = []
     s_np = memory.strength[0].cpu().numpy()
     order = np.argsort(-s_np)[:12]

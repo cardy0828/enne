@@ -1,18 +1,4 @@
-"""NeuroGraph v8.0 SFT Dataset Curation, Filtering, Deduplication, Leak-Free Split & Strict Audit (v2 — Post-Astra Audit!).
-
-Fixes every data-hygiene & audit finding from Codex 6.2 Astra:
-  1. Multi-turn integrity: STOPS (`break`) at the first invalid turn instead of dropping turn 0 and promoting
-     context-dependent follow-ups ('あらすじを教えてください', '彼女') to turn 0!
-  2. Concise, natural Japanese conversational curation:
-     - Strips ASCII control bytes (< 0x20 except \\n, \\t) so EOT byte 0x04 NEVER appears in text.
-     - Drops broken/unbalanced code fences (` ``` `), AI-meta boilerplate disclaimers, excessive Markdown bold/list walls
-       (`**` >= 4 or assistant > 480 chars), and obvious orphan turn-0 prompts starting with bare anaphora.
-     - Balances effective byte volume across sources (prevents long Magpie templates from swamping concise QA!).
-  3. Strict Train/Val separation & reconciled accounting:
-     - Splits by conversation, deduplicates across ALL turns (both same-role AND cross-role exact hashes!),
-       and computes `per_source` counts & `sample_preview.json` strictly AFTER final Val cleaning.
-  4. Exact stride-1 substring overlap check against Base 3-domain Val files (easy_ja/aozora/wikipedia.val 120k chars).
-"""
+"""対話データの整形・重複除去・学習と検証の分割（v8.0）。"""
 
 from __future__ import annotations
 
@@ -34,7 +20,6 @@ RAW_DIR = SFT_RAW_DIR
 OUT_DIR = SFT_DIR
 BASE_DATA_DIR = DATA_DIR
 
-# Universal language-agnostic ASCII turn framing (ZERO hardcoded Japanese keywords!)
 TURN_U_PREFIX = b"\n> "
 TURN_A_PREFIX = b"\n\n"
 TURN_EOT_BYTE = 0x04
@@ -42,7 +27,6 @@ TURN_EOT_BYTE = 0x04
 _CTRL_RE = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
 _WS_NORM_RE = re.compile(r"\s+")
 
-# Offline dataset-hygiene patterns (NEVER used at inference time!)
 _META_BOILERPLATE = (
     "責任を負いたくない",
     "AI言語モデルとして",
@@ -65,7 +49,6 @@ def clean_text(s: str) -> str:
 
 
 def jp_char_ratio(s: str) -> float:
-    """Offline Japanese-corpus curation quality metric (NOT a runtime rule)."""
     non_ws = [c for c in s if not c.isspace()]
     if not non_ws:
         return 0.0
@@ -89,7 +72,6 @@ def norm_hash(s: str) -> str:
 
 
 def _extract_dialogues() -> Tuple[List[Dict], Dict[str, Counter]]:
-    """Extract clean, context-intact dialogues (`break` on first invalid turn -> ZERO orphan follow-ups!)."""
     dialogues: List[Dict] = []
     drop_stats: Dict[str, Counter] = {}
 
@@ -128,17 +110,14 @@ def _extract_dialogues() -> Tuple[List[Dict], Dict[str, Counter]]:
         while i + 1 < len(conv) and len(turns) < 3:
             m0, m1 = conv[i], conv[i + 1]
             if m0.get(u_key) != u_val or m1.get(u_key) != a_val:
-                # Strict causal integrity: stop if dialogue alternation breaks!
                 break
             vp = _valid_pair(m0.get(txt_key, ""), m1.get(txt_key, ""), len(turns), st)
             if vp is None:
-                # Strict causal integrity: NEVER skip a broken earlier turn and keep later turns!
                 break
             turns.append(vp)
             i += 2
         return turns
 
-    # 1) llm-jp/oasst1-21k-ja
     src = "oasst1_ja"
     st = drop_stats[src] = Counter()
     p = RAW_DIR / "oasst1-21k-ja.jsonl"
@@ -152,7 +131,6 @@ def _extract_dialogues() -> Tuple[List[Dict], Dict[str, Counter]]:
                     dialogues.append({"source": src, "conv_id": f"{src}_{idx}", "turns": turns})
                     st["kept_convs"] += 1
 
-    # 2) kunishou/databricks-dolly-15k-ja
     src = "dolly_ja"
     st = drop_stats[src] = Counter()
     p = RAW_DIR / "databricks-dolly-15k-ja.json"
@@ -169,7 +147,6 @@ def _extract_dialogues() -> Tuple[List[Dict], Dict[str, Counter]]:
                 dialogues.append({"source": src, "conv_id": f"{src}_{idx}", "turns": [vp]})
                 st["kept_convs"] += 1
 
-    # 3) shi3z/Japanese_wikipedia_conversation_100K
     src = "wiki_conv_ja"
     st = drop_stats[src] = Counter()
     p = RAW_DIR / "ja_conv_gpt3.5_100K_fix.jsonl"
@@ -183,7 +160,6 @@ def _extract_dialogues() -> Tuple[List[Dict], Dict[str, Counter]]:
                     dialogues.append({"source": src, "conv_id": f"{src}_{idx}", "turns": turns})
                     st["kept_convs"] += 1
 
-    # 4) llm-jp/magpie-sft-v1.0
     src = "magpie_ja"
     st = drop_stats[src] = Counter()
     p = RAW_DIR / "magpie-sft-v1.0.jsonl"
@@ -201,9 +177,6 @@ def _extract_dialogues() -> Tuple[List[Dict], Dict[str, Counter]]:
 
 
 def serialize_dialogue_with_mask(turns: List[Tuple[str, str]]) -> Tuple[bytes, np.ndarray]:
-    """Serialize ONE independent dialogue into raw UTF-8 bytes + exact causal target mask [L-1].
-    Format per turn: b'\\n> ' + user_utf8 + b'\\n\\n' + assistant_utf8 + b'\\x04'
-    target_mask[i] == True iff predicting raw[i + 1] where raw[i + 1] is in Assistant response + 0x04 EOT."""
     buf = bytearray()
     is_assist_byte: List[bool] = []
     for u, a in turns:
@@ -226,7 +199,6 @@ def serialize_dialogue_with_mask(turns: List[Tuple[str, str]]) -> Tuple[bytes, n
 
 
 def _check_base_val_overlap_exact(train_dialogues: List[Dict], win: int = 36) -> Dict[str, int]:
-    """Exact stride-1 36-char substring overlap check against Base 3-domain Val files (120k chars each)."""
     if not BASE_DATA_DIR.exists():
         return {}
     val_sets: Dict[str, set] = {}
@@ -236,7 +208,6 @@ def _check_base_val_overlap_exact(train_dialogues: List[Dict], win: int = 36) ->
             continue
         u32 = np.memmap(vp, dtype=np.uint32, mode="r")[:120_000]
         vstr = clean_text(np.array(u32, dtype="<u4").tobytes().decode("utf-32-le", errors="ignore"))
-        # Index EVERY starting offset (stride=1) using 64-bit hash of 36-char window!
         val_sets[dname] = {hash(vstr[i : i + win]) for i in range(max(0, len(vstr) - win + 1))}
 
     hits = {k: 0 for k in val_sets}
@@ -260,10 +231,8 @@ def build_sft_dataset(
     val_per_source: int = 250,
     seed: int = 80,
 ) -> Dict:
-    """Build clean, balanced, deduplicated, leak-free Train/Val SFT splits + reconciled audit & preview."""
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     if max_train_per_source is None:
-        # Byte-balanced conversational mix across all 4 sources!
         max_train_per_source = {
             "oasst1_ja": 15_000,
             "dolly_ja": 12_000,
@@ -273,7 +242,6 @@ def build_sft_dataset(
 
     raw_diags, drop_stats = _extract_dialogues()
 
-    # Global exact deduplication across ALL turns (both same-role AND cross-role!)
     seen_any = set()
     dedup_by_src: Dict[str, List[Dict]] = {}
     dup_dropped = 0
@@ -301,7 +269,6 @@ def build_sft_dataset(
         val_set.extend(v_sub)
         train_set.extend(t_sub)
 
-    # Strict cross-role & same-role Train/Val zero-overlap assertion!
     tr_all = {norm_hash(s) for d in train_set for pair in d["turns"] for s in pair}
     va_all = {norm_hash(s) for d in val_set for pair in d["turns"] for s in pair}
     assert len(tr_all & va_all) == 0, f"Train/Val overlap detected: {len(tr_all & va_all)}"
@@ -309,7 +276,6 @@ def build_sft_dataset(
     rng.shuffle(train_set)
     rng.shuffle(val_set)
 
-    # Compute FINAL reconciled per-source counts, assistant byte shares, and sample previews from final splits!
     per_src_counts: Dict[str, Dict[str, float]] = {}
     sample_preview: Dict[str, Dict[str, List[Dict]]] = {}
     for src in sorted(avail_by_src.keys()):

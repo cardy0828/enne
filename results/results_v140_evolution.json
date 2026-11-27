@@ -1,0 +1,3053 @@
+{
+ "baseline": [
+  {
+   "prompt": "星紡ぎ試験機の識別色は？",
+   "answer": "情報がありません。",
+   "ok": 0,
+   "valid": true,
+   "eot": true,
+   "sources": [
+    "epistemic:abstention"
+   ],
+   "tool": null,
+   "value": ""
+  },
+  {
+   "prompt": "朝霧便の集合場所は？",
+   "answer": "情報がありません。",
+   "ok": 0,
+   "valid": true,
+   "eot": true,
+   "sources": [
+    "epistemic:abstention"
+   ],
+   "tool": null,
+   "value": ""
+  },
+  {
+   "prompt": "壁の時計が止まっています。そちらはいま何時でしょう？",
+   "answer": "そちらについては情報がありません。",
+   "ok": 0,
+   "valid": true,
+   "eot": true,
+   "sources": [
+    "epistemic:abstention"
+   ],
+   "tool": null,
+   "value": ""
+  },
+  {
+   "prompt": "昨日5キロメートル走り、今日も7キロメートル走りました。合計で何キロメートル走りましたか？",
+   "answer": "-2キロメートルです。",
+   "ok": 0,
+   "valid": true,
+   "eot": true,
+   "sources": [
+    "tool:calc"
+   ],
+   "tool": "calc",
+   "value": "-2"
+  }
+ ],
+ "candidate_unseen": [
+  {
+   "prompt": "点検する星紡ぎ試験機は何色でしたか？",
+   "answer": "星紡ぎ試験機の識別色は薄紫色です。",
+   "ok": 1,
+   "valid": true,
+   "eot": true,
+   "sources": [
+    "learned:gen_001"
+   ],
+   "tool": null,
+   "value": ""
+  },
+  {
+   "prompt": "朝霧便に参加するにはどこへ行けばいい？",
+   "answer": "朝霧便の集合場所は東広場です。",
+   "ok": 1,
+   "valid": true,
+   "eot": true,
+   "sources": [
+    "learned:gen_001"
+   ],
+   "tool": null,
+   "value": ""
+  },
+  {
+   "prompt": "時計が止まっているので今の時刻を教えて",
+   "answer": "2026-11-27 07:39:55 +0900 Fridayです。",
+   "ok": 1,
+   "valid": true,
+   "eot": true,
+   "sources": [
+    "tool:clock"
+   ],
+   "tool": "clock",
+   "value": "2026-11-27 07:39:55 +0900 Friday"
+  },
+  {
+   "prompt": "午前中に6キロメートル歩き、午後に9キロメートル歩きました。合計で何キロメートル歩きましたか？",
+   "answer": "15キロメートルです。",
+   "ok": 1,
+   "valid": true,
+   "eot": true,
+   "sources": [
+    "tool:calc"
+   ],
+   "tool": "calc",
+   "value": "15"
+  }
+ ],
+ "stage1": {
+  "parent": "gen_000",
+  "generation_id": "gen_001",
+  "cycle": "ee2e982f64294c27ab8817ad96117060",
+  "offset": 1307,
+  "before": {
+   "cases": {
+    "core": [
+     {
+      "prompt": "こんにちは！調子はどうですか？",
+      "answer": "うまくいってるよ。",
+      "ok": 0,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "sft:utterance"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "answer": "東海道新幹線は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。 多くの列車が山陽新幹線（新大阪駅 - 博多駅間）に直通する運行体系がとられていることから、総称して「東海道・山陽新幹線」（とうかいどう・さんようしんかんせん）とも呼ばれる。",
+      "ok": 4,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "answer": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:deep_wiki"
+      ],
+      "tool": "deep_wiki",
+      "value": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。"
+     },
+     {
+      "prompt": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "answer": "第二次世界大戦は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。",
+      "ok": 2,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "answer": "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。中学の英語教師苦沙弥先生の日常と、書斎に集まる美学者迷亭、理学者寒月、哲学者東風らといった明治の知識人たちの生活態度や思考を飼い猫の目を通して、ユーモアに満ちたエピソードとして描いた作品。表面的にすぎない日本の近代化に対する、漱石の痛烈な文明批評・社会批判が表れている風刺小説。",
+      "ok": 4,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "日本の首都はどこですか？",
+      "answer": "東京都は、日本の首都。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "custom": [
+     {
+      "prompt": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+      "answer": "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+      "ok": 3,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "custom:astra"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "アストラX-99の最大推力はどのくらいですか？",
+      "answer": "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+      "ok": 3,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "custom:astra"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "traps": [
+     {
+      "prompt": "架空の都市「ネオアトランティス2099」の市長は誰ですか？",
+      "answer": "ネオアトランティス2099については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の科学者「ドクター・クロノス77」の出身地はどこですか？",
+      "answer": "ドクター・クロノス77については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の都市「ルメリア星港842」の市長は誰ですか？",
+      "answer": "ルメリア星港842については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空都市「セラノ港531」の市長は誰でしょうか？",
+      "answer": "セラノ港531については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空都市「オルネ港684」の市長の名前を教えてください。",
+      "answer": "オルネ港684の名前については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の探検家「ミルザ・ペルナ482」の生誕地を教えて。",
+      "answer": "ミルザ・ペルナ482については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "姫路城の明日の入場者数はいくらですか？",
+      "answer": "姫路城の入場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の天文台「リュネ塔7316」の初代台長の名前は？",
+      "answer": "天文台の名前については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "松本城の来週の来場者数を教えてもらえますか。",
+      "answer": "松本城の来場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の町「ニレフォラ港9637」の町長の名前を知りたい。",
+      "answer": "ニレフォラ港9637の名前については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "犬山城のあさっての見学者数は何人になりますか？",
+      "answer": "犬山城の見学者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の島「ラトベルナ島5842」の初代知事を教えて。",
+      "answer": "ラトベルナ島5842については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "彦根城の再来週の入場者数は何人になるでしょうか。",
+      "answer": "彦根城の入場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の飛行艇「ミラノワ艇52号」の設計者は誰でしょう？",
+      "answer": "ミラノワ艇52号については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "名古屋城で来月最初の日曜日に訪れる人の正確な人数は？",
+      "answer": "名古屋城は、日本の城のひとつ。日曜日または日曜（にちよう）は、土曜日と月曜日の間にある週の1日。",
+      "ok": 0,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia",
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "arithmetic": [
+     {
+      "prompt": "（７３＋１７）÷６－４",
+      "answer": "11です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "11"
+     },
+     {
+      "prompt": "画用紙を24枚用意しました。そこへ別の束から19枚を足すと、合わせて何枚になりますか？",
+      "answer": "43枚です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "43"
+     },
+     {
+      "prompt": "水槽には38匹いました。そこから9匹を別の水槽へ移しました。残ったのは何匹でしょう。",
+      "answer": "29匹です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "29"
+     },
+     {
+      "prompt": "机が7台並んでおり、それぞれに付箋を4枚ずつ貼りました。全部で付箋は何枚ですか？",
+      "answer": "28枚です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "28"
+     }
+    ],
+    "progress": [
+     {
+      "prompt": "星紡ぎ試験機",
+      "answer": "情報がありません。",
+      "ok": 0,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "朝霧便",
+      "answer": "情報がありません。",
+      "ok": 0,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "壁の時計が止まっています。そちらはいま何時でしょう？",
+      "answer": "そちらについては情報がありません。",
+      "ok": 0,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "昨日5キロメートル走り、今日も7キロメートル走りました。合計で何キロメートル走りましたか？",
+      "answer": "-2キロメートルです。",
+      "ok": 0,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "-2"
+     }
+    ]
+   },
+   "scores": {
+    "core": 12,
+    "custom": 6,
+    "traps": 14,
+    "arithmetic": 4,
+    "progress": 0
+   },
+   "retained": [],
+   "oracle_holdout": []
+  },
+  "after": {
+   "cases": {
+    "core": [
+     {
+      "prompt": "こんにちは！調子はどうですか？",
+      "answer": "うまくいってるよ。",
+      "ok": 0,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "sft:utterance"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "answer": "東海道新幹線は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。 多くの列車が山陽新幹線（新大阪駅 - 博多駅間）に直通する運行体系がとられていることから、総称して「東海道・山陽新幹線」（とうかいどう・さんようしんかんせん）とも呼ばれる。",
+      "ok": 4,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "answer": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:deep_wiki"
+      ],
+      "tool": "deep_wiki",
+      "value": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。"
+     },
+     {
+      "prompt": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "answer": "第二次世界大戦は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。",
+      "ok": 2,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "answer": "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。中学の英語教師苦沙弥先生の日常と、書斎に集まる美学者迷亭、理学者寒月、哲学者東風らといった明治の知識人たちの生活態度や思考を飼い猫の目を通して、ユーモアに満ちたエピソードとして描いた作品。表面的にすぎない日本の近代化に対する、漱石の痛烈な文明批評・社会批判が表れている風刺小説。",
+      "ok": 4,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "日本の首都はどこですか？",
+      "answer": "東京都は、日本の首都。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "custom": [
+     {
+      "prompt": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+      "answer": "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+      "ok": 3,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "custom:astra"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "アストラX-99の最大推力はどのくらいですか？",
+      "answer": "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+      "ok": 3,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "custom:astra"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "traps": [
+     {
+      "prompt": "架空の都市「ネオアトランティス2099」の市長は誰ですか？",
+      "answer": "ネオアトランティス2099については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の科学者「ドクター・クロノス77」の出身地はどこですか？",
+      "answer": "ドクター・クロノス77については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の都市「ルメリア星港842」の市長は誰ですか？",
+      "answer": "ルメリア星港842については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空都市「セラノ港531」の市長は誰でしょうか？",
+      "answer": "セラノ港531については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空都市「オルネ港684」の市長の名前を教えてください。",
+      "answer": "オルネ港684の名前については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の探検家「ミルザ・ペルナ482」の生誕地を教えて。",
+      "answer": "ミルザ・ペルナ482については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "姫路城の明日の入場者数はいくらですか？",
+      "answer": "姫路城の入場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の天文台「リュネ塔7316」の初代台長の名前は？",
+      "answer": "天文台の名前については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "松本城の来週の来場者数を教えてもらえますか。",
+      "answer": "松本城の来場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の町「ニレフォラ港9637」の町長の名前を知りたい。",
+      "answer": "ニレフォラ港9637の名前については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "犬山城のあさっての見学者数は何人になりますか？",
+      "answer": "犬山城の見学者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の島「ラトベルナ島5842」の初代知事を教えて。",
+      "answer": "ラトベルナ島5842については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "彦根城の再来週の入場者数は何人になるでしょうか。",
+      "answer": "彦根城の入場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の飛行艇「ミラノワ艇52号」の設計者は誰でしょう？",
+      "answer": "ミラノワ艇52号については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "名古屋城で来月最初の日曜日に訪れる人の正確な人数は？",
+      "answer": "訪れる人については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "arithmetic": [
+     {
+      "prompt": "（７３＋１７）÷６－４",
+      "answer": "11です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "11"
+     },
+     {
+      "prompt": "画用紙を24枚用意しました。そこへ別の束から19枚を足すと、合わせて何枚になりますか？",
+      "answer": "43枚です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "43"
+     },
+     {
+      "prompt": "水槽には38匹いました。そこから9匹を別の水槽へ移しました。残ったのは何匹でしょう。",
+      "answer": "29匹です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "29"
+     },
+     {
+      "prompt": "机が7台並んでおり、それぞれに付箋を4枚ずつ貼りました。全部で付箋は何枚ですか？",
+      "answer": "28枚です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "28"
+     }
+    ],
+    "progress": [
+     {
+      "prompt": "星紡ぎ試験機",
+      "answer": "星紡ぎ試験機の識別色は薄紫色です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "learned:gen_001"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "朝霧便",
+      "answer": "朝霧便の集合場所は東広場です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "learned:gen_001"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "壁の時計が止まっています。そちらはいま何時でしょう？",
+      "answer": "2026-11-27 07:39:53 +0900 Fridayです。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:clock"
+      ],
+      "tool": "clock",
+      "value": "2026-11-27 07:39:53 +0900 Friday"
+     },
+     {
+      "prompt": "昨日5キロメートル走り、今日も7キロメートル走りました。合計で何キロメートル走りましたか？",
+      "answer": "12キロメートルです。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "12"
+     }
+    ]
+   },
+   "scores": {
+    "core": 12,
+    "custom": 6,
+    "traps": 15,
+    "arithmetic": 4,
+    "progress": 4
+   },
+   "oracle_holdout": [],
+   "retained": []
+  },
+  "nodes": {
+   "before": 0,
+   "born": 2,
+   "pruned": 0,
+   "alive": 2,
+   "oracle_skipped_correct": 0
+  },
+  "curiosity": {},
+  "delta": {
+   "core": 0,
+   "custom": 0,
+   "traps": 1,
+   "arithmetic": 0,
+   "progress": 4
+  },
+  "reasons": [],
+  "status": "committed"
+ },
+ "resources": {
+  "teach": {
+   "rss_kib": 11683356,
+   "peak_cuda_bytes": 7678924800,
+   "device": "NVIDIA GeForce RTX 3060"
+  },
+  "restart": {
+   "rss_kib": 11748452,
+   "peak_cuda_bytes": 7678924800,
+   "device": "NVIDIA GeForce RTX 3060"
+  },
+  "poison": {
+   "rss_kib": 11506528,
+   "peak_cuda_bytes": 7678924800,
+   "device": "NVIDIA GeForce RTX 3060"
+  },
+  "rollback": {
+   "rss_kib": 6355384,
+   "peak_cuda_bytes": 7678924800,
+   "device": "NVIDIA GeForce RTX 3060"
+  }
+ },
+ "restart": {
+  "generation": "gen_001",
+  "direct": [
+   {
+    "prompt": "星紡ぎ試験機の識別色は？",
+    "answer": "星紡ぎ試験機の識別色は薄紫色です。",
+    "ok": 1,
+    "valid": true,
+    "eot": true,
+    "sources": [
+     "learned:gen_001"
+    ],
+    "tool": null,
+    "value": ""
+   },
+   {
+    "prompt": "朝霧便の集合場所は？",
+    "answer": "朝霧便の集合場所は東広場です。",
+    "ok": 1,
+    "valid": true,
+    "eot": true,
+    "sources": [
+     "learned:gen_001"
+    ],
+    "tool": null,
+    "value": ""
+   },
+   {
+    "prompt": "壁の時計が止まっています。そちらはいま何時でしょう？",
+    "answer": "2026-11-27 07:40:04 +0900 Fridayです。",
+    "ok": 1,
+    "valid": true,
+    "eot": true,
+    "sources": [
+     "tool:clock"
+    ],
+    "tool": "clock",
+    "value": "2026-11-27 07:40:04 +0900 Friday"
+   },
+   {
+    "prompt": "昨日5キロメートル走り、今日も7キロメートル走りました。合計で何キロメートル走りましたか？",
+    "answer": "12キロメートルです。",
+    "ok": 1,
+    "valid": true,
+    "eot": true,
+    "sources": [
+     "tool:calc"
+    ],
+    "tool": "calc",
+    "value": "12"
+   }
+  ],
+  "unseen": [
+   {
+    "prompt": "点検する星紡ぎ試験機は何色でしたか？",
+    "answer": "星紡ぎ試験機の識別色は薄紫色です。",
+    "ok": 1,
+    "valid": true,
+    "eot": true,
+    "sources": [
+     "learned:gen_001"
+    ],
+    "tool": null,
+    "value": ""
+   },
+   {
+    "prompt": "朝霧便に参加するにはどこへ行けばいい？",
+    "answer": "朝霧便の集合場所は東広場です。",
+    "ok": 1,
+    "valid": true,
+    "eot": true,
+    "sources": [
+     "learned:gen_001"
+    ],
+    "tool": null,
+    "value": ""
+   },
+   {
+    "prompt": "時計が止まっているので今の時刻を教えて",
+    "answer": "2026-11-27 07:40:06 +0900 Fridayです。",
+    "ok": 1,
+    "valid": true,
+    "eot": true,
+    "sources": [
+     "tool:clock"
+    ],
+    "tool": "clock",
+    "value": "2026-11-27 07:40:06 +0900 Friday"
+   },
+   {
+    "prompt": "午前中に6キロメートル歩き、午後に9キロメートル歩きました。合計で何キロメートル歩きましたか？",
+    "answer": "15キロメートルです。",
+    "ok": 1,
+    "valid": true,
+    "eot": true,
+    "sources": [
+     "tool:calc"
+    ],
+    "tool": "calc",
+    "value": "15"
+   }
+  ]
+ },
+ "unlabelled": [
+  {
+   "q": "琵琶湖から自然に流れ出す川の名前を教えて。",
+   "answer": "情報がありません。",
+   "abstain": true
+  },
+  {
+   "q": "ダイヤモンドのモース硬度はいくつでしょう。",
+   "answer": "現実に存在する化学物質（人工物、天然物）の中で、モース硬度として最も硬いものはダイヤモンドである。",
+   "abstain": false
+  },
+  {
+   "q": "木星の赤道傾斜角？",
+   "answer": "水星や木星は自転軸がほぼ垂直に直立している。",
+   "abstain": false
+  },
+  {
+   "q": "太陽の半径？",
+   "answer": "太陽の半径については情報がありません。",
+   "abstain": true
+  },
+  {
+   "q": "架空の町「ニレフォラ港9637」の町長の名前を知りたい。",
+   "answer": "ニレフォラ港9637の名前については情報がありません。",
+   "abstain": true
+  },
+  {
+   "q": "犬山城のあさっての見学者数は何人になりますか？",
+   "answer": "犬山城の見学者数については情報がありません。",
+   "abstain": true
+  }
+ ],
+ "stage2": {
+  "parent": "gen_001",
+  "generation_id": "gen_002",
+  "cycle": "a06e90d36e164e20ae67e637c8877a58",
+  "offset": 2852,
+  "before": {
+   "cases": {
+    "core": [
+     {
+      "prompt": "こんにちは！調子はどうですか？",
+      "answer": "うまくいってるよ。",
+      "ok": 0,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "sft:utterance"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "answer": "東海道新幹線は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。 多くの列車が山陽新幹線（新大阪駅 - 博多駅間）に直通する運行体系がとられていることから、総称して「東海道・山陽新幹線」（とうかいどう・さんようしんかんせん）とも呼ばれる。",
+      "ok": 4,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "answer": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:deep_wiki"
+      ],
+      "tool": "deep_wiki",
+      "value": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。"
+     },
+     {
+      "prompt": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "answer": "第二次世界大戦は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。",
+      "ok": 2,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "answer": "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。中学の英語教師苦沙弥先生の日常と、書斎に集まる美学者迷亭、理学者寒月、哲学者東風らといった明治の知識人たちの生活態度や思考を飼い猫の目を通して、ユーモアに満ちたエピソードとして描いた作品。表面的にすぎない日本の近代化に対する、漱石の痛烈な文明批評・社会批判が表れている風刺小説。",
+      "ok": 4,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "日本の首都はどこですか？",
+      "answer": "東京都は、日本の首都。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "custom": [
+     {
+      "prompt": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+      "answer": "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+      "ok": 3,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "custom:astra"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "アストラX-99の最大推力はどのくらいですか？",
+      "answer": "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+      "ok": 3,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "custom:astra"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "traps": [
+     {
+      "prompt": "架空の都市「ネオアトランティス2099」の市長は誰ですか？",
+      "answer": "ネオアトランティス2099については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の科学者「ドクター・クロノス77」の出身地はどこですか？",
+      "answer": "ドクター・クロノス77については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の都市「ルメリア星港842」の市長は誰ですか？",
+      "answer": "ルメリア星港842については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空都市「セラノ港531」の市長は誰でしょうか？",
+      "answer": "セラノ港531については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空都市「オルネ港684」の市長の名前を教えてください。",
+      "answer": "オルネ港684の名前については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の探検家「ミルザ・ペルナ482」の生誕地を教えて。",
+      "answer": "ミルザ・ペルナ482については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "姫路城の明日の入場者数はいくらですか？",
+      "answer": "姫路城の入場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の天文台「リュネ塔7316」の初代台長の名前は？",
+      "answer": "天文台の名前については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "松本城の来週の来場者数を教えてもらえますか。",
+      "answer": "松本城の来場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の町「ニレフォラ港9637」の町長の名前を知りたい。",
+      "answer": "ニレフォラ港9637の名前については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "犬山城のあさっての見学者数は何人になりますか？",
+      "answer": "犬山城の見学者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の島「ラトベルナ島5842」の初代知事を教えて。",
+      "answer": "ラトベルナ島5842については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "彦根城の再来週の入場者数は何人になるでしょうか。",
+      "answer": "彦根城の入場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の飛行艇「ミラノワ艇52号」の設計者は誰でしょう？",
+      "answer": "ミラノワ艇52号については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "名古屋城で来月最初の日曜日に訪れる人の正確な人数は？",
+      "answer": "訪れる人については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "arithmetic": [
+     {
+      "prompt": "（７３＋１７）÷６－４",
+      "answer": "11です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "11"
+     },
+     {
+      "prompt": "画用紙を24枚用意しました。そこへ別の束から19枚を足すと、合わせて何枚になりますか？",
+      "answer": "43枚です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "43"
+     },
+     {
+      "prompt": "水槽には38匹いました。そこから9匹を別の水槽へ移しました。残ったのは何匹でしょう。",
+      "answer": "29匹です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "29"
+     },
+     {
+      "prompt": "机が7台並んでおり、それぞれに付箋を4枚ずつ貼りました。全部で付箋は何枚ですか？",
+      "answer": "28枚です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "28"
+     }
+    ],
+    "progress": [
+     {
+      "prompt": "太陽の半径？",
+      "answer": "太陽の半径については情報がありません。",
+      "ok": 0,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ]
+   },
+   "scores": {
+    "core": 12,
+    "custom": 6,
+    "traps": 15,
+    "arithmetic": 4,
+    "progress": 0
+   },
+   "retained": [
+    {
+     "prompt": "星紡ぎ試験機",
+     "answer": "星紡ぎ試験機の識別色は薄紫色です。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "learned:gen_001"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "朝霧便",
+     "answer": "朝霧便の集合場所は東広場です。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "learned:gen_001"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "壁の時計が止まっています。そちらはいま何時でしょう？",
+     "answer": "2026-11-27 07:40:38 +0900 Fridayです。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "tool:clock"
+     ],
+     "tool": "clock",
+     "value": "2026-11-27 07:40:38 +0900 Friday"
+    },
+    {
+     "prompt": "昨日5キロメートル走り、今日も7キロメートル走りました。合計で何キロメートル走りましたか？",
+     "answer": "12キロメートルです。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "tool:calc"
+     ],
+     "tool": "calc",
+     "value": "12"
+    }
+   ],
+   "oracle_holdout": [
+    {
+     "prompt": "こんにちは、数学の問題について相談があります。問題の内容は「半径3の円と半径6の円が接している場合、中心間の距離を求めなさい」というものです。",
+     "answer": "9のです。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "tool:calc"
+     ],
+     "tool": "calc",
+     "value": "9"
+    }
+   ]
+  },
+  "after": {
+   "cases": {
+    "core": [
+     {
+      "prompt": "こんにちは！調子はどうですか？",
+      "answer": "うまくいってるよ。",
+      "ok": 0,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "sft:utterance"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "answer": "東海道新幹線は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。 多くの列車が山陽新幹線（新大阪駅 - 博多駅間）に直通する運行体系がとられていることから、総称して「東海道・山陽新幹線」（とうかいどう・さんようしんかんせん）とも呼ばれる。",
+      "ok": 4,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "answer": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:deep_wiki"
+      ],
+      "tool": "deep_wiki",
+      "value": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。"
+     },
+     {
+      "prompt": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "answer": "第二次世界大戦は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。",
+      "ok": 2,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "answer": "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。中学の英語教師苦沙弥先生の日常と、書斎に集まる美学者迷亭、理学者寒月、哲学者東風らといった明治の知識人たちの生活態度や思考を飼い猫の目を通して、ユーモアに満ちたエピソードとして描いた作品。表面的にすぎない日本の近代化に対する、漱石の痛烈な文明批評・社会批判が表れている風刺小説。",
+      "ok": 4,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "日本の首都はどこですか？",
+      "answer": "東京都は、日本の首都。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "custom": [
+     {
+      "prompt": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+      "answer": "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+      "ok": 3,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "custom:astra"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "アストラX-99の最大推力はどのくらいですか？",
+      "answer": "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+      "ok": 3,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "custom:astra"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "traps": [
+     {
+      "prompt": "架空の都市「ネオアトランティス2099」の市長は誰ですか？",
+      "answer": "ネオアトランティス2099については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の科学者「ドクター・クロノス77」の出身地はどこですか？",
+      "answer": "ドクター・クロノス77については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の都市「ルメリア星港842」の市長は誰ですか？",
+      "answer": "ルメリア星港842については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空都市「セラノ港531」の市長は誰でしょうか？",
+      "answer": "セラノ港531については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空都市「オルネ港684」の市長の名前を教えてください。",
+      "answer": "オルネ港684の名前については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の探検家「ミルザ・ペルナ482」の生誕地を教えて。",
+      "answer": "ミルザ・ペルナ482については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "姫路城の明日の入場者数はいくらですか？",
+      "answer": "姫路城の入場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の天文台「リュネ塔7316」の初代台長の名前は？",
+      "answer": "天文台の名前については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "松本城の来週の来場者数を教えてもらえますか。",
+      "answer": "松本城の来場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の町「ニレフォラ港9637」の町長の名前を知りたい。",
+      "answer": "ニレフォラ港9637の名前については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "犬山城のあさっての見学者数は何人になりますか？",
+      "answer": "犬山城の見学者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の島「ラトベルナ島5842」の初代知事を教えて。",
+      "answer": "ラトベルナ島5842については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "彦根城の再来週の入場者数は何人になるでしょうか。",
+      "answer": "彦根城の入場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の飛行艇「ミラノワ艇52号」の設計者は誰でしょう？",
+      "answer": "ミラノワ艇52号については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "名古屋城で来月最初の日曜日に訪れる人の正確な人数は？",
+      "answer": "訪れる人については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "arithmetic": [
+     {
+      "prompt": "（７３＋１７）÷６－４",
+      "answer": "11です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "11"
+     },
+     {
+      "prompt": "画用紙を24枚用意しました。そこへ別の束から19枚を足すと、合わせて何枚になりますか？",
+      "answer": "43枚です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "43"
+     },
+     {
+      "prompt": "水槽には38匹いました。そこから9匹を別の水槽へ移しました。残ったのは何匹でしょう。",
+      "answer": "29匹です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "29"
+     },
+     {
+      "prompt": "机が7台並んでおり、それぞれに付箋を4枚ずつ貼りました。全部で付箋は何枚ですか？",
+      "answer": "28枚です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "28"
+     }
+    ],
+    "progress": [
+     {
+      "prompt": "太陽の半径？",
+      "answer": "太陽の半径は約70万 kmで直径約140万 kmとなり地球の直径の約109倍の大きさである。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "learned:gen_002"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ]
+   },
+   "scores": {
+    "core": 12,
+    "custom": 6,
+    "traps": 15,
+    "arithmetic": 4,
+    "progress": 1
+   },
+   "oracle_holdout": [
+    {
+     "prompt": "こんにちは、数学の問題について相談があります。問題の内容は「半径3の円と半径6の円が接している場合、中心間の距離を求めなさい」というものです。",
+     "answer": "9のです。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "tool:calc"
+     ],
+     "tool": "calc",
+     "value": "9"
+    }
+   ],
+   "retained": [
+    {
+     "prompt": "星紡ぎ試験機",
+     "answer": "星紡ぎ試験機の識別色は薄紫色です。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "learned:gen_001"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "朝霧便",
+     "answer": "朝霧便の集合場所は東広場です。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "learned:gen_001"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "壁の時計が止まっています。そちらはいま何時でしょう？",
+     "answer": "2026-11-27 07:41:06 +0900 Fridayです。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "tool:clock"
+     ],
+     "tool": "clock",
+     "value": "2026-11-27 07:41:06 +0900 Friday"
+    },
+    {
+     "prompt": "昨日5キロメートル走り、今日も7キロメートル走りました。合計で何キロメートル走りましたか？",
+     "answer": "12キロメートルです。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "tool:calc"
+     ],
+     "tool": "calc",
+     "value": "12"
+    }
+   ]
+  },
+  "nodes": {
+   "before": 2,
+   "born": 0,
+   "pruned": 0,
+   "alive": 2,
+   "oracle_skipped_correct": 1
+  },
+  "curiosity": {
+   "discoveries": [
+    {
+     "prompt": "琵琶湖から自然に流れ出す川の名前を教えて。",
+     "promoted": false
+    },
+    {
+     "prompt": "太陽の半径？",
+     "promoted": true,
+     "evidence": {
+      "head": "太陽",
+      "attribute": "半径",
+      "byte_offset": 2023288660,
+      "text": "太陽の半径は約70万 kmで直径約140万 kmとなり地球の直径の約109倍の大きさである。"
+     }
+    },
+    {
+     "prompt": "架空の町「ニレフォラ港9637」の町長の名前を知りたい。",
+     "promoted": false
+    },
+    {
+     "prompt": "犬山城のあさっての見学者数は何人になりますか？",
+     "promoted": false
+    }
+   ],
+   "oracle_total": 2,
+   "held_out": [
+    {
+     "prompt": "こんにちは、数学の問題について相談があります。問題の内容は「半径3の円と半径6の円が接している場合、中心間の距離を求めなさい」というものです。",
+     "kind": "tool:calc:+",
+     "target": "9",
+     "origin": "oracle"
+    }
+   ]
+  },
+  "delta": {
+   "core": 0,
+   "custom": 0,
+   "traps": 0,
+   "arithmetic": 0,
+   "progress": 1
+  },
+  "reasons": [],
+  "status": "committed"
+ },
+ "stage3": {
+  "parent": "gen_002",
+  "generation_id": "gen_003",
+  "cycle": "cc841a73d7f741e5942f0ca003116781",
+  "offset": 3010,
+  "before": {
+   "cases": {
+    "core": [
+     {
+      "prompt": "こんにちは！調子はどうですか？",
+      "answer": "うまくいってるよ。",
+      "ok": 0,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "sft:utterance"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "answer": "東海道新幹線は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。 多くの列車が山陽新幹線（新大阪駅 - 博多駅間）に直通する運行体系がとられていることから、総称して「東海道・山陽新幹線」（とうかいどう・さんようしんかんせん）とも呼ばれる。",
+      "ok": 4,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "answer": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:deep_wiki"
+      ],
+      "tool": "deep_wiki",
+      "value": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。"
+     },
+     {
+      "prompt": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "answer": "第二次世界大戦は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。",
+      "ok": 2,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "answer": "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。中学の英語教師苦沙弥先生の日常と、書斎に集まる美学者迷亭、理学者寒月、哲学者東風らといった明治の知識人たちの生活態度や思考を飼い猫の目を通して、ユーモアに満ちたエピソードとして描いた作品。表面的にすぎない日本の近代化に対する、漱石の痛烈な文明批評・社会批判が表れている風刺小説。",
+      "ok": 4,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "日本の首都はどこですか？",
+      "answer": "東京都は、日本の首都。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "custom": [
+     {
+      "prompt": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+      "answer": "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+      "ok": 3,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "custom:astra"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "アストラX-99の最大推力はどのくらいですか？",
+      "answer": "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+      "ok": 3,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "custom:astra"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "traps": [
+     {
+      "prompt": "架空の都市「ネオアトランティス2099」の市長は誰ですか？",
+      "answer": "ネオアトランティス2099については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の科学者「ドクター・クロノス77」の出身地はどこですか？",
+      "answer": "ドクター・クロノス77については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の都市「ルメリア星港842」の市長は誰ですか？",
+      "answer": "ルメリア星港842については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空都市「セラノ港531」の市長は誰でしょうか？",
+      "answer": "セラノ港531については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空都市「オルネ港684」の市長の名前を教えてください。",
+      "answer": "オルネ港684の名前については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の探検家「ミルザ・ペルナ482」の生誕地を教えて。",
+      "answer": "ミルザ・ペルナ482については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "姫路城の明日の入場者数はいくらですか？",
+      "answer": "姫路城の入場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の天文台「リュネ塔7316」の初代台長の名前は？",
+      "answer": "天文台の名前については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "松本城の来週の来場者数を教えてもらえますか。",
+      "answer": "松本城の来場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の町「ニレフォラ港9637」の町長の名前を知りたい。",
+      "answer": "ニレフォラ港9637の名前については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "犬山城のあさっての見学者数は何人になりますか？",
+      "answer": "犬山城の見学者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の島「ラトベルナ島5842」の初代知事を教えて。",
+      "answer": "ラトベルナ島5842については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "彦根城の再来週の入場者数は何人になるでしょうか。",
+      "answer": "彦根城の入場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の飛行艇「ミラノワ艇52号」の設計者は誰でしょう？",
+      "answer": "ミラノワ艇52号については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "名古屋城で来月最初の日曜日に訪れる人の正確な人数は？",
+      "answer": "訪れる人については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "arithmetic": [
+     {
+      "prompt": "（７３＋１７）÷６－４",
+      "answer": "11です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "11"
+     },
+     {
+      "prompt": "画用紙を24枚用意しました。そこへ別の束から19枚を足すと、合わせて何枚になりますか？",
+      "answer": "43枚です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "43"
+     },
+     {
+      "prompt": "水槽には38匹いました。そこから9匹を別の水槽へ移しました。残ったのは何匹でしょう。",
+      "answer": "29匹です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "29"
+     },
+     {
+      "prompt": "机が7台並んでおり、それぞれに付箋を4枚ずつ貼りました。全部で付箋は何枚ですか？",
+      "answer": "28枚です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "28"
+     }
+    ],
+    "progress": [
+     {
+      "prompt": "架空の町「ニレフォラ港9637」の町長の名前を知りたい。",
+      "answer": "ニレフォラ港9637の名前については情報がありません。",
+      "ok": 0,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ]
+   },
+   "scores": {
+    "core": 12,
+    "custom": 6,
+    "traps": 15,
+    "arithmetic": 4,
+    "progress": 0
+   },
+   "retained": [
+    {
+     "prompt": "星紡ぎ試験機",
+     "answer": "星紡ぎ試験機の識別色は薄紫色です。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "learned:gen_001"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "朝霧便",
+     "answer": "朝霧便の集合場所は東広場です。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "learned:gen_001"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "壁の時計が止まっています。そちらはいま何時でしょう？",
+     "answer": "2026-11-27 07:41:42 +0900 Fridayです。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "tool:clock"
+     ],
+     "tool": "clock",
+     "value": "2026-11-27 07:41:42 +0900 Friday"
+    },
+    {
+     "prompt": "昨日5キロメートル走り、今日も7キロメートル走りました。合計で何キロメートル走りましたか？",
+     "answer": "12キロメートルです。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "tool:calc"
+     ],
+     "tool": "calc",
+     "value": "12"
+    },
+    {
+     "prompt": "太陽の半径？",
+     "answer": "太陽の半径は約70万 kmで直径約140万 kmとなり地球の直径の約109倍の大きさである。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "learned:gen_002"
+     ],
+     "tool": null,
+     "value": ""
+    }
+   ],
+   "oracle_holdout": []
+  },
+  "after": {
+   "cases": {
+    "core": [
+     {
+      "prompt": "こんにちは！調子はどうですか？",
+      "answer": "うまくいってるよ。",
+      "ok": 0,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "sft:utterance"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "東海道新幹線とは何ですか？簡単に教えてください。",
+      "answer": "東海道新幹線は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。 多くの列車が山陽新幹線（新大阪駅 - 博多駅間）に直通する運行体系がとられていることから、総称して「東海道・山陽新幹線」（とうかいどう・さんようしんかんせん）とも呼ばれる。",
+      "ok": 4,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+      "answer": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:deep_wiki"
+      ],
+      "tool": "deep_wiki",
+      "value": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。"
+     },
+     {
+      "prompt": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+      "answer": "第二次世界大戦は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。",
+      "ok": 2,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+      "answer": "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。中学の英語教師苦沙弥先生の日常と、書斎に集まる美学者迷亭、理学者寒月、哲学者東風らといった明治の知識人たちの生活態度や思考を飼い猫の目を通して、ユーモアに満ちたエピソードとして描いた作品。表面的にすぎない日本の近代化に対する、漱石の痛烈な文明批評・社会批判が表れている風刺小説。",
+      "ok": 4,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "日本の首都はどこですか？",
+      "answer": "東京都は、日本の首都。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "lead:wikipedia"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "custom": [
+     {
+      "prompt": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+      "answer": "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+      "ok": 3,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "custom:astra"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "アストラX-99の最大推力はどのくらいですか？",
+      "answer": "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+      "ok": 3,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "custom:astra"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "traps": [
+     {
+      "prompt": "架空の都市「ネオアトランティス2099」の市長は誰ですか？",
+      "answer": "ネオアトランティス2099については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の科学者「ドクター・クロノス77」の出身地はどこですか？",
+      "answer": "ドクター・クロノス77については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の都市「ルメリア星港842」の市長は誰ですか？",
+      "answer": "ルメリア星港842については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空都市「セラノ港531」の市長は誰でしょうか？",
+      "answer": "セラノ港531については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空都市「オルネ港684」の市長の名前を教えてください。",
+      "answer": "オルネ港684の名前については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の探検家「ミルザ・ペルナ482」の生誕地を教えて。",
+      "answer": "ミルザ・ペルナ482については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "姫路城の明日の入場者数はいくらですか？",
+      "answer": "姫路城の入場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の天文台「リュネ塔7316」の初代台長の名前は？",
+      "answer": "天文台の名前については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "松本城の来週の来場者数を教えてもらえますか。",
+      "answer": "松本城の来場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の町「ニレフォラ港9637」の町長の名前を知りたい。",
+      "answer": "町長の名前はマツバです。",
+      "ok": 0,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "learned:gen_003"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "犬山城のあさっての見学者数は何人になりますか？",
+      "answer": "犬山城の見学者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の島「ラトベルナ島5842」の初代知事を教えて。",
+      "answer": "ラトベルナ島5842については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "彦根城の再来週の入場者数は何人になるでしょうか。",
+      "answer": "彦根城の入場者数については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "架空の飛行艇「ミラノワ艇52号」の設計者は誰でしょう？",
+      "answer": "ミラノワ艇52号については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "名古屋城で来月最初の日曜日に訪れる人の正確な人数は？",
+      "answer": "訪れる人については情報がありません。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "epistemic:abstention"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "arithmetic": [
+     {
+      "prompt": "（７３＋１７）÷６－４",
+      "answer": "11です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "11"
+     },
+     {
+      "prompt": "画用紙を24枚用意しました。そこへ別の束から19枚を足すと、合わせて何枚になりますか？",
+      "answer": "43枚です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "43"
+     },
+     {
+      "prompt": "水槽には38匹いました。そこから9匹を別の水槽へ移しました。残ったのは何匹でしょう。",
+      "answer": "29匹です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "29"
+     },
+     {
+      "prompt": "机が7台並んでおり、それぞれに付箋を4枚ずつ貼りました。全部で付箋は何枚ですか？",
+      "answer": "28枚です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "28"
+     }
+    ],
+    "progress": [
+     {
+      "prompt": "架空の町「ニレフォラ港9637」の町長の名前を知りたい。",
+      "answer": "町長の名前はマツバです。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "learned:gen_003"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ]
+   },
+   "scores": {
+    "core": 12,
+    "custom": 6,
+    "traps": 14,
+    "arithmetic": 4,
+    "progress": 1
+   },
+   "oracle_holdout": [],
+   "retained": [
+    {
+     "prompt": "星紡ぎ試験機",
+     "answer": "星紡ぎ試験機の識別色は薄紫色です。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "learned:gen_001"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "朝霧便",
+     "answer": "朝霧便の集合場所は東広場です。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "learned:gen_001"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "壁の時計が止まっています。そちらはいま何時でしょう？",
+     "answer": "2026-11-27 07:42:10 +0900 Fridayです。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "tool:clock"
+     ],
+     "tool": "clock",
+     "value": "2026-11-27 07:42:10 +0900 Friday"
+    },
+    {
+     "prompt": "昨日5キロメートル走り、今日も7キロメートル走りました。合計で何キロメートル走りましたか？",
+     "answer": "12キロメートルです。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "tool:calc"
+     ],
+     "tool": "calc",
+     "value": "12"
+    },
+    {
+     "prompt": "太陽の半径？",
+     "answer": "太陽の半径は約70万 kmで直径約140万 kmとなり地球の直径の約109倍の大きさである。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "learned:gen_002"
+     ],
+     "tool": null,
+     "value": ""
+    }
+   ]
+  },
+  "nodes": {
+   "before": 2,
+   "born": 0,
+   "pruned": 0,
+   "alive": 2,
+   "oracle_skipped_correct": 0
+  },
+  "curiosity": {},
+  "delta": {
+   "core": 0,
+   "custom": 0,
+   "traps": -1,
+   "arithmetic": 0,
+   "progress": 1
+  },
+  "reasons": [
+   "traps 架空の町「ニレフォラ港9637」の町長の名前を知りたい。"
+  ],
+  "status": "rolled_back"
+ },
+ "poison_unchanged": true,
+ "rollback_baseline": [
+  {
+   "prompt": "星紡ぎ試験機の識別色は？",
+   "answer": "情報がありません。",
+   "ok": 0,
+   "valid": true,
+   "eot": true,
+   "sources": [
+    "epistemic:abstention"
+   ],
+   "tool": null,
+   "value": ""
+  },
+  {
+   "prompt": "朝霧便の集合場所は？",
+   "answer": "情報がありません。",
+   "ok": 0,
+   "valid": true,
+   "eot": true,
+   "sources": [
+    "epistemic:abstention"
+   ],
+   "tool": null,
+   "value": ""
+  },
+  {
+   "prompt": "壁の時計が止まっています。そちらはいま何時でしょう？",
+   "answer": "そちらについては情報がありません。",
+   "ok": 0,
+   "valid": true,
+   "eot": true,
+   "sources": [
+    "epistemic:abstention"
+   ],
+   "tool": null,
+   "value": ""
+  },
+  {
+   "prompt": "昨日5キロメートル走り、今日も7キロメートル走りました。合計で何キロメートル走りましたか？",
+   "answer": "-2キロメートルです。",
+   "ok": 0,
+   "valid": true,
+   "eot": true,
+   "sources": [
+    "tool:calc"
+   ],
+   "tool": "calc",
+   "value": "-2"
+  }
+ ],
+ "unit_from": "キロメートル",
+ "temperature": [
+  {
+   "q": "星紡ぎ試験機の識別色は？",
+   "seed": 0,
+   "answer": "星紡ぎ試験機の識別色は薄紫色です。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "星紡ぎ試験機の識別色は？",
+   "seed": 1,
+   "answer": "星紡ぎ試験機の識別色は薄紫色です。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "星紡ぎ試験機の識別色は？",
+   "seed": 2,
+   "answer": "星紡ぎ試験機の識別色は薄紫色です。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "星紡ぎ試験機の識別色は？",
+   "seed": 3,
+   "answer": "星紡ぎ試験機の識別色は薄紫色です。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "朝霧便の集合場所は？",
+   "seed": 0,
+   "answer": "朝霧便の集合場所は東広場です。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "朝霧便の集合場所は？",
+   "seed": 1,
+   "answer": "朝霧便の集合場所は東広場です。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "朝霧便の集合場所は？",
+   "seed": 2,
+   "answer": "朝霧便の集合場所は東広場です。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "朝霧便の集合場所は？",
+   "seed": 3,
+   "answer": "朝霧便の集合場所は東広場です。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "壁の時計が止まっています。そちらはいま何時でしょう？",
+   "seed": 0,
+   "answer": "2026-11-27 07:42:21 +0900 Fridayです。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "壁の時計が止まっています。そちらはいま何時でしょう？",
+   "seed": 1,
+   "answer": "2026-11-27 07:42:21 +0900 Fridayです。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "壁の時計が止まっています。そちらはいま何時でしょう？",
+   "seed": 2,
+   "answer": "2026-11-27 07:42:21 +0900 Fridayです。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "壁の時計が止まっています。そちらはいま何時でしょう？",
+   "seed": 3,
+   "answer": "2026-11-27 07:42:21 +0900 Fridayです。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "昨日5キロメートル走り、今日も7キロメートル走りました。合計で何キロメートル走りましたか？",
+   "seed": 0,
+   "answer": "12キロメートルです。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "昨日5キロメートル走り、今日も7キロメートル走りました。合計で何キロメートル走りましたか？",
+   "seed": 1,
+   "answer": "12キロメートルです。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "昨日5キロメートル走り、今日も7キロメートル走りました。合計で何キロメートル走りましたか？",
+   "seed": 2,
+   "answer": "12キロメートルです。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "昨日5キロメートル走り、今日も7キロメートル走りました。合計で何キロメートル走りましたか？",
+   "seed": 3,
+   "answer": "12キロメートルです。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "(12+8)*2",
+   "seed": 0,
+   "answer": "40です。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "(12+8)*2",
+   "seed": 1,
+   "answer": "40です。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "(12+8)*2",
+   "seed": 2,
+   "answer": "40です。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  },
+  {
+   "q": "(12+8)*2",
+   "seed": 3,
+   "answer": "40です。",
+   "valid": true,
+   "eot": true,
+   "diverged": false
+  }
+ ],
+ "cpu_module_cuda_max_bytes": 0,
+ "final_generation": "gen_002"
+}

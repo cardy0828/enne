@@ -1,26 +1,4 @@
-"""NeuroGraph v2.1: System 7 — Hippocampal Episodic Engram Store + Active Prefrontal Thought Workspace.
-
-Bridges Sub-Symbolic Raw UTF-8 Cortex + v2.0 Byte-Engram with Explicit Multi-Sentence Episodic Memory!
-100% Zero Backprop | Zero Attention | Zero Tokenizer | Zero <UNK> | Zero Hardcoded Language Rules.
-
-How System 7 works biologically:
-1. Hippocampal Episodic Engram Cartridges (CPU RAM, 0 MB GPU VRAM, Hot-Swappable!):
-   - Slices raw UTF-8 knowledge streams into ~240-byte natural passage episodes (split at newlines / punctuation
-     boundaries when present, falling back to fixed UTF-8-aligned chunks) and indexes them via a C++17 OpenMP
-     multi-scale 6B/9B IDF inverted index (440,000 episodes indexed in ~2.5s, queried in < 100 microseconds!).
-   - Supports instant mounting/unmounting of domain cartridges (wikipedia, aozora, easy_ja, custom user facts!).
-2. Active Prefrontal Thought Workspace (ActiveThoughtWorkspace):
-   - Recalls the Top-K resonant episodes for the current prompt / active narrative.
-   - Extracts:
-     (a) Transient Episodic Byte-Transition Cache (k4/k6/k9 -> next_byte) weighted by episode relevance
-         -> injects recalled facts & names smoothly via Entropy-Gated residual!
-     (b) Active Thought Anchor Vector z_thought (mean Cortex h_dag of prompt + recalled episodes)
-         -> keeps the Cortex's latent state inside the active topic manifold across sentence boundaries!
-     (c) High-IDF Active Concept Entities (pure raw UTF-8 6-byte spans ranked by rule-free IDF)
-         -> guides Prefrontal Clause Rollouts (K=6) to weave recalled entities/facts naturally across
-            multiple sentences without parroting or drifting off-topic!
-   - Dynamically refreshes the thought workspace mid-generation so the brain can chain associative thoughts!
-"""
+"""文章断片の転置索引による文章記憶と、検索結果を置く作業領域（v2.1）。"""
 
 from __future__ import annotations
 
@@ -39,7 +17,6 @@ from neurograph.engram_v20 import DecoupledBrainV20, EngramCartridge
 from neurograph.memory_v3b import _mix64
 
 
-# ---- Compile / Load Native C++17 Episodic Index Kernel ----
 _EP_LIB_CACHE: Optional[ctypes.CDLL] = None
 
 
@@ -88,16 +65,12 @@ def slice_raw_bytes_into_episodes(
     target_len: int = 240,
     min_len: int = 80,
 ) -> np.ndarray:
-    """Slice a raw UTF-8 byte stream into clean ~240B UTF-8-aligned episodes (preferring newline breaks).
-    Returns uint64 array ep_off of shape [num_episodes + 1]."""
     N = len(raw_bytes)
     if N <= target_len:
         return np.array([0, N], dtype=np.uint64)
 
-    # Fast vectorized boundary detection: find newline (0x0A) positions, else stride by target_len aligned to UTF-8 lead byte
     offs = [0]
     pos = 0
-    # Pre-find newlines for fast snapping
     nl_pos = np.flatnonzero(raw_bytes == 10)
     nl_idx = 0
     n_nl = len(nl_pos)
@@ -106,14 +79,12 @@ def slice_raw_bytes_into_episodes(
         want = min(pos + target_len, N)
         if want >= N:
             break
-        # Advance nl_idx to first newline >= pos + min_len
         while nl_idx < n_nl and nl_pos[nl_idx] < pos + min_len:
             nl_idx += 1
         if nl_idx < n_nl and nl_pos[nl_idx] <= pos + target_len + 60:
             nxt = int(nl_pos[nl_idx]) + 1
             nl_idx += 1
         else:
-            # Snap to next UTF-8 character lead byte (not 0x80..0xBF continuation byte!)
             nxt = want
             while nxt < N and (raw_bytes[nxt] & 0xC0) == 0x80:
                 nxt += 1
@@ -128,7 +99,6 @@ def slice_raw_bytes_into_episodes(
 
 
 class EpisodicCartridge:
-    """Hot-Swappable Hippocampal Episodic Engram Cartridge (CPU RAM, 0 MB GPU VRAM, Zero Tokenizer!)."""
 
     def __init__(
         self,
@@ -200,7 +170,6 @@ class EpisodicCartridge:
 
 
 class EpisodicRack:
-    """Multi-Cartridge Hot-Swappable Hippocampal Episodic Engram Rack!"""
 
     def __init__(self):
         self.cartridges: List[EpisodicCartridge] = []
@@ -223,7 +192,6 @@ class EpisodicRack:
         for c in self.cartridges:
             all_hits.extend(c.query(query_bytes, top_k=top_k))
         all_hits.sort(key=lambda x: x[0], reverse=True)
-        # Deduplicate near-identical recalled episodes by prefix
         out: List[Tuple[float, str, bytes]] = []
         seen_pref = set()
         for sc, cname, ep_b in all_hits:
@@ -237,35 +205,26 @@ class EpisodicRack:
         return out
 
     def extract_high_idf_spans(self, text_bytes: bytes, max_spans: int = 28) -> List[Tuple[bytes, float]]:
-        """Extract distinctive high-IDF 6-byte raw UTF-8 concept spans with ZERO tokenizer and ZERO rules!"""
         if len(text_bytes) < 6 or not self.cartridges:
             return []
-        # Reference largest background cartridge for IDF (so custom rare terms get high rarity score!)
         bg = max(self.cartridges, key=lambda c: c.num_episodes)
         cands: Dict[bytes, float] = {}
         n = len(text_bytes)
         pos = 0
         while pos + 6 <= n:
-            # Start only on UTF-8 character boundaries (pure UTF-8 encoding framing!)
             if (text_bytes[pos] & 0xC0) == 0x80:
                 pos += 1
                 continue
             sp = text_bytes[pos : pos + 6]
-            # Require cleanly decodable multi-byte span (2+ chars, skip pure spaces/newlines)
             try:
                 dec = sp.decode("utf-8")
                 if len(dec.strip()) >= 2 and ("\n" not in dec):
                     idf = bg.span_idf(sp)
-                    # If idf == 0 on background cartridge: either unseen ultra-rare proper noun (like 'アストラ')
-                    # OR filtered stop-phrase! Check a small non-bg cartridge or score cleanly:
                     if idf > 6.5:
                         cands[sp] = max(cands.get(sp, 0.0), idf)
                     elif idf == 0.0:
-                        # ONLY treat as ultra-rare custom entity if it comes from a small custom cartridge (<10k episodes)
-                        # AND is NOT a filtered stop-span in any other large cartridge!
                         in_small = any((c.num_episodes < 10_000 and c.span_idf(sp) > 0.0) for c in self.cartridges)
                         if in_small:
-                            # Make sure it's not a ubiquitous stop-span (check no other big cartridge has low IDF)
                             other_big_low = any((c.num_episodes >= 10_000 and 0.0 < c.span_idf(sp) < 6.0) for c in self.cartridges)
                             if not other_big_low:
                                 cands[sp] = max(cands.get(sp, 0.0), 14.0)
@@ -273,7 +232,6 @@ class EpisodicRack:
                 pass
             pos += 1
         ranked = sorted(cands.items(), key=lambda x: x[1], reverse=True)
-        # Non-overlapping greedy filter so we keep distinct concepts!
         chosen: List[Tuple[bytes, float]] = []
         chosen_strs: List[str] = []
         for sp, sc in ranked:
@@ -287,14 +245,7 @@ class EpisodicRack:
         return chosen
 
 
-# ---- System 7: Active Prefrontal Thought Workspace + ThinkingBrainV21 ----
 class ActiveThoughtWorkspace:
-    """Transient Working-Memory Workspace populated by Hippocampal Episodic Recall!
-    Holds:
-      - Transient high-precision byte-transition tables (k4, k6, k9 -> next_byte) from recalled episodes
-      - Active high-IDF topical 6-byte concept spans (for multi-sentence rollout guidance!)
-      - Active Cortex Thought Anchor Vector z_thought [D=256] (keeps latent state on-topic across sentences!)
-    """
 
     def __init__(self, device: torch.device):
         self.device = device
@@ -329,14 +280,12 @@ class ActiveThoughtWorkspace:
         ep_vecs = []
 
         for rank, (sc, cname, ep_b) in enumerate(recalled):
-            # Relevance weight in [0.35..1.0] (calibrated smoothly so low-relevance recalls stay gentle!)
             rel = min(1.0, sc / max_score_norm) * (0.82 ** rank)
             rel = max(0.25, rel)
             all_topic_bytes.extend(b"\n")
             all_topic_bytes.extend(ep_b)
 
             n = len(ep_b)
-            # Populate transient episodic byte-transition maps (k4, k6, k9 -> next byte!)
             for pos in range(4, n):
                 yb = ep_b[pos]
                 k4 = ep_b[pos - 4 : pos]
@@ -353,15 +302,12 @@ class ActiveThoughtWorkspace:
                 if pos >= 18:
                     self.episode_ngrams18.add(ep_b[pos - 18 : pos])
 
-            # Compute compact Cortex h_dag thought fingerprint for this episode (fast 4-hop pass!)
             ev = self._encode_episode_h(core_brain, ep_b)
             if ev is not None:
                 ep_vecs.append(ev * rel)
 
         self.topic_spans = ep_rack.extract_high_idf_spans(bytes(all_topic_bytes), max_spans=28)
 
-        # Populate selective 3-byte completion primes ONLY for the top-20 high-IDF active entities!
-        # Allows indirect paraphrased prompts to smoothly complete recalled names/dates/terms once started.
         for sp_b, idf_v in self.topic_spans[:20]:
             if len(sp_b) >= 6:
                 ew = min(1.0, idf_v / 10.0) * 0.75
@@ -370,7 +316,6 @@ class ActiveThoughtWorkspace:
                     d3 = self.t3_ent.setdefault(k3, {})
                     d3[sp_b[p_i]] = max(d3.get(sp_b[p_i], 0.0), ew)
 
-        # Anchor z_thought = normalized blend of prompt Cortex h_dag (0.55) + recalled episodes h_dag (0.45)
         p_vec = self._encode_episode_h(core_brain, prompt_bytes)
         if ep_vecs:
             e_mean = torch.stack(ep_vecs).mean(dim=0)
@@ -409,7 +354,6 @@ class ActiveThoughtWorkspace:
     def lookup_boost_vec(
         self, tail_bytes: bytes, scale: float = 1.0, max_boost: float = 2.6, include_entity_k3: bool = False
     ) -> Optional[Dict[int, float]]:
-        """O(1) transient episodic transition boost for current byte tail (last 9 bytes)."""
         if not self.recalled or len(tail_bytes) < 3:
             return None
         acc: Dict[int, float] = {}
@@ -435,14 +379,10 @@ class ActiveThoughtWorkspace:
                     acc[b] = acc.get(b, 0.0) + w
         if not acc:
             return None
-        # Smooth tanh saturation so episodic boosts never explode NLL!
         return {b: math.tanh(w * 0.55) * max_boost * scale for b, w in acc.items()}
 
 
 class ThinkingBrainV21:
-    """Complete NeuroGraph v2.1 Brain:
-    Frozen GPU Core (2.42 GB) + External CPU Byte-Engram Rack (354M slots) +
-    System 7 Hippocampal Episodic Engram Rack (440k+ episodes) & Active Prefrontal Thought Workspace!"""
 
     def __init__(self, brain_v20: DecoupledBrainV20, ep_rack: EpisodicRack):
         self.v20 = brain_v20
@@ -463,8 +403,6 @@ class ThinkingBrainV21:
         ep_scale: float = 0.65,
         entropy_h0: float = 1.0,
     ) -> Dict[str, float]:
-        """Strict zero-leakage passage continuation eval on UNSEEN val passages:
-        Reads first 96 bytes (prompt) -> recalls Top-3 related TRAIN episodes -> evaluates next 240 UNSEEN bytes!"""
         core = self.core
         cfg = core.cfg
         device = self.device
@@ -476,7 +414,6 @@ class ThinkingBrainV21:
         data = torch.from_numpy(data_np.astype(np.int64)).to(device)
         B, T = data.shape
 
-        # 1) Prefetch v2.0 Byte-Engram boosts for all [B, T-1] in ONE single OpenMP pass!
         eng_boost_all = None
         if use_byte_engram and len(self.v20.rack.cartridges) > 0:
             old_mb = self.v20.rack.max_boost
@@ -491,7 +428,6 @@ class ThinkingBrainV21:
             self.v20.rack.max_boost = old_mb
             eng_boost_all = torch.from_numpy(boost_np.reshape(B, T - 1, 256)).permute(1, 0, 2).to(torch.float16).contiguous()
 
-        # 2) Prefetch System 7 Episodic Engram boosts per passage (using ONLY the prompt bytes 0..prompt_bytes_len!)
         ep_boost_all = None
         ep_recall_hits = 0
         ep_step_hits = 0
@@ -514,7 +450,6 @@ class ThinkingBrainV21:
                             ep_buf[t, bi, k_b] = v_w
             ep_boost_all = torch.from_numpy(ep_buf)
 
-        # 3) Stream GPU Core Brain + ByteSTM + Executive + Entropy-Gated Byte-Engram + Entropy-Gated Episodic-Engram!
         H_buf = max(cfg.max_hops + 4, 22)
         byte_hist = torch.full((B, H_buf), -1, dtype=torch.int64, device=device)
         hist_ptr = 0
@@ -651,7 +586,6 @@ class ThinkingBrainV21:
                     stm_boost.index_put_((hb, stm_val[hb, hs]), hw[hb, hs], accumulate=True)
                     logits = logits + stm_boost.clamp(max=cfg.stm_max_boost)
 
-            # Entropy-Gated v2.0 Byte-Engram + System 7 Episodic Engram!
             if (eng_boost_all is not None) or (ep_boost_all is not None and t >= prompt_bytes_len):
                 lp_c = torch.log_softmax(logits, dim=-1)
                 p_c = torch.exp(lp_c)
@@ -667,7 +601,6 @@ class ThinkingBrainV21:
             log_p = torch.log_softmax(logits, dim=-1)
             nll = -log_p[arange_B, y_t]
 
-            # Score ONLY on the unseen continuation portion (t >= prompt_bytes_len)!
             if t >= prompt_bytes_len:
                 total_nll += float(nll.sum().item())
                 top5 = torch.topk(logits, k=5, dim=-1).indices
@@ -715,11 +648,6 @@ class ThinkingBrainV21:
         thought_anchor_beta: float = 0.14,
         allow_high_fidelity_custom: bool = False,
     ) -> Tuple[str, bool, Dict[str, object]]:
-        """Multi-Sentence Generation guided by System 7 Hippocampal Episodic Engram + Active Thought Workspace!
-        - Silently recalls Top-3 resonant episodes from CPU EpisodicRack (<100us)
-        - Anchors Cortex latent state h_act with Active Thought Vector z_thought across sentence boundaries
-        - Primes recalled entity/fact transitions via Entropy-Gated Episodic Cache
-        - Guides K=6 Prefrontal Rollouts to weave active high-IDF topical entities progressively across sentences!"""
         core = self.core
         cfg = core.cfg
         device = self.device
@@ -730,7 +658,6 @@ class ThinkingBrainV21:
         D_ctx = 12
         N_stm = cfg.stm_slots
 
-        # 1) Hippocampal Recall -> Populate Active Prefrontal Thought Workspace!
         ws = ActiveThoughtWorkspace(device)
         t_q0 = time.perf_counter()
         if use_episodic_thought and len(self.ep_rack.cartridges) > 0:
@@ -848,14 +775,12 @@ class ThinkingBrainV21:
             r_sum = torch.einsum("bsd,sdk->bsk", st["slot_state"], core.W_read).sum(dim=1)[0]
             m_sum = torch.einsum("bsd,sdk->bsk", st["slot_state"], core.W_mod).sum(dim=1)[0]
 
-            # System 7: Direct Latent Thought-Anchor Modulation inside Cortex h_act!
             h_core_pre = h_dag * (1.0 + 0.35 * torch.tanh(m_sum)) + r_sum
             if use_episodic_thought and ws.z_thought is not None:
                 h_core_pre = h_core_pre + ws.z_thought * (thought_anchor_beta * h_dag.norm().clamp(min=1.0))
             h_act = torch.tanh(h_core_pre * 0.35) * 2.85
             logits = h_act @ core.E.T + core.bias + logits_s
 
-            # Executive Critic
             st["exec_vec"].mul_(cfg.mode_ema_decay).add_(h_dag.unsqueeze(0), alpha=1.0 - cfg.mode_ema_decay)
             if core.mode_ready:
                 ev_n = st["exec_vec"] / st["exec_vec"].norm(dim=1, keepdim=True).clamp(min=1e-6)
@@ -863,7 +788,6 @@ class ThinkingBrainV21:
                 mp = (0.60 * locked_mode_p + 0.40 * cur_mp) if locked_mode_p is not None else cur_mp
                 logits = logits + (mp @ core.mode_llr)[0] * (cfg.mode_llr_scale * 1.15)
 
-            # ByteSTM
             k4, k7 = core._compute_stm_keys(st["byte_hist"], cur_idx, H_buf)
             st["stm_str"].mul_(cfg.stm_decay)
             if step_i >= 4:
@@ -876,7 +800,6 @@ class ThinkingBrainV21:
                     boost.index_add_(0, st["stm_val"][0, idx_h], hw[idx_h])
                     logits = logits + boost.clamp(max=cfg.stm_max_boost)
 
-            # Entropy-Gated v2.0 Byte-Engram + System 7 Episodic Thought Cache!
             if (not is_prompt) and (len(self.v20.rack.cartridges) > 0 or (use_episodic_thought and ws.recalled)):
                 lp_c = torch.log_softmax(logits, dim=-1)
                 p_c = torch.exp(lp_c)
@@ -897,7 +820,6 @@ class ThinkingBrainV21:
                         include_entity_k3=True,
                     )
                     if ep_bv:
-                        # On exact custom facts (high relevance), open wider even at medium entropy!
                         ep_g = max(ent_g, 0.70 if allow_high_fidelity_custom else 0.45)
                         for kb, vw in ep_bv.items():
                             logits[kb] = logits[kb] + vw * ep_g
@@ -915,10 +837,8 @@ class ThinkingBrainV21:
             st["step_i"] = step_i + 1
             return logits, h_dag
 
-        # 2) Prime on prompt (and silently prime ByteSTM with top-1 recalled episode's key 7B/4B facts!)
         st = init_state()
         if use_episodic_thought and ws.recalled:
-            # Silent hippocampal replay into ByteSTM (top-1 recalled episode -> primes 1-shot proper nouns!)
             top_ep_b = ws.recalled[0][2][:180]
             tmp_hist = torch.full((1, H_buf), -1, dtype=torch.int64, device=device)
             tmp_ptr = 0
@@ -950,12 +870,10 @@ class ThinkingBrainV21:
             if core.mode_ready else None
         )
 
-        # 3) Multi-Sentence Prefrontal Rollout Guided by Active Thought Workspace!
         out_bytes = list(raw_in)
         gen_only: List[int] = []
         recent_ngrams: set = set()
         used_topic_spans: set = set()
-        # Mark spans already present in the prompt so we reward introducing NEW recalled facts/entities!
         for sp_b, _ in ws.topic_spans:
             if sp_b in prompt_b:
                 used_topic_spans.add(sp_b)
@@ -1009,11 +927,9 @@ class ThinkingBrainV21:
                 anchor_vec = ws.z_thought if (use_episodic_thought and ws.z_thought is not None) else prompt_mode_vec
                 thought_sim = float((c_mean_n @ anchor_vec).item())
 
-                # Progressive Active Concept Coverage Bonus (rewards introducing NEW recalled topic entities!)
                 ent_bonus = 0.0
                 c_new_ents: List[bytes] = []
                 if use_episodic_thought and ws.topic_spans:
-                    # Also check boundary overlap with last 5 bytes of out_bytes
                     window_c = bytes(out_bytes[-5:]) + raw_c
                     for sp_b, idf_v in ws.topic_spans:
                         if sp_b in window_c:
@@ -1021,9 +937,8 @@ class ThinkingBrainV21:
                                 ent_bonus += 0.55 * min(idf_v / 8.0, 1.5)
                                 c_new_ents.append(sp_b)
                             else:
-                                ent_bonus += 0.12  # gentle reward for staying on-topic
+                                ent_bonus += 0.12
 
-                # Gentle anti-verbatim-copy guard (keeps synthesis original except on high-fidelity custom recall)
                 copy_pen = 0.0
                 if (not allow_high_fidelity_custom) and ws.episode_ngrams18 and len(raw_c) >= 18:
                     for pi in range(0, len(raw_c) - 17, 6):
@@ -1059,7 +974,6 @@ class ThinkingBrainV21:
             except UnicodeDecodeError:
                 continue
 
-        # Count total distinct active topic entities appearing anywhere in the generated continuation!
         gen_topic_hits = [
             sp_b.decode("utf-8", errors="ignore")
             for sp_b, _ in ws.topic_spans

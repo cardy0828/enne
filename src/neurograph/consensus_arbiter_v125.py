@@ -1,4 +1,4 @@
-"""CPU 上でオンライン成長する局所閉形式の合議ノード。"""
+"""CPU 上で成長する局所閉形式の仲裁ノード（v12.5）。"""
 import math
 import pickle
 import re
@@ -214,4 +214,3 @@ def attribute_gap(gate,brain,prompt,ents,leads,custom):
     if len(ents)==2 and all(e not in prompt for e in ents) and all(any(e.encode() in b for b in leads) for e in ents):
         return None
     return gate.detect_attribute_gap(brain,prompt,ents,[],ents,leads,custom)
-

@@ -1,17 +1,4 @@
-"""NeuroGraph v6.0: Emergent Role-Bound Hebbian Thought Cortex (Zero Backprop, Zero Attention, Zero Hardcoded Rules!)
-
-Solves the fundamental structural bottleneck diagnosed in v5.2:
-  - Bag-of-topics cosine (`cos(e, h_root)`) cannot distinguish WHO is Subject vs Object/Modifier/Predicate
-    (e.g., '東海道新幹線は東京駅と…' vs '東京駅は東海道新幹線が…', or 'ドイツの自動車産業' vs 'ドイツの歴史',
-     or '警察が犯人を' vs '犯人が警察を').
-  - NeuroGraph v6.0 discovers R=64 Emergent Structural Role-Markers purely from corpus IDF statistics
-    (`cg < 0.35`, zero language rules!), assigns each emergent role an exact orthogonal HRR binding
-    isometry `Pi_r(e)` (circular shift + bipolar Rademacher flip, O(D) ops, zero parameters), and learns
-    a Closed-Form Hebbian Role-to-Predicate Ridge Operator `W_joint: [h_topic, h_role_fast, h_role_slow] -> e_next`
-    (768 -> 256, 32k-chunked < 100 MB temp VRAM, ZERO backprop!) plus a Discrete Role-Conditioned
-    (Subject, Role) -> Predicate sparse associative memory!
-
-100% Zero Backprop, Zero Attention, Zero Pre-trained Tokenizer, Zero <UNK>, Zero Hardcoded Language Rules."""
+"""HRR 束縛による文中の役割表現（v6.0）。"""
 
 from __future__ import annotations
 
@@ -27,7 +14,6 @@ from neurograph.thought_cortex_v50 import ContinuousThoughtCortexV50, Hierarchic
 
 
 class RoleBoundThoughtCortexV60:
-    """Emergent Role-Bound Hebbian Thought Cortex built directly on top of ContinuousThoughtCortexV50."""
 
     def __init__(
         self,
@@ -41,9 +27,6 @@ class RoleBoundThoughtCortexV60:
         self.num_roles = num_roles
         self.seed = seed
 
-        # 1) Rule-free Emergent Structural Role Discovery (STRICTLY DISJOINT from Content set!):
-        # Role markers: IDF < tau_idf - 0.50 (strictly below content boundary tau_idf -> Role ∩ Content = ∅!).
-        # Content motors: IDF >= tau_idf (cg >= 0.50) AND mid_to_role[mid] < 0!
         grown_ids = np.arange(256, self.V_m, dtype=np.int32)
         grown_idfs = mc.motor_idfs[256:]
         low_mask = (grown_idfs > 0.1) & (grown_idfs < (mc.tau_idf - 0.50))
@@ -53,53 +36,35 @@ class RoleBoundThoughtCortexV60:
         self.role_motor_ids: np.ndarray = cand_ids[order].astype(np.int32)
         self.R = int(len(self.role_motor_ids))
 
-        # Lookup table: motor_id -> role_idx in [0..R-1] (or -1 if not a structural role marker)
         self.mid_to_role: np.ndarray = np.full(self.V_m, -1, dtype=np.int32)
         for ri, mid in enumerate(self.role_motor_ids.tolist()):
             self.mid_to_role[mid] = ri
-        self.content_cg_thresh: float = 0.50  # Strictly disjoint: IDF >= tau_idf!
+        self.content_cg_thresh: float = 0.50
 
-        # 2) Deterministic Orthogonal HRR Binding Isometries Pi_r (circular shift + bipolar Rademacher flip!)
-        # Role indices 0..R-1 = RIGHT-adjacent structural marker (e.g., X + 'は', X + 'を', X + 'の')
-        # Role indices R..2R-1 = LEFT-adjacent structural marker (e.g., 'の' + X, 'in' + X, 'by' + X)
-        # Role index 2R = Bare/Unmarked content fallback
         self.total_ops = 2 * self.R + 1
         rng = np.random.default_rng(seed)
         self.shifts = np.array([(i * 19 + 7) % self.D_m for i in range(self.total_ops)], dtype=np.int32)
         self.signs = rng.choice(np.array([-1.0, 1.0], dtype=np.float32), size=(self.total_ops, self.D_m))
         self.signs = np.ascontiguousarray(self.signs, dtype=np.float32)
 
-        # Learned Closed-Form Hebbian Predictors (ZERO Backprop!)
-        # W_joint: [D_m, 3*D_m] maps [h_topic, h_role_fast, h_role_slow] -> predicted next content embedding
-        # W_role_only: [D_m, 2*D_m] maps [h_role_fast, h_role_slow] -> predicted next content embedding (for ablation!)
-        # W_topic_only: [D_m, D_m] maps [h_topic] -> predicted next content embedding (fair matched baseline!)
         self.W_joint: Optional[np.ndarray] = None
         self.W_role_only: Optional[np.ndarray] = None
         self.W_topic_only: Optional[np.ndarray] = None
 
-        # Discrete Role-Conditioned (subject_mid, role_op) -> {pred_mid: weight} sparse memory (bounded!)
         self.role_pred_table: Dict[Tuple[int, int], Dict[int, float]] = {}
 
-        # Precompute content gate vector for fast indexing
         idfs = mc.motor_idfs.astype(np.float32)
         z = np.clip((idfs - mc.tau_idf) * 2.2, -12.0, 12.0)
         self.cg_vec = (1.0 / (1.0 + np.exp(-z))).astype(np.float32)
         self.cg_vec[:256] = 0.0
 
     def bind_vec(self, e: np.ndarray, op_idx: int) -> np.ndarray:
-        """Exact orthogonal O(D) HRR Role-Binding Isometry Pi_r(e) = sign[r] * roll(e, shift[r])."""
         sh = int(self.shifts[op_idx])
         if sh == 0:
             return e * self.signs[op_idx]
         return np.roll(e, sh) * self.signs[op_idx]
 
     def extract_role_events(self, motor_seq: np.ndarray) -> List[Tuple[int, int, int, float]]:
-        """Extract strictly causal role-bound events `(pos_idx, content_mid, op_idx, cg)` from a motor sequence.
-        Rule-free: binds each content motor `c` (`cg > 0.30`) to its immediately adjacent emergent structural marker:
-          - Right-adjacent marker `r_right` (`motor_seq[i+1]` if `i+1 < len`) -> `op = r_right` (e.g. X+'は', X+'を', X+'の')
-          - Else left-adjacent marker `r_left` (`motor_seq[i-1]` if `i-1 >= 0`) -> `op = R + r_left` (e.g. 'of'+X, 'in'+X)
-          - Else bare unmarked fallback -> `op = 2*R`.
-        Note: for strict causality at position `t`, `motor_seq` MUST contain ONLY observed tokens `<= t`!"""
         L = len(motor_seq)
         events: List[Tuple[int, int, int, float]] = []
         R = self.R
@@ -130,7 +95,6 @@ class RoleBoundThoughtCortexV60:
         self,
         motor_seq: np.ndarray,
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """Compute strictly causal `(h_topic, h_role_fast, h_role_slow)` from observed `motor_seq` ONLY!"""
         D = self.D_m
         h_topic = np.zeros(D, dtype=np.float32)
         h_rf = np.zeros(D, dtype=np.float32)
@@ -145,7 +109,6 @@ class RoleBoundThoughtCortexV60:
             if float(np.dot(e, e)) < 0.1:
                 continue
             b = self.bind_vec(e, op)
-            # Multi-timescale leaky integration (fast clause role, slow sentence role, long topic!)
             at = 0.12 * cg
             af = 0.45 * cg
             as_ = 0.20 * cg
@@ -168,22 +131,18 @@ class RoleBoundThoughtCortexV60:
         chunk_sz: int = 32_768,
         build_discrete_table: bool = True,
     ) -> Dict[str, float]:
-        """Train ZERO-BACKPROP Closed-Form Hebbian Role-to-Predicate Operators on GPU (32k-chunked, < 100 MB VRAM!)
-        + Bounded Discrete Role-Conditioned (Subject, Role) -> Predicate Associative Memory!"""
         t0 = time.time()
         D = self.D_m
         R = self.R
-        E_gpu = torch.from_numpy(self.mc.emb_np).to(device)  # [V_m, D] (~25 MB)
-        signs_gpu = torch.from_numpy(self.signs).to(device)  # [2R+1, D]
+        E_gpu = torch.from_numpy(self.mc.emb_np).to(device)
+        signs_gpu = torch.from_numpy(self.signs).to(device)
         shifts_np = self.shifts
         m2r = self.mid_to_role
         cg_v = self.cg_vec
 
-        # Running Hebbian covariance matrices for 768-dim joint state X = [h_topic, h_role_fast, h_role_slow]
-        C_xx = torch.zeros((3 * D, 3 * D), device=device, dtype=torch.float32)  # 2.3 MB
-        C_xy = torch.zeros((3 * D, D), device=device, dtype=torch.float32)      # 0.75 MB
+        C_xx = torch.zeros((3 * D, 3 * D), device=device, dtype=torch.float32)
+        C_xy = torch.zeros((3 * D, D), device=device, dtype=torch.float32)
 
-        # Causal 1D EMA convolution kernels (window K=24 content events)
         K = 24
         d_idx = torch.arange(K, device=device, dtype=torch.float32)
         def _mk_ker(alpha: float) -> torch.Tensor:
@@ -194,10 +153,9 @@ class RoleBoundThoughtCortexV60:
         ker_rf = _mk_ker(0.45)
         ker_rs = _mk_ker(0.20)
 
-        # Precompute index table for fast batched GPU circular shifts [total_ops, D]
         col_base = torch.arange(D, device=device, dtype=torch.int64).unsqueeze(0)
         sh_t = torch.from_numpy(shifts_np.astype(np.int64)).to(device).unsqueeze(1)
-        gather_idx = (col_base - sh_t) % D  # [total_ops, D]: gather(e, gather_idx[op]) == roll(e, shift[op])!
+        gather_idx = (col_base - sh_t) % D
 
         total_events = 0
         disc_counts: Dict[Tuple[int, int], Dict[int, float]] = {}
@@ -208,7 +166,6 @@ class RoleBoundThoughtCortexV60:
             if L < 64:
                 continue
 
-            # Vectorized NumPy extraction of STRICTLY DISJOINT content motors + adjacent emergent role markers!
             valid_c = (sub >= 256) & (sub < self.V_m)
             sub_cl = np.clip(sub, 0, self.V_m - 1)
             cgs = np.where(valid_c & (m2r[sub_cl] < 0), cg_v[sub_cl], 0.0)
@@ -219,21 +176,17 @@ class RoleBoundThoughtCortexV60:
             c_mids = sub[pos].astype(np.int64)
             ops = np.full(len(pos), 2 * R, dtype=np.int64)
 
-            # Right-adjacent structural marker (pos + 1)
             has_r = (pos + 1) < L
             r_ids = np.where(has_r, sub[np.minimum(pos + 1, L - 1)], 0)
             r_role = np.where(has_r & (r_ids >= 0) & (r_ids < self.V_m), m2r[np.clip(r_ids, 0, self.V_m - 1)], -1)
             ops = np.where(r_role >= 0, r_role, ops)
 
-            # Left-adjacent structural marker (pos - 1) if no right marker
             need_l = (ops == 2 * R) & (pos > 0)
             l_ids = np.where(need_l, sub[np.maximum(pos - 1, 0)], 0)
             l_role = np.where(need_l & (l_ids >= 0) & (l_ids < self.V_m), m2r[np.clip(l_ids, 0, self.V_m - 1)], -1)
             ops = np.where(l_role >= 0, R + l_role, ops)
 
-            # Optional discrete Role-Conditioned (subj, role) -> forward predicate counts (short horizon <= 8 content steps!)
             if build_discrete_table:
-                # Stride 2 over content events so build is ultra-fast (~2s) & memory-bounded!
                 M_ev = len(c_mids)
                 for ei in range(0, M_ev - 1, 2):
                     op_i = int(ops[ei])
@@ -254,11 +207,9 @@ class RoleBoundThoughtCortexV60:
                             continue
                         mp[p_mid] = mp.get(p_mid, 0.0) + (1.0 / (1.0 + 0.35 * (ej - ei)))
                     if len(mp) > 96:
-                        # Keep top-48 predicates per (subject, role) to strictly cap RAM!
                         top_k = sorted(mp.items(), key=lambda x: x[1], reverse=True)[:48]
                         disc_counts[key] = dict(top_k)
 
-            # Strictly 32k-chunked GPU Hebbian covariance accumulation (< 100 MB temp VRAM!)
             M_ev = len(c_mids)
             for c0 in range(0, M_ev, chunk_sz):
                 c1 = min(M_ev, c0 + chunk_sz)
@@ -267,15 +218,13 @@ class RoleBoundThoughtCortexV60:
                 cm_t = torch.from_numpy(c_mids[c0:c1]).to(device)
                 op_t = torch.from_numpy(ops[c0:c1]).to(device)
 
-                e_seq = E_gpu[cm_t]  # [M_c, D]
-                # Exact batched orthogonal HRR role binding Pi_{op}(e) on GPU!
-                idx_g = gather_idx[op_t]  # [M_c, D]
-                b_seq = torch.gather(e_seq, 1, idx_g) * signs_gpu[op_t]  # [M_c, D]
+                e_seq = E_gpu[cm_t]
+                idx_g = gather_idx[op_t]
+                b_seq = torch.gather(e_seq, 1, idx_g) * signs_gpu[op_t]
 
-                # Strictly causal EMA states from events [0..t-1] predicting event [t]!
-                e_in = e_seq[:-1].T.unsqueeze(1)  # [D, 1, M_c - 1]
+                e_in = e_seq[:-1].T.unsqueeze(1)
                 b_in = b_seq[:-1].T.unsqueeze(1)
-                ht = torch.nn.functional.conv1d(e_in, ker_t).squeeze(1).T   # [M_c - K, D]
+                ht = torch.nn.functional.conv1d(e_in, ker_t).squeeze(1).T
                 hrf = torch.nn.functional.conv1d(b_in, ker_rf).squeeze(1).T
                 hrs = torch.nn.functional.conv1d(b_in, ker_rs).squeeze(1).T
 
@@ -283,44 +232,38 @@ class RoleBoundThoughtCortexV60:
                 hrf = hrf / hrf.norm(dim=-1, keepdim=True).clamp(min=1e-6)
                 hrs = hrs / hrs.norm(dim=-1, keepdim=True).clamp(min=1e-6)
 
-                X = torch.cat([ht, hrf, hrs], dim=-1)  # [M_c - K, 3D]
-                Y = e_seq[K:]                           # [M_c - K, D]
+                X = torch.cat([ht, hrf, hrs], dim=-1)
+                Y = e_seq[K:]
 
-                # Weight by target norm > 0.1 so zero-embedded nodes don't pollute regression
                 C_xx += X.T @ X
                 C_xy += X.T @ Y
                 total_events += int(X.shape[0])
 
                 del cm_t, op_t, e_seq, idx_g, b_seq, e_in, b_in, ht, hrf, hrs, X, Y
 
-        # Solve 3 closed-form Hebbian ridge models directly from blocks of (C_xx, C_xy)!
         eye3 = torch.eye(3 * D, device=device)
         lam3 = 0.18 * (torch.trace(C_xx) / (3 * D)).clamp(min=1.0)
-        W_j = torch.linalg.solve(C_xx + lam3 * eye3, C_xy)  # [3D, D]
-        self.W_joint = np.ascontiguousarray(W_j.T.cpu().numpy(), dtype=np.float32)  # [D, 3D]
+        W_j = torch.linalg.solve(C_xx + lam3 * eye3, C_xy)
+        self.W_joint = np.ascontiguousarray(W_j.T.cpu().numpy(), dtype=np.float32)
 
-        # Ablation 1: Pure Topic-only baseline (first D dims)
         C_tt = C_xx[:D, :D]
         C_ty = C_xy[:D, :]
         lam1 = 0.18 * (torch.trace(C_tt) / D).clamp(min=1.0)
         W_t = torch.linalg.solve(C_tt + lam1 * torch.eye(D, device=device), C_ty)
         self.W_topic_only = np.ascontiguousarray(W_t.T.cpu().numpy(), dtype=np.float32)
 
-        # Ablation 2: Pure Role-Bound only (last 2D dims)
         C_rr = C_xx[D:, D:]
         C_ry = C_xy[D:, :]
         lam2 = 0.18 * (torch.trace(C_rr) / (2 * D)).clamp(min=1.0)
         W_r = torch.linalg.solve(C_rr + lam2 * torch.eye(2 * D, device=device), C_ry)
         self.W_role_only = np.ascontiguousarray(W_r.T.cpu().numpy(), dtype=np.float32)
 
-        # Finalize discrete role-predicate table (normalize weights per (subj, role))
         self.role_pred_table = {}
         for k, mp in disc_counts.items():
             if not mp:
                 continue
             top_items = sorted(mp.items(), key=lambda x: x[1], reverse=True)[:32]
             mx = max(top_items[0][1], 1e-5)
-            # Keep only meaningful associations (count >= 1.5)
             filt = {m: round(w / mx, 4) for m, w in top_items if w >= 1.5}
             if filt:
                 self.role_pred_table[k] = filt
@@ -336,7 +279,6 @@ class RoleBoundThoughtCortexV60:
         }
 
     def save(self, path: str) -> float:
-        """Persist HRR 768d Role Cortex (~2-5 MB) so future runs mount in ~0.03s instead of retraining 32s!"""
         import pickle
         t0 = time.perf_counter()
         p = Path(path)
@@ -381,8 +323,6 @@ class RoleBoundThoughtCortexV60:
         motor_seq: np.ndarray,
         mode: str = "joint",
     ) -> np.ndarray:
-        """Predict next content concept vector in 256-dim space from strictly causal `motor_seq`!
-        mode: 'unbound_topic' | 'topic_ridge' | 'role_only' | 'joint'"""
         ht, hrf, hrs = self.compute_states_causal(motor_seq)
         if mode == "unbound_topic":
             out = ht
@@ -403,16 +343,13 @@ class RoleBoundThoughtCortexV60:
         candidate_phrase: str,
         mode: str = "joint",
     ) -> float:
-        """Score how well a candidate predicate/continuation fits the Role-Bound Thought State of `prompt`!"""
         p_ids = self.mc.encode(np.frombuffer(prompt.encode("utf-8"), dtype=np.uint8))
         c_ids = self.mc.encode(np.frombuffer(candidate_phrase.encode("utf-8"), dtype=np.uint8))
         pred_v = self.predict_next_concept_vec(p_ids, mode=mode)
 
-        # Discrete role-bound predicate affinity boost (when mode in ('role_only', 'joint'))
         disc_bonus = 0.0
         if mode in ("role_only", "joint") and self.role_pred_table:
             p_ev = self.extract_role_events(p_ids)
-            # Weight prompt's role-bound subjects (earlier primary subject + recent clause role)
             for idx_e, (_, smid, op, cg) in enumerate(p_ev[-6:]):
                 mp = self.role_pred_table.get((smid, op))
                 if not mp:
@@ -445,10 +382,6 @@ class RoleBoundThoughtCortexV60:
         inhib_thresh: float = 0.22,
         rhythm_penalty: float = 0.55,
     ) -> Tuple[str, bool, Dict]:
-        """Strict Single-Factor A/B Generator comparing:
-          - `use_role_binding=False`: v5.2 Unbound 256d Thought-Field (`h_root` + `W_pred`)
-          - `use_role_binding=True`:  v6.0 Role-Bound 768d->256d Thought-Field (`Pi_r` + `W_joint` + Discrete Role Table)!
-        Keeps L1 UTF-8 Syntax Escape Hatch, single-application inhibition, identical hyperparameters, zero language rules!"""
         if not use_role_binding:
             return brain.generate_motor_beam_v50(
                 prompt,
@@ -475,7 +408,6 @@ class RoleBoundThoughtCortexV60:
         p_motors = mc.encode(np.frombuffer(prompt_b, dtype=np.uint8))
         prompt_m = p_motors.tolist()
 
-        # Prefrontal Role-Bound Prompt Anchors!
         root_t_ids, root_t_w = mc.extract_active_topics(p_motors, max_topics=6, min_idf=5.8, use_resonance=True)
         h_root = mc.compute_root_thought_vec(p_motors)
         p_ht, p_hrf, p_hrs = self.compute_states_causal(p_motors)
@@ -490,7 +422,6 @@ class RoleBoundThoughtCortexV60:
         root_conf = min(1.0, root_mass / 1.6)
         has_role_vec = bool(float(np.linalg.norm(p_pred_role)) > 0.1 and root_conf > 0.25)
 
-        # Prefill Layer-1 GPU Core
         st1 = runner.init_batch_state(1)
         prompt_hs = []
         raw_in = list(prompt_b)
@@ -532,7 +463,6 @@ class RoleBoundThoughtCortexV60:
 
             for wi, bm in enumerate(beams):
                 m_arr = np.array(bm["motor_seq"][-32:], dtype=np.int32)
-                # Dynamic Role-Bound Predictive Vector (anchored 55% to prompt's Role-Bound Intention + 45% live Role State!)
                 cur_pred = self.predict_next_concept_vec(m_arr, mode="joint")
                 target_role_vec = 0.55 * p_pred_role + 0.45 * cur_pred
                 tn = float(np.linalg.norm(target_role_vec))
@@ -574,10 +504,8 @@ class RoleBoundThoughtCortexV60:
                     if has_role_vec and mid_v >= 256 and cg > 0.15:
                         em = mc.emb_np[mid_v]
                         if float(np.dot(em, em)) > 0.1:
-                            # ROLE-BOUND ALIGNMENT: predicts WHAT PREDICATE FITS THE SUBJECT'S ROLE!
                             cos_role = float(np.dot(em, target_role_vec))
                             cos_root = float(np.dot(em, h_root))
-                            # Discrete Role-Conditioned (Subject, Role) -> Predicate affinity!
                             disc_r = 0.0
                             for _, smid, op, scg in p_role_events[-6:]:
                                 mp = self.role_pred_table.get((smid, op))
@@ -609,7 +537,6 @@ class RoleBoundThoughtCortexV60:
                     if taken >= top_k_motor:
                         break
 
-                # Always-on L1 UTF-8 Syntax Escape Hatch (Top-4)
                 lrow = logits_beams[wi].clone()
                 lrow[~runner.lead_mask] = -1e9
                 lrow[0] = -1e9; lrow[10] = -1e9; lrow[13] = -1e9

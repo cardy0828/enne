@@ -1,4 +1,4 @@
-"""経験を追記し、固定ゲートを通った CPU スナップショットだけを公開する。"""
+"""経験を記録し、固定ゲートを通った CPU スナップショットだけを新しい世代として公開する（v14.0）。"""
 import contextlib
 import copy
 import hashlib
@@ -59,7 +59,6 @@ def sealed(folder, gen, parent, offset, probes=()):
 
 class SleepConsolidatorV140:
     def __init__(self, root=None):
-        """NEUROGRAPH_EVOLUTION_DIR で独立した実験場所を指定できる。"""
         self.root = Path(root or os.environ.get("NEUROGRAPH_EVOLUTION_DIR", "evolution_v140"))
         self.gens = self.root/"generations"
         self.gens.mkdir(parents=True, exist_ok=True)
@@ -285,4 +284,3 @@ class SleepConsolidatorV140:
         for name, nodes in zip(FILES[1:],(axis,social)):
             atomic(folder/name,pickle.dumps(nodes))
         return probes, dict(before=before,born=born,pruned=pruned,alive=len(axis)+len(social))
-

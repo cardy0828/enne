@@ -11,8 +11,9 @@
 - 実験機のデータパス（コーパス・対話データ）の直書きを、`settings.py` の環境変数に置き換えた
 - GPU の UUID の直書きを削除した。研究時と同じ検査が必要な場合は `ENNE_GPU_UUID` と `ENNE_STRICT_DEVICE=1` を指定する
 - 改行コードを LF にそろえた
+- コメントと docstring を整理した。各ファイル冒頭の説明を書き直し、事実だけを書いた日本語の説明は残して、開発中に書かれた英語の説明や誇張した表現（「Zero Hardcoded Rules!」など）は削除した。ログ出力の誇張表現も直した。整理の前後で、docstring を除いた構文木が一致することを確認している
 
-docstring やコメントには開発中の書き方（「Zero Hardcoded Rules!」など）が残っています。実際には閾値や混合係数などの設計値を含みます。方式の説明は [architecture.md](architecture.md) を優先してください。
+コードには閾値や混合係数などの設計値が含まれます。方式の説明は [architecture.md](architecture.md) を参照してください。
 
 ## 動作環境
 
@@ -90,3 +91,11 @@ python -m neurograph.run_v111_merge_polish       # 統合後の読み出し調�
 | 教示・睡眠・世代管理 | `evolution_v140.py`、`gate_v140.py`、`curiosity_v140.py`、`evolve_v140.py` |
 | メタ認知 | `metacog_v152.py`、`train_v152_metacog.py`、`run_v152_metacog_eval.py` |
 | 対話端末・設定 | `chat_cli.py`、`settings.py` |
+
+## 更新するとき
+
+ソースを更新するときは、`pyproject.toml` の version、README、docs、結果JSONを同時に更新します。公開前に次の検査を通します。版のずれと、実験機のパス・GPU の UUID などの残りを調べます。
+
+```sh
+python -X utf8 scripts/check_release.py
+```

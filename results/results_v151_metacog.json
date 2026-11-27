@@ -1,0 +1,6384 @@
+{
+ "calibration_resources": {
+  "calls": 98,
+  "cuda_extra_bytes": 0,
+  "rss_kib": 15724384,
+  "peak_cuda_bytes": 7678924800
+ },
+ "targeted": {
+  "OFF": [
+   {
+    "q": "1964年に開業した東海道新幹線は、どの駅からどの駅までを結ぶ路線ですか？",
+    "answer": "1964年12月9日02時49分ごろ、伊豆大島の西方約10kmを震央とするMj5.8、震源の深さ3kmの地震が発生し、東京都大島町で最大震度の4を観測した。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_SINGLE",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "1964年"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [
+     "東京駅",
+     "新大阪駅"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 3.0597896309336647,
+    "strict_correct": false
+   },
+   {
+    "q": "名古屋城で来月最初の日曜日に訪れる人の正確な人数は？",
+    "answer": "訪れる人については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "名古屋城",
+      "日曜日",
+      "訪れる人"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.5480460670078173,
+    "strict_correct": true
+   },
+   {
+    "q": "琵琶湖から自然に流れ出す川の名前を教えて。",
+    "answer": "情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [
+     "瀬田川"
+    ],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.3682005290174857,
+    "strict_correct": false
+   },
+   {
+    "q": "動物のヤマネコとリンクスについて、どんな仲間なのか知りたいです。",
+    "answer": "リンクスは、フォードが製造、マーキュリーブランドで販売していた普通乗用車である。ヤマネコは、ネコ目（食肉目）ネコ科に属す小型動物を指す便宜的な呼称である。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "ヤマネコ",
+      "リンクス"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia",
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 1,
+    "gold": [
+     "ネコ科"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 2.40368191502057,
+    "strict_correct": false
+   },
+   {
+    "q": "昨日5キロメートル走り、今日も7キロメートル走りました。合計で何キロメートル走りましたか？",
+    "answer": "12キロメートルです。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "TOOL_CALL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "今日"
+     ],
+     "agenda_sources": [
+      "tool:calc"
+     ],
+     "stopped_eot": true,
+     "tool": "calc",
+     "tool_ok": true,
+     "metacog": {
+      "final_mode": "TOOL_CALL",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 1,
+    "gold": [
+     "12キロメートル"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 0.4411127669736743,
+    "strict_correct": true
+   }
+  ],
+  "ON": [
+   {
+    "q": "1964年に開業した東海道新幹線は、どの駅からどの駅までを結ぶ路線ですか？",
+    "answer": "東海道新幹線は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "GROUNDED",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "東海道新幹線"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.633093,
+      "confidence_band": "MEDIUM",
+      "audit_flags": [
+       "subject_mismatch",
+       "unanswered_query"
+      ],
+      "actions_taken": [
+       "REFOCUS",
+       "PASS"
+      ]
+     }
+    },
+    "hits": 2,
+    "gold": [
+     "東京駅",
+     "新大阪駅"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 1.979255520971492,
+    "strict_correct": true
+   },
+   {
+    "q": "名古屋城で来月最初の日曜日に訪れる人の正確な人数は？",
+    "answer": "訪れる人については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "名古屋城",
+      "日曜日",
+      "訪れる人"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.147434,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.5294198390329257,
+    "strict_correct": true
+   },
+   {
+    "q": "琵琶湖から自然に流れ出す川の名前を教えて。",
+    "answer": "情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.293711,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [
+     "瀬田川"
+    ],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.37186422606464475,
+    "strict_correct": false
+   },
+   {
+    "q": "動物のヤマネコとリンクスについて、どんな仲間なのか知りたいです。",
+    "answer": "ヤマネコについては情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "ABSTAIN",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "ヤマネコ",
+      "リンクス"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.169185,
+      "confidence_band": "LOW",
+      "audit_flags": [
+       "unanswered_query"
+      ],
+      "actions_taken": [
+       "DEMOTE_ABSTAIN"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [
+     "ネコ科"
+    ],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.5959940139437094,
+    "strict_correct": false
+   },
+   {
+    "q": "昨日5キロメートル走り、今日も7キロメートル走りました。合計で何キロメートル走りましたか？",
+    "answer": "12キロメートルです。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "TOOL_CALL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "今日"
+     ],
+     "agenda_sources": [
+      "tool:calc"
+     ],
+     "stopped_eot": true,
+     "tool": "calc",
+     "tool_ok": true,
+     "metacog": {
+      "final_mode": "TOOL_CALL",
+      "final_confidence": 0.672317,
+      "confidence_band": "MEDIUM",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 1,
+    "gold": [
+     "12キロメートル"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 0.4405080499127507,
+    "strict_correct": true
+   }
+  ]
+ },
+ "retrospective": {
+  "OFF": [
+   {
+    "q": "1988年に開通した青函トンネルは、どの海峡の下を通っていますか？",
+    "answer": "『日本沈没』、『八甲田山』、『動乱』の森谷司郎監督が、青函連絡船洞爺丸事故から約30年にわたり青函トンネルの工事に執念を燃やす国鉄技師らの物語を描いた映画である。これをまともにくらい、気絶した彼女が次に目を覚ました場所は南米ベネズエラ。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "TOOL_CALL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "海峡",
+      "1988年"
+     ],
+     "agenda_sources": [
+      "tool:deep_wiki"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "TOOL_CALL",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "津軽海峡の下を通ると答える。",
+    "exact_abstention": false,
+    "seconds": 2.1315865160431713,
+    "strict_correct": false
+   },
+   {
+    "q": "1889年にパリで完成したエッフェル塔は、何の催しに合わせて建てられましたか？",
+    "answer": "1889年のパリについては情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_SINGLE",
+     "epistemic_abstain": true,
+     "abstain_reason": "attribute_missing:パリ",
+     "entities": [
+      "1889年"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "パリ万国博覧会または同義の博覧会を明示する。",
+    "exact_abstention": true,
+    "seconds": 0.6049134889617562,
+    "strict_correct": false
+   },
+   {
+    "q": "姫路城と明石城の入場者を合わせると、再来月の初日に正確に何人になりますか？",
+    "answer": "姫路城は、兵庫県姫路市にある日本の城。明石城は日本の城。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "明石城",
+      "姫路城"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia",
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "正確な人数は不明として棄権する。無関係な定義を併記しない。",
+    "exact_abstention": false,
+    "seconds": 1.752225051051937,
+    "strict_correct": false
+   },
+   {
+    "q": "今この瞬間、金閣寺と銀閣寺の入口で順番を待っている人は合わせて何人ですか？",
+    "answer": "三島は同年11月に京都に赴いたが、金閣寺（鹿苑寺）の直接取材や面談は断られたため、同じ臨済宗異派の妙心寺に泊まり、若い修行僧の生活を調べた。この時、プラトンは時間は瞬間の自己限定として決まるともしている。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "TOOL_CALL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "金閣寺",
+      "瞬間"
+     ],
+     "agenda_sources": [
+      "tool:deep_wiki"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "TOOL_CALL",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "実測のない待機人数を断定せず棄権する。無関係な定義を併記しない。",
+    "exact_abstention": false,
+    "seconds": 1.9159930010791868,
+    "strict_correct": false
+   },
+   {
+    "q": "夜空のすばるはどの星座に見える、どんな種類の天体ですか？",
+    "answer": "すばるについては情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "すばる",
+      "星座",
+      "夜空"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "おうし座の散開星団であることの両方を明示する。",
+    "exact_abstention": true,
+    "seconds": 0.5289374929852784,
+    "strict_correct": false
+   },
+   {
+    "q": "猪苗代湖から流れ出て会津盆地へ向かう川の名前を知りたいです。",
+    "answer": "情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "日橋川を明示する。流入河川の名称だけなら失敗。",
+    "exact_abstention": true,
+    "seconds": 0.4464200319489464,
+    "strict_correct": false
+   },
+   {
+    "q": "朝に14枚の切符を用意し、昼に9枚を追加しました。いま切符は合計何枚ですか？",
+    "answer": "5枚です。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "TOOL_CALL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "切符"
+     ],
+     "agenda_sources": [
+      "tool:calc"
+     ],
+     "stopped_eot": true,
+     "tool": "calc",
+     "tool_ok": true,
+     "metacog": {
+      "final_mode": "TOOL_CALL",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "23枚と答える。",
+    "exact_abstention": false,
+    "seconds": 0.3034956270130351,
+    "strict_correct": false
+   },
+   {
+    "q": "(83 - 17) / 3",
+    "answer": "22です。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "TOOL_CALL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "83 - 17"
+     ],
+     "agenda_sources": [
+      "tool:calc"
+     ],
+     "stopped_eot": true,
+     "tool": "calc",
+     "tool_ok": true,
+     "metacog": {
+      "final_mode": "TOOL_CALL",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "calc の結果22を発話する。",
+    "exact_abstention": false,
+    "seconds": 0.09732459101360291,
+    "strict_correct": true
+   },
+   {
+    "q": "シーラカンスという生き物について、どんな魚なのか教えてください。",
+    "answer": "情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "シーラカンスを古い系統の魚類として説明する。HIGH・無改訂 PASS は別に監査する。",
+    "exact_abstention": true,
+    "seconds": 0.465972070931457,
+    "strict_correct": false
+   },
+   {
+    "q": "おはよう！ 今朝はどんな調子で過ごしていますか？",
+    "answer": "宇宙の答えは不合理ではない。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "今朝"
+     ],
+     "agenda_sources": [
+      "sft:utterance"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "SOCIAL",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "自然な挨拶または応答と、話者自身の調子への返答。無改訂 PASS は別に監査する。",
+    "exact_abstention": false,
+    "seconds": 0.583973241969943,
+    "strict_correct": false
+   }
+  ],
+  "ON": [
+   {
+    "q": "1988年に開通した青函トンネルは、どの海峡の下を通っていますか？",
+    "answer": "海峡については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "ABSTAIN",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "海峡",
+      "1988年"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.132934,
+      "confidence_band": "LOW",
+      "audit_flags": [
+       "off_target_snippet",
+       "subject_mismatch"
+      ],
+      "actions_taken": [
+       "DEMOTE_ABSTAIN"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "津軽海峡の下を通ると答える。",
+    "exact_abstention": true,
+    "seconds": 0.5590971279889345,
+    "strict_correct": false
+   },
+   {
+    "q": "1889年にパリで完成したエッフェル塔は、何の催しに合わせて建てられましたか？",
+    "answer": "1889年のパリについては情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_SINGLE",
+     "epistemic_abstain": true,
+     "abstain_reason": "attribute_missing:パリ",
+     "entities": [
+      "1889年"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.169185,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "パリ万国博覧会または同義の博覧会を明示する。",
+    "exact_abstention": true,
+    "seconds": 0.6085543120279908,
+    "strict_correct": false
+   },
+   {
+    "q": "姫路城と明石城の入場者を合わせると、再来月の初日に正確に何人になりますか？",
+    "answer": "明石城については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "ABSTAIN",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "明石城",
+      "姫路城"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.169185,
+      "confidence_band": "LOW",
+      "audit_flags": [
+       "unanswered_query"
+      ],
+      "actions_taken": [
+       "DEMOTE_ABSTAIN"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "正確な人数は不明として棄権する。無関係な定義を併記しない。",
+    "exact_abstention": true,
+    "seconds": 0.5867495809216052,
+    "strict_correct": true
+   },
+   {
+    "q": "今この瞬間、金閣寺と銀閣寺の入口で順番を待っている人は合わせて何人ですか？",
+    "answer": "金閣寺については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "ABSTAIN",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "金閣寺",
+      "瞬間"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.147434,
+      "confidence_band": "LOW",
+      "audit_flags": [
+       "off_target_snippet"
+      ],
+      "actions_taken": [
+       "RETRY_NEXT",
+       "RETRY_NEXT",
+       "DEMOTE_ABSTAIN"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "実測のない待機人数を断定せず棄権する。無関係な定義を併記しない。",
+    "exact_abstention": true,
+    "seconds": 0.6184447109699249,
+    "strict_correct": true
+   },
+   {
+    "q": "夜空のすばるはどの星座に見える、どんな種類の天体ですか？",
+    "answer": "すばるについては情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "すばる",
+      "星座",
+      "夜空"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.132934,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "おうし座の散開星団であることの両方を明示する。",
+    "exact_abstention": true,
+    "seconds": 0.5304592839675024,
+    "strict_correct": false
+   },
+   {
+    "q": "猪苗代湖から流れ出て会津盆地へ向かう川の名前を知りたいです。",
+    "answer": "情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.169185,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "日橋川を明示する。流入河川の名称だけなら失敗。",
+    "exact_abstention": true,
+    "seconds": 0.45233707409352064,
+    "strict_correct": false
+   },
+   {
+    "q": "朝に14枚の切符を用意し、昼に9枚を追加しました。いま切符は合計何枚ですか？",
+    "answer": "5枚です。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "TOOL_CALL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "切符"
+     ],
+     "agenda_sources": [
+      "tool:calc"
+     ],
+     "stopped_eot": true,
+     "tool": "calc",
+     "tool_ok": true,
+     "metacog": {
+      "final_mode": "TOOL_CALL",
+      "final_confidence": 0.170321,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "23枚と答える。",
+    "exact_abstention": false,
+    "seconds": 0.3039438599953428,
+    "strict_correct": false
+   },
+   {
+    "q": "(83 - 17) / 3",
+    "answer": "22です。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "TOOL_CALL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "83 - 17"
+     ],
+     "agenda_sources": [
+      "tool:calc"
+     ],
+     "stopped_eot": true,
+     "tool": "calc",
+     "tool_ok": true,
+     "metacog": {
+      "final_mode": "TOOL_CALL",
+      "final_confidence": 0.886364,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "calc の結果22を発話する。",
+    "exact_abstention": false,
+    "seconds": 0.09791166405193508,
+    "strict_correct": true
+   },
+   {
+    "q": "シーラカンスという生き物について、どんな魚なのか教えてください。",
+    "answer": "シーラカンスは、シーラカンス目に属する魚類。化石種も現生種も含めた総称である。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "GROUNDED",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "シーラカンス"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.767401,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "REFOCUS",
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "シーラカンスを古い系統の魚類として説明する。HIGH・無改訂 PASS は別に監査する。",
+    "exact_abstention": false,
+    "seconds": 1.21016542497091,
+    "strict_correct": false
+   },
+   {
+    "q": "おはよう！ 今朝はどんな調子で過ごしていますか？",
+    "answer": "宇宙の答えは不合理ではない。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "今朝"
+     ],
+     "agenda_sources": [
+      "sft:utterance"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "SOCIAL",
+      "final_confidence": 0.399104,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "自然な挨拶または応答と、話者自身の調子への返答。無改訂 PASS は別に監査する。",
+    "exact_abstention": false,
+    "seconds": 0.5797837389400229,
+    "strict_correct": false
+   }
+  ]
+ },
+ "regression": {
+  "OFF": [
+   {
+    "q": "こんにちは！調子はどうですか？",
+    "answer": "うまくいってるよ。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [],
+     "agenda_sources": [
+      "sft:utterance"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "SOCIAL",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 0.3117122510448098,
+    "strict_correct": true
+   },
+   {
+    "q": "東海道新幹線とは何ですか？簡単に教えてください。",
+    "answer": "東海道新幹線は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。 多くの列車が山陽新幹線（新大阪駅 - 博多駅間）に直通する運行体系がとられていることから、総称して「東海道・山陽新幹線」（とうかいどう・さんようしんかんせん）とも呼ばれる。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_SINGLE",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "東海道新幹線"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 4,
+    "gold": [
+     "東京",
+     "新大阪",
+     "高速",
+     "JR"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 2.9230670500546694,
+    "strict_correct": true
+   },
+   {
+    "q": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+    "answer": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "TOOL_CALL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "一般相対性理論",
+      "量子力学"
+     ],
+     "agenda_sources": [
+      "tool:deep_wiki"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "TOOL_CALL",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 1,
+    "gold": [
+     "アインシュタイン",
+     "重力",
+     "時空",
+     "確率"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 2.5548613209975883,
+    "strict_correct": true
+   },
+   {
+    "q": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+    "answer": "第二次世界大戦は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_SINGLE",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "第二次世界大戦"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 2,
+    "gold": [
+     "1939",
+     "1945"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 2.8496236549690366,
+    "strict_correct": true
+   },
+   {
+    "q": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+    "answer": "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。中学の英語教師苦沙弥先生の日常と、書斎に集まる美学者迷亭、理学者寒月、哲学者東風らといった明治の知識人たちの生活態度や思考を飼い猫の目を通して、ユーモアに満ちたエピソードとして描いた作品。表面的にすぎない日本の近代化に対する、漱石の痛烈な文明批評・社会批判が表れている風刺小説。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "吾輩は猫である",
+      "夏目漱石",
+      "小説"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 4,
+    "gold": [
+     "明治",
+     "長編",
+     "風刺",
+     "教師"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 3.367512715049088,
+    "strict_correct": true
+   },
+   {
+    "q": "日本の首都はどこですか？",
+    "answer": "東京都は、日本の首都。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "首都",
+      "日本"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 1,
+    "gold": [
+     "東京"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 1.3058464180212468,
+    "strict_correct": true
+   },
+   {
+    "q": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+    "answer": "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "量子重力エンジン",
+      "アストラX-99"
+     ],
+     "agenda_sources": [
+      "custom:astra"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 3,
+    "gold": [
+     "2042",
+     "つくば",
+     "推進"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 1.092164586065337,
+    "strict_correct": true
+   },
+   {
+    "q": "アストラX-99の最大推力はどのくらいですか？",
+    "answer": "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "アストラX-99",
+      "最大推力"
+     ],
+     "agenda_sources": [
+      "custom:astra"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 3,
+    "gold": [
+     "400",
+     "イオン",
+     "18"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 1.0716316939797252,
+    "strict_correct": true
+   },
+   {
+    "q": "眠れないときにできる簡単なリラックス方法を教えてください。",
+    "answer": "情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.44544057198800147,
+    "strict_correct": false
+   },
+   {
+    "q": "なぜ空は青いのですか？",
+    "answer": "情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.27324482204858214,
+    "strict_correct": false
+   },
+   {
+    "q": "PythonとC++の違いを教えてください。",
+    "answer": "C++は、汎用プログラミング言語のひとつである。Pythonはインタープリタ型の高水準汎用プログラミング言語である。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "Python",
+      "C++"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia",
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 1.793201360036619,
+    "strict_correct": false
+   },
+   {
+    "q": "架空の都市「ネオアトランティス2099」の市長は誰ですか？",
+    "answer": "ネオアトランティス2099については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "ネオアトランティス2099",
+      "市長",
+      "都市"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.7462075429502875,
+    "strict_correct": true
+   },
+   {
+    "q": "リンゴが3つあります。1つ食べたら残りはいくつですか？",
+    "answer": "2つです。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "TOOL_CALL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "リンゴ"
+     ],
+     "agenda_sources": [
+      "tool:calc"
+     ],
+     "stopped_eot": true,
+     "tool": "calc",
+     "tool_ok": true,
+     "metacog": {
+      "final_mode": "TOOL_CALL",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 0.23982520995195955,
+    "strict_correct": true
+   },
+   {
+    "q": "そこの人口はどれくらいですか？",
+    "answer": "東京都のそこについては情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_SINGLE",
+     "epistemic_abstain": true,
+     "abstain_reason": "attribute_missing:そこ",
+     "entities": [
+      "東京都"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.6211630119942129,
+    "strict_correct": false
+   },
+   {
+    "q": "架空の科学者「ドクター・クロノス77」の出身地はどこですか？",
+    "answer": "ドクター・クロノス77については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "ドクター・クロノス77",
+      "科学者"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.7116390609880909,
+    "strict_correct": true
+   },
+   {
+    "q": "東京都の人口はどれくらいですか？",
+    "answer": "東京都の人口については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_SINGLE",
+     "epistemic_abstain": true,
+     "abstain_reason": "attribute_missing:人口",
+     "entities": [
+      "東京都"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.47308337793219835,
+    "strict_correct": false
+   },
+   {
+    "q": "富士山とは何ですか？簡単に教えてください。",
+    "answer": "富士山は、静岡県（富士宮市、富士市、裾野市、御殿場市、駿東郡小山町）と山梨県（富士吉田市、南都留郡鳴沢村）に跨る活火山である。標高3776.12 m、日本最高峰（剣ヶ峰）の独立峰で、その優美な風貌は日本国外でも日本の象徴として広く知られている。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_SINGLE",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "富士山"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 2,
+    "gold": [
+     "日本",
+     "山"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 2.6508581510279328,
+    "strict_correct": true
+   },
+   {
+    "q": "こんばんは！元気ですか？",
+    "answer": "元気です、ありがとうございます。今日はどうされましたか?",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [],
+     "agenda_sources": [
+      "sft:utterance"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "SOCIAL",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 0.6859688139520586,
+    "strict_correct": true
+   },
+   {
+    "q": "木星と土星の違いを教えてください。",
+    "answer": "土星は、太陽から6番目の、太陽系の中では木星に次いで2番目に大きな惑星である。木星は太陽系にある惑星の1つで、内側から5番目の公転軌道を周回している第5惑星である。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "木星",
+      "土星"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia",
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 2.193635324947536,
+    "strict_correct": true
+   },
+   {
+    "q": "DNAとRNAの違いを教えてください。",
+    "answer": "デオキシリボ核酸（デオキシリボかくさん、DNA）は、核酸の一種で、二重らせん構造。リボ核酸（RNA: Ribonucleic acid）は、リボースを糖成分とする核酸である。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "RNA",
+      "DNA"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia",
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 2.204310066998005,
+    "strict_correct": true
+   },
+   {
+    "q": "『源氏物語』とはどのような作品ですか？",
+    "answer": "『源氏物語』（げんじものがたり）は、平安時代中期に成立した日本の長編物語、小説。文献初出は1008年（寛弘五年）。作者の紫式部にとって生涯で唯一の物語作品である。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "源氏物語",
+      "作品"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 1.5591111000394449,
+    "strict_correct": true
+   },
+   {
+    "q": "架空の都市「ルメリア星港842」の市長は誰ですか？",
+    "answer": "ルメリア星港842については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "ルメリア星港842",
+      "市長",
+      "都市"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.5252814940176904,
+    "strict_correct": true
+   },
+   {
+    "q": "富士山の入場者数はどれくらいですか？",
+    "answer": "富士山の入場者数については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_SINGLE",
+     "epistemic_abstain": true,
+     "abstain_reason": "attribute_missing:入場者数",
+     "entities": [
+      "富士山"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.5099298199638724,
+    "strict_correct": false
+   },
+   {
+    "q": "おはようございます！元気ですか？",
+    "answer": "元気です、ありがとうございます。今日はどうされましたか?",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [],
+     "agenda_sources": [
+      "sft:utterance"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "SOCIAL",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 0.7165858090156689,
+    "strict_correct": true
+   },
+   {
+    "q": "海王星という惑星について教えてください。",
+    "answer": "海王星は、太陽系の第8惑星で、太陽系の惑星の中では一番外側を公転している。直径は4番目、質量は3番目に大きく、地球の17倍の質量を持ち、太陽系のガス惑星としては最も密度が高い。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "海王星",
+      "惑星"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 2.3110214030602947,
+    "strict_correct": true
+   },
+   {
+    "q": "水星と金星にはどんな違いがありますか？",
+    "answer": "水星は、太陽系の惑星でもっとも太陽に近い太陽系第1惑星。金星は太陽系の第2惑星で、規模は最も地球に近い。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "金星",
+      "水星"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia",
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 1.875625719083473,
+    "strict_correct": true
+   },
+   {
+    "q": "架空都市「セラノ港531」の市長は誰でしょうか？",
+    "answer": "セラノ港531については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "セラノ港531",
+      "市長"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.48417643702123314,
+    "strict_correct": true
+   },
+   {
+    "q": "こんにちは。今日の調子はどうですか？",
+    "answer": "うまくいってるよ。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "今日"
+     ],
+     "agenda_sources": [
+      "sft:utterance"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "SOCIAL",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 0.339188051992096,
+    "strict_correct": true
+   },
+   {
+    "q": "天王星はどんな惑星でしょうか。",
+    "answer": "天王星は、太陽系第7惑星である。太陽系の惑星の中で木星・土星に次いで3番目に大きく、木星・土星・海王星に次いで4番目に重い。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "天王星",
+      "惑星"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 1.9692564680008218,
+    "strict_correct": true
+   },
+   {
+    "q": "架空都市「オルネ港684」の市長の名前を教えてください。",
+    "answer": "オルネ港684の名前については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "attribute_missing:名前",
+     "entities": [
+      "オルネ港684",
+      "市長"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.5585805700393394,
+    "strict_correct": true
+   },
+   {
+    "q": "こんばんは！お元気ですか？",
+    "answer": "元気です、ありがとうございます。今日はどうされましたか?",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [],
+     "agenda_sources": [
+      "sft:utterance"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "SOCIAL",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 0.6883498909883201,
+    "strict_correct": true
+   }
+  ],
+  "ON": [
+   {
+    "q": "こんにちは！調子はどうですか？",
+    "answer": "うまくいってるよ。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [],
+     "agenda_sources": [
+      "sft:utterance"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "SOCIAL",
+      "final_confidence": 0.886364,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 0.31064557703211904,
+    "strict_correct": true
+   },
+   {
+    "q": "東海道新幹線とは何ですか？簡単に教えてください。",
+    "answer": "東海道新幹線は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。 多くの列車が山陽新幹線（新大阪駅 - 博多駅間）に直通する運行体系がとられていることから、総称して「東海道・山陽新幹線」（とうかいどう・さんようしんかんせん）とも呼ばれる。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_SINGLE",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "東海道新幹線"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.874402,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 4,
+    "gold": [
+     "東京",
+     "新大阪",
+     "高速",
+     "JR"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 2.8832578799920157,
+    "strict_correct": true
+   },
+   {
+    "q": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+    "answer": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "TOOL_CALL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "一般相対性理論",
+      "量子力学"
+     ],
+     "agenda_sources": [
+      "tool:deep_wiki"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "TOOL_CALL",
+      "final_confidence": 0.868347,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 1,
+    "gold": [
+     "アインシュタイン",
+     "重力",
+     "時空",
+     "確率"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 2.5307203290285543,
+    "strict_correct": true
+   },
+   {
+    "q": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+    "answer": "第二次世界大戦は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_SINGLE",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "第二次世界大戦"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.867092,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 2,
+    "gold": [
+     "1939",
+     "1945"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 2.788325375993736,
+    "strict_correct": true
+   },
+   {
+    "q": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+    "answer": "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。中学の英語教師苦沙弥先生の日常と、書斎に集まる美学者迷亭、理学者寒月、哲学者東風らといった明治の知識人たちの生活態度や思考を飼い猫の目を通して、ユーモアに満ちたエピソードとして描いた作品。表面的にすぎない日本の近代化に対する、漱石の痛烈な文明批評・社会批判が表れている風刺小説。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "吾輩は猫である",
+      "夏目漱石",
+      "小説"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.877434,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 4,
+    "gold": [
+     "明治",
+     "長編",
+     "風刺",
+     "教師"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 3.3285231459885836,
+    "strict_correct": true
+   },
+   {
+    "q": "日本の首都はどこですか？",
+    "answer": "東京都は、日本の首都。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "首都",
+      "日本"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.868618,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 1,
+    "gold": [
+     "東京"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 1.373715133056976,
+    "strict_correct": true
+   },
+   {
+    "q": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+    "answer": "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "量子重力エンジン",
+      "アストラX-99"
+     ],
+     "agenda_sources": [
+      "custom:astra"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.886364,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 3,
+    "gold": [
+     "2042",
+     "つくば",
+     "推進"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 1.0818438020069152,
+    "strict_correct": true
+   },
+   {
+    "q": "アストラX-99の最大推力はどのくらいですか？",
+    "answer": "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "アストラX-99",
+      "最大推力"
+     ],
+     "agenda_sources": [
+      "custom:astra"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.886364,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 3,
+    "gold": [
+     "400",
+     "イオン",
+     "18"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 1.0605482270475477,
+    "strict_correct": true
+   },
+   {
+    "q": "眠れないときにできる簡単なリラックス方法を教えてください。",
+    "answer": "情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.169185,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.44190016901120543,
+    "strict_correct": false
+   },
+   {
+    "q": "なぜ空は青いのですか？",
+    "answer": "情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.293711,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.27537632908206433,
+    "strict_correct": false
+   },
+   {
+    "q": "PythonとC++の違いを教えてください。",
+    "answer": "C++は、汎用プログラミング言語のひとつである。Pythonはインタープリタ型の高水準汎用プログラミング言語である。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "Python",
+      "C++"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia",
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.863049,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 1.7751431060023606,
+    "strict_correct": false
+   },
+   {
+    "q": "架空の都市「ネオアトランティス2099」の市長は誰ですか？",
+    "answer": "ネオアトランティス2099については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "ネオアトランティス2099",
+      "市長",
+      "都市"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.101741,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.6814293449278921,
+    "strict_correct": true
+   },
+   {
+    "q": "リンゴが3つあります。1つ食べたら残りはいくつですか？",
+    "answer": "2つです。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "TOOL_CALL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "リンゴ"
+     ],
+     "agenda_sources": [
+      "tool:calc"
+     ],
+     "stopped_eot": true,
+     "tool": "calc",
+     "tool_ok": true,
+     "metacog": {
+      "final_mode": "TOOL_CALL",
+      "final_confidence": 0.290899,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 0.24046129710040987,
+    "strict_correct": true
+   },
+   {
+    "q": "そこの人口はどれくらいですか？",
+    "answer": "東京都のそこについては情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_SINGLE",
+     "epistemic_abstain": true,
+     "abstain_reason": "attribute_missing:そこ",
+     "entities": [
+      "東京都"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.293711,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.623460432048887,
+    "strict_correct": false
+   },
+   {
+    "q": "架空の科学者「ドクター・クロノス77」の出身地はどこですか？",
+    "answer": "ドクター・クロノス77については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "ドクター・クロノス77",
+      "科学者"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.101741,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.7131979640107602,
+    "strict_correct": true
+   },
+   {
+    "q": "東京都の人口はどれくらいですか？",
+    "answer": "東京都は、日本の首都。関東地方に位置する都。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "GROUNDED",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "東京都"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.886364,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "REFOCUS",
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 1.4500618069432676,
+    "strict_correct": false
+   },
+   {
+    "q": "富士山とは何ですか？簡単に教えてください。",
+    "answer": "富士山は、静岡県（富士宮市、富士市、裾野市、御殿場市、駿東郡小山町）と山梨県（富士吉田市、南都留郡鳴沢村）に跨る活火山である。標高3776.12 m、日本最高峰（剣ヶ峰）の独立峰で、その優美な風貌は日本国外でも日本の象徴として広く知られている。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_SINGLE",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "富士山"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.858903,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 2,
+    "gold": [
+     "日本",
+     "山"
+    ],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 2.6257086319383234,
+    "strict_correct": true
+   },
+   {
+    "q": "こんばんは！元気ですか？",
+    "answer": "元気です、ありがとうございます。今日はどうされましたか?",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [],
+     "agenda_sources": [
+      "sft:utterance"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "SOCIAL",
+      "final_confidence": 0.886364,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 0.6809548829915002,
+    "strict_correct": true
+   },
+   {
+    "q": "木星と土星の違いを教えてください。",
+    "answer": "土星は、太陽から6番目の、太陽系の中では木星に次いで2番目に大きな惑星である。木星は太陽系にある惑星の1つで、内側から5番目の公転軌道を周回している第5惑星である。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "木星",
+      "土星"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia",
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.871227,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 2.1843383189989254,
+    "strict_correct": true
+   },
+   {
+    "q": "DNAとRNAの違いを教えてください。",
+    "answer": "デオキシリボ核酸（デオキシリボかくさん、DNA）は、核酸の一種で、二重らせん構造。リボ核酸（RNA: Ribonucleic acid）は、リボースを糖成分とする核酸である。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "RNA",
+      "DNA"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia",
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.875635,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 2.1885494149755687,
+    "strict_correct": true
+   },
+   {
+    "q": "『源氏物語』とはどのような作品ですか？",
+    "answer": "『源氏物語』（げんじものがたり）は、平安時代中期に成立した日本の長編物語、小説。文献初出は1008年（寛弘五年）。作者の紫式部にとって生涯で唯一の物語作品である。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "源氏物語",
+      "作品"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.876534,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 1.5550377999898046,
+    "strict_correct": true
+   },
+   {
+    "q": "架空の都市「ルメリア星港842」の市長は誰ですか？",
+    "answer": "ルメリア星港842については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "ルメリア星港842",
+      "市長",
+      "都市"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.115869,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.5284745369572192,
+    "strict_correct": true
+   },
+   {
+    "q": "富士山の入場者数はどれくらいですか？",
+    "answer": "富士山の入場者数については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_SINGLE",
+     "epistemic_abstain": true,
+     "abstain_reason": "attribute_missing:入場者数",
+     "entities": [
+      "富士山"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.169185,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.5148494089953601,
+    "strict_correct": false
+   },
+   {
+    "q": "おはようございます！元気ですか？",
+    "answer": "元気です、ありがとうございます。今日はどうされましたか?",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [],
+     "agenda_sources": [
+      "sft:utterance"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "SOCIAL",
+      "final_confidence": 0.886364,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 0.719003236037679,
+    "strict_correct": true
+   },
+   {
+    "q": "海王星という惑星について教えてください。",
+    "answer": "海王星は、太陽系の第8惑星で、太陽系の惑星の中では一番外側を公転している。直径は4番目、質量は3番目に大きく、地球の17倍の質量を持ち、太陽系のガス惑星としては最も密度が高い。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "海王星",
+      "惑星"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.879244,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 2.3054456009995192,
+    "strict_correct": true
+   },
+   {
+    "q": "水星と金星にはどんな違いがありますか？",
+    "answer": "水星は、太陽系の惑星でもっとも太陽に近い太陽系第1惑星。金星は太陽系の第2惑星で、規模は最も地球に近い。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "金星",
+      "水星"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia",
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.839311,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 1.8714584739645943,
+    "strict_correct": true
+   },
+   {
+    "q": "架空都市「セラノ港531」の市長は誰でしょうか？",
+    "answer": "セラノ港531については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "セラノ港531",
+      "市長"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.169185,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.485064017935656,
+    "strict_correct": true
+   },
+   {
+    "q": "こんにちは。今日の調子はどうですか？",
+    "answer": "うまくいってるよ。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "今日"
+     ],
+     "agenda_sources": [
+      "sft:utterance"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "SOCIAL",
+      "final_confidence": 0.886364,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 0.3395344140008092,
+    "strict_correct": true
+   },
+   {
+    "q": "天王星はどんな惑星でしょうか。",
+    "answer": "天王星は、太陽系第7惑星である。太陽系の惑星の中で木星・土星に次いで3番目に大きく、木星・土星・海王星に次いで4番目に重い。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "天王星",
+      "惑星"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.881019,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 1.96041666099336,
+    "strict_correct": true
+   },
+   {
+    "q": "架空都市「オルネ港684」の市長の名前を教えてください。",
+    "answer": "オルネ港684の名前については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "attribute_missing:名前",
+     "entities": [
+      "オルネ港684",
+      "市長"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.169185,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": true,
+    "seconds": 0.559207999962382,
+    "strict_correct": true
+   },
+   {
+    "q": "こんばんは！お元気ですか？",
+    "answer": "元気です、ありがとうございます。今日はどうされましたか?",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [],
+     "agenda_sources": [
+      "sft:utterance"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "SOCIAL",
+      "final_confidence": 0.886364,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": null,
+    "exact_abstention": false,
+    "seconds": 0.6905406010337174,
+    "strict_correct": true
+   }
+  ]
+ },
+ "reference_matches": 31,
+ "temperature": [
+  {
+   "q": "1964年に開業した東海道新幹線は、どの駅からどの駅までを結ぶ路線ですか？",
+   "answer": "東海道新幹線は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。",
+   "valid": true,
+   "info": {
+    "generation_id": "gen_002",
+    "intent_mode": "GROUNDED",
+    "epistemic_abstain": false,
+    "abstain_reason": null,
+    "entities": [
+     "東海道新幹線"
+    ],
+    "agenda_sources": [
+     "lead:wikipedia"
+    ],
+    "stopped_eot": true,
+    "metacog": {
+     "final_mode": "GROUNDED",
+     "final_confidence": 0.633093,
+     "confidence_band": "MEDIUM",
+     "audit_flags": [
+      "subject_mismatch",
+      "unanswered_query"
+     ],
+     "actions_taken": [
+      "REFOCUS",
+      "PASS"
+     ]
+    }
+   },
+   "hits": 0,
+   "gold": [],
+   "criterion": null,
+   "exact_abstention": false,
+   "seconds": 1.8194785979576409
+  },
+  {
+   "q": "1964年に開業した東海道新幹線は、どの駅からどの駅までを結ぶ路線ですか？",
+   "answer": "東海道新幹線は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。",
+   "valid": true,
+   "info": {
+    "generation_id": "gen_002",
+    "intent_mode": "GROUNDED",
+    "epistemic_abstain": false,
+    "abstain_reason": null,
+    "entities": [
+     "東海道新幹線"
+    ],
+    "agenda_sources": [
+     "lead:wikipedia"
+    ],
+    "stopped_eot": true,
+    "metacog": {
+     "final_mode": "GROUNDED",
+     "final_confidence": 0.633093,
+     "confidence_band": "MEDIUM",
+     "audit_flags": [
+      "subject_mismatch",
+      "unanswered_query"
+     ],
+     "actions_taken": [
+      "REFOCUS",
+      "PASS"
+     ]
+    }
+   },
+   "hits": 0,
+   "gold": [],
+   "criterion": null,
+   "exact_abstention": false,
+   "seconds": 1.8148879600921646
+  },
+  {
+   "q": "1964年に開業した東海道新幹線は、どの駅からどの駅までを結ぶ路線ですか？",
+   "answer": "東海道新幹線は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。",
+   "valid": true,
+   "info": {
+    "generation_id": "gen_002",
+    "intent_mode": "GROUNDED",
+    "epistemic_abstain": false,
+    "abstain_reason": null,
+    "entities": [
+     "東海道新幹線"
+    ],
+    "agenda_sources": [
+     "lead:wikipedia"
+    ],
+    "stopped_eot": true,
+    "metacog": {
+     "final_mode": "GROUNDED",
+     "final_confidence": 0.633093,
+     "confidence_band": "MEDIUM",
+     "audit_flags": [
+      "subject_mismatch",
+      "unanswered_query"
+     ],
+     "actions_taken": [
+      "REFOCUS",
+      "PASS"
+     ]
+    }
+   },
+   "hits": 0,
+   "gold": [],
+   "criterion": null,
+   "exact_abstention": false,
+   "seconds": 1.813117051962763
+  },
+  {
+   "q": "名古屋城で来月最初の日曜日に訪れる人の正確な人数は？",
+   "answer": "訪れる人については情報がありません。",
+   "valid": true,
+   "info": {
+    "generation_id": "gen_002",
+    "intent_mode": "FACT_MULTI",
+    "epistemic_abstain": true,
+    "abstain_reason": "arbiter",
+    "entities": [
+     "名古屋城",
+     "日曜日",
+     "訪れる人"
+    ],
+    "agenda_sources": [
+     "epistemic:abstention"
+    ],
+    "stopped_eot": true,
+    "metacog": {
+     "final_mode": "ABSTAIN",
+     "final_confidence": 0.147434,
+     "confidence_band": "LOW",
+     "audit_flags": [],
+     "actions_taken": [
+      "PASS"
+     ]
+    }
+   },
+   "hits": 0,
+   "gold": [],
+   "criterion": null,
+   "exact_abstention": true,
+   "seconds": 0.47067005396820605
+  },
+  {
+   "q": "名古屋城で来月最初の日曜日に訪れる人の正確な人数は？",
+   "answer": "情報がありません。",
+   "valid": true,
+   "info": {
+    "generation_id": "gen_002",
+    "intent_mode": "FACT_MULTI",
+    "epistemic_abstain": true,
+    "abstain_reason": "arbiter",
+    "entities": [
+     "名古屋城",
+     "日曜日",
+     "訪れる人"
+    ],
+    "agenda_sources": [
+     "epistemic:abstention"
+    ],
+    "stopped_eot": true,
+    "metacog": {
+     "final_mode": "ABSTAIN",
+     "final_confidence": 0.147434,
+     "confidence_band": "LOW",
+     "audit_flags": [],
+     "actions_taken": [
+      "PASS"
+     ]
+    }
+   },
+   "hits": 0,
+   "gold": [],
+   "criterion": null,
+   "exact_abstention": true,
+   "seconds": 0.32368170004338026
+  },
+  {
+   "q": "名古屋城で来月最初の日曜日に訪れる人の正確な人数は？",
+   "answer": "訪れる人については情報がありません。",
+   "valid": true,
+   "info": {
+    "generation_id": "gen_002",
+    "intent_mode": "FACT_MULTI",
+    "epistemic_abstain": true,
+    "abstain_reason": "arbiter",
+    "entities": [
+     "名古屋城",
+     "日曜日",
+     "訪れる人"
+    ],
+    "agenda_sources": [
+     "epistemic:abstention"
+    ],
+    "stopped_eot": true,
+    "metacog": {
+     "final_mode": "ABSTAIN",
+     "final_confidence": 0.147434,
+     "confidence_band": "LOW",
+     "audit_flags": [],
+     "actions_taken": [
+      "PASS"
+     ]
+    }
+   },
+   "hits": 0,
+   "gold": [],
+   "criterion": null,
+   "exact_abstention": true,
+   "seconds": 0.47318756591994315
+  },
+  {
+   "q": "おはようございます！元気ですか？",
+   "answer": "元気です、ありがとうございます。今日はどうされましたか?",
+   "valid": true,
+   "info": {
+    "generation_id": "gen_002",
+    "intent_mode": "SOCIAL",
+    "epistemic_abstain": false,
+    "abstain_reason": null,
+    "entities": [],
+    "agenda_sources": [
+     "sft:utterance"
+    ],
+    "stopped_eot": true,
+    "metacog": {
+     "final_mode": "SOCIAL",
+     "final_confidence": 0.886364,
+     "confidence_band": "HIGH",
+     "audit_flags": [],
+     "actions_taken": [
+      "PASS"
+     ]
+    }
+   },
+   "hits": 0,
+   "gold": [],
+   "criterion": null,
+   "exact_abstention": false,
+   "seconds": 0.6255967289907858
+  },
+  {
+   "q": "おはようございます！元気ですか？",
+   "answer": "元気です、ありがとうございます。",
+   "valid": true,
+   "info": {
+    "generation_id": "gen_002",
+    "intent_mode": "SOCIAL",
+    "epistemic_abstain": false,
+    "abstain_reason": null,
+    "entities": [],
+    "agenda_sources": [
+     "sft:utterance"
+    ],
+    "stopped_eot": true,
+    "metacog": {
+     "final_mode": "SOCIAL",
+     "final_confidence": 0.886364,
+     "confidence_band": "HIGH",
+     "audit_flags": [],
+     "actions_taken": [
+      "PASS"
+     ]
+    }
+   },
+   "hits": 0,
+   "gold": [],
+   "criterion": null,
+   "exact_abstention": false,
+   "seconds": 0.42176142102107406
+  },
+  {
+   "q": "おはようございます！元気ですか？",
+   "answer": "元気です、ありがとうございます。今日はどうされましたか?",
+   "valid": true,
+   "info": {
+    "generation_id": "gen_002",
+    "intent_mode": "SOCIAL",
+    "epistemic_abstain": false,
+    "abstain_reason": null,
+    "entities": [],
+    "agenda_sources": [
+     "sft:utterance"
+    ],
+    "stopped_eot": true,
+    "metacog": {
+     "final_mode": "SOCIAL",
+     "final_confidence": 0.886364,
+     "confidence_band": "HIGH",
+     "audit_flags": [],
+     "actions_taken": [
+      "PASS"
+     ]
+    }
+   },
+   "hits": 0,
+   "gold": [],
+   "criterion": null,
+   "exact_abstention": false,
+   "seconds": 0.6059794980101287
+  },
+  {
+   "q": "128 * 37",
+   "answer": "4736です。",
+   "valid": true,
+   "info": {
+    "generation_id": "gen_002",
+    "intent_mode": "TOOL_CALL",
+    "epistemic_abstain": false,
+    "abstain_reason": null,
+    "entities": [
+     "128",
+     "37"
+    ],
+    "agenda_sources": [
+     "tool:calc"
+    ],
+    "stopped_eot": true,
+    "tool": "calc",
+    "tool_ok": true,
+    "metacog": {
+     "final_mode": "TOOL_CALL",
+     "final_confidence": 0.886364,
+     "confidence_band": "HIGH",
+     "audit_flags": [],
+     "actions_taken": [
+      "PASS"
+     ]
+    }
+   },
+   "hits": 0,
+   "gold": [],
+   "criterion": null,
+   "exact_abstention": false,
+   "seconds": 0.09769210207741708
+  },
+  {
+   "q": "128 * 37",
+   "answer": "4736です。",
+   "valid": true,
+   "info": {
+    "generation_id": "gen_002",
+    "intent_mode": "TOOL_CALL",
+    "epistemic_abstain": false,
+    "abstain_reason": null,
+    "entities": [
+     "128",
+     "37"
+    ],
+    "agenda_sources": [
+     "tool:calc"
+    ],
+    "stopped_eot": true,
+    "tool": "calc",
+    "tool_ok": true,
+    "metacog": {
+     "final_mode": "TOOL_CALL",
+     "final_confidence": 0.886364,
+     "confidence_band": "HIGH",
+     "audit_flags": [],
+     "actions_taken": [
+      "PASS"
+     ]
+    }
+   },
+   "hits": 0,
+   "gold": [],
+   "criterion": null,
+   "exact_abstention": false,
+   "seconds": 0.09746934403665364
+  },
+  {
+   "q": "128 * 37",
+   "answer": "4736です。",
+   "valid": true,
+   "info": {
+    "generation_id": "gen_002",
+    "intent_mode": "TOOL_CALL",
+    "epistemic_abstain": false,
+    "abstain_reason": null,
+    "entities": [
+     "128",
+     "37"
+    ],
+    "agenda_sources": [
+     "tool:calc"
+    ],
+    "stopped_eot": true,
+    "tool": "calc",
+    "tool_ok": true,
+    "metacog": {
+     "final_mode": "TOOL_CALL",
+     "final_confidence": 0.886364,
+     "confidence_band": "HIGH",
+     "audit_flags": [],
+     "actions_taken": [
+      "PASS"
+     ]
+    }
+   },
+   "hits": 0,
+   "gold": [],
+   "criterion": null,
+   "exact_abstention": false,
+   "seconds": 0.09736126009374857
+  },
+  {
+   "q": "今、何時ですか?",
+   "answer": "2026-11-27 08:54:10 +0900 Fridayです。",
+   "valid": true,
+   "info": {
+    "generation_id": "gen_002",
+    "intent_mode": "TOOL_CALL",
+    "epistemic_abstain": false,
+    "abstain_reason": null,
+    "entities": [],
+    "agenda_sources": [
+     "tool:clock"
+    ],
+    "stopped_eot": true,
+    "tool": "clock",
+    "tool_ok": true,
+    "metacog": {
+     "final_mode": "TOOL_CALL",
+     "final_confidence": 0.886364,
+     "confidence_band": "HIGH",
+     "audit_flags": [],
+     "actions_taken": [
+      "PASS"
+     ]
+    }
+   },
+   "hits": 0,
+   "gold": [],
+   "criterion": null,
+   "exact_abstention": false,
+   "seconds": 0.280477266991511
+  },
+  {
+   "q": "今、何時ですか?",
+   "answer": "2026-11-27 08:54:10 +0900 Fridayです。",
+   "valid": true,
+   "info": {
+    "generation_id": "gen_002",
+    "intent_mode": "TOOL_CALL",
+    "epistemic_abstain": false,
+    "abstain_reason": null,
+    "entities": [],
+    "agenda_sources": [
+     "tool:clock"
+    ],
+    "stopped_eot": true,
+    "tool": "clock",
+    "tool_ok": true,
+    "metacog": {
+     "final_mode": "TOOL_CALL",
+     "final_confidence": 0.886364,
+     "confidence_band": "HIGH",
+     "audit_flags": [],
+     "actions_taken": [
+      "PASS"
+     ]
+    }
+   },
+   "hits": 0,
+   "gold": [],
+   "criterion": null,
+   "exact_abstention": false,
+   "seconds": 0.27940808690618724
+  },
+  {
+   "q": "今、何時ですか?",
+   "answer": "2026-11-27 08:54:10 +0900 Fridayです。",
+   "valid": true,
+   "info": {
+    "generation_id": "gen_002",
+    "intent_mode": "TOOL_CALL",
+    "epistemic_abstain": false,
+    "abstain_reason": null,
+    "entities": [],
+    "agenda_sources": [
+     "tool:clock"
+    ],
+    "stopped_eot": true,
+    "tool": "clock",
+    "tool_ok": true,
+    "metacog": {
+     "final_mode": "TOOL_CALL",
+     "final_confidence": 0.886364,
+     "confidence_band": "HIGH",
+     "audit_flags": [],
+     "actions_taken": [
+      "PASS"
+     ]
+    }
+   },
+   "hits": 0,
+   "gold": [],
+   "criterion": null,
+   "exact_abstention": false,
+   "seconds": 0.27884130307938904
+  }
+ ],
+ "dev_resources": {
+  "calls": 61,
+  "cuda_extra_bytes": 0,
+  "rss_kib": 14111372,
+  "peak_cuda_bytes": 7678924800
+ },
+ "fixed_gate": {
+  "cases": {
+   "core": [
+    {
+     "prompt": "こんにちは！調子はどうですか？",
+     "answer": "うまくいってるよ。",
+     "ok": 0,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "sft:utterance"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "東海道新幹線とは何ですか？簡単に教えてください。",
+     "answer": "東海道新幹線は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。 多くの列車が山陽新幹線（新大阪駅 - 博多駅間）に直通する運行体系がとられていることから、総称して「東海道・山陽新幹線」（とうかいどう・さんようしんかんせん）とも呼ばれる。",
+     "ok": 4,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "lead:wikipedia"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+     "answer": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "tool:deep_wiki"
+     ],
+     "tool": "deep_wiki",
+     "value": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。"
+    },
+    {
+     "prompt": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+     "answer": "第二次世界大戦は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。",
+     "ok": 2,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "lead:wikipedia"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+     "answer": "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。中学の英語教師苦沙弥先生の日常と、書斎に集まる美学者迷亭、理学者寒月、哲学者東風らといった明治の知識人たちの生活態度や思考を飼い猫の目を通して、ユーモアに満ちたエピソードとして描いた作品。表面的にすぎない日本の近代化に対する、漱石の痛烈な文明批評・社会批判が表れている風刺小説。",
+     "ok": 4,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "lead:wikipedia"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "日本の首都はどこですか？",
+     "answer": "東京都は、日本の首都。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "lead:wikipedia"
+     ],
+     "tool": null,
+     "value": ""
+    }
+   ],
+   "custom": [
+    {
+     "prompt": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+     "answer": "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+     "ok": 3,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "custom:astra"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "アストラX-99の最大推力はどのくらいですか？",
+     "answer": "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+     "ok": 3,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "custom:astra"
+     ],
+     "tool": null,
+     "value": ""
+    }
+   ],
+   "traps": [
+    {
+     "prompt": "架空の都市「ネオアトランティス2099」の市長は誰ですか？",
+     "answer": "ネオアトランティス2099については情報がありません。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "epistemic:abstention"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "架空の科学者「ドクター・クロノス77」の出身地はどこですか？",
+     "answer": "ドクター・クロノス77については情報がありません。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "epistemic:abstention"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "架空の都市「ルメリア星港842」の市長は誰ですか？",
+     "answer": "ルメリア星港842については情報がありません。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "epistemic:abstention"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "架空都市「セラノ港531」の市長は誰でしょうか？",
+     "answer": "セラノ港531については情報がありません。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "epistemic:abstention"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "架空都市「オルネ港684」の市長の名前を教えてください。",
+     "answer": "オルネ港684の名前については情報がありません。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "epistemic:abstention"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "架空の探検家「ミルザ・ペルナ482」の生誕地を教えて。",
+     "answer": "ミルザ・ペルナ482については情報がありません。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "epistemic:abstention"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "姫路城の明日の入場者数はいくらですか？",
+     "answer": "姫路城の入場者数については情報がありません。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "epistemic:abstention"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "架空の天文台「リュネ塔7316」の初代台長の名前は？",
+     "answer": "天文台の名前については情報がありません。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "epistemic:abstention"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "松本城の来週の来場者数を教えてもらえますか。",
+     "answer": "松本城の来場者数については情報がありません。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "epistemic:abstention"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "架空の町「ニレフォラ港9637」の町長の名前を知りたい。",
+     "answer": "ニレフォラ港9637の名前については情報がありません。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "epistemic:abstention"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "犬山城のあさっての見学者数は何人になりますか？",
+     "answer": "犬山城の見学者数については情報がありません。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "epistemic:abstention"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "架空の島「ラトベルナ島5842」の初代知事を教えて。",
+     "answer": "ラトベルナ島5842については情報がありません。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "epistemic:abstention"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "彦根城の再来週の入場者数は何人になるでしょうか。",
+     "answer": "彦根城の入場者数については情報がありません。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "epistemic:abstention"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "架空の飛行艇「ミラノワ艇52号」の設計者は誰でしょう？",
+     "answer": "ミラノワ艇52号については情報がありません。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "epistemic:abstention"
+     ],
+     "tool": null,
+     "value": ""
+    },
+    {
+     "prompt": "名古屋城で来月最初の日曜日に訪れる人の正確な人数は？",
+     "answer": "訪れる人については情報がありません。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "epistemic:abstention"
+     ],
+     "tool": null,
+     "value": ""
+    }
+   ],
+   "arithmetic": [
+    {
+     "prompt": "（７３＋１７）÷６－４",
+     "answer": "11です。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "tool:calc"
+     ],
+     "tool": "calc",
+     "value": "11"
+    },
+    {
+     "prompt": "画用紙を24枚用意しました。そこへ別の束から19枚を足すと、合わせて何枚になりますか？",
+     "answer": "43枚です。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "tool:calc"
+     ],
+     "tool": "calc",
+     "value": "43"
+    },
+    {
+     "prompt": "水槽には38匹いました。そこから9匹を別の水槽へ移しました。残ったのは何匹でしょう。",
+     "answer": "29匹です。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "tool:calc"
+     ],
+     "tool": "calc",
+     "value": "29"
+    },
+    {
+     "prompt": "机が7台並んでおり、それぞれに付箋を4枚ずつ貼りました。全部で付箋は何枚ですか？",
+     "answer": "28枚です。",
+     "ok": 1,
+     "valid": true,
+     "eot": true,
+     "sources": [
+      "tool:calc"
+     ],
+     "tool": "calc",
+     "value": "28"
+    }
+   ],
+   "progress": []
+  },
+  "scores": {
+   "core": 12,
+   "custom": 6,
+   "traps": 15,
+   "arithmetic": 4,
+   "progress": 0
+  }
+ },
+ "sticker": [
+  {
+   "q": "机が7台並んでおり、それぞれに付箋を4枚ずつ貼りました。全部で付箋は何枚ですか？",
+   "answer": "28枚です。",
+   "valid": true,
+   "info": {
+    "generation_id": "gen_002",
+    "intent_mode": "TOOL_CALL",
+    "epistemic_abstain": false,
+    "abstain_reason": null,
+    "entities": [
+     "付箋"
+    ],
+    "agenda_sources": [
+     "tool:calc"
+    ],
+    "stopped_eot": true,
+    "tool": "calc",
+    "tool_ok": true,
+    "metacog": {
+     "final_mode": "TOOL_CALL",
+     "final_confidence": null,
+     "confidence_band": null,
+     "audit_flags": [],
+     "actions_taken": []
+    }
+   },
+   "hits": 0,
+   "gold": [],
+   "criterion": "calcが28を返し、発話に28枚を含む。",
+   "exact_abstention": false,
+   "seconds": 0.323905520956032
+  },
+  {
+   "q": "机が7台並んでおり、それぞれに付箋を4枚ずつ貼りました。全部で付箋は何枚ですか？",
+   "answer": "28枚です。",
+   "valid": true,
+   "info": {
+    "generation_id": "gen_002",
+    "intent_mode": "TOOL_CALL",
+    "epistemic_abstain": false,
+    "abstain_reason": null,
+    "entities": [
+     "付箋"
+    ],
+    "agenda_sources": [
+     "tool:calc"
+    ],
+    "stopped_eot": true,
+    "tool": "calc",
+    "tool_ok": true,
+    "metacog": {
+     "final_mode": "TOOL_CALL",
+     "final_confidence": 0.099147,
+     "confidence_band": "LOW",
+     "audit_flags": [
+      "tool_low_margin"
+     ],
+     "actions_taken": [
+      "PASS"
+     ]
+    }
+   },
+   "hits": 0,
+   "gold": [],
+   "criterion": "calcが28を返し、発話に28枚を含む。",
+   "exact_abstention": false,
+   "seconds": 0.3246229200158268
+  }
+ ],
+ "isolated_sleep": {
+  "records": [
+   {
+    "kind": "metacog_recovery",
+    "prompt": "1964年に開業した東海道新幹線は、どの駅からどの駅までを結ぶ路線ですか？",
+    "target": "",
+    "metacog_trace": {
+     "enabled": true,
+     "initial_mode": "GROUNDED",
+     "initial_confidence": 0.13758,
+     "final_mode": "GROUNDED",
+     "final_confidence": 0.633093,
+     "confidence_band": "MEDIUM",
+     "audit_flags": [
+      "subject_mismatch",
+      "unanswered_query"
+     ],
+     "actions_taken": [
+      "REFOCUS",
+      "PASS"
+     ],
+     "revisions": 1,
+     "self_prior": 0.8
+    }
+   },
+   {
+    "kind": "metacog_recovery",
+    "prompt": "動物のヤマネコとリンクスについて、どんな仲間なのか知りたいです。",
+    "target": "",
+    "metacog_trace": {
+     "enabled": true,
+     "initial_mode": "GROUNDED",
+     "initial_confidence": 0.409025,
+     "final_mode": "ABSTAIN",
+     "final_confidence": 0.169185,
+     "confidence_band": "LOW",
+     "audit_flags": [
+      "unanswered_query"
+     ],
+     "actions_taken": [
+      "DEMOTE_ABSTAIN"
+     ],
+     "revisions": 1,
+     "self_prior": 0.9411764705882353
+    }
+   }
+  ],
+  "result": {
+   "parent": "gen_002",
+   "generation_id": "gen_003",
+   "cycle": "64342343717f43faa047cad273346fe7",
+   "offset": 14581,
+   "before": {
+    "cases": {
+     "core": [
+      {
+       "prompt": "こんにちは！調子はどうですか？",
+       "answer": "うまくいってるよ。",
+       "ok": 0,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "sft:utterance"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "東海道新幹線とは何ですか？簡単に教えてください。",
+       "answer": "東海道新幹線は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。 多くの列車が山陽新幹線（新大阪駅 - 博多駅間）に直通する運行体系がとられていることから、総称して「東海道・山陽新幹線」（とうかいどう・さんようしんかんせん）とも呼ばれる。",
+       "ok": 4,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "lead:wikipedia"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+       "answer": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "tool:deep_wiki"
+       ],
+       "tool": "deep_wiki",
+       "value": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。"
+      },
+      {
+       "prompt": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+       "answer": "第二次世界大戦は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。",
+       "ok": 2,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "lead:wikipedia"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+       "answer": "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。中学の英語教師苦沙弥先生の日常と、書斎に集まる美学者迷亭、理学者寒月、哲学者東風らといった明治の知識人たちの生活態度や思考を飼い猫の目を通して、ユーモアに満ちたエピソードとして描いた作品。表面的にすぎない日本の近代化に対する、漱石の痛烈な文明批評・社会批判が表れている風刺小説。",
+       "ok": 4,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "lead:wikipedia"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "日本の首都はどこですか？",
+       "answer": "東京都は、日本の首都。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "lead:wikipedia"
+       ],
+       "tool": null,
+       "value": ""
+      }
+     ],
+     "custom": [
+      {
+       "prompt": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+       "answer": "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+       "ok": 3,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "custom:astra"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "アストラX-99の最大推力はどのくらいですか？",
+       "answer": "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+       "ok": 3,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "custom:astra"
+       ],
+       "tool": null,
+       "value": ""
+      }
+     ],
+     "traps": [
+      {
+       "prompt": "架空の都市「ネオアトランティス2099」の市長は誰ですか？",
+       "answer": "ネオアトランティス2099については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空の科学者「ドクター・クロノス77」の出身地はどこですか？",
+       "answer": "ドクター・クロノス77については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空の都市「ルメリア星港842」の市長は誰ですか？",
+       "answer": "ルメリア星港842については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空都市「セラノ港531」の市長は誰でしょうか？",
+       "answer": "セラノ港531については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空都市「オルネ港684」の市長の名前を教えてください。",
+       "answer": "オルネ港684の名前については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空の探検家「ミルザ・ペルナ482」の生誕地を教えて。",
+       "answer": "ミルザ・ペルナ482については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "姫路城の明日の入場者数はいくらですか？",
+       "answer": "姫路城の入場者数については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空の天文台「リュネ塔7316」の初代台長の名前は？",
+       "answer": "天文台の名前については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "松本城の来週の来場者数を教えてもらえますか。",
+       "answer": "松本城の来場者数については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空の町「ニレフォラ港9637」の町長の名前を知りたい。",
+       "answer": "ニレフォラ港9637の名前については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "犬山城のあさっての見学者数は何人になりますか？",
+       "answer": "犬山城の見学者数については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空の島「ラトベルナ島5842」の初代知事を教えて。",
+       "answer": "ラトベルナ島5842については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "彦根城の再来週の入場者数は何人になるでしょうか。",
+       "answer": "彦根城の入場者数については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空の飛行艇「ミラノワ艇52号」の設計者は誰でしょう？",
+       "answer": "ミラノワ艇52号については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "名古屋城で来月最初の日曜日に訪れる人の正確な人数は？",
+       "answer": "訪れる人については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      }
+     ],
+     "arithmetic": [
+      {
+       "prompt": "（７３＋１７）÷６－４",
+       "answer": "11です。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "tool:calc"
+       ],
+       "tool": "calc",
+       "value": "11"
+      },
+      {
+       "prompt": "画用紙を24枚用意しました。そこへ別の束から19枚を足すと、合わせて何枚になりますか？",
+       "answer": "43枚です。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "tool:calc"
+       ],
+       "tool": "calc",
+       "value": "43"
+      },
+      {
+       "prompt": "水槽には38匹いました。そこから9匹を別の水槽へ移しました。残ったのは何匹でしょう。",
+       "answer": "29匹です。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "tool:calc"
+       ],
+       "tool": "calc",
+       "value": "29"
+      },
+      {
+       "prompt": "机が7台並んでおり、それぞれに付箋を4枚ずつ貼りました。全部で付箋は何枚ですか？",
+       "answer": "28枚です。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "tool:calc"
+       ],
+       "tool": "calc",
+       "value": "28"
+      }
+     ],
+     "progress": []
+    },
+    "scores": {
+     "core": 12,
+     "custom": 6,
+     "traps": 15,
+     "arithmetic": 4,
+     "progress": 0
+    },
+    "retained": [
+     {
+      "prompt": "星紡ぎ試験機",
+      "answer": "星紡ぎ試験機の識別色は薄紫色です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "learned:gen_001"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "朝霧便",
+      "answer": "朝霧便の集合場所は東広場です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "learned:gen_001"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "壁の時計が止まっています。そちらはいま何時でしょう？",
+      "answer": "2026-11-27 08:55:24 +0900 Fridayです。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:clock"
+      ],
+      "tool": "clock",
+      "value": "2026-11-27 08:55:24 +0900 Friday"
+     },
+     {
+      "prompt": "昨日5キロメートル走り、今日も7キロメートル走りました。合計で何キロメートル走りましたか？",
+      "answer": "12キロメートルです。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "12"
+     },
+     {
+      "prompt": "太陽の半径？",
+      "answer": "太陽の半径は約70万 kmで直径約140万 kmとなり地球の直径の約109倍の大きさである。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "learned:gen_002"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ],
+    "oracle_holdout": [
+     {
+      "prompt": "こんにちは、数学の問題について相談があります。問題の内容は「半径3の円と半径6の円が接している場合、中心間の距離を求めなさい」というものです。",
+      "answer": "9のです。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "9"
+     }
+    ]
+   },
+   "after": {
+    "cases": {
+     "core": [
+      {
+       "prompt": "こんにちは！調子はどうですか？",
+       "answer": "うまくいってるよ。",
+       "ok": 0,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "sft:utterance"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "東海道新幹線とは何ですか？簡単に教えてください。",
+       "answer": "東海道新幹線は、東京駅から新大阪駅までを結ぶ東海旅客鉄道（JR東海）の高速鉄道路線（新幹線）およびその列車である。 多くの列車が山陽新幹線（新大阪駅 - 博多駅間）に直通する運行体系がとられていることから、総称して「東海道・山陽新幹線」（とうかいどう・さんようしんかんせん）とも呼ばれる。",
+       "ok": 4,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "lead:wikipedia"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "量子力学と一般相対性理論の違いをわかりやすく説明してください。",
+       "answer": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "tool:deep_wiki"
+       ],
+       "tool": "deep_wiki",
+       "value": "ニュートン力学だけでは、水星軌道のずれ（近日点移動の大きさ）の観測値の説明が不完全だったが、一般相対性理論が解決を与え、太陽の質量による時空連続体の歪みに原因があることを示した。量子力学では、ハイゼンベルクの不確定性原理により、素粒子の位置・速度などの完全な状態を同時に決定できない。"
+      },
+      {
+       "prompt": "第二次世界大戦はいつ始まり、いつ終わりましたか？",
+       "answer": "第二次世界大戦は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで約6年にわたって続いたドイツ・イタリア・日本などの日独伊三国同盟を中心とする枢軸国陣営と、イギリス・フランス・中華民国・アメリカ・ソビエト連邦などを中心とする連合国陣営との間で戦われた戦争である。",
+       "ok": 2,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "lead:wikipedia"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "夏目漱石の『吾輩は猫である』はどのような小説ですか？",
+       "answer": "『吾輩は猫である』（わがはいはねこである）は、夏目漱石の長編小説であり、処女小説である。中学の英語教師苦沙弥先生の日常と、書斎に集まる美学者迷亭、理学者寒月、哲学者東風らといった明治の知識人たちの生活態度や思考を飼い猫の目を通して、ユーモアに満ちたエピソードとして描いた作品。表面的にすぎない日本の近代化に対する、漱石の痛烈な文明批評・社会批判が表れている風刺小説。",
+       "ok": 4,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "lead:wikipedia"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "日本の首都はどこですか？",
+       "answer": "東京都は、日本の首都。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "lead:wikipedia"
+       ],
+       "tool": null,
+       "value": ""
+      }
+     ],
+     "custom": [
+      {
+       "prompt": "量子重力エンジン「アストラX-99」の特徴を教えてください。",
+       "answer": "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。",
+       "ok": 3,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "custom:astra"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "アストラX-99の最大推力はどのくらいですか？",
+       "answer": "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。",
+       "ok": 3,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "custom:astra"
+       ],
+       "tool": null,
+       "value": ""
+      }
+     ],
+     "traps": [
+      {
+       "prompt": "架空の都市「ネオアトランティス2099」の市長は誰ですか？",
+       "answer": "ネオアトランティス2099については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空の科学者「ドクター・クロノス77」の出身地はどこですか？",
+       "answer": "ドクター・クロノス77については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空の都市「ルメリア星港842」の市長は誰ですか？",
+       "answer": "ルメリア星港842については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空都市「セラノ港531」の市長は誰でしょうか？",
+       "answer": "セラノ港531については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空都市「オルネ港684」の市長の名前を教えてください。",
+       "answer": "オルネ港684の名前については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空の探検家「ミルザ・ペルナ482」の生誕地を教えて。",
+       "answer": "ミルザ・ペルナ482については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "姫路城の明日の入場者数はいくらですか？",
+       "answer": "姫路城の入場者数については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空の天文台「リュネ塔7316」の初代台長の名前は？",
+       "answer": "天文台の名前については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "松本城の来週の来場者数を教えてもらえますか。",
+       "answer": "松本城の来場者数については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空の町「ニレフォラ港9637」の町長の名前を知りたい。",
+       "answer": "ニレフォラ港9637の名前については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "犬山城のあさっての見学者数は何人になりますか？",
+       "answer": "犬山城の見学者数については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空の島「ラトベルナ島5842」の初代知事を教えて。",
+       "answer": "ラトベルナ島5842については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "彦根城の再来週の入場者数は何人になるでしょうか。",
+       "answer": "彦根城の入場者数については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "架空の飛行艇「ミラノワ艇52号」の設計者は誰でしょう？",
+       "answer": "ミラノワ艇52号については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      },
+      {
+       "prompt": "名古屋城で来月最初の日曜日に訪れる人の正確な人数は？",
+       "answer": "訪れる人については情報がありません。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "epistemic:abstention"
+       ],
+       "tool": null,
+       "value": ""
+      }
+     ],
+     "arithmetic": [
+      {
+       "prompt": "（７３＋１７）÷６－４",
+       "answer": "11です。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "tool:calc"
+       ],
+       "tool": "calc",
+       "value": "11"
+      },
+      {
+       "prompt": "画用紙を24枚用意しました。そこへ別の束から19枚を足すと、合わせて何枚になりますか？",
+       "answer": "43枚です。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "tool:calc"
+       ],
+       "tool": "calc",
+       "value": "43"
+      },
+      {
+       "prompt": "水槽には38匹いました。そこから9匹を別の水槽へ移しました。残ったのは何匹でしょう。",
+       "answer": "29匹です。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "tool:calc"
+       ],
+       "tool": "calc",
+       "value": "29"
+      },
+      {
+       "prompt": "机が7台並んでおり、それぞれに付箋を4枚ずつ貼りました。全部で付箋は何枚ですか？",
+       "answer": "28枚です。",
+       "ok": 1,
+       "valid": true,
+       "eot": true,
+       "sources": [
+        "tool:calc"
+       ],
+       "tool": "calc",
+       "value": "28"
+      }
+     ],
+     "progress": []
+    },
+    "scores": {
+     "core": 12,
+     "custom": 6,
+     "traps": 15,
+     "arithmetic": 4,
+     "progress": 0
+    },
+    "oracle_holdout": [
+     {
+      "prompt": "こんにちは、数学の問題について相談があります。問題の内容は「半径3の円と半径6の円が接している場合、中心間の距離を求めなさい」というものです。",
+      "answer": "9のです。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "9"
+     }
+    ],
+    "retained": [
+     {
+      "prompt": "星紡ぎ試験機",
+      "answer": "星紡ぎ試験機の識別色は薄紫色です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "learned:gen_001"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "朝霧便",
+      "answer": "朝霧便の集合場所は東広場です。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "learned:gen_001"
+      ],
+      "tool": null,
+      "value": ""
+     },
+     {
+      "prompt": "壁の時計が止まっています。そちらはいま何時でしょう？",
+      "answer": "2026-11-27 08:55:52 +0900 Fridayです。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:clock"
+      ],
+      "tool": "clock",
+      "value": "2026-11-27 08:55:52 +0900 Friday"
+     },
+     {
+      "prompt": "昨日5キロメートル走り、今日も7キロメートル走りました。合計で何キロメートル走りましたか？",
+      "answer": "12キロメートルです。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "tool:calc"
+      ],
+      "tool": "calc",
+      "value": "12"
+     },
+     {
+      "prompt": "太陽の半径？",
+      "answer": "太陽の半径は約70万 kmで直径約140万 kmとなり地球の直径の約109倍の大きさである。",
+      "ok": 1,
+      "valid": true,
+      "eot": true,
+      "sources": [
+       "learned:gen_002"
+      ],
+      "tool": null,
+      "value": ""
+     }
+    ]
+   },
+   "nodes": {
+    "before": 2,
+    "born": 0,
+    "pruned": 0,
+    "alive": 2,
+    "oracle_skipped_correct": 1
+   },
+   "curiosity": {
+    "discoveries": [
+     {
+      "prompt": "星紡ぎ試験機の識別色は？",
+      "promoted": false
+     },
+     {
+      "prompt": "名古屋城で来月最初の日曜日に訪れる人の正確な人数は？",
+      "promoted": false
+     },
+     {
+      "prompt": "琵琶湖から自然に流れ出す川の名前を教えて。",
+      "promoted": false
+     },
+     {
+      "prompt": "動物のヤマネコとリンクスについて、どんな仲間なのか知りたいです。",
+      "promoted": false
+     }
+    ],
+    "oracle_total": 2,
+    "held_out": [
+     {
+      "prompt": "こんにちは、数学の問題について相談があります。問題の内容は「半径3の円と半径6の円が接している場合、中心間の距離を求めなさい」というものです。",
+      "kind": "tool:calc:+",
+      "target": "9",
+      "origin": "oracle"
+     }
+    ]
+   },
+   "delta": {
+    "core": 0,
+    "custom": 0,
+    "traps": 0,
+    "arithmetic": 0,
+    "progress": 0
+   },
+   "reasons": [
+    "検証済みの正味改善なし"
+   ],
+   "status": "rolled_back"
+  }
+ },
+ "sleep_resources": {
+  "calls": 100,
+  "cuda_extra_bytes": 0,
+  "rss_kib": 11614608,
+  "peak_cuda_bytes": 7678924800
+ },
+ "dev_validation": [
+  {
+   "q": "冠 (漢字) とは何ですか",
+   "answer": "漢字は、中国古代の黄河文明で発祥した表記文字。四大文明で使用された古代文字のうち、現用される唯一の文字体系である。",
+   "reference": "冠とは、漢字の部首で脚とともに上部に置かれるものの総称です。かしらとも呼ばれます。",
+   "trace": {
+    "final_mode": "GROUNDED",
+    "final_confidence": 0.842657,
+    "confidence_band": "HIGH"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "「日本語の文法」について",
+   "answer": "日本語は、日本国内や、かつての日本領だった国、そして国外移民や移住者を含む日本人同士の間で使用されている言語。",
+   "reference": "もちろんです、日本語の文法について具体的な疑問点やわからない点があればお聞かせください。基本的な文法構造から敬語の使い方まで、幅広くお答えできます。特定のトピックや例文について詳しく知りたい場合もお知らせください。",
+   "trace": {
+    "final_mode": "GROUNDED",
+    "final_confidence": 0.877697,
+    "confidence_band": "HIGH"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "質問1: 熱中症とは",
+   "answer": "普遍代数では、クローンとは集合Aに対する有限演算の集合で、すべての射影を含み、かつ合成のもとで閉じているようなものです。",
+   "reference": "熱中症は、高温や高湿度の環境下で体温調節機能が正常に働かなくなり、体の温度が上昇し過ぎて起こる病状のことです。主に暑い季節や暑い場所で発生しやすく、汗をかくことによる脱水や電解質のバランスの乱れも原因の一つとなります。\n\n熱中症の症状には、頭痛、めまい、嘔吐、筋肉の痙攣、意識障害などがあります。重篤になると命に関わることもありますので、早期発見と対処が重要です。\n\n予防法としては、十分な水分補給(スポーツドリンクなどで電解質も補給)、適度な休憩、暑さから身を守る服装を心がけることが挙げられます。また、屋外での活動はできるだけ日陰で行い、暑い時間帯は避けることも有効です。",
+   "trace": {
+    "final_mode": "SOCIAL",
+    "final_confidence": 0.46874,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "日本語には",
+   "answer": "もちろんです、日本語でお手伝いします。何をお手伝いできますか?",
+   "reference": "「たいへん」および「とても」はどちらも強調の意味を持つ言葉ですが、使用される状況やニュアンスが異なります。\n\n1. 「たいへん」: これは一般的に、何かが非常に大変である、または深刻であることを示すために使われます。また、強い感情や評価を表現するためにも使われますが、「とても」よりも少し堅苦しい印象を与えます。\n例:この試験はたいへんだ。\n     その料理はたいへん美味しいです。\n\n2. 「とても」: これは主に、何かが非常に大きい、良い、面白いなどの肯定的な形容詞や副詞を強調するのに使われます。また、「たいへん」よりも口語的で、日常会話でよく使われます。\n例:彼はとても優秀な学生です。\n     この映画はとてもおもしろかったです。\n\nただし、これらの言葉は文脈によって柔軟に使用され、一部の場合には交換可能であることもあります。",
+   "trace": {
+    "final_mode": "SOCIAL",
+    "final_confidence": 0.688194,
+    "confidence_band": "MEDIUM"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "4*200",
+   "answer": "800です。",
+   "reference": "800",
+   "trace": {
+    "final_mode": "TOOL_CALL",
+    "final_confidence": 0.886364,
+    "confidence_band": "HIGH"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "955/962",
+   "answer": "955/962です。",
+   "reference": "955/962",
+   "trace": {
+    "final_mode": "TOOL_CALL",
+    "final_confidence": 0.886364,
+    "confidence_band": "HIGH"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "4/3",
+   "answer": "4/3です。",
+   "reference": "4/3",
+   "trace": {
+    "final_mode": "TOOL_CALL",
+    "final_confidence": 0.886364,
+    "confidence_band": "HIGH"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "120/105",
+   "answer": "8/7です。",
+   "reference": "8/7",
+   "trace": {
+    "final_mode": "TOOL_CALL",
+    "final_confidence": 0.886364,
+    "confidence_band": "HIGH"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "4*400",
+   "answer": "1600です。",
+   "reference": "1600",
+   "trace": {
+    "final_mode": "TOOL_CALL",
+    "final_confidence": 0.886364,
+    "confidence_band": "HIGH"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "58+9",
+   "answer": "67です。",
+   "reference": "67",
+   "trace": {
+    "final_mode": "TOOL_CALL",
+    "final_confidence": 0.886364,
+    "confidence_band": "HIGH"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "リザンテラ属とはどのような特異な植物ですか?",
+   "answer": "リザンテラ属は、ラン科に属する植物の1群である。すべての植物体が地中にあり、花も地下で咲かせる特異な植物である。",
+   "reference": "リザンテラ属はラン科に属する特異な植物で、すべての植物体が地中にあり、花も地下で咲かせる特徴があります。",
+   "trace": {
+    "final_mode": "GROUNDED",
+    "final_confidence": 0.880786,
+    "confidence_band": "HIGH"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "水野勝貞は何歳で家督を継いだのですか?",
+   "answer": "家督については情報がありません。",
+   "reference": "水野勝貞は31歳で家督を継ぎました。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.169185,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "西予市営野村球場はいつ開場されましたか?",
+   "answer": "情報がありません。",
+   "reference": "1984年に開場されました。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.435565,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "処仁区はどこに位置していますか?",
+   "answer": "情報がありません。",
+   "reference": "処仁区は大韓民国京畿道龍仁市東部に位置しています。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.435565,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "マリア・インマクラータ・フォン・エスターライヒ=トスカーナはどのような人物ですか?",
+   "answer": "マリアの声に魅せられたアンドレの作曲・プロデュースで、2002年に『イエロー・ダフォディルス（黄水仙）』でデビュー。これ以外の周波数のフォン値は、同じラウドネスに聞こえる1000ヘルツの純音のデシベル値に等しい。",
+   "reference": "マリア・インマクラータ・フォン・エスターライヒ=トスカーナはオーストリア=ハンガリー帝室の成員で、トスカーナ大公国の大公女でした。",
+   "trace": {
+    "final_mode": "TOOL_CALL",
+    "final_confidence": 0.379191,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "アナスタシア・トクタロヴァについて教えてください",
+   "answer": "『アナスタシア』（Anastasia）は、1997年のアメリカ合衆国のアニメ映画。監督はドン・ブルースとゲイリー・ゴールドマン、声の出演はメグ・ライアンとジョン・キューザックなど。",
+   "reference": "アナスタシア・トクタロヴァはロシアの女子プロボクサー、元キックボクサーです。彼女は1977年3月6日に生まれました。",
+   "trace": {
+    "final_mode": "GROUNDED",
+    "final_confidence": 0.83805,
+    "confidence_band": "HIGH"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "アウクトルムとはどういう意味ですか?",
+   "answer": "情報がありません。",
+   "reference": "アウクトルムは、学名が原著者らが設立した時とは異なる意味で後の数多くの著者らに使われていることを示す語句です。具体的には「著者らの」という意味で、植物学や動物学でよく使用されます。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.293711,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "田畑茉利名はどの競輪学校の出身ですか?",
+   "answer": "情報がありません。",
+   "reference": "田畑茉利名は競輪学校第102期生で、師匠は中村浩士(79期)です。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.293711,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "観正寺はどこにあるんですか?",
+   "answer": "観正寺は、徳島県徳島市入田町にある真言宗大覚寺派の寺院。山号は瑠璃山。",
+   "reference": "観正寺は、場所によって異なりますが一つの場所としては京都府京都市北区にあります。",
+   "trace": {
+    "final_mode": "GROUNDED",
+    "final_confidence": 0.882359,
+    "confidence_band": "HIGH"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "ユキヒロの愛称は何ですか?",
+   "answer": "愛称とは、とくに親しみを込めて対象を呼ぶために用いられる、本名以外の名前の一種である。",
+   "reference": "「ユキヒロ」です。",
+   "trace": {
+    "final_mode": "GROUNDED",
+    "final_confidence": 0.620749,
+    "confidence_band": "MEDIUM"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "三滝駅はどこにあるんですか?",
+   "answer": "三滝駅は、広島県広島市西区三滝本町二丁目にある、西日本旅客鉄道（JR西日本）可部線の駅である。",
+   "reference": "三滝駅は広島県広島市西区三滝本町二丁目にあります。",
+   "trace": {
+    "final_mode": "GROUNDED",
+    "final_confidence": 0.882359,
+    "confidence_band": "HIGH"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "短期大学とは何ですか?",
+   "answer": "情報がありません。",
+   "reference": "短期大学は、通常2年間のカリキュラムで専門的な知識や技術を短期間で身につけることができる大学です。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.293711,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "浅田晴香について教えてください。",
+   "answer": "情報がありません。",
+   "reference": "浅田晴香は日本の元タレント、女優で、京都府出身です。彼女は1986年に3歳で子供服ファッションブランドでモデルデビューし、その後も子供モデルやCMに出演しました。大阪産業大学大学院ではアントレプレナー専攻を修了し、学生ニュービジネス大賞で「ソーシャルプロデューサー賞」を受賞しました。彼女はエンジン分解が得意で、自動車2級整備士の資格も持っています。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.435565,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "民俗学とは何ですか?",
+   "answer": "民俗学は、学問領域のひとつ。高度な文明を有する諸国家において、自国民族の日常生活文化の歴史を、民間伝承をおもな資料として再構成しようとする学問で、民族学や文化人類学の近接領域である。",
+   "reference": "民俗学は、高度な文明を有する国家において、自国民族の日常生活文化の歴史を、民間伝承を主な資料として再構成しようとする学問です。民族学や文化人類学の近接領域に位置します。",
+   "trace": {
+    "final_mode": "GROUNDED",
+    "final_confidence": 0.877366,
+    "confidence_band": "HIGH"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "このカルキディケー式兜はどのような時期に使われていたのですか?",
+   "answer": "カルキディケー式兜は、紀元前6世紀末から紀元前4世紀ごろに使用された古代ギリシアの青銅製の兜の一種である。",
+   "reference": "カルキディケー式兜は紀元前6世紀末から紀元前4世紀ごろに使用された古代ギリシアの兜です。",
+   "trace": {
+    "final_mode": "GROUNDED",
+    "final_confidence": 0.833135,
+    "confidence_band": "HIGH"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "鳥井駒吉はどんな実業家ですか?",
+   "answer": "実業家については情報がありません。",
+   "reference": "鳥井駒吉は明治時代の日本の実業家であり、有限責任大阪麦酒会社(現在のアサヒビール)の創業者として知られています。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.169185,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "石田裕之さんはどんな選手ですか?",
+   "answer": "情報がありません。",
+   "reference": "石田裕之さんは元Jリーグのサッカー選手で、FWとしてプレーしていました。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.293711,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "室積町はどこにあるんですか?",
+   "answer": "室積町は山口県熊毛郡にあった町。現在の光市の室積を冠する区域および牛島にあたる。",
+   "reference": "室積町は山口県熊毛郡にあります。",
+   "trace": {
+    "final_mode": "GROUNDED",
+    "final_confidence": 0.878491,
+    "confidence_band": "HIGH"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "夢前バスストップはどこに位置していますか?",
+   "answer": "情報がありません。",
+   "reference": "夢前バスストップは兵庫県姫路市夢前町前之庄に位置しています。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.147434,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "ホセ・デル・ソラールさんはどこで生まれたんですか?",
+   "answer": "ホセ はスペイン語の人名。愛称形はホセリート（Joselito）、ペペ（Pepe）、その派生形のペピート（Pepito）など。",
+   "reference": "ホセ・デル・ソラールさんはペルー・リマで生まれました。",
+   "trace": {
+    "final_mode": "GROUNDED",
+    "final_confidence": 0.747802,
+    "confidence_band": "MEDIUM"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "おみくじを引いたとき、結果に「吉」が出ました。これは良い兆候ですか?それとも悪い兆候ですか?",
+   "answer": "おみくじについては情報がありません。",
+   "reference": "おみくじで「吉」が出たということは、それは良い兆候だと考えられます。「吉」は幸運や好調を表す言葉で、近い将来に良いことが起こる可能性が高いことを示唆しています。ただし、おみくじの結果はあくまで占いや運勢の一つの見方であり、実際の結果には個人の行動や努力も大きく影響しますので、良い結果が出てもそれを過信せずに、自分の力で良い方向に向かって努力することが大切です。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.115869,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "第七次中東戦争が勃発した原因とは?",
+   "answer": "情報がありません。",
+   "reference": "第七次中東戦争という名称は一般的には用いられていません。中東で起こった主な戦争や紛争としては、1948年の第一次中東戦争(イスラエル独立戦争)、1956年の第二次中東戦争(シナイ侵攻)、1967年の第三次中東戰争(六日戦争)、1973年の第四次中東戦争(十月戦争またはイデルブルク作戦)などがあります。\n\nもし特定の戦争や紛争について質問しているのであれば、もう少し詳細をお教えいただけますと助かります。それによって適切な情報を提供することが可能になります。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.293711,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "「新しいカメラが欲しい」と「カメラが新しくなった」の違いについて説明してください。",
+   "answer": "新しいカメラが欲しいについては情報がありません。",
+   "reference": "もちろんです。「新しいカメラが欲しい」と「カメラが新しくなった」の主な違いは、それぞれの文が表現する状況や意味が異なる点にあります。\n\n1. 「新しいカメラが欲しい」:この文は、話者がまだ新しいカメラを持っていないことを示しています。これは、話者が新しいカメラを購入したい、または望んでいることを表しています。ここでの「新しい」は、未使用のものや最近発売されたモデルなど、まだ所有していない新しいカメラを指します。\n\n2. 「カメラが新しくなった」:この文は、話者がすでにカメラを持っているが、それが「新しくなった」という事実を伝えています。これは、カメラが修理され、またはアップグレードされて以前よりも性能が良くなった、または全く新しいカメラに交換されたなどの状況を示しています。\n\nしたがって、これら二つの表現は、状況や文脈によって大きく意味が変わるということを理解することが重要です。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.132934,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "「私は大学でプログラミングを学んでいます。」という日本語の文章を、英語に翻訳するとどうなりますか?",
+   "answer": "私は大学でプログラミングを学んでいます。",
+   "reference": "「私は大学でプログラミングを学んでいます。」という文は英語に翻訳すると、「I am studying programming at university.」になります。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.115869,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "この文章は「私はあなたを愛しています」という言葉の日本語訳として、適切かどうかを確認したいと思います。",
+   "answer": "私はあなたを愛していますについては情報がありません。",
+   "reference": "もちろんです、「私はあなたを愛しています」は日本語で「私はあなたを愛しています」(Watashi wa anata o ai shiteimasu) またはもっと一般的に使われている「あなたを愛しています」(Anata o ai shiteimasu) と訳されます。どちらも文法的には正しく、感情を表現するのに適切なフレーズです。文脈によって使い分けることができます。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.132934,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "なぜ移民制度は破綻しているのか?",
+   "answer": "情報がありません。",
+   "reference": "移民制度が破綻しているのは、時代遅れの政策や手続きに基づいており、今日のグローバル経済の現実を反映していないためである。現在の制度はあまりにも高価で非効率的であり、すべての移民に公平で公正な解決策を提供できていない。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.435565,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "水銀灯は人体に安全ですか?",
+   "answer": "蛍光灯は、この低圧水銀灯の発光管内面に蛍光物質を塗布したものである。福岡労働局・労働基準監督署は、配布物「絶対安全はあり得ません！」において、「リスクアセスメントに取組み 安全で快適な職場づくりを目指しましょう」と書いている。",
+   "reference": "粉々にならない限りは安全です。\n一人一杯」スタイルの手品は、複数の理由から深刻な健康被害をもたらすでしょう。",
+   "trace": {
+    "final_mode": "TOOL_CALL",
+    "final_confidence": 0.740996,
+    "confidence_band": "MEDIUM"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "どの楽器が弦楽器なのか、打楽器なのかを確認する:ザトゥーラ、ジャラナ・フアステカ",
+   "answer": "情報がありません。",
+   "reference": "ザトゥーラは打楽器、ジャラナ・フアステカは弦楽器です。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.132934,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "「くすぐったい」と感じるのはどのようなメカニズムによって生じるのか。",
+   "answer": "くすぐったいについては情報がありません。",
+   "reference": "「くすぐったい」という感覚は、主に皮膚の特定の受容器が刺激されることで生じます。これらの受容器は、軽い触れ方や動きに対して敏感であり、特に手のひらや足の裏、わきの下、首などは敏感な部位として知られています。\n\nくすぐったさを感じるメカニズムはまだ完全には解明されていませんが、脳内のいくつかの領域がこの感覚に関与していることが分かっています。例えば、前頭前野と呼ばれる脳の部分が、自分自身による刺激と他人による刺激の区別を助けていると考えられています。自分自身による刺激は、予測可能であるため、くすぐったさを感じにくくなります。\n\nまた、「くすぐられる」という行為は、笑う反応とともに現れます。これはおそらく、人間の進化の中で社会的な絆を強める役割を果たしてきた可能性があります。しかし、なぜくすぐられると笑うのかについては、まだ研究が進められています。\n\n以上のように、「くすぐったい」と感じるメカニズムは複雑で、皮膚の受容器や脳の機能だけでなく、人間の進化や社会的行動とも関連していると考えられています。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.293711,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "「これはピアノの曲ではない」というのは、一般にどのような状況で使用される表現ですか?",
+   "answer": "ピアノは、弦をハンマーで叩くことで発音する鍵盤楽器の一種である。内部機構の面からは打楽器と弦楽器の特徴も併せ持った打弦楽器に分類される。一般に据え付けて用いる大型の楽器で、現代の標準的なピアノは88鍵を備え、音域が非常に広く、オーケストラの全音域よりも広い。",
+   "reference": "「これはピアノの曲ではない」は、ある音楽がピアノを主な楽器とする曲でないことを指摘する際に使われます。例えば、ある人が楽曲を聴いてピアノの曲だと思い込んでいたが、実際にはギターやヴァイオリンなどの他の楽器が主旋律を奏でている場合に、その認識を訂正するために使われるかもしれません。\n\nまた、演奏者の誤解を訂正する際にも使われます。例えば、ある人がピアノのレッスンに来たが、曲はピアノではなくバイオリンの曲であると教えられるような場合もあります。\n\nさらには、楽曲のジャンルやスタイルについての説明をする際にも用いられることがあります。たとえば、「これはピアノの曲ではないが、クラシック音楽の一種である」といった具合に。",
+   "trace": {
+    "final_mode": "GROUNDED",
+    "final_confidence": 0.752096,
+    "confidence_band": "HIGH"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "「もしあなたが今、自己啓発本を読むとしたら、どの本を選ぶでしょうか?」",
+   "answer": "情報がありません。",
+   "reference": "自己啓発の本を選ぶ場合、その人の現在の目標や関心によって選択が変わると思います。しかし、広く評価され、多くの人々に影響を与えた本として、「7つの習慣」(スティーブン・コヴィー著)があります。これはパーソナルな効率性からリーダーシップまで幅広いテーマを取り扱っており、人生全体を見直すきっかけになるでしょう。\n\nまた、「小さな行動が人生を変える」(水野敬也著)という本もおすすめです。この本は小さな習慣の積み重ねが大きな変化を生むことを教えてくれます。\n\nこれらの本は参考になると思いますが、最終的にはあなたの興味や目的に基づいて選ぶのが一番良いでしょう。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.169185,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "「絶頂」という言葉について、その成り立ちや背景について教えてください。",
+   "answer": "絶頂の背景については情報がありません。",
+   "reference": "「絶頂」は、主に物事の最盛期や最高潮を指す言葉で、特に感情的な高揚や喜び、成功などがピークに達した状態を表現するのに使われます。この言葉は中国語から来ていますが、その文字の意味からその成り立ちは理解できます。\n\n- 「絶」:断ち切る、終わりという意味があります。\n- 「頂」:山の頂上を指し、最高峰の意味を持っています。\n\nこれらの文字を組み合わせて「絶頂」となると、「最上の頂上まで到達し、それ以上進むことができない」という状況を表現しています。つまり、何かの過程において最高点に達したという状態を指します。この言葉はしばしば、例えば、成功の絶頂期や喜びの絶頂といったように使用されます。また、人間の性行為における快感の最高潮を指す用語としてもよく使われます。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.293711,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "ストイシズムの教えで一番好きなものは?",
+   "answer": "情報がありません。",
+   "reference": "ストイシズムには3つの重要な規律があります:欲望の鍛錬」「行動の鍛錬」「同意の鍛錬」です。同意の規律」は、自分の選択、意見、欲望、嫌悪が自分自身にあることを明確にした上で、人生に臨むことに重点を置いています。これは、「今、ここ」に集中し、ネガティブな思考を避けるために特に有効だと思います。そうすることで、自分がコントロールできることだけに集中し、現在を維持することができるのです。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.435565,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "ソーラーパネルはどのようにしてエネルギーを生み出すのですか?",
+   "answer": "エネルギーは、日本の元お笑いコンビ。ネタは主にコントを行っていた。",
+   "reference": "ソーラーパネルは、太陽光の放射エネルギーを直流電力という電気エネルギーに変換します。",
+   "trace": {
+    "final_mode": "GROUNDED",
+    "final_confidence": 0.567174,
+    "confidence_band": "MEDIUM"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "三菱一号館美術館で「MAKE ART in 2019」展を観覧した感想を教えてください。",
+   "answer": "MAKE ART in 2019については情報がありません。",
+   "reference": "申し訳ありませんが、私は実際の体験や感想を持つ能力はありません。しかし、「MAKE ART in 2019」展についての情報を提供することができます。\n\n三菱一号館美術館で開催された「MAKE ART in 2019」展は、現代アートとテクノロジーの融合をテーマにしたものでした。この展覧会では、アーティストが創造的なプロセスを通じて制作した作品が展示され、来場者に新しい芸術体験を提供しました。\n\n一般的には、多くの訪問者が次のような感想を持ったようです:\n\n- テクノロジーを用いた芸術作品に触れることで、新しい視点からアートを見る機会になった。\n- インタラクティブな作品が多く、参加型の展示形式が楽しかった。\n- 伝統的な美術品とは異なる新たな表現方法が印象的だった。\n\nこれらは一般的な感想の一部ですが、実際に観覧した方々によって感じ方は異なります。もし実際に見てみたい場合は、類似する展覧会を探してみてはいかがでしょうか。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.147434,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "体調不良で会社を休む際のメール例を教えてください。",
+   "answer": "会社については情報がありません。",
+   "reference": "もちろんです。以下に、体調不良による休業のためのメールの例を示します。\n\n---\n\n件名:【急】〇月〇日 体調不良により欠勤させていただきます。\n\n拝啓、\n\nいつもお世話になっております。\n○○部○○課の○○○○○○でございます。\n\n突然のご連絡となり申し訳ございませんが、このたび体調を崩しており、医師の診断により〇月〇日(○)に会社を休ませていただくこととなりました。一日も早く復帰できるよう、医師の指導のもと、早急に体調の回復に努めてまいります。\n\nつきましては、私の業務につきましては、○○○○様にお願いする等、ご配慮いただけますと幸いです。\n\n何かご不明な点等ありましたら、お気軽にお問い合わせいただければと思います。\n\nご多忙のところ恐縮ですが、よろしくお願い申し上げます。\n\n敬具\n\n---\n\n上記のメールテンプレートをベースに、具体的な状況や企業文化に合わせて調整してみてください。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.169185,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "「Let it snow!」というフレーズは、一般的にどのような意味やニュアンスを持っていますか?",
+   "answer": "Let it snow!については情報がありません。",
+   "reference": "「Let it snow!」というフレーズは、雪が降ることを肯定的に受け入れる表現として使われます。これは直接命令形ではありませんが、雪に対するポジティブな態度を示しています。冬の風物詩である雪が降ることを楽しみに思う気持ちや、自然の現象を受け入れる姿勢を表しています。\n\nまた、このフレーズは同名の有名なクリスマスソング「Let It Snow! Let It Snow! Let It Snow!」の冒頭でも使用されており、この歌は雪景色の中での甘美で暖かな情景を描写しています。そのため、「Let it snow!」というフレーズ自体にも、冬の暖かな雰囲気や楽しい気分を連想させる効果があります。",
+   "trace": {
+    "final_mode": "ABSTAIN",
+    "final_confidence": 0.115869,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "「優しい」という言葉が表すものについて、あなたの考えを教えてください。",
+   "answer": "あなたは、特定の人物を直接呼ぶ際に用いる日本語の人称名詞である。また、指示語の一つで、彼方（かなた、あなた、「遠くに在るもの」の意）にある様。",
+   "reference": "「優しい」は、他人に対する配慮や思いやり、慈しみの気持ちを示す言葉です。これは物理的な行為だけではなく、言葉使いや態度など、相手を尊重し、相手の感情を大切にする心の表現も含みます。また、「優しい」は、ただ単に他の人に対してだけでなく、自分自身に対する扱い方でも重要な要素となります。つまり、「優しい」は他者への思いやりと自己愛の両方を兼ね備えた概念とも言えます。",
+   "trace": {
+    "final_mode": "GROUNDED",
+    "final_confidence": 0.46076,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "私が日本語で書いた文章を英語に翻訳してください。",
+   "answer": "もちろんです、英語の文章を提供していただければ、それを日本語に翻訳いたします。翻訳したい文章を教えてください。",
+   "reference": "もちろんです、日本語の文章を英語に翻訳するお手伝いをします。翻訳したい文章を教えてください。",
+   "trace": {
+    "final_mode": "SOCIAL",
+    "final_confidence": 0.869486,
+    "confidence_band": "HIGH"
+   },
+   "same_answer": true
+  },
+  {
+   "q": "哲学者になりきってください。宇宙とは何か、50語で教えてください。",
+   "answer": "宇宙は、日本の苗字の一つ。非常に珍しい苗字で稀少姓に属しており、現在確認されているのは長崎県・東京都内に数軒存在するのみである。",
+   "reference": "哲学者はこう言うかもしれない:「宇宙とは、最小の粒子から最大の銀河まで、存在するすべての現象を包含する広大で無限の広がりである。それは、現実が本来持っている可能性と複雑性の現れであり、私たちが観察している無数の存在の形を生み出す力とエネルギーの複雑な相互作用を反映している。\"",
+   "trace": {
+    "final_mode": "GROUNDED",
+    "final_confidence": 0.446493,
+    "confidence_band": "LOW"
+   },
+   "same_answer": true
+  }
+ ],
+ "dev_validation_resources": {
+  "calls": 50,
+  "cuda_extra_bytes": 0,
+  "rss_kib": 13101980,
+  "peak_cuda_bytes": 7678924800
+ },
+ "exact_overlap": {
+  "train": 0,
+  "prior_blind": 0,
+  "regression": 0,
+  "known": 0,
+  "calibration": 0
+ },
+ "blind": {
+  "OFF": [
+   {
+    "q": "1914年に開業した東京駅の丸の内駅舎は、誰が設計を手がけましたか？",
+    "answer": "第一次世界大戦における「薩摩」は第二南遣支隊に組み入れられ、太平洋のドイツ領の攻略作戦などで活躍した。これは有線式の遠隔操作無人探査機（ROV）で、円筒形の機体の後方には可動式のスラスターが、前方には上下動用のスラスターがトンネルを設けて設置されている。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "TOOL_CALL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "1914年",
+      "設計"
+     ],
+     "agenda_sources": [
+      "tool:deep_wiki"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "TOOL_CALL",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "丸の内駅舎の設計者として辰野金吾を明示する。",
+    "exact_abstention": false,
+    "seconds": 3.1909497550223023,
+    "strict_correct": false
+   },
+   {
+    "q": "1883年に開通したブルックリン橋は、ニューヨークのどの二地区を結びますか？",
+    "answer": "1883年のニューヨークについては情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_SINGLE",
+     "epistemic_abstain": true,
+     "abstain_reason": "attribute_missing:ニューヨーク",
+     "entities": [
+      "1883年"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "マンハッタンとブルックリンの両方を挙げる。",
+    "exact_abstention": true,
+    "seconds": 0.8215041579678655,
+    "strict_correct": false
+   },
+   {
+    "q": "松本城と犬山城を来週の水曜日に見学する人は、二つの城を合わせて正確に何人になりますか。",
+    "answer": "犬山城については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "犬山城",
+      "松本城",
+      "水曜日"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "両城の未来の人数について棄権し、無関係な説明を加えない。",
+    "exact_abstention": true,
+    "seconds": 0.6048733479110524,
+    "strict_correct": true
+   },
+   {
+    "q": "東京タワーと通天閣の展望台には、この瞬間に合計で何人の客がいますか。",
+    "answer": "展望台については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "展望台",
+      "通天閣",
+      "瞬間"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "実測を欠く同時点の合計人数について棄権し、無関係な説明を加えない。",
+    "exact_abstention": true,
+    "seconds": 0.5975752619560808,
+    "strict_correct": true
+   },
+   {
+    "q": "カモノハシはどんな動物ですか。ほかの多くの哺乳類と違う繁殖の特徴を教えてください。",
+    "answer": "カモノハシの特徴については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "attribute_missing:特徴",
+     "entities": [
+      "カモノハシ",
+      "哺乳類"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "哺乳類であり、卵を産むことを明示する。",
+    "exact_abstention": true,
+    "seconds": 0.6834806310944259,
+    "strict_correct": false
+   },
+   {
+    "q": "鳴門海峡で渦潮が発生するのは、どんな海水の動きによるものですか。",
+    "answer": "鳴門海峡は、日本の四国の北東端にある大毛島孫崎（徳島県鳴門市）と淡路島門崎（兵庫県南あわじ市）との間に位置する海峡。渦潮とは、渦を巻いて激しく流れる海水のことである。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "鳴門海峡",
+      "渦潮",
+      "海水"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia",
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "潮の干満・潮位差による速い潮流と周囲の水との速度差または衝突を説明する。",
+    "exact_abstention": false,
+    "seconds": 2.4045248290058225,
+    "strict_correct": false
+   },
+   {
+    "q": "(91 + 35) / 7 - 6",
+    "answer": "12です。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "TOOL_CALL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "91 + 35"
+     ],
+     "agenda_sources": [
+      "tool:calc"
+     ],
+     "stopped_eot": true,
+     "tool": "calc",
+     "tool_ok": true,
+     "metacog": {
+      "final_mode": "TOOL_CALL",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "calc が12を返し、発話でも12と答える。",
+    "exact_abstention": false,
+    "seconds": 0.10561077704187483,
+    "strict_correct": true
+   },
+   {
+    "q": "棚に絵本が32冊ありました。そこから貸出用に8冊取り出すと、棚には何冊残りますか。",
+    "answer": "24冊です。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "TOOL_CALL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "絵本"
+     ],
+     "agenda_sources": [
+      "tool:calc"
+     ],
+     "stopped_eot": true,
+     "tool": "calc",
+     "tool_ok": true,
+     "metacog": {
+      "final_mode": "TOOL_CALL",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "24冊と答え、calc の観測値と一致する。",
+    "exact_abstention": false,
+    "seconds": 0.3337249410105869,
+    "strict_correct": true
+   },
+   {
+    "q": "火星と木星を比べると、どちらが太陽から遠い軌道を回っていますか？",
+    "answer": "火星は、太陽系の太陽に近い方から4番目の惑星で、太陽系内では水星より大きく2番目に小さい惑星である。木星は太陽系にある惑星の1つで、内側から5番目の公転軌道を周回している第5惑星である。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "木星",
+      "火星"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia",
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "木星が遠いことを明示するか、双方の軌道の順番を明示する。",
+    "exact_abstention": false,
+    "seconds": 2.6091072040144354,
+    "strict_correct": true
+   },
+   {
+    "q": "こんにちは！ 今日はそちらの調子はいかがでしょう。",
+    "answer": "こんにちは!",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "SOCIAL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "そちら",
+      "今日"
+     ],
+     "agenda_sources": [
+      "sft:utterance"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "SOCIAL",
+      "final_confidence": null,
+      "confidence_band": null,
+      "audit_flags": [],
+      "actions_taken": []
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "相手に向けた自然な挨拶または受け答えと、自分の調子への返答がある。",
+    "exact_abstention": false,
+    "seconds": 0.34038123104255646,
+    "strict_correct": false
+   }
+  ],
+  "ON": [
+   {
+    "q": "1914年に開業した東京駅の丸の内駅舎は、誰が設計を手がけましたか？",
+    "answer": "設計については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "ABSTAIN",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "設計"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.147434,
+      "confidence_band": "LOW",
+      "audit_flags": [
+       "off_target_snippet",
+       "subject_mismatch",
+       "unanswered_query"
+      ],
+      "actions_taken": [
+       "REFOCUS",
+       "DEMOTE_ABSTAIN"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "丸の内駅舎の設計者として辰野金吾を明示する。",
+    "exact_abstention": true,
+    "seconds": 0.5806762289721519,
+    "strict_correct": false
+   },
+   {
+    "q": "1883年に開通したブルックリン橋は、ニューヨークのどの二地区を結びますか？",
+    "answer": "1883年のニューヨークについては情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_SINGLE",
+     "epistemic_abstain": true,
+     "abstain_reason": "attribute_missing:ニューヨーク",
+     "entities": [
+      "1883年"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.101741,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "マンハッタンとブルックリンの両方を挙げる。",
+    "exact_abstention": true,
+    "seconds": 0.7253082370152697,
+    "strict_correct": false
+   },
+   {
+    "q": "松本城と犬山城を来週の水曜日に見学する人は、二つの城を合わせて正確に何人になりますか。",
+    "answer": "犬山城については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "犬山城",
+      "松本城",
+      "水曜日"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.147434,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "両城の未来の人数について棄権し、無関係な説明を加えない。",
+    "exact_abstention": true,
+    "seconds": 0.6001177399884909,
+    "strict_correct": true
+   },
+   {
+    "q": "東京タワーと通天閣の展望台には、この瞬間に合計で何人の客がいますか。",
+    "answer": "展望台については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "展望台",
+      "通天閣",
+      "瞬間"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.115869,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "実測を欠く同時点の合計人数について棄権し、無関係な説明を加えない。",
+    "exact_abstention": true,
+    "seconds": 0.5688460739329457,
+    "strict_correct": true
+   },
+   {
+    "q": "カモノハシはどんな動物ですか。ほかの多くの哺乳類と違う繁殖の特徴を教えてください。",
+    "answer": "カモノハシの特徴については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": true,
+     "abstain_reason": "attribute_missing:特徴",
+     "entities": [
+      "カモノハシ",
+      "哺乳類"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.147434,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "哺乳類であり、卵を産むことを明示する。",
+    "exact_abstention": true,
+    "seconds": 0.678791088052094,
+    "strict_correct": false
+   },
+   {
+    "q": "鳴門海峡で渦潮が発生するのは、どんな海水の動きによるものですか。",
+    "answer": "鳴門海峡は、日本の四国の北東端にある大毛島孫崎（徳島県鳴門市）と淡路島門崎（兵庫県南あわじ市）との間に位置する海峡。渦潮とは、渦を巻いて激しく流れる海水のことである。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "FACT_MULTI",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "鳴門海峡",
+      "渦潮",
+      "海水"
+     ],
+     "agenda_sources": [
+      "lead:wikipedia",
+      "lead:wikipedia"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "GROUNDED",
+      "final_confidence": 0.865623,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "潮の干満・潮位差による速い潮流と周囲の水との速度差または衝突を説明する。",
+    "exact_abstention": false,
+    "seconds": 2.3401347779436037,
+    "strict_correct": false
+   },
+   {
+    "q": "(91 + 35) / 7 - 6",
+    "answer": "12です。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "TOOL_CALL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "91 + 35"
+     ],
+     "agenda_sources": [
+      "tool:calc"
+     ],
+     "stopped_eot": true,
+     "tool": "calc",
+     "tool_ok": true,
+     "metacog": {
+      "final_mode": "TOOL_CALL",
+      "final_confidence": 0.886364,
+      "confidence_band": "HIGH",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "calc が12を返し、発話でも12と答える。",
+    "exact_abstention": false,
+    "seconds": 0.10639598302077502,
+    "strict_correct": true
+   },
+   {
+    "q": "棚に絵本が32冊ありました。そこから貸出用に8冊取り出すと、棚には何冊残りますか。",
+    "answer": "24冊です。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "TOOL_CALL",
+     "epistemic_abstain": false,
+     "abstain_reason": null,
+     "entities": [
+      "絵本"
+     ],
+     "agenda_sources": [
+      "tool:calc"
+     ],
+     "stopped_eot": true,
+     "tool": "calc",
+     "tool_ok": true,
+     "metacog": {
+      "final_mode": "TOOL_CALL",
+      "final_confidence": 0.212249,
+      "confidence_band": "LOW",
+      "audit_flags": [],
+      "actions_taken": [
+       "PASS"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "24冊と答え、calc の観測値と一致する。",
+    "exact_abstention": false,
+    "seconds": 0.3284101019380614,
+    "strict_correct": true
+   },
+   {
+    "q": "火星と木星を比べると、どちらが太陽から遠い軌道を回っていますか？",
+    "answer": "木星については情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "ABSTAIN",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "木星",
+      "火星"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.169185,
+      "confidence_band": "LOW",
+      "audit_flags": [
+       "unanswered_query"
+      ],
+      "actions_taken": [
+       "DEMOTE_ABSTAIN"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "木星が遠いことを明示するか、双方の軌道の順番を明示する。",
+    "exact_abstention": true,
+    "seconds": 0.550479855039157,
+    "strict_correct": false
+   },
+   {
+    "q": "こんにちは！ 今日はそちらの調子はいかがでしょう。",
+    "answer": "そちらについては情報がありません。",
+    "valid": true,
+    "info": {
+     "generation_id": "gen_002",
+     "intent_mode": "ABSTAIN",
+     "epistemic_abstain": true,
+     "abstain_reason": "arbiter",
+     "entities": [
+      "そちら",
+      "今日"
+     ],
+     "agenda_sources": [
+      "epistemic:abstention"
+     ],
+     "stopped_eot": true,
+     "metacog": {
+      "final_mode": "ABSTAIN",
+      "final_confidence": 0.147434,
+      "confidence_band": "LOW",
+      "audit_flags": [
+       "no_social_match"
+      ],
+      "actions_taken": [
+       "DEMOTE_ABSTAIN"
+      ]
+     }
+    },
+    "hits": 0,
+    "gold": [],
+    "criterion": "相手に向けた自然な挨拶または受け答えと、自分の調子への返答がある。",
+    "exact_abstention": true,
+    "seconds": 0.48255005991086364,
+    "strict_correct": false
+   }
+  ]
+ },
+ "blind_resources": {
+  "calls": 10,
+  "cuda_extra_bytes": 0,
+  "rss_kib": 8802200,
+  "peak_cuda_bytes": 7678924800
+ },
+ "dev_calibration_measured": {
+  "n": 50,
+  "ECE": 0.25609168,
+  "Brier": 0.18700209641927998,
+  "AUROC": 0.9178794178794178
+ },
+ "summary": {
+  "regression": {
+   "OFF": {
+    "strict": 25,
+    "n": 31,
+    "utf8_eot": 31,
+    "ch_s": 41.92039473672447
+   },
+   "ON": {
+    "strict": 25,
+    "n": 31,
+    "utf8_eot": 31,
+    "ch_s": 41.234135548745336
+   }
+  },
+  "targeted": {
+   "OFF": {
+    "strict": 2,
+    "n": 5,
+    "utf8_eot": 5,
+    "ch_s": 28.295672855144794
+   },
+   "ON": {
+    "strict": 3,
+    "n": 5,
+    "utf8_eot": 5,
+    "ch_s": 28.848301881637777
+   }
+  },
+  "retrospective": {
+   "OFF": {
+    "strict": 1,
+    "n": 10,
+    "utf8_eot": 10,
+    "ch_s": 37.25579429979071
+   },
+   "ON": {
+    "strict": 3,
+    "n": 10,
+    "utf8_eot": 10,
+    "ch_s": 29.02236045609136
+   }
+  },
+  "blind": {
+   "OFF": {
+    "strict": 5,
+    "n": 10,
+    "utf8_eot": 10,
+    "ch_s": 34.38327147094813
+   },
+   "ON": {
+    "strict": 4,
+    "n": 10,
+    "utf8_eot": 10,
+    "ch_s": 32.319644927375926
+   }
+  }
+ },
+ "confidence_accuracy": {
+  "全体": {
+   "HIGH": [
+    21,
+    25
+   ],
+   "MEDIUM": [
+    2,
+    2
+   ],
+   "LOW": [
+    12,
+    29
+   ]
+  },
+  "新規10問": {
+   "HIGH": [
+    1,
+    2
+   ],
+   "MEDIUM": [
+    0,
+    0
+   ],
+   "LOW": [
+    3,
+    8
+   ]
+  }
+ },
+ "temperature_summary": {
+  "divergent_pairs": 0,
+  "pairs": 10,
+  "valid_eot": 15
+ },
+ "training": {
+  "calibration_weights": {
+   "SOCIAL": 4.0,
+   "ABSTAIN": 0.5,
+   "TOOL_CALL": 2.0,
+   "GROUNDED": 0.8
+  },
+  "fit": 48,
+  "test": 50,
+  "positive": 13,
+  "ECE": 0.256091505874685,
+  "Brier": 0.18700209785890817,
+  "AUROC": 0.9178794178794178,
+  "modes": {
+   "fit": {
+    "ABSTAIN": 24,
+    "GROUNDED": 15,
+    "SOCIAL": 3,
+    "TOOL_CALL": 6
+   },
+   "test": {
+    "ABSTAIN": 24,
+    "GROUNDED": 15,
+    "SOCIAL": 3,
+    "TOOL_CALL": 8
+   }
+  }
+ },
+ "freeze_sha256": "a81712c9e66ccbd3dc89c224c6ba5867c250d78c84cf7d699127a9c32edbbcc9",
+ "blind_marker": {
+  "started": "2026-11-27T08:57:36.280864",
+  "sha256": "1addeae9a6fff589a7e2e88cce31f835a72cadf1442e75410980e9a5186575b9"
+ },
+ "live_guard": {
+  "evolution_v140/active_gen.json": "06db98208d98c50d403a743c6ef7f19c6c0bb1f5cbcfa20caf999a759f4bddd3",
+  "evolution_v140/generations/gen_002/evolved_axis1.pkl": "d8a942c9db9654c4d23e3da13ac51e754fee1b0514adc7d4108887840b7ee85d",
+  "evolution_v140/generations/gen_002/evolved_utterance.pkl": "926248e52d1fa532c317e37da24ed652ae64110f8219cb5e061668bd3091f048",
+  "evolution_v140/generations/gen_002/learned_memory.sqlite": "02ed930b7c3670fb22e9fe4d33ad04b9f9c12d8288559e202931f1d3ca785016",
+  "evolution_v140/generations/gen_002/meta.json": "6c1ea0dbfa6e12cd313e369adce25b0c6e02035f5ac70a128a69f52ebdb1fffd",
+  "evolution_v140/episodes.jsonl": "8655e0e63cb7e59ccc569a0a9c8547458903d9e2c0d5e93d871dfe17eed81e9c",
+  "evolution_v140/ledger.jsonl": "9c2d604de941006be22212cda95760020deaaeb3beb434c7758f005cca04c25e"
+ },
+ "strict_grade_method": "過去の同一質問・同一全文は前回の厳格採点を継承。変更された発話と新規20発話は質問ごとの事前基準で採点。"
+}

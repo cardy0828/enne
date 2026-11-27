@@ -1,4 +1,4 @@
-"""根拠候補を CPU 上で監査し、発話前に最大二回だけ再検討する。"""
+"""根拠候補を CPU 上で監査し、発話前に最大2回だけ再検討するメタ認知（v15.2）。"""
 from dataclasses import dataclass
 import json
 import math
@@ -266,7 +266,6 @@ class MetacogControllerV152:
                          final_mode=plan.mode,final_confidence=last["confidence"],confidence_band=band,
                          audit_flags=sorted({f for h in history for f in h["audit_flags"]}),actions_taken=actions,
                          revisions=min(self.max_revisions,len(history)-1),self_prior=last["self_prior"],candidate_history=history)
-
 
 
 def deliberate(brain,q,plan,qa,proto,carried,gap,tool_result,allow_leads=True,allow_body=True):

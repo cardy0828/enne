@@ -1,4 +1,4 @@
-"""既存見出しと原文冒頭を照合し、UTF-32 のファイル位置を記録する。"""
+"""既存見出しと原文冒頭を照合し、記事本文の UTF-32 ファイル位置を索引にする（v13.0）。"""
 import json
 import os
 from pathlib import Path
@@ -64,4 +64,3 @@ def build():
 
 if __name__ == "__main__":
     build()
-

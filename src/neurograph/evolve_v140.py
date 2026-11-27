@@ -1,4 +1,4 @@
-"""コマンドラインから一回の睡眠統合を実行する。"""
+"""コマンドラインから睡眠統合を1回実行する（v14.0）。"""
 import json
 from neurograph.gate_v140 import check_device
 from neurograph.run_v112_lead_qa import load_brain
@@ -17,4 +17,3 @@ def main():
 
 if __name__=="__main__":
     main()
-

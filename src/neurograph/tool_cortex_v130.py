@@ -1,4 +1,4 @@
-"""CPU 上のプラグイン候補、学習済みノードおよび根拠の検証。"""
+"""ツール（プラグイン）の候補、学習済みノード、根拠の検証（v13.0）。"""
 import ast
 from collections import Counter
 from dataclasses import dataclass, field
@@ -346,4 +346,3 @@ class ToolUseArbiterV130:
         trace.update(called_tool=action,tool_args=proposals[action],tool_ok=result.ok,tool_result=result.text,
                      tool_result_preview=result.text[:160],fallback=None if result.ok else mode)
         return trace,result
-

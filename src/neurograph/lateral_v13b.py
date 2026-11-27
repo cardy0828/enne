@@ -1,20 +1,4 @@
-"""NeuroGraph v1.3b: Rule-Free IDF-Gated Lateral Semantic Thought Wave (System 6 Upgrade).
-
-Fixes BOTH diagnostic findings from v1.3 with ZERO hardcoded language rules and ZERO tokenizer:
-1. Rule-Free Two-Pass IDF + Burstiness Content-Concept Discovery (depth 2..14 = 3..15 raw UTF-8 bytes):
-   - Counts exact Term Frequency (TF) and Document Frequency (DF) across 4,096 passage blocks on GPU.
-   - Ubiquitous syntactic glue ('の', 'ている', 'いました。', 'れている') has high doc_ratio (> 8%) ->
-     automatically eliminated by pure IDF!
-   - True topical content concepts across ALL lengths ('猫' [3B], '東京' [6B], 'ドイツ' [9B],
-     '世界大戦' [12B], '江戸時代' [12B]) have low doc_ratio + high burstiness (TF/DF) -> ALL captured!
-   - Pure UTF-8 boundary alignment bonus (raw.decode('utf-8') valid) cleanly prefers whole spans
-     ('アルゼンチン', 'オーストリア', 'フランス') over half-byte clipped fragments.
-2. High-Precision (k4 + k5) Bounded tanh Proactive Lateral Priming:
-   - Replaces noisy 3-byte (1-char) k3 priming (which had 20% false-positive hits) with
-     high-specificity 4-byte (k4) and 5-byte (k5) context transitions + tanh saturation.
-   - Fires ONLY on strong PPMI associations -> eliminates false-positive BPC overhead and delivers
-     clean BPC gain AND strong on-topic 2-hop semantic waves on every prompt!
-"""
+"""IDF で重み付けした連想グラフの改良版（v1.3b）。"""
 
 from __future__ import annotations
 
@@ -32,29 +16,26 @@ from neurograph.memory_v3b import _mix64
 
 @dataclass
 class LateralV13bConfig(UnifiedBrainV13Config):
-    # System 6 v1.3b: IDF-Gated Multi-Scale Content Concepts + High-Precision k4/k5 Priming
     sem_vocab_max: int = 32_000
-    sem_min_depth: int = 2              # depth 2 = 3 raw UTF-8 bytes (captures single kanji like '猫'!)
-    sem_max_depth: int = 14             # up to 15 raw UTF-8 bytes (~5 Japanese chars / 15 ASCII chars)
-    sem_min_df: int = 3                 # must appear in >= 3 distinct passages
-    sem_max_doc_ratio: float = 0.14     # appears in <= 14% of passages -> kills stop-phrases while keeping major topics!
+    sem_min_depth: int = 2
+    sem_max_depth: int = 14
+    sem_min_df: int = 3
+    sem_max_doc_ratio: float = 0.14
     lat_k_neighbors: int = 24
     lat_min_cooc: int = 3
     lat_min_pmi: float = 1.9
-    lat_k4_scale: float = 0.28          # gentle 4-byte transition boost
-    lat_k5_scale: float = 0.72          # sharp 5-byte transition boost
+    lat_k4_scale: float = 0.28
+    lat_k5_scale: float = 0.72
     lat_tanh_gain: float = 0.45
     lat_max_boost: float = 1.65
 
 
 class UnifiedBrainV13b(UnifiedBrainV13):
-    """Unified 6-System Raw UTF-8 Brain with IDF-Gated System 6 + Clean Checkpoint Loading/Expansion."""
 
     def __init__(self, cfg: LateralV13bConfig, device: torch.device):
         super().__init__(cfg, device)
         self.cfg = cfg
         self.sem_idf = torch.empty((0,), dtype=torch.float32, device=device)
-        # High-precision k4 (2 slots) & k5 (4 slots) byte-transition primes per concept
         self.sem_p4_k = torch.empty((0, 2), dtype=torch.int64, device=device)
         self.sem_p4_y = torch.empty((0, 2), dtype=torch.int16, device=device)
         self.sem_p5_k = torch.empty((0, 4), dtype=torch.int64, device=device)
@@ -69,7 +50,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
         new_pool_capacity: Optional[int] = None,
         cfg_overrides: Optional[Dict[str, object]] = None,
     ) -> "UnifiedBrainV13b":
-        """Load a saved v1.3 / v1.3b / v1.4 checkpoint losslessly, optionally expanding the neuron pool!"""
         ck = torch.load(ckpt_path, map_location="cpu", weights_only=False)
         saved_cfg = dict(ck["cfg"])
         valid_fields = set(LateralV13bConfig.__dataclass_fields__.keys())
@@ -117,7 +97,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
             brain.ltm.dst[bi].copy_(ck["ltm_dst"][bi].to(device))
             brain.ltm.w[bi].copy_(ck["ltm_w"][bi].to(device))
 
-        # Restore edges: use full saved edge table if present, else reconstruct cleanly from parent/cond arrays!
         if "edge_parents" in ck and "edge_children" in ck:
             ep = ck["edge_parents"].to(device, dtype=torch.int64)
             ek = ck["edge_kinds"].to(device, dtype=torch.int64)
@@ -139,7 +118,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
             ep = brain.parent[h_ids].to(torch.int64)
             ek = brain.cond_kind[h_ids].to(torch.int64)
             ec = brain.cond_id[h_ids].to(torch.int64)
-            # Insert in high-fire order so most important edges always land cleanly
             ord_f = torch.argsort(brain.fires[h_ids], descending=True)
             ep, ek, ec, h_ids = ep[ord_f], ek[ord_f], ec[ord_f], h_ids[ord_f]
             rem = torch.ones(h_ids.numel(), dtype=torch.bool, device=device)
@@ -157,7 +135,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
 
     @torch.no_grad()
     def fuse_similar_neurons(self, seed: int = 100, chunk_size: int = 32_768) -> Dict[str, int]:
-        """Ultra-Low-VRAM Chunked Selective Asymmetric Fusion (handles 3.6M+ neurons x D=256 in < 5 GB VRAM!)."""
         cfg = self.cfg
         if not cfg.enable_merge:
             return {"merged": 0, "alive_hidden": self.num_hidden_alive, "edges": self.edges.count()}
@@ -186,7 +163,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
             planes = torch.randn((self.D, cfg.merge_lsh_bits), generator=gen, device=device)
             powers = 1 << torch.arange(cfg.merge_lsh_bits, dtype=torch.int64, device=device)
 
-            # Chunked norm + LSH computation -> NEVER allocates [M, D] float32!
             w_norm_all = torch.empty(M0, dtype=torch.float32, device=device)
             lsh_all = torch.empty(M0, dtype=torch.int64, device=device)
             for s in range(0, M0, chunk_size):
@@ -244,7 +220,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
             if cand_pairs.numel() == 0:
                 continue
 
-            # Chunked cosine & sharp-conflict check ONLY on pre_ok candidate pairs!
             src_all_p = s_ids[cand_pairs]
             dst_all_p = lead_ids[cand_pairs]
             K_p = int(cand_pairs.numel())
@@ -368,7 +343,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
         return {"merged": total_merged_now, "alive_hidden": self.num_hidden_alive, "edges": self.edges.count()}
 
     def save_full_checkpoint(self, path: str) -> None:
-        """Save complete 6-system brain INCLUDING all convergent DAG edges (100% bit-exact restore!)."""
         valid_e = self.edges.child >= 0
         torch.save(
             {
@@ -437,13 +411,11 @@ class UnifiedBrainV13b(UnifiedBrainV13):
         cooc_scan_bytes: int = 16_000_000,
         cooc_batch_streams: int = 2048,
     ) -> Dict[str, object]:
-        """System 6 v1.3b: Two-Pass Rule-Free IDF + Burstiness Content-Concept Discovery & PPMI Lateral Graph!"""
         cfg = self.cfg
         device = self.device
         V = self.V
         H_buf = max(cfg.max_hops + 4, 22)
 
-        # ---- PASS 1: Exact GPU TF & Document Frequency across num_docs_idf passages (high-parallelism B=1024!) ----
         max_docs = min(num_docs_idf, len(mixed_bytes) // doc_len)
         B_idf = min(1024, max_docs)
         n_batches = max(1, max_docs // B_idf)
@@ -454,7 +426,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
         ones_tmp = torch.ones(B_idf, dtype=torch.int32, device=device)
         arange_Bi = torch.arange(B_idf, device=device)
 
-        # Eligible pool mask for TF/DF tracking: alive hidden neurons depth 2..14, fires >= 8
         idx_all = torch.arange(self.P, device=device)
         elig_mask = (
             self.alive
@@ -469,7 +440,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
             data = torch.from_numpy(seg.astype(np.int64)).to(device)
             byte_hist = torch.full((B_idf, H_buf), -1, dtype=torch.int64, device=device)
             hist_ptr = 0
-            # Collect (b << 24 | node_id) pairs in chunks -> exact unique DF per passage!
             pair_chunks: List[torch.Tensor] = []
 
             for t in range(doc_len):
@@ -495,7 +465,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
                             pair_chunks.append((sb << 24) | sn)
                     frontier = torch.where(ok, ch, torch.full_like(ch, -1))
 
-                # Periodically compact pair_chunks so GPU memory stays tiny (< 120 MB)!
                 if len(pair_chunks) >= 256:
                     pair_chunks = [torch.unique(torch.cat(pair_chunks))]
 
@@ -504,7 +473,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
                 u_nodes = uniq_bn & 0xFFFFFF
                 df.scatter_add_(0, u_nodes, torch.ones(u_nodes.numel(), dtype=torch.int32, device=device))
 
-        # ---- Select Top-K Rule-Free IDF + Burstiness Content Concepts ----
         max_df = max(4, int(total_docs * cfg.sem_max_doc_ratio))
         cand_mask = elig_mask & (df >= cfg.sem_min_df) & (df <= max_df)
         cand_ids = torch.nonzero(cand_mask, as_tuple=False).squeeze(1)
@@ -520,7 +488,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
         len_prior = (d_c / 6.0).clamp(0.60, 1.35)
         score = (idf_c ** 1.45) * torch.log1p(tf_c) * (0.45 + 0.55 * torch.sqrt(burst_c)) * len_prior
 
-        # Take top 2.5x candidates to allow UTF-8 alignment preference & dedup to fill full sem_vocab_max!
         k_over = min(int(cfg.sem_vocab_max * 2.5), int(cand_ids.numel()))
         top_vals, top_pos = torch.topk(score, k=k_over)
         top_nids = cand_ids[top_pos].cpu().tolist()
@@ -531,7 +498,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
         kd_cpu = self.cond_kind.cpu().numpy()
         cd_cpu = self.cond_id.cpu().numpy()
 
-        # Reconstruct raw bytes, apply pure UTF-8 framing bonus (1.35x if cleanly valid UTF-8!), re-rank!
         parsed = []
         for nid, sc_v, idf_v in zip(top_nids, top_scores, top_idfs):
             bs_l: List[int] = []
@@ -556,7 +522,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
                 dec = raw.decode("utf-8", errors="ignore").strip()
             if len(dec) < 1:
                 continue
-            # Require either >= 2 chars OR a single multi-byte (>=3B) char like '猫', '犬', '駅', '🚀'!
             if len(dec) == 1 and len(dec.encode("utf-8")) < 3:
                 continue
             adj_sc = sc_v * (1.40 if is_clean_utf8 else 0.75)
@@ -589,7 +554,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
             self.sem_raw_bytes.append(raw)
             sem_idf_list.append(idf_v)
 
-            # High-precision k4 (2 transitions at pos 4..5) and k5 (4 transitions at pos 5..8)
             r4_0, r4_1, r4_2, r4_3, r4_y = [-1, -1], [-1, -1], [-1, -1], [-1, -1], [-1, -1]
             j4 = 0
             for pos in range(4, min(len(raw), 6)):
@@ -639,7 +603,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
         )
         self.sem_p5_y = torch.tensor(p5_y, dtype=torch.int16, device=device)
 
-        # ---- PASS 2: Fast GPU Co-Occurrence Scan (records HIGHEST-IDF concept per step!) ----
         use_len = min(cooc_scan_bytes, len(mixed_bytes))
         stream_len = use_len // cooc_batch_streams
         data = torch.from_numpy(
@@ -719,7 +682,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
             self.sem_ready = False
             return {"num_concepts": K_sem, "num_edges": 0}
 
-        # ---- Symmetric Sharp PPMI Graph ----
         pa_all = torch.cat(pair_a_chunks).to(torch.int64)
         pb_all = torch.cat(pair_b_chunks).to(torch.int64)
         src_all = torch.cat([pa_all, pb_all])
@@ -773,7 +735,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
 
     @torch.no_grad()
     def trace_semantic_wave(self, query_substr: str, top_k: int = 8) -> List[Tuple[str, float]]:
-        """Exact-first then substring match 2-hop Lateral Semantic Thought Wave."""
         if not self.sem_ready:
             return []
         exact = [i for i, txt in enumerate(self.sem_texts) if txt == query_substr]
@@ -812,7 +773,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
         use_executive: bool = True,
         use_lateral: bool = True,
     ) -> Dict[str, float]:
-        """Full 6-System Eval with High-Precision (k4 + k5) Bounded tanh Lateral Semantic Priming!"""
         cfg = self.cfg
         device = self.device
         V, D, S = self.V, self.D, cfg.num_slots
@@ -847,7 +807,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
         stm_ptr = torch.zeros(B, dtype=torch.int64, device=device)
         stm_boost = torch.zeros((B, V), dtype=torch.float32, device=device)
 
-        # High-precision k4 + k5 lateral priming caches per stream!
         N_c4, N_c5 = 64, 96
         if lat_on:
             lp4_k = torch.zeros((B, N_c4), dtype=torch.int64, device=device)
@@ -895,7 +854,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
                         ctx_score[rb, ws[rb]] = sal_old[rb]
             top_ctx_all = ctx_node[arange_B, ctx_score.argmax(dim=1)]
 
-            # System 1: Cortex DAG Traversal
             vis_b_list = [arange_B]
             vis_u_list = [x_t]
             vis_g_list = [ones_B_f]
@@ -971,7 +929,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
                     accumulate=True,
                 )
 
-            # System 2: S=16 Autonomous Slots
             h_norm = h_dag / h_dag.norm(dim=1, keepdim=True).clamp(min=1.0)
             e_norm = self.E[x_t] / self.E[x_t].norm(dim=1, keepdim=True).clamp(min=1.0)
             x_slot = 0.65 * h_norm + 0.35 * e_norm
@@ -985,12 +942,10 @@ class UnifiedBrainV13b(UnifiedBrainV13):
             h_act = torch.tanh((h_dag * (1.0 + 0.35 * torch.tanh(m_sum)) + r_sum) * 0.35) * 2.85
             logits = h_act @ self.E.T + self.bias.unsqueeze(0) + logits_sharp
 
-            # System 3: 8-Bank MegaByteLTM
             lk, lv = self.ltm.compute_keys(byte_hist, cur_idx, H_buf, top_ctx_all)
             self.ltm.lookup_boost(lk, lv, ltm_boost, max_boost=cfg.ltm_max_boost, ltm_scale=cfg.ltm_scale)
             logits = logits + ltm_boost
 
-            # System 4: 1-Shot ByteSTM
             k4, k7 = self._compute_stm_keys(byte_hist, cur_idx, H_buf)
             stm_str.mul_(cfg.stm_decay)
             if t >= 4:
@@ -1003,7 +958,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
                     stm_boost.index_put_((hb, stm_val[hb, hs]), hw[hb, hs], accumulate=True)
                     logits = logits + stm_boost.clamp(max=cfg.stm_max_boost)
 
-            # System 5: 24-Mode Executive Discourse Critic
             if exec_on and exec_vec is not None:
                 exec_vec.mul_(cfg.mode_ema_decay).add_(h_dag, alpha=1.0 - cfg.mode_ema_decay)
                 if t >= 24:
@@ -1011,7 +965,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
                     mp = torch.softmax((ev_n @ self.mode_centroids.T) / cfg.mode_temp, dim=-1)
                     logits = logits + (mp @ self.mode_llr) * cfg.mode_llr_scale
 
-            # System 6 v1.3b: High-Precision (k4 + k5) Bounded tanh Proactive Lateral Priming!
             if lat_on:
                 lp4_w.mul_(0.9970)
                 lp5_w.mul_(0.9970)
@@ -1031,7 +984,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
                             lb5, ls5 = torch.nonzero(ml5, as_tuple=True)
                             lat_boost.index_put_((lb5, lp5_y[lb5, ls5]), lp5_w[lb5, ls5] * cfg.lat_k5_scale, accumulate=True)
                             hit_any_b |= ml5.any(dim=1)
-                        # Smooth bounded tanh calibration -> ZERO over-confident logit spikes!
                         logits = logits + torch.tanh(lat_boost * cfg.lat_tanh_gain) * cfg.lat_max_boost
                         total_lat_hits += int(hit_any_b.sum().item())
 
@@ -1039,7 +991,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
                 if has_fs.any():
                     fs_b = torch.nonzero(has_fs, as_tuple=False).squeeze(1)
                     fs_s = fired_sem[fs_b].to(torch.int64)
-                    # Top-6 strongest PPMI lateral neighbors (weight >= 0.40) -> prime k4 + k5 transitions!
                     nb_ids = self.lat_dst[fs_s, :6]
                     nb_wt = self.lat_w[fs_s, :6]
                     for j in range(6):
@@ -1051,7 +1002,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
                         jb = fs_b[ok_j]
                         js = nj[ok_j].to(torch.int64)
                         jw_ok = jw[ok_j]
-                        # Prime k4 (1 transition) & k5 (2 transitions) per neighbor
                         pk4 = self.sem_p4_k[js, 0]
                         py4 = self.sem_p4_y[js, 0].to(torch.int64)
                         ok4 = (pk4 != 0) & (py4 >= 0)
@@ -1121,7 +1071,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
         rollout_chunk_bytes: int = 42,
         use_semantic_exec: bool = True,
     ) -> Tuple[str, bool, Dict[str, object]]:
-        """6-System Generation with Multi-Scale IDF Prompt Seeding + 2-Hop Lateral Wave + Executive Rollout!"""
         cfg = self.cfg
         device = self.device
         V, D, S = self.V, self.D, cfg.num_slots
@@ -1290,7 +1239,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
             st["step_i"] = step_i + 1
             return logits, h_dag, fired_sem_ids
 
-        # 1) Prime on prompt & collect ALL multi-scale IDF content concepts fired anywhere in the prompt!
         st = init_state()
         prompt_hs = []
         logits = None
@@ -1304,7 +1252,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
                     if self.sem_texts[sid] not in prompt_seeds:
                         prompt_seeds.append(self.sem_texts[sid])
 
-        # Propagate 2-hop Lateral Semantic Wave from ALL prompt seeds!
         top_wave_words: List[str] = []
         if use_semantic_exec and self.sem_ready and (prompt_wave > 0).any():
             w_acc = prompt_wave.clone()
@@ -1343,7 +1290,6 @@ class UnifiedBrainV13b(UnifiedBrainV13):
             if (use_semantic_exec and self.mode_ready) else None
         )
 
-        # 2) Prefrontal Rollout guided by IDF 2-Hop Lateral Semantic Resonance!
         out_bytes = list(raw_in)
         gen_only: List[int] = []
         recent_ngrams: set = set()

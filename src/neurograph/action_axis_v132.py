@@ -1,4 +1,4 @@
-"""外部行動を独立採択し、記憶の二段検索を別に実行する CPU ルータ。"""
+"""外部行動（ツール）の採択と記憶の二段検索を別々の軸で行う CPU ルータ（v13.2）。"""
 from neurograph.operators_v132 import classify
 import pickle
 import re
@@ -96,7 +96,3 @@ class OrthogonalRouter:
                 return trace,result
         trace["fallback"]=mode
         return trace,None
-
-
-
-

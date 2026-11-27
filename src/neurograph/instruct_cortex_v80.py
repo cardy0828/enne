@@ -1,17 +1,4 @@
-"""NeuroGraph v8.0: Living-Brain Behavioral Conditioning (Zero-Backprop SFT — Post-Astra Hardened!).
-
-Fixes EVERY critical, high, and medium finding from Codex 6.2 Astra's pre-flight audit:
-  - Exact API alignment: `EngramCartridgeConfig(bank_buckets=...)`, `sleep_prune(min_w_override=2)["after"]`,
-    `unified.brain.{v20,runner,device}`, `_extract_hippocampal_grounding(u_bytes)` (`query_ms`), `compute_root_thought_vec`.
-  - Exact `[B, 1]` EOT weighting (no `[B, B]` broadcast!).
-  - Exact `h_act` alignment between Training, Evaluation, AND Generation (`st["last_h_act"]` exposed directly from
-    `BatchedCoreRunner.step_batch`, plus built-in automated pre-flight equivalence assertion `verify_eval_gen_logits_match()`!).
-  - Strict Per-Dialogue State Isolation: length-bucketed mini-batches (`B <= 64`), fresh zero state per independent
-    dialogue, ZERO cross-dialogue state leakage, ZERO truncated tails, and tiny peak CPU/GPU RAM!
-  - Zero missing Engram boundary byte (`pos = end - 1`), and strictly separated `body_bpc` vs `eot_bits` with exact counts.
-  - Multi-turn causal history preserved in `W_qa` (matches `respond()`).
-  - Fair EOT candidate scoring in BOTH Base (`use_sft=False`) and SFT (`use_sft=True`) + newline support!
-"""
+"""対話データによる読み出しの局所適応と EOT 予測（v8.0）。"""
 
 from __future__ import annotations
 
@@ -50,9 +37,6 @@ def _build_isolated_batches(
     dialogues: List[Dict],
     batch_size: int = 48,
 ) -> List[Tuple[np.ndarray, np.ndarray, np.ndarray, int]]:
-    """Group independent dialogues by length into padded mini-batches so EVERY dialogue starts from a clean
-    zero state with ZERO cross-dialogue leakage and ZERO truncated tails!
-    Returns list of `(data_i64 [B, L], mask_bool [B, L-1], valid_len [B], body_chars)`."""
     serialized = []
     for d in dialogues:
         raw, m = serialize_dialogue_with_mask(d["turns"])
@@ -81,25 +65,19 @@ def _build_isolated_batches(
 
 
 class InstructAdapterV80:
-    """Self-contained, hot-swappable Zero-Backprop SFT behavioral bundle (0% catastrophic forgetting!)."""
 
     def __init__(self, thought_dim: int = 256, core_dim: int = 256):
         self.thought_dim = thought_dim
         self.core_dim = core_dim
         self.sft_engram: Optional[EngramCartridge] = None
-        # Closed-Form Hebbian Assistant Readout Residual Adapter [D_core, 256] + [256] (unscaled raw solution!)
         self.W_sft_res: Optional[np.ndarray] = None
         self.b_sft_res: Optional[np.ndarray] = None
-        self.readout_scale: float = 2.0  # Calibrated on dev split!
-        # Layer-2 Closed-Form Hebbian Question->Answer Intent Operator [D_m, 3*D_m]
+        self.readout_scale: float = 2.0
         self.W_qa: Optional[np.ndarray] = None
-        # Assistant-Span Sparse Macro Transition Memory + Learned EOT priors
         self.sft_m1: Dict[int, Dict[int, float]] = {}
         self.sft_m2: Dict[Tuple[int, int], Dict[int, float]] = {}
         self.sft_openers: List[Tuple[int, float]] = []
         self.eot_after_motor: Dict[int, float] = {}
-        # Rule-free User-Prompt IDF [V_m]: suppresses generic instruction boilerplate ('教えてください', 'わかりやすく')
-        # purely from SFT user-prompt statistics so ONLY true topical entities anchor QA openings & Hippocampus queries!
         self.user_prompt_idf: Optional[np.ndarray] = None
 
         self._W_sft_gpu: Optional[torch.Tensor] = None
@@ -121,8 +99,6 @@ class InstructAdapterV80:
         save_dir: str = "engrams_v80/instruct_sft",
         chunk_bytes: int = 2_000_000,
     ) -> Dict[str, object]:
-        """Component 1: Distill ONLY Assistant response spans (including 0x04 EOT) into a hot-swappable
-        Behavioral Engram Cartridge (0 MB GPU VRAM, zero boundary drops, zero cross-dialogue key leaks!)."""
         t0 = time.perf_counter()
         cfg = EngramCartridgeConfig(
             name="instruct_sft_v80",
@@ -135,8 +111,6 @@ class InstructAdapterV80:
         )
         cart = EngramCartridge(cfg)
 
-        # Insert 96 zero-separator bytes between independent dialogues so Engram keys & 16d conv1d context
-        # NEVER bridge across two independent conversations!
         sep = bytes(96)
         sep_m = np.zeros(96, dtype=np.bool_)
         raw_parts: List[bytes] = []
@@ -145,8 +119,8 @@ class InstructAdapterV80:
             raw, m = serialize_dialogue_with_mask(d["turns"])
             if idx > 0:
                 raw_parts.append(sep)
-                mask_parts.append(np.array([False], dtype=np.bool_))  # bridge prev last -> sep[0]
-                mask_parts.append(sep_m)                               # sep[0..95] -> next[0]
+                mask_parts.append(np.array([False], dtype=np.bool_))
+                mask_parts.append(sep_m)
             raw_parts.append(raw)
             mask_parts.append(m)
         full_raw = np.frombuffer(b"".join(raw_parts), dtype=np.uint8).copy()
@@ -186,7 +160,6 @@ class InstructAdapterV80:
             del x_gpu, keys_gpu, cq_gpu, y_gpu, keep_t, idx
             if end >= N_tot:
                 break
-            # Advance to end - 1 so transition (end-1 -> end) is NEVER dropped!
             pos = end - 1
 
         prune_info = cart.sleep_prune(min_w_override=2)
@@ -214,9 +187,6 @@ class InstructAdapterV80:
         ridge_alpha: float = 0.25,
         eot_weight: float = 3.0,
     ) -> Dict[str, object]:
-        """Component 2: Closed-Form Hebbian 1-Layer Assistant Readout Residual Adapter (ZERO Backprop!).
-        Processes strictly isolated per-dialogue padded batches (fresh zero state per dialogue!).
-        Solves exact weighted ridge `(C_hh + lam*I) W = C_hr` on `(h_act, onehot(y) - p_base)`."""
         t0 = time.perf_counter()
         core = v20.core
         cfg = core.cfg
@@ -304,34 +274,25 @@ class InstructAdapterV80:
 
                 m_t = mask_2d[:, t]
                 mf = m_t.to(torch.float32).unsqueeze(1)
-                # Strict [B, 1] EOT weighting (ZERO [B, B] broadcast!)
                 is_eot_y = (y_t == TURN_EOT_BYTE).unsqueeze(1)
                 w_eot = torch.where(is_eot_y, torch.full((B, 1), eot_weight, device=dev), torch.ones((B, 1), device=dev))
-                wt = mf * w_eot  # [B, 1]
+                wt = mf * w_eot
                 probs = torch.softmax(logits, dim=-1)
-                # Accumulate exact Assistant empirical vs Base expected byte counts for closed-form log-prior shift!
                 sum_p_base += (probs * mf).sum(dim=0).to(torch.float64)
                 cnt_y_asst.scatter_add_(0, y_t, m_t.to(torch.float64))
                 resid = -probs
                 resid[arange_B, y_t] += 1.0
-                h_aug = torch.cat([h_act, ones_col], dim=1)  # [B, D+1]
+                h_aug = torch.cat([h_act, ones_col], dim=1)
                 h_w = (h_aug * wt).to(torch.float64)
                 C_hh += h_w.T @ h_aug.to(torch.float64)
                 C_hr += h_w.T @ resid.to(torch.float64)
                 n_asst += int(m_t.sum().item())
                 n_eot += int((m_t & (y_t == TURN_EOT_BYTE)).sum().item())
 
-        # 1) Exact Closed-Form Unigram Log-Prior Shift (zero backprop!):
-        # Automatically lifts unseen/rare assistant bytes (like EOT 0x04 with base logit ~ -21!)
-        # to their exact empirical Assistant log-odds!
         eps_p = 1e-6
         b_prior = torch.log((cnt_y_asst + 0.5) / (sum_p_base + eps_p)).clamp(-4.0, 18.0)
-        # Keep truly unobserved bytes (0 count in Assistant) at 0 shift so we never distort unused control bytes
         b_prior = torch.where(cnt_y_asst > 0.5, b_prior, torch.zeros_like(b_prior))
 
-        # 2) Fisher-Variance-Stabilized Closed-Form Hebbian Ridge W_sft_res [D, V]:
-        # Scaling each column by 1 / sqrt(p_emp + 0.002) gives rare behavioral events (like WHEN to emit 0x04
-        # right after '。'/'ます。') proportional leverage without inverting near-zero p!
         p_emp = (cnt_y_asst / max(1.0, float(n_asst))).clamp(min=0.0)
         inv_std = (1.0 / torch.sqrt(p_emp + 0.002)).clamp(max=18.0)
         lam = ridge_alpha * float((torch.trace(C_hh[:D, :D]) / D).clamp(min=1.0).item())
@@ -367,10 +328,6 @@ class InstructAdapterV80:
         device: torch.device,
         max_dialogues: int = 45_000,
     ) -> Dict[str, object]:
-        """Components 3 & 4:
-        - Closed-Form Hebbian `W_qa` (`768d -> 256d`) fed with FULL causal prior dialogue history up to
-          each User turn (exact same context available at inference time!).
-        - Assistant-Span Sparse Macro Transition Memory + Learned EOT Motor Priors."""
         t0 = time.perf_counter()
         D = mc.thought_dim
         C_xx = torch.zeros((3 * D, 3 * D), dtype=torch.float64, device=device)
@@ -419,7 +376,6 @@ class InstructAdapterV80:
                             mp2[m] = mp2.get(m, 0.0) + 1.0
                 motor_before_eot[a_list[-1]] = motor_before_eot.get(a_list[-1], 0.0) + 1.0
 
-                # Full causal dialogue history up to current User turn -> Assistant content embedding!
                 if len(hist_motors) > 0 and mc.emb_np is not None:
                     ctx_arr = np.array(hist_motors[-48:], dtype=np.int32)
                     ht, hrf, hrs = rc.compute_states_causal(ctx_arr)
@@ -504,9 +460,6 @@ class InstructAdapterV80:
         return (v / n).astype(np.float32) if n > 1e-6 else np.zeros(self.thought_dim, dtype=np.float32)
 
     def compute_user_prompt_idf(self, mc: ContinuousThoughtCortexV50, train_dialogues: List[Dict]) -> Dict[str, object]:
-        """Purely data-driven IDF across SFT User prompts (ZERO language rules!):
-        Instruction boilerplate ('教えてください', 'わかりやすく', '特徴', 'とは') gets low user_prompt_idf,
-        while genuine topical entities ('東海道新幹線', '量子力学', '夏目漱石', 'アストラ') stay high!"""
         df = np.zeros(mc.V_m, dtype=np.int64)
         n_docs = 0
         for d in train_dialogues:
@@ -565,7 +518,6 @@ class InstructAdapterV80:
 
 
 class InstructBrainV80:
-    """Complete NeuroGraph v8.0 Conversational Assistant (Exact Eval/Gen Parity + Zero Catastrophic Forgetting!)."""
 
     def __init__(self, unified: UnifiedCorticoHippocampalBrainV62, adapter: InstructAdapterV80):
         self.unified = unified
@@ -592,13 +544,10 @@ class InstructBrainV80:
         sft_readout_scale: Optional[float] = None,
         is_prompt: bool = False,
     ) -> torch.Tensor:
-        """SINGLE SHARED STEP FUNCTION used by BOTH causal evaluation AND generation!
-        Guarantees 100% identical h_act, mode, STM, Base Engram, SFT Readout, and SFT Engram ordering!"""
         dev = self.device
         runner = self.runner
         r_scale = self.adapter.readout_scale if sft_readout_scale is None else sft_readout_scale
 
-        # Run core step WITHOUT base engram first so SFT Readout Adapter shifts base logits BEFORE entropy gating!
         logits, _ = runner.step_batch(
             st, x_t, next_true=None, locked_mode_p=None, use_engram=False, is_prompt=is_prompt
         )
@@ -607,10 +556,8 @@ class InstructBrainV80:
         if (not is_prompt) and use_sft_readout:
             W_g, b_g = self.adapter._ensure_gpu_adapter(dev)
             if W_g is not None:
-                # Apply calibrated scale to context weights W_g, while keeping exact closed-form log-prior b_g at 1.0!
                 logits = logits + (h_act @ W_g) * r_scale + b_g.unsqueeze(0)
 
-        # Entropy-gated Base + SFT Engram (exact same order & scale in eval and generation!)
         want_base = (not is_prompt) and use_base_engram and (len(self.v20.rack.cartridges) > 0)
         want_sft = (not is_prompt) and use_sft_engram and (self.adapter.sft_engram is not None)
         if want_base or want_sft:
@@ -636,7 +583,6 @@ class InstructBrainV80:
                 np.minimum(s_np, 2.8, out=s_np)
                 logits = logits + torch.from_numpy(s_np).to(dev) * (sft_engram_scale * ent_g)
 
-        # Optional post-scoring STM write (strictly causal: uses next_true only AFTER logits are finalized!)
         if next_true is not None:
             core = self.v20.core
             cfg = core.cfg
@@ -671,12 +617,8 @@ class InstructBrainV80:
 
     @torch.no_grad()
     def verify_eval_gen_logits_match(self, user_prompt: str = "東海道新幹線とは何ですか？") -> float:
-        """Pre-flight parity gate required by Codex 6.2 Astra:
-        Verifies that the 1st-assistant-byte logits produced by the eval path and generation path
-        are IDENTICAL on the exact same framed dialogue prefix!"""
         dev = self.device
         prefix = list(TURN_U_PREFIX + user_prompt.encode("utf-8") + TURN_A_PREFIX)
-        # Path A: Eval loop with per-dialogue isolated state
         st_a = self.runner.init_batch_state(1)
         lg_a = None
         for i, b in enumerate(prefix):
@@ -690,7 +632,6 @@ class InstructBrainV80:
                 use_sft_readout=is_last,
                 is_prompt=not is_last,
             )
-        # Path B: Generation prefill helper
         st_b = self.runner.init_batch_state(1)
         lg_b = None
         for i, b in enumerate(prefix):
@@ -717,10 +658,6 @@ class InstructBrainV80:
         sft_readout_scale: Optional[float] = None,
         batch_size: int = 48,
     ) -> Dict[str, object]:
-        """Strictly Causal Per-Dialogue Isolated Evaluation across 100% of `val_dialogues`!
-        - Fresh zero state per independent dialogue (ZERO cross-dialogue leakage!).
-        - Uses `_step_unified` (100% parity with generation!).
-        - Reports SEPARATED `body_bpc` (UTF-8 body only) and `eot_bits` (0x04 stop only) + exact counts!"""
         t0 = time.perf_counter()
         dev = self.device
         batches = _build_isolated_batches(val_dialogues, batch_size=batch_size)
@@ -746,9 +683,7 @@ class InstructBrainV80:
                 y_t = data[:, t + 1]
                 valid_step = (t + 1) < vlen_t
                 m_t = mask_2d[:, t] & valid_step
-                # Write STM on prompt bytes ONLY (strict parity with respond()!)
                 nt = torch.where((~m_t) & valid_step, y_t, torch.full_like(y_t, -1))
-                # Evaluate with exact same unified step!
                 any_asst = bool(m_t.any().item())
                 logits = self._step_unified(
                     st, x_t, next_true=nt,
@@ -806,13 +741,6 @@ class InstructBrainV80:
         qa_intent_gain: float = 1.45,
         score_critic: bool = True,
     ) -> Tuple[str, bool, Dict]:
-        """Conversational Zero-Backprop Response Generator (v8.1 Tuned!):
-        - Exact parity with `_step_unified`!
-        - Entity-Anchored Step-0 Opening (uses User's salient high-IDF topic entities on factual QA;
-          uses learned `sft_openers` on topic-free greetings/chit-chat!).
-        - Separates Assistant's own `gen_motors` from User's question suffix in Base L2 n-gram lookup
-          (eliminates Wikipedia section-heading & question-tail leakage!).
-        - Fair EOT (0x04) candidate scoring in BOTH Base and SFT with learned EOT motor priors!"""
         t0 = time.perf_counter()
         dev = self.device
         mc = self.mc
@@ -820,7 +748,6 @@ class InstructBrainV80:
         runner = self.runner
         eff_base_eng = base_engram_mult if use_sft else 0.72
 
-        # Build full framed prefix (optional prior turns + current User prompt + TURN_A_PREFIX)
         pref_buf = bytearray()
         ctx_motor_list: List[int] = []
         if history:
@@ -836,7 +763,6 @@ class InstructBrainV80:
         ctx_motor_list.extend(u_motors.tolist())
         ctx_motors_arr = np.array(ctx_motor_list, dtype=np.int32)
 
-        # 1) Filter User prompt strictly by Dual IDF = min(corpus_idf, user_prompt_idf) (ZERO language rules!)
         u_idf_arr = self.adapter.user_prompt_idf
         salient_openers: List[int] = []
         seen_so = set()
@@ -853,7 +779,6 @@ class InstructBrainV80:
                 salient_openers.append(m)
                 seen_so.add(m)
 
-        # Query Hippocampus ONLY when the User prompt contains genuine topical entities (skips pure greetings!)
         hip_query_b = b" ".join(topic_query_parts) if len(b"".join(topic_query_parts)) >= 6 else b""
         if use_hippocampus and len(hip_query_b) >= 6:
             epi = self.unified._extract_hippocampal_grounding(hip_query_b)
@@ -864,7 +789,6 @@ class InstructBrainV80:
                 "ep_top_motors": [], "h_epi": np.zeros(mc.thought_dim, dtype=np.float32),
                 "epi_conf": 0.0, "has_custom": False, "query_ms": 0.0,
             }
-        # Verify topical entity overlap with recalled episode (rejects false-positive Hippocampus hits on chit-chat!)
         ep_valid = False
         if epi["episodes_txt"]:
             if epi["has_custom"]:
@@ -873,15 +797,12 @@ class InstructBrainV80:
                 top_ep_b = epi["episodes_txt"][0].encode("utf-8", errors="ignore")
                 if any(p in top_ep_b for p in topic_query_parts if len(p) >= 6):
                     ep_valid = True
-        # Also extract raw high-IDF opening span from custom episode (handles OOV entity names like 'アストラX-99'!)
         custom_opener_bytes: List[bytes] = []
         if ep_valid and epi["has_custom"] and epi["episodes_txt"]:
-            # Find any matching 6+ byte span from User prompt inside the custom episode
             ep0_b = epi["episodes_txt"][0].encode("utf-8", errors="ignore")
             for p_part in topic_query_parts:
                 pos_p = ep0_b.find(p_part)
                 if pos_p >= 0:
-                    # Take up to next UTF-8 boundary spanning ~12-18 bytes from match start
                     end_p = min(len(ep0_b), pos_p + len(p_part))
                     if end_p > pos_p and ep0_b[pos_p:end_p] not in custom_opener_bytes:
                         custom_opener_bytes.append(ep0_b[pos_p:end_p])
@@ -900,7 +821,6 @@ class InstructBrainV80:
         ep_trans2 = epi["ep_trans2"]
         ep_4grams = epi["ep_4grams"]
 
-        # 2) Layer-2 Dual Intent Anchor: Topic Gate (h_anchor) + Learned Question->Answer Intent (h_qa)!
         clean_u_motors = np.array(
             [m for m in u_motors.tolist() if m >= 256 and rc.mid_to_role[m] < 0 and (u_idf_arr is None or float(u_idf_arr[m]) >= 5.5)],
             dtype=np.int32,
@@ -923,10 +843,6 @@ class InstructBrainV80:
         has_qa = bool(use_sft and float(np.linalg.norm(h_qa)) > 0.1)
         is_factual_qa = bool(ep_valid or len(salient_openers) > 0)
 
-        # 3) v8.3 CORTICO-HIPPOCAMPAL WORKING-MEMORY REPLAY (ZERO Backprop, ZERO Attention!):
-        # Pre-read top recalled Hippocampal episode(s) into Layer-1's 1-shot ByteSTM working memory
-        # so Layer-1 has direct access to factual details ('2042年', 'つくば研究所', '約400倍', '18日間',
-        # '東京駅と新大阪駅', '1939年から1945年') during Assistant synthesis!
         st1 = runner.init_batch_state(1)
         if ep_valid and epi["episodes_txt"]:
             replay_chunks = epi["episodes_txt"][: (1 if has_custom else 2)]
@@ -935,16 +851,12 @@ class InstructBrainV80:
                 rx = torch.tensor([replay_b[ri]], dtype=torch.int64, device=dev)
                 ry = torch.tensor([replay_b[ri + 1]], dtype=torch.int64, device=dev)
                 runner.step_batch(st1, rx, next_true=ry, use_engram=False, is_prompt=True)
-            # Clear local 28-byte sensory buffer & delayed node queue before User turn, KEEPING ByteSTM factual bindings!
             st1["byte_hist"].fill_(-1)
             st1["hist_ptr"].zero_()
             st1["node_delay"].fill_(-1)
             st1["nd_ptr"].zero_()
             st1["c_eng"].zero_()
 
-        # Prefill framed User prompt via exact shared `_step_unified`!
-        # Write User STM ONLY on topic-free greetings (primes 'こんにちは' -> 'こんにちは。');
-        # skip User STM on factual QA so it NEVER overwrites replayed Hippocampus facts or echoes '?'!
         raw_in = list(frame_prefix)
         logits1 = None
         for i, b in enumerate(raw_in):
@@ -991,8 +903,6 @@ class InstructBrainV80:
                 if bm["done"]:
                     continue
 
-                # FAIR EOT (0x04) CANDIDATE SCORING FOR BOTH BASE AND SFT!
-                # Factual QA needs at least 1 substantive clause (~42B) before EOT; greetings can stop at >=6B!
                 min_eot_b = 42 if is_factual_qa else 6
                 if bm["n_bytes"] >= min_eot_b:
                     lp_now = torch.log_softmax(logits_beams[wi], dim=-1)
@@ -1001,7 +911,6 @@ class InstructBrainV80:
                     eot_prior = self.adapter.eot_after_motor.get(last_gm, 0.0) if use_sft else 0.0
                     nb_e = bm["n_bytes"] + 1
                     nm_e = len(bm["gen_motors"]) + 1
-                    # Calibrated length-matched EOT bonus only at learned sentence-ending motors (zero hardcoded punct!)
                     eot_l2 = 1.8 * math.sqrt(eot_prior) if eot_prior > 0.0 else 0.0
                     len_finish_bonus = (0.28 * math.sqrt(eot_prior)) if (use_sft and bm["n_bytes"] >= 45 and eot_prior >= 0.04) else 0.0
                     eot_sc = (bm["raw_l1_lp"] + eot_lp - bm["tot_inh"]) / (nb_e ** 0.90) + 0.30 * ((bm["raw_l2_sc"] + eot_l2) / (nm_e ** 0.85)) - 0.18 * bm["tot_rep"] + len_finish_bonus
@@ -1029,7 +938,6 @@ class InstructBrainV80:
                     inh_b = 0.0
                     if mid_v >= 256 and mid_v in _rec14:
                         l2_b -= (0.95 + 1.20 * cg)
-                    # Gently discourage mid-paragraph newlines before a full sentence (stops '\n概要\n' wiki headings!)
                     if b"\n" in mb:
                         if _last_b == 10 or _bm["n_bytes"] < 48:
                             l2_b -= 3.0
@@ -1048,7 +956,6 @@ class InstructBrainV80:
                                 if align < 0.18:
                                     inh_b = cg * 2.10 * min(1.3, (0.18 - align) / 0.18)
                                 elif has_custom and ep_w == 0.0 and cg > 0.60 and cos_anc < 0.45:
-                                    # Keep custom-fact QA faithful to mounted fact instead of hallucinating unrelated entities!
                                     inh_b = cg * 1.45 * (0.45 - cos_anc)
                                 l2_b += cg * 0.95 * align
                             if has_qa:
@@ -1056,7 +963,6 @@ class InstructBrainV80:
                                 l2_g += cg * qa_intent_gain * cos_qa
                     return l2_b, l2_g, inh_b, cg
 
-                # A) Step-0 Entity-Anchored Opening vs Topic-Free SFT Opener, then SFT Assistant Macro!
                 if use_sft:
                     sft_cands: Dict[int, float] = {}
                     if step_i == 0:
@@ -1070,14 +976,12 @@ class InstructBrainV80:
                                     cand_cg.append(cg); cand_keep_prio.append(True); cand_is_l1_esc.append(False)
                                     added_bytes_wi.add(cob)
                         if salient_openers or has_custom:
-                            # Topical/Factual QA: open directly from User's salient topic entity or Custom Fact entity!
                             for rk, sm in enumerate(salient_openers[:3]):
                                 sft_cands[sm] = max(sft_cands.get(sm, 0.0), 1.45 - 0.15 * rk)
                             if has_custom:
                                 for emid, ew in epi["ep_top_motors"][:3]:
                                     sft_cands[emid] = max(sft_cands.get(emid, 0.0), 1.55 * math.tanh(ew))
                         else:
-                            # Pure greeting / chit-chat (no rare topic entities): use learned SFT openers!
                             for om, ow in self.adapter.sft_openers[:10]:
                                 sft_cands[om] = max(sft_cands.get(om, 0.0), 1.15 * ow)
                     else:
@@ -1097,7 +1001,6 @@ class InstructBrainV80:
                         cand_cg.append(cg); cand_keep_prio.append(True); cand_is_l1_esc.append(False)
                         added_bytes_wi.add(mb)
 
-                # B) Base L2 Motor Proposals: condition ONLY on Assistant's OWN generated motors (never User's '?' suffix!)
                 if len(gm) > 0:
                     p_ids, p_sc = mc.predict_topk(
                         np.array(gm[-6:], dtype=np.int32),
@@ -1119,7 +1022,6 @@ class InstructBrainV80:
                         if taken >= top_k_motor:
                             break
 
-                # C) Layer-3 Hippocampal Grounded Injections
                 if epi_conf > 0.20:
                     epi_cands: Dict[int, float] = {}
                     if last2 in ep_trans2:
@@ -1141,7 +1043,6 @@ class InstructBrainV80:
                         cand_cg.append(cg); cand_keep_prio.append(True); cand_is_l1_esc.append(False)
                         added_bytes_wi.add(mb)
 
-                # D) Layer-1 UTF-8 Escape Hatch
                 if escape_k > 0:
                     lrow = logits_beams[wi].clone()
                     lrow[~runner.lead_mask] = -1e9
@@ -1378,13 +1279,11 @@ class InstructBrainV80:
             logits_beams = log_c[k_t].clone()
             beams = kept
 
-            # Early exit ONLY if best finished EOT beam decisively beats best live continuation beam!
             if finished_beams:
                 best_fin = max(finished_beams, key=lambda x: x["score"])
                 if best_fin["score"] > beams[0]["score"] + 0.12 and len(finished_beams) >= beam_width:
                     break
 
-        # Fair competition between finished EOT candidates AND live beams (never blindly discard live beams!)
         all_cands = finished_beams + beams
         all_cands.sort(key=lambda x: x["score"], reverse=True)
         best = all_cands[0]

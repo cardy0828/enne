@@ -1,29 +1,4 @@
-"""NeuroGraph v0.8: Neurogenesis Branching Graph (True Dynamic Growth, Multi-Hop Branching & Apoptosis).
-
-Starts with ZERO hidden neurons (only atomic sensory character neurons 0..V-1).
-No fixed hidden layer width, no fixed depth, no Backprop, no Attention, no Tokenizer, no hardcoded rules.
-
-Core living-graph dynamics:
-1. Event-Driven Branching Traversal (starts from 1 sensory neuron x_t):
-   - Hop 0: root sensory neuron x_t fires.
-   - Hop h -> h+1: every firing neuron u attempts to branch along its outgoing dendritic edges:
-       * Local-sequence branch (kind=0): gated by the char at physical distance (depth(u)+1)
-       * Long-range context branch (kind=1): gated by a salient context neuron in window [6..40]
-     Multiple branches can fire simultaneously (true parallel branching!), and each stream
-     naturally stops when no further branches match -> DYNAMIC DEPTH per character!
-2. Hierarchical Residual Readout:
-   - Every neuron visited along the branching path contributes its local residual wave into a
-     compact shared feature space (D=96 -> smooth readout over all V chars) plus sparse top-8
-     sharp synapses. Easy contexts finish shallow; hard contexts traverse deep paths.
-3. Surprise-Driven Neurogenesis (Birth of New Neurons):
-   - Each neuron tracks accumulated prediction surprise ('pain'). When an active leaf neuron
-     repeatedly experiences high surprise, it dynamically spawns a NEW child neuron from the
-     free-list pool and grows a new gated branch (either deeper local distance or long-range
-     context condition) -> neuron count & graph depth grow organically!
-4. Metabolic Apoptosis (Death & Pruning of Useless Neurons):
-   - Neurons that rarely fire or fail to reduce prediction error beyond their parent lose
-     metabolic life and DIE (alive=False, edges deleted, ID returned to free-list pool).
-"""
+"""ノードの新生・分岐・削除を行う成長グラフ（v0.8）。"""
 
 from __future__ import annotations
 
@@ -40,26 +15,22 @@ from neurograph.memory_v3b import _mix64
 @dataclass
 class GrowingGraphConfig:
     vocab_size: int
-    pool_capacity: int = 160_000     # allocator ceiling (starts with 0 alive hidden neurons!)
-    feat_dim: int = 96               # compact shared feature readout space (eliminates long-tail zero-prob)
-    max_hops: int = 8                # safety cap on branching depth
-    enable_long_branch: bool = True  # allow branching on long-range salient context [6..40]
-    enable_apoptosis: bool = True    # allow metabolic cell death & ID recycling
-    # Edge hash table [edge_buckets, edge_ways] -> unbounded fan-out per parent neuron!
-    edge_buckets: int = 262_144      # power of 2
+    pool_capacity: int = 160_000
+    feat_dim: int = 96
+    max_hops: int = 8
+    enable_long_branch: bool = True
+    enable_apoptosis: bool = True
+    edge_buckets: int = 262_144
     edge_ways: int = 4
-    # Neurogenesis (birth) settings
     birth_surprise_thresh: float = 0.48
-    birth_pain_thresh: float = 2.2   # parent pain needed before splitting/spawning a child
-    max_births_per_step: int = 64    # smooth growth rate per parallel batch step
-    # Apoptosis (death) settings
-    min_fires_survive: int = 3       # newborn must fire at least this many times to survive apoptosis
+    birth_pain_thresh: float = 2.2
+    max_births_per_step: int = 64
+    min_fires_survive: int = 3
     min_utility_survive: float = 0.02
-    # Local plasticity (zero backprop)
     lr_feat: float = 0.24
     lr_basis: float = 0.04
     lr_sharp: float = 0.30
-    k_sharp: int = 8                 # tiny sharp direct synapses per neuron
+    k_sharp: int = 8
     metaplasticity: float = 0.02
 
 
@@ -71,8 +42,6 @@ def _edge_sig(parent: torch.Tensor, kind: torch.Tensor, cond: torch.Tensor) -> t
 
 
 class DynamicEdgeTable:
-    """Open-addressed GPU hash table mapping (parent_id, kind, cond_id) -> child_node_id.
-    Allows scale-free variable branching (0 branches to 1000+ branches per parent!)."""
 
     def __init__(self, num_buckets: int, ways: int, device: torch.device):
         assert (num_buckets & (num_buckets - 1)) == 0
@@ -86,11 +55,10 @@ class DynamicEdgeTable:
 
     @torch.no_grad()
     def lookup(self, parent: torch.Tensor, kind: torch.Tensor, cond: torch.Tensor) -> torch.Tensor:
-        """Vectorized O(1) branch lookup: returns child node IDs or -1 if no branch exists."""
         sigs = _edge_sig(parent, kind, cond)
         bkts = (sigs & self.mask).to(torch.int64)
-        b_sig = self.sig[bkts]      # [N, W]
-        b_ch = self.child[bkts]     # [N, W]
+        b_sig = self.sig[bkts]
+        b_ch = self.child[bkts]
         hit = (b_sig == sigs.unsqueeze(1)) & (b_ch >= 0)
         has = hit.any(dim=1)
         slot = hit.to(torch.int32).argmax(dim=1)
@@ -105,14 +73,12 @@ class DynamicEdgeTable:
         cond: torch.Tensor,
         child_id: torch.Tensor,
     ) -> torch.Tensor:
-        """Insert new edges into empty slots; returns bool mask of successfully inserted edges."""
         n = parent.numel()
         if n == 0:
             return torch.zeros(0, dtype=torch.bool, device=self.device)
         sigs = _edge_sig(parent, kind, cond)
         bkts = (sigs & self.mask).to(torch.int64)
 
-        # Deduplicate per bucket within this batch insert to prevent write collisions
         order = torch.argsort(bkts, stable=True)
         s_bkts = bkts[order]
         is_first = torch.ones(n, dtype=torch.bool, device=self.device)
@@ -143,7 +109,6 @@ class DynamicEdgeTable:
 
     @torch.no_grad()
     def delete_children(self, dead_mask: torch.Tensor) -> int:
-        """Remove all edges pointing to dead child neurons (Apoptosis cleanup)."""
         valid = self.child >= 0
         if not valid.any():
             return 0
@@ -160,7 +125,6 @@ class DynamicEdgeTable:
 
 
 class NeurogenesisGraph:
-    """Living, self-growing, branching & pruning neural graph (starts at 0 hidden neurons)."""
 
     def __init__(self, cfg: GrowingGraphConfig, device: torch.device):
         self.cfg = cfg
@@ -169,43 +133,34 @@ class NeurogenesisGraph:
         self.P = cfg.pool_capacity
         self.D = cfg.feat_dim
 
-        # Alive mask: ONLY sensory char neurons 0..V-1 exist initially! Hidden neurons = 0!
         self.alive = torch.zeros(self.P, dtype=torch.bool, device=device)
         self.alive[: self.V] = True
 
-        # Neuron genealogy & structural metadata
         self.parent = torch.full((self.P,), -1, dtype=torch.int32, device=device)
-        self.cond_kind = torch.full((self.P,), -1, dtype=torch.int8, device=device)  # 0=local dist, 1=long context
+        self.cond_kind = torch.full((self.P,), -1, dtype=torch.int8, device=device)
         self.cond_id = torch.full((self.P,), -1, dtype=torch.int32, device=device)
-        self.depth = torch.zeros(self.P, dtype=torch.int16, device=device)  # root chars = depth 0
-        self.local_span = torch.zeros(self.P, dtype=torch.int16, device=device)  # how many local chars back used
+        self.depth = torch.zeros(self.P, dtype=torch.int16, device=device)
+        self.local_span = torch.zeros(self.P, dtype=torch.int16, device=device)
 
-        # Metabolic state per neuron (drives Neurogenesis & Apoptosis!)
-        self.pain = torch.zeros(self.P, dtype=torch.float32, device=device)      # accumulated surprise
-        self.fires = torch.zeros(self.P, dtype=torch.int32, device=device)       # total firing count
+        self.pain = torch.zeros(self.P, dtype=torch.float32, device=device)
+        self.fires = torch.zeros(self.P, dtype=torch.int32, device=device)
         self.recent_fires = torch.zeros(self.P, dtype=torch.int32, device=device)
-        self.utility = torch.zeros(self.P, dtype=torch.float32, device=device)   # contribution to prediction
-        self.age = torch.zeros(self.P, dtype=torch.int32, device=device)         # survival cycles
+        self.utility = torch.zeros(self.P, dtype=torch.float32, device=device)
+        self.age = torch.zeros(self.P, dtype=torch.int32, device=device)
 
-        # Dynamic outgoing branch table: (parent, kind, cond) -> child
         self.edges = DynamicEdgeTable(cfg.edge_buckets, cfg.edge_ways, device)
 
-        # Shared smooth character feature basis E [V, D] + output bias [V]
         self.E = torch.zeros((self.V, self.D), dtype=torch.float32, device=device)
         self.bias = torch.zeros(self.V, dtype=torch.float32, device=device)
 
-        # Per-neuron residual feature weights W_node [P, D] + local metaplastic update count
         self.W_node = torch.zeros((self.P, self.D), dtype=torch.float32, device=device)
         self.upd_cnt = torch.zeros(self.P, dtype=torch.float32, device=device)
 
-        # Per-neuron tiny sharp direct synapses (top-K direct char connections for crisp exact patterns)
         self.sharp_dst = torch.full((self.P, cfg.k_sharp), -1, dtype=torch.int32, device=device)
         self.sharp_w = torch.zeros((self.P, cfg.k_sharp), dtype=torch.float32, device=device)
 
-        # Character rarity salience (for picking meaningful long-range context branch conditions)
         self.char_salience = torch.ones(self.V, dtype=torch.float32, device=device)
 
-        # Telemetry
         self.total_births = 0
         self.total_deaths = 0
 
@@ -215,7 +170,6 @@ class NeurogenesisGraph:
 
     @torch.no_grad()
     def init_sensory_basis(self, train_ids: np.ndarray, sample_len: int = 2_000_000) -> None:
-        """Self-organize sensory character feature basis E [V, D] & character rarity from text distances."""
         V, D = self.V, self.D
         seq = torch.from_numpy(train_ids[: min(sample_len, len(train_ids))].astype(np.int64)).to(self.device)
 
@@ -239,18 +193,15 @@ class NeurogenesisGraph:
 
         counts = torch.bincount(seq, minlength=V).to(torch.float32)
         self.bias.copy_(torch.log((counts + 1.0) / (counts.sum() + V)))
-        # Rarity salience: rare content characters stand out for long-range branching (zero rules!)
         avg_c = counts.sum() / max(1, V)
         self.char_salience.copy_(((avg_c / (counts + 5.0)) ** 0.55).clamp(0.05, 3.0))
         self.char_salience[0] = 0.0
 
     def describe_neuron(self, nid: int, id_to_char: List[str]) -> str:
-        """Render the exact branching lineage of any grown neuron back to its sensory root!"""
         if nid < 0 or nid >= self.P or not bool(self.alive[nid].item()):
             return "<DEAD>"
         if nid < self.V:
             return id_to_char[nid]
-        # Walk up parent chain to reconstruct local substring + long-range context tags
         local_chars: List[str] = []
         ctx_tags: List[str] = []
         cur = nid
@@ -266,7 +217,6 @@ class NeurogenesisGraph:
             cur = int(self.parent[cur].item())
             guard += 1
         root_str = id_to_char[cur] if 0 <= cur < self.V else "?"
-        # local_chars were added from deepest (furthest left) to shallowest (closest left)
         seq_str = "".join(local_chars) + root_str
         if ctx_tags:
             return f"{seq_str}[{','.join(ctx_tags)}]"
@@ -274,7 +224,6 @@ class NeurogenesisGraph:
 
     @torch.no_grad()
     def _allocate_free_ids(self, count: int) -> torch.Tensor:
-        """Pop up to `count` dead/free neuron slots from the pool [V..P-1]."""
         if count <= 0:
             return torch.empty(0, dtype=torch.int64, device=self.device)
         free = torch.nonzero(~self.alive[self.V :], as_tuple=False).squeeze(1) + self.V
@@ -285,15 +234,13 @@ class NeurogenesisGraph:
     @torch.no_grad()
     def _spawn_children(
         self,
-        parents: torch.Tensor,   # [M] int64
-        kinds: torch.Tensor,     # [M] int64 (0=local, 1=long ctx)
-        conds: torch.Tensor,     # [M] int64
+        parents: torch.Tensor,
+        kinds: torch.Tensor,
+        conds: torch.Tensor,
     ) -> int:
-        """Neurogenesis: allocate free neuron IDs, wire edges, and initialize newborn neurons."""
         M = parents.numel()
         if M == 0:
             return 0
-        # Cap births per step for smooth organic growth
         if M > self.cfg.max_births_per_step:
             parents = parents[: self.cfg.max_births_per_step]
             kinds = kinds[: self.cfg.max_births_per_step]
@@ -324,18 +271,16 @@ class NeurogenesisGraph:
         self.depth[born] = self.depth[bp] + 1
         self.local_span[born] = self.local_span[bp] + (bk == 0).to(torch.int16)
 
-        # Clean fresh metabolic & synaptic state (residual neuron starts at 0 so it never hurts parent!)
         self.pain[born] = 0.0
         self.fires[born] = 1
         self.recent_fires[born] = 1
-        self.utility[born] = 0.05  # grace period for newborns
+        self.utility[born] = 0.05
         self.age[born] = 0
         self.W_node[born] = 0.0
         self.upd_cnt[born] = 0.0
         self.sharp_dst[born] = -1
         self.sharp_w[born] = 0.0
 
-        # Parent feels relieved after spawning a specialist child
         self.pain[bp] *= 0.35
 
         n_born = int(born.numel())
@@ -345,18 +290,15 @@ class NeurogenesisGraph:
     @torch.no_grad()
     def _update_sharp_synapses(
         self,
-        nodes: torch.Tensor,   # [M] int64 firing neurons
-        y_t: torch.Tensor,     # [M] int64 true target chars
-        surp: torch.Tensor,    # [M] float32 (1 - p_true)
-        top_bad: torch.Tensor, # [M] int64 top-1 wrong char (for quick lateral inhibition)
-        p_bad: torch.Tensor,   # [M] float32 prob of top-1 wrong char
+        nodes: torch.Tensor,
+        y_t: torch.Tensor,
+        surp: torch.Tensor,
+        top_bad: torch.Tensor,
+        p_bad: torch.Tensor,
         lr: float,
     ) -> None:
-        """Update tiny top-K sharp direct synapses per active neuron (fast vectorized, zero backprop)."""
         if nodes.numel() == 0:
             return
-        # Deduplicate per (node, y_t) using first occurrence for positive updates
-        # (fast approximate Hogwild update: race-free on unique nodes!)
         n = nodes.numel()
         order = torch.argsort(nodes, stable=True)
         sn = nodes[order]
@@ -371,8 +313,7 @@ class NeurogenesisGraph:
         tb = top_bad[idx].to(torch.int32)
         pb = p_bad[idx]
 
-        # 1) Positive reinforcement / sprouting on true y_t
-        dst = self.sharp_dst[u]  # [U, K]
+        dst = self.sharp_dst[u]
         w = self.sharp_w[u]
         hit = dst == yt.unsqueeze(1)
         has = hit.any(dim=1)
@@ -395,7 +336,6 @@ class NeurogenesisGraph:
             self.sharp_dst[nu, slot] = yt[need]
             self.sharp_w[nu, slot] = (lr * sp[need]).clamp(0.05, 1.5)
 
-        # 2) Mild inhibition on top-1 wrong target if already connected
         bad_valid = (tb != yt) & (pb > 0.08)
         if bad_valid.any():
             bu = u[bad_valid]
@@ -411,7 +351,6 @@ class NeurogenesisGraph:
 
     @torch.no_grad()
     def apoptosis(self) -> Dict[str, int]:
-        """Metabolic Cell Death: kill useless/dormant hidden neurons & prune orphaned subtrees!"""
         if not self.cfg.enable_apoptosis:
             return {"died": 0, "alive_hidden": self.num_hidden_alive, "edges": self.edges.count()}
 
@@ -419,7 +358,6 @@ class NeurogenesisGraph:
         hidden_alive[: self.V] = False
         self.age[hidden_alive] += 1
 
-        # A neuron dies if it has lived >= 1 cycle AND (rarely fired OR low utility/weight norm)
         w_norm = self.W_node.norm(dim=1)
         sharp_norm = self.sharp_w.abs().sum(dim=1)
         weak = (self.recent_fires < self.cfg.min_fires_survive) | (
@@ -427,7 +365,6 @@ class NeurogenesisGraph:
         )
         dead = hidden_alive & (self.age >= 1) & weak
 
-        # Cascade death to any children whose parent just died (clean tree/graph pruning!)
         for _ in range(self.cfg.max_hops):
             p_ids = self.parent.clamp(min=0).to(torch.int64)
             orphans = hidden_alive & (~dead) & (self.parent >= self.V) & dead[p_ids]
@@ -454,7 +391,6 @@ class NeurogenesisGraph:
             self.sharp_w[dead] = 0.0
             self.total_deaths += n_died
 
-        # Reset cycle counters & decay utility gently
         self.recent_fires.zero_()
         self.utility.mul_(0.85)
 
@@ -472,7 +408,6 @@ class NeurogenesisGraph:
         batch_streams: int = 512,
         lr_scale: float = 1.0,
     ) -> Dict[str, float]:
-        """Traverse the branching graph from 1 sensory neuron per stream, grow on pain, update locally."""
         cfg = self.cfg
         device = self.device
         V, D = self.V, self.D
@@ -488,12 +423,10 @@ class NeurogenesisGraph:
         ).to(device)
         B, T = data.shape
 
-        # History ring buffer for local sequence branching (up to max_hops+2) + salient long-range context
         H_buf = cfg.max_hops + 4
         char_hist = torch.full((B, H_buf), -1, dtype=torch.int64, device=device)
         hist_ptr = 0
 
-        # Salient long-range context ring (tracks the 2 most salient rare chars in the past ~40 chars!)
         ctx_char = torch.full((B, 2), -1, dtype=torch.int64, device=device)
         ctx_score = torch.zeros((B, 2), dtype=torch.float32, device=device)
 
@@ -511,7 +444,6 @@ class NeurogenesisGraph:
         max_depth_seen = 0
         births_this_pass = 0
 
-        # Active frontier width per stream: supports parallel branching (up to 4 simultaneous branches/hop)
         MAX_FRONT = 4
         logits_sharp = torch.empty((B, V), dtype=torch.float32, device=device)
 
@@ -523,13 +455,10 @@ class NeurogenesisGraph:
             cur_idx = hist_ptr
             hist_ptr = (hist_ptr + 1) % H_buf
 
-            # Update salient long-range context memory (decaying rarity tracker, zero rules!)
             ctx_score.mul_(0.965)
-            # Only inject a char from 6 steps ago into long-range context so it's truly NON-LOCAL!
             if t >= 6:
                 c_old = char_hist[:, (cur_idx - 6) % H_buf]
                 sal_old = self.char_salience[c_old.clamp(min=0)]
-                # Replace weaker slot if salient & not already held
                 already = (ctx_char[:, 0] == c_old) | (ctx_char[:, 1] == c_old)
                 weak_slot = ctx_score.argmin(dim=1)
                 weak_val = ctx_score[arange_B, weak_slot]
@@ -540,17 +469,11 @@ class NeurogenesisGraph:
                     ctx_char[rb, rs] = c_old[rb]
                     ctx_score[rb, rs] = sal_old[rb]
 
-            # ==================================================================
-            # 1) TRUE EVENT-DRIVEN BRANCHING TRAVERSAL (starts from 1 neuron x_t!)
-            # ==================================================================
-            # Visited neurons accumulator per stream for readout + local plasticity
-            visited_nodes: List[torch.Tensor] = [x_t]  # Hop 0 = root sensory neuron
+            visited_nodes: List[torch.Tensor] = [x_t]
             visited_gains: List[float] = [1.0]
 
-            # Frontier starts as 1 root neuron per stream: [B, 1]
-            frontier = x_t.unsqueeze(1)  # [B, F]
+            frontier = x_t.unsqueeze(1)
             stream_max_depth = torch.zeros(B, dtype=torch.int32, device=device)
-            # Track the deepest local-spine leaf per stream (primary candidate for Neurogenesis)
             deepest_leaf = x_t.clone()
             deepest_span = torch.zeros(B, dtype=torch.int64, device=device)
 
@@ -560,19 +483,16 @@ class NeurogenesisGraph:
                 if not valid_f.any():
                     break
 
-                # Flatten active frontier parents for O(1) GPU branch lookup
                 fb, ff = torch.nonzero(valid_f, as_tuple=True)
-                p_ids = frontier[fb, ff]  # [A]
-                p_span = self.local_span[p_ids].to(torch.int64)  # next local dist = p_span + 1
+                p_ids = frontier[fb, ff]
+                p_span = self.local_span[p_ids].to(torch.int64)
 
-                # (a) Local sequence branch: cond_kind=0, cond = char at dist (p_span + 1)
                 next_dist = (p_span + 1).clamp(max=H_buf - 1)
                 c_loc = char_hist[fb, (cur_idx - next_dist) % H_buf]
                 k0 = torch.zeros_like(p_ids)
                 ch_loc = self.edges.lookup(p_ids, k0, c_loc)
                 ch_loc = torch.where((c_loc > 0) & (ch_loc >= 0) & self.alive[ch_loc.clamp(min=0)], ch_loc, torch.full_like(ch_loc, -1))
 
-                # (b) Long-range context branch: cond_kind=1, cond = top salient context char
                 ch_ctx = torch.full_like(p_ids, -1)
                 if cfg.enable_long_branch and hop <= 4:
                     top_ctx = ctx_char[fb, ctx_score[fb].argmax(dim=1)]
@@ -584,9 +504,7 @@ class NeurogenesisGraph:
                         torch.full_like(raw_ctx, -1),
                     )
 
-                # Pack discovered child branches into next frontier [B, MAX_FRONT]
                 next_front = torch.full((B, MAX_FRONT), -1, dtype=torch.int64, device=device)
-                # Write local children to slot (ff * 2) % MAX_FRONT and context children to (ff * 2 + 1) % MAX_FRONT
                 hit_loc = ch_loc >= 0
                 if hit_loc.any():
                     hl_b = fb[hit_loc]
@@ -594,7 +512,6 @@ class NeurogenesisGraph:
                     hl_slot = (ff[hit_loc] * 2) % MAX_FRONT
                     next_front[hl_b, hl_slot] = hl_c
                     stream_max_depth[hl_b] = hop
-                    # Update deepest local leaf
                     new_sp = self.local_span[hl_c].to(torch.int64)
                     deeper = new_sp > deepest_span[hl_b]
                     if deeper.any():
@@ -612,7 +529,6 @@ class NeurogenesisGraph:
                 if not (hit_loc.any() or hit_ctx.any()):
                     break
 
-                # Record every active child column in this hop for readout + local learning
                 gain = 1.0 / (1.0 + 0.15 * hop)
                 for col in range(MAX_FRONT):
                     col_v = next_front[:, col]
@@ -622,16 +538,12 @@ class NeurogenesisGraph:
 
                 frontier = next_front
 
-            # Telemetry on dynamic depth & visited neurons
             d_mean = float(stream_max_depth.to(torch.float32).mean().item())
             total_depth_sum += d_mean * B
             cur_md = int(stream_max_depth.max().item())
             if cur_md > max_depth_seen:
                 max_depth_seen = cur_md
 
-            # ==================================================================
-            # 2) HIERARCHICAL RESIDUAL READOUT (only visited neurons fire!)
-            # ==================================================================
             h = torch.zeros((B, D), dtype=torch.float32, device=device)
             logits_sharp.zero_()
             n_vis_step = 0
@@ -642,10 +554,8 @@ class NeurogenesisGraph:
                     continue
                 n_vis_step += int(ok.sum().item())
                 u_ok = v_ids[ok]
-                # Smooth feature wave
                 h[ok] += self.W_node[u_ok] * v_g
-                # Sharp direct wave (top-K direct chars)
-                sd = self.sharp_dst[u_ok]  # [M, K]
+                sd = self.sharp_dst[u_ok]
                 sw = self.sharp_w[u_ok]
                 sm = sd >= 0
                 if sm.any():
@@ -659,9 +569,6 @@ class NeurogenesisGraph:
             h_act = torch.tanh(h * 0.5) * 2.0
             logits = h_act @ self.E.T + self.bias.unsqueeze(0) + logits_sharp
 
-            # ==================================================================
-            # 3) CAUSAL EVALUATION
-            # ==================================================================
             log_p = torch.log_softmax(logits, dim=-1)
             nll = -log_p[arange_B, y_t]
             total_nll += float(nll.sum().item())
@@ -674,47 +581,36 @@ class NeurogenesisGraph:
             if not train:
                 continue
 
-            # ==================================================================
-            # 4) BACKPROP-FREE LOCAL PLASTICITY + SURPRISE-DRIVEN NEUROGENESIS!
-            # ==================================================================
             probs = torch.exp(log_p)
             p_true = probs[arange_B, y_t]
-            surprise = 1.0 - p_true  # [B]
+            surprise = 1.0 - p_true
 
-            # Local predictive-coding feature error
             e_feat = self.E[y_t] - (probs @ self.E)
             sat = (1.0 - (h_act * 0.5).pow(2)).clamp(min=0.15)
-            e_local = e_feat * sat  # [B, D]
+            e_local = e_feat * sat
 
-            # Top-1 wrong candidate for sharp lateral inhibition
             top2_p, top2_i = torch.topk(probs, k=2, dim=-1)
             top_bad = torch.where(top2_i[:, 0] != y_t, top2_i[:, 0], top2_i[:, 1])
             p_bad = torch.where(top2_i[:, 0] != y_t, top2_p[:, 0], top2_p[:, 1])
 
-            # Update ONLY the visited neurons along each stream's traversed branches!
             for v_ids, v_g in zip(visited_nodes, visited_gains):
                 ok = v_ids >= 0
                 if not ok.any():
                     continue
                 u_ok = v_ids[ok]
-                # Track firing & metabolic utility
                 ones_u = torch.ones(u_ok.numel(), dtype=torch.int32, device=device)
                 self.fires.scatter_add_(0, u_ok, ones_u)
                 self.recent_fires.scatter_add_(0, u_ok, ones_u)
 
-                # Local utility: positive when this neuron's feature aligns with e_local (helps prediction!)
                 align = (self.W_node[u_ok] * e_local[ok]).sum(dim=-1) / math.sqrt(D)
                 self.utility.scatter_add_(0, u_ok, torch.relu(align + 0.05) * 0.25)
 
-                # Metaplastic feature update
                 self.upd_cnt.scatter_add_(0, u_ok, torch.ones(u_ok.numel(), dtype=torch.float32, device=device))
                 lr_u = (lr_feat * v_g) / torch.sqrt(1.0 + cfg.metaplasticity * self.upd_cnt[u_ok])
                 self.W_node.index_add_(0, u_ok, e_local[ok] * lr_u.unsqueeze(1))
 
-                # Sharp direct synapse update
                 self._update_sharp_synapses(u_ok, y_t[ok], surprise[ok], top_bad[ok], p_bad[ok], lr_sharp * v_g)
 
-            # Local output bias & basis E update
             bias_g = torch.zeros(V, dtype=torch.float32, device=device)
             bias_g.scatter_add_(0, y_t, torch.ones(B, dtype=torch.float32, device=device))
             bias_g.sub_(probs.sum(dim=0))
@@ -726,27 +622,21 @@ class NeurogenesisGraph:
                 self.E.mul_(0.9995)
                 self.E[0].zero_()
 
-            # NEUROGENESIS: accumulate pain on surprised deepest leaves; split when pain > threshold!
             high_surp = surprise > cfg.birth_surprise_thresh
             if high_surp.any():
                 hs_b = torch.nonzero(high_surp, as_tuple=False).squeeze(1)
                 leaves = deepest_leaf[hs_b]
                 self.pain.scatter_add_(0, leaves, surprise[hs_b])
 
-                # Check which leaves crossed splitting threshold & haven't hit max depth
                 can_split = (self.pain[leaves] >= cfg.birth_pain_thresh) & (self.depth[leaves] < cfg.max_hops)
                 if can_split.any():
                     sb = hs_b[can_split]
                     sp = leaves[can_split]
 
-                    # Decide whether to grow a deeper local branch (kind=0) or long-range context branch (kind=1):
-                    # If local span < 4, prefer local branch; if local span >= 2 and strong salient ctx exists,
-                    # also spawn long-range context branch!
                     l_span = self.local_span[sp].to(torch.int64)
                     next_d = (l_span + 1).clamp(max=H_buf - 1)
                     c_loc = char_hist[sb, (cur_idx - next_d) % H_buf]
 
-                    # Try local branch first when c_loc > 0
                     use_long = (
                         cfg.enable_long_branch
                         & (l_span >= 2)
@@ -777,7 +667,6 @@ class NeurogenesisGraph:
 
     @torch.no_grad()
     def trace_sentence_depths(self, ids: List[int], id_to_char: List[str]) -> List[Dict[str, object]]:
-        """Trace dynamic branching depth & fired path for every character in a sentence!"""
         cfg = self.cfg
         device = self.device
         H_buf = cfg.max_hops + 4
@@ -833,7 +722,6 @@ class NeurogenesisGraph:
 
     @torch.no_grad()
     def sample_deep_branches(self, id_to_char: List[str], top_k: int = 15) -> List[str]:
-        """Inspect the deepest & most active organically grown neurons in the graph!"""
         alive_h = torch.nonzero(self.alive[self.V :], as_tuple=False).squeeze(1) + self.V
         if alive_h.numel() == 0:
             return []

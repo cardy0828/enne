@@ -1,14 +1,4 @@
-"""NeuroGraph v11.0: Topology-Aligned Cortical DAG Node Merge — Build, Dev-200 Calibration & Full Evaluation!
-
-Tests merging NEW Broca L1 SFT-DAG (524,838N, Host) + Frozen Base 6M Core (4,543,752N, Donor)
-weighted STRONGER toward NEW Broca inside ONE SINGLE 6M-neuron vessel (`merged_v110_core.pt`):
-  1. Exact BFS topological alignment + Ridge coordinate transport (`cos = 0.997+`)
-  2. Strict Dev-200 sweep of `(w_new, alpha_donor)` (ZERO touching of `val.jsonl`!)
-  3. Full 1,000 Isolated SFT Val Evaluation (Core-Only AND Full + Engram) + throughput comparison vs Dual v10.2!
-  4. Full Base 3-Domain Retention (`easy_ja`, `aozora`, `wikipedia` 120k chars each):
-     Broca Alone (524K) vs Single Merged v11.0 Core vs Original Base 6M Core!
-  5. Save `merged_v110_core.pt` + verify bit-exact round-trip reload!
-"""
+"""DAG 統合の構築・調整・評価を実行する（v11.0）。"""
 
 from __future__ import annotations
 
@@ -35,7 +25,6 @@ from neurograph.sft_data_v80 import OUT_DIR as SFT_DIR, load_sft_jsonl
 
 
 def mount_base_engrams(v20: DecoupledBrainV20, E_base: torch.Tensor) -> None:
-    # Align 16-D Engram context fingerprints to Base Core's E_base (exact key/context parity with saved Engrams!)
     v20.encoder = EngramContextEncoder(E_base.to(v20.device), v20.device)
     for folder in ("engrams_v20/easy_ja", "engrams_v20/aozora", "engrams_v22/wikipedia_full_1b"):
         c = EngramCartridge.load(folder, mmap_mode="r")
@@ -68,14 +57,12 @@ def main() -> None:
     dev_diags = train_all[-200:]
     del train_all
 
-    # Load 3-domain Val slices (120k chars each) for retention comparison
     val_corpora = {
         d: load_utf8_slice(str(DATA_DIR), d, start_char=0, train_chars=1000, val_chars=120_000)
         for d in ("easy_ja", "aozora", "wikipedia")
     }
     sft_eng = EngramCartridge.load("engrams_v80/instruct_sft", mmap_mode="r")
 
-    # 1) Build Exact Topological Alignment on CPU FIRST (gives us E_base + exact BFS alignment!)
     print("\n=== 1. COMPUTING EXACT BFS TOPOLOGY ALIGNMENT (BROCA HOST + BASE 6M DONOR) ===", flush=True)
     topo = build_cortical_merge_topology(
         broca_ckpt="broca_v100/broca_l1_core.pt",
@@ -86,7 +73,6 @@ def main() -> None:
     E_base_cpu = topo.ck_base["E"].clone()
     print(f"  [Merge Topology Ready] {topo.stats}", flush=True)
 
-    # 0) Baseline check: Broca Alone (524K) on 3-Domain Retention & SFT Val (+ E_base-aligned Engrams!)
     print("\n=== 2. BASELINE: BROCA ALONE (524K) + ENGRAM (SFT VAL & 3-DOMAIN RETENTION) ===", flush=True)
     broca_only = UnifiedBrainV13b.from_checkpoint("broca_v100/broca_l1_core.pt", device)
     v20_broca = DecoupledBrainV20(broca_only)
@@ -99,14 +85,12 @@ def main() -> None:
     gc.collect()
     torch.cuda.empty_cache()
 
-    # 3) Instantiate ONE Single 6M Merged Vessel on GPU
     merged_core = instantiate_merged_brain_vessel(topo, device, pool_capacity=6_000_000, edge_buckets=8_388_608)
     v20_merged = DecoupledBrainV20(merged_core)
     mount_base_engrams(v20_merged, E_base_cpu)
     print(f"  [Single Merged Vessel Mounted] alive={merged_core.num_hidden_alive:,}N / {merged_core.edges.count():,}E | mem={_mem_snapshot(device)}", flush=True)
 
-    # 4) Strict Dev-200 Calibration of (w_new, alpha_donor) — Stronger NEW Broca!
-    print("\n=== 3. CALIBRATING (w_new, alpha_donor) STRICTLY ON DEV-200 (BROCA-STRONG!) ===", flush=True)
+    print("\n=== 3. CALIBRATING (w_new, alpha_donor) ON DEV-200 ===", flush=True)
     sweep_cfgs = [
         (0.65, 0.55),
         (0.75, 0.50),
@@ -122,7 +106,6 @@ def main() -> None:
         dt_w = apply_merge_weights_inplace(merged_core, topo, w_new=w_n, alpha_donor=a_d)
         ev_d = eval_single_core_sft_val(v20_merged, dev_diags, sft_engram=sft_eng, use_base_engram=True, use_sft_engram=True)
         ev_3d = eval_3domains_v20(v20_merged, val_corpora)
-        # Balanced score prioritizing SFT BPC + EOT while also tracking 3-domain retention!
         sc = ev_d["body_bpc"] + 0.01 * ev_d["eot_bits"]
         row = {"w_new": w_n, "alpha_donor": a_d, "apply_sec": dt_w, "dev_sft": ev_d, "val_3dom": ev_3d}
         dev_logs.append(row)
@@ -136,10 +119,8 @@ def main() -> None:
             best_sc = sc
             best_pair = (w_n, a_d)
 
-    # Apply winning Broca-strong weights & save ONE single merged checkpoint!
     w_best, a_best = best_pair
     apply_merge_weights_inplace(merged_core, topo, w_new=w_best, alpha_donor=a_best)
-    # Free raw CPU checkpoints before final eval/save to keep peak RSS low!
     topo_stats = topo.stats
     del topo
     gc.collect()
@@ -154,7 +135,6 @@ def main() -> None:
     ev_3dom_fin = eval_3domains_v20(v20_merged, val_corpora)
     print(f"  [Merged Single Core + Base Engram   ] 3-Domain Val: {ev_3dom_fin}", flush=True)
 
-    # Save standalone merged checkpoint & verify round-trip reload!
     save_path = "merged_v110_broca_strong_core.pt"
     t_sv = time.perf_counter()
     merged_core.save_full_checkpoint(save_path)

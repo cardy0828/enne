@@ -1,12 +1,4 @@
-"""NeuroGraph v11.1 (Stage 1): EOT-Orthogonal Cortical Node Merge + Closed-Form 1-Layer Readout Polish!
-
-Proves:
-  1. 1-line exact QR orthogonal projection of SFT control bytes {0x02, 0x03, 0x04} out of Base's transport
-     matrix `T_base_to_broca` eliminates EOT interference (`eot_leak_after == 0.000000`) immediately!
-  2. Closed-Form 1-Layer Hebbian Readout Polish on the SINGLE merged 4.58M brain (`ZERO backprop`)
-     pushes ONE single core (1.77x faster & -2.3 GB less GPU VRAM!) past even the Dual Parallel v10.2 system!
-  3. Saves `merged_v111_broca_core.pt` + `merged_v111_adapter.pkl` ready for Stage 2 (Wiki Lead Hippocampus)!
-"""
+"""EOT と直交させた統合と、閉形式の読み出し調整を実行する（v11.1）。"""
 
 from __future__ import annotations
 
@@ -73,8 +65,7 @@ def main() -> None:
     }
     sft_eng = EngramCartridge.load("engrams_v80/instruct_sft", mmap_mode="r")
 
-    # 1) Exact BFS Topology + EOT-Orthogonal Transport (`eot_leak_after == 0.000000`!)
-    print("\n=== 1. EOT-ORTHOGONAL CORTICAL MERGE (ZERO EOT LEAKAGE FROM BASE!) ===", flush=True)
+    print("\n=== 1. EOT-ORTHOGONAL CORTICAL MERGE ===", flush=True)
     topo = build_cortical_merge_topology(
         broca_ckpt="broca_v100/broca_l1_core.pt",
         base_ckpt="brain_v22_6m_core.pt",
@@ -88,7 +79,6 @@ def main() -> None:
     v20_merged = DecoupledBrainV20(merged_core)
     mount_base_engrams(v20_merged, E_base_cpu)
 
-    # Verify EOT-orthogonal improvement on Dev-200 across 3 strong Broca-weighted operating points!
     best_sc = 1e9
     best_pair = (0.80, 0.50)
     dev_ortho_logs = []
@@ -114,12 +104,10 @@ def main() -> None:
     del topo
     gc.collect()
 
-    # 2) Raw EOT-Orthogonal Merged Single Brain Eval on Val-1000 (BEFORE Readout Polish!)
     print(f"\n=== 2. RAW EOT-ORTHO MERGED SINGLE CORE (w={w_best}, a={a_best}) ON VAL-1000 ===", flush=True)
     ev_raw_full = eval_single_core_sft_val(v20_merged, val_diags, sft_engram=sft_eng, use_base_engram=True, use_sft_engram=True)
     print(f"  [Raw EOT-Ortho Single + Engram] Body-BPC={ev_raw_full['body_bpc']:.4f} Top1={ev_raw_full['body_top1']*100:.1f}% EOT={ev_raw_full['eot_bits']:.3f} ({ev_raw_full['sec']}s)", flush=True)
 
-    # 3) Closed-Form 1-Layer Hebbian Readout Polish (ZERO Backprop!) + Dev-200 Scale Cal
     print("\n=== 3. CLOSED-FORM 1-LAYER READOUT POLISH ON SINGLE MERGED BRAIN ===", flush=True)
     W_res, b_res, pol_stat = train_single_core_readout_polish(v20_merged, train_diags, max_dialogues=12_000, batch_size=64)
     print(f"  [Readout Polish Fit] {pol_stat}", flush=True)
@@ -137,7 +125,6 @@ def main() -> None:
             best_rs_sc = sc
             best_rs = rs_cand
 
-    # 4) Final Full Independent Val-1000 + 3-Domain Retention!
     print(f"\n=== 4. FINAL SINGLE MERGED BRAIN v11.1 (r_scale={best_rs:.1f}) ON VAL-1000 & 3-DOMAIN ===", flush=True)
     ev_pol_core = eval_single_core_sft_val(
         v20_merged, val_diags, sft_engram=None, use_base_engram=False, use_sft_engram=False,
@@ -154,7 +141,6 @@ def main() -> None:
     ev_3d_fin = eval_3domains_v20(v20_merged, val_corpora)
     print(f"  [v11.1 Single Core 3-Domain Val     ] {ev_3d_fin}", flush=True)
 
-    # Save v11.1 Single Merged Brain + Readout Polish Adapter + E_base!
     merged_core.save_full_checkpoint("merged_v111_broca_core.pt")
     with open("merged_v111_adapter.pkl", "wb") as f:
         pickle.dump(

@@ -1,25 +1,4 @@
-"""NeuroGraph v9.0: Grown Prefrontal Reasoning Nodes + Conjunctive AND Hippocampus + Layer-1 `goal_z` Conditioning!
-(Post-Astra Audit v2 — All Critical, High, and Medium Findings Fixed!)
-
-100% Zero Backprop | Zero Attention | Zero Pre-trained Tokenizer | Zero <UNK> | Zero Hardcoded Language Rules.
-
-Key Architectural Components:
-  1. PrefrontalReasoningGraphV90:
-     - Grows from ZERO Reasoning Nodes via Online Competitive Hebbian Growth (ART) + Metabolic Apoptosis.
-     - Frequency-weighted information-theoretic `tau_user_idf = 0.72 * H1_user` (never polluted by unseen motors).
-     - Learns genuine per-node factual grounding need (`hip_need_rate` from Assistant high-IDF fact density,
-       dynamically gating Hippocampus routing!), multi-entity rate (`multi_entity_rate` gating 1 vs 2 agenda slots!),
-       empirical answer length (`p25_ans_bytes`), and `ans_concept_proto`.
-     - Closed-Form Hebbian Coordinate Bridge `W_l2_to_l1 [D_c, D_m]` aligning Layer-2 thought plans to Layer-1 `goal_z`,
-       verified on held-out Val answers + validated with `vocab_sha256` integrity check on load!
-  2. Conjunctive Multi-Entity Hippocampal Deliberation (Hop 2 & Hop 3):
-     - Purely statistical Dual-IDF entity grouping (zero ASCII/language lexical rules, preserves OOV UTF-8 spans!).
-     - 100% UTF-8-boundary-safe clause slicing & replay truncation (zero mid-character cuts!).
-     - Uncovered-entity-first agenda selection + exact `(exact_hits, partial_hits, uncovered)` trace logging!
-  3. Strict 1-Factor Ablation Support Inside ONE Identical Decoder:
-     - Independent switches for `use_reasoning_node`, `use_conjunctive_hip`, and `goal_z_beta` (`0.14` vs `0.0`)
-       with IDENTICAL Engram weights, beam parameters, and per-parent closure-safe UTF-8 escape scoring!
-"""
+"""推論用の成長ノードと、条件の積で検索する文章記憶（v9.0）。"""
 
 from __future__ import annotations
 
@@ -41,14 +20,11 @@ from neurograph.thought_cortex_v50 import ContinuousThoughtCortexV50
 
 
 def trim_utf8_safe(raw: bytes, max_bytes: int) -> bytes:
-    """Truncate a raw UTF-8 byte string to <= max_bytes strictly on a valid UTF-8 codepoint boundary."""
     if len(raw) <= max_bytes:
         return raw
     end = max_bytes
-    # Step back over continuation bytes (10xxxxxx) to reach the start of the interrupted character
     while end > 0 and (raw[end] & 0xC0) == 0x80:
         end -= 1
-    # Validate complete sequence; if last codepoint is still incomplete, back up over its lead byte
     cand = raw[:end]
     try:
         cand.decode("utf-8", errors="strict")
@@ -77,9 +53,9 @@ def compute_vocab_sha256(motor_bytes: List[bytes]) -> str:
 @dataclass
 class ReasoningNode:
     node_id: int
-    centroid: np.ndarray                                   # [2 * D_m] unit float32
-    ans_proto_sum: np.ndarray                              # [D_m] float64
-    ans_concept_proto: np.ndarray                          # [D_m] float32
+    centroid: np.ndarray
+    ans_proto_sum: np.ndarray
+    ans_concept_proto: np.ndarray
     fires: int = 0
     hip_need_sum: float = 0.0
     multi_ent_sum: float = 0.0
@@ -96,7 +72,6 @@ class ReasoningNode:
 
 
 class PrefrontalReasoningGraphV90:
-    """Self-growing Prefrontal Reasoning Node Graph + Closed-Form L2->L1 `goal_z` Bridge."""
 
     def __init__(self, V_m: int, thought_dim: int = 256, core_dim: int = 256, seed: int = 90, vocab_hash: str = ""):
         self.V_m = int(V_m)
@@ -111,11 +86,11 @@ class PrefrontalReasoningGraphV90:
         self.P_op /= np.maximum(norms, 1e-6)
 
         self.nodes: List[ReasoningNode] = []
-        self.centroid_mat: Optional[np.ndarray] = None  # [K, 2 * D_m]
+        self.centroid_mat: Optional[np.ndarray] = None
         self.tau_user_idf: float = 6.2
         self.rare_fact_idf: float = 12.4
-        self.W_l2_to_l1: Optional[np.ndarray] = None    # [D_c, D_m]
-        self.y_l1_mean: Optional[np.ndarray] = None     # [D_c]
+        self.W_l2_to_l1: Optional[np.ndarray] = None
+        self.y_l1_mean: Optional[np.ndarray] = None
         self._W_bridge_gpu: Optional[torch.Tensor] = None
 
     def extract_entity_spans(
@@ -125,19 +100,11 @@ class PrefrontalReasoningGraphV90:
         adapter: InstructAdapterV80,
         user_prompt: str,
     ) -> Tuple[List[bytes], List[int]]:
-        """Purely statistical Dual-IDF entity span extractor decomposed along learned Role boundaries
-        (ZERO hardcoded language/character rules!).
-        - Uses `rc.role_motor_ids` (unsupervised entropy-discovered role/boundary morphemes) to split
-          multi-entity spans glued together by greedy motor encoding (e.g., `AとB` -> `A`, `B`; `XのYは` -> `X`, `Y`).
-        - Uses `adapter.user_prompt_idf` & `mc.motor_idfs` to separate entities from SFT question boilerplate
-          and low-frequency punctuation-only fragments."""
         u_bytes = user_prompt.strip().encode("utf-8")
         u_motors = mc.encode(np.frombuffer(u_bytes, dtype=np.uint8)).tolist()
         u_idf_arr = adapter.user_prompt_idf
 
-        # Learned role/boundary byte sequences from unsupervised v6.4 RoleBoundThoughtCortexV60
         role_bytes_set = [mc.motor_bytes[int(m)] for m in rc.role_motor_ids if len(mc.motor_bytes[int(m)]) >= 2]
-        # Low-user-IDF conversational boilerplate fragments discovered purely from SFT prompt statistics
         boiler_bytes: List[bytes] = []
         if u_idf_arr is not None:
             cand_b = np.where((np.arange(len(u_idf_arr)) >= 256) & (u_idf_arr < 4.3))[0]
@@ -147,7 +114,6 @@ class PrefrontalReasoningGraphV90:
             )[:48]
 
         def _strip_learned_boundaries(sb: bytes) -> List[bytes]:
-            """Split a raw span by learned role bytes (e.g. の/と/は/「/、/。) & trim boilerplate suffixes."""
             pieces = [sb]
             for rb in role_bytes_set:
                 nxt: List[bytes] = []
@@ -162,7 +128,6 @@ class PrefrontalReasoningGraphV90:
                 pieces = nxt
             cleaned: List[bytes] = []
             for pc in pieces:
-                # Trim frequent SFT question boilerplate prefixes/suffixes (e.g. ですか, とは何, 教えてください)
                 changed = True
                 while changed and len(pc) >= 4:
                     changed = False
@@ -175,21 +140,17 @@ class PrefrontalReasoningGraphV90:
                             pc = pc[len(bb) :].strip()
                             changed = True
                             break
-                # Strip trailing/leading single-codepoint high-UTF8 symbol bytes if they are standalone punctuation
-                # detected statistically: motors whose corpus IDF is below median AND length <= 3 bytes at span edges
                 if len(pc) >= 6:
                     for edge in ("end", "start"):
                         p_ms = mc.encode(np.frombuffer(pc, dtype=np.uint8)).tolist()
                         if len(p_ms) >= 2:
                             em = p_ms[-1] if edge == "end" else p_ms[0]
                             emb = mc.motor_bytes[em]
-                            # Drop edge motor if it's a 1-char (<=3B) rare-in-SFT punctuation/symbol with low cg_vec
                             if len(emb) <= 3 and em >= 256 and float(rc.cg_vec[em]) < 0.35:
                                 pc = pc[: -len(emb)] if edge == "end" else pc[len(emb) :]
                 if len(pc) >= 4:
                     try:
                         pc.decode("utf-8", errors="strict")
-                        # Reject pure boilerplate or low-content fragments via learned content-gate `cg_vec`
                         pm = mc.encode(np.frombuffer(pc, dtype=np.uint8)).tolist()
                         max_cg = max((float(rc.cg_vec[m]) for m in pm if m >= 256), default=0.0)
                         has_oov_alnum = any(m < 256 and m > 32 for m in pm)
@@ -238,8 +199,6 @@ class PrefrontalReasoningGraphV90:
             u_idf = float(u_idf_arr[m]) if (u_idf_arr is not None and m < len(u_idf_arr)) else c_idf
             cg_m = float(rc.cg_vec[m])
             eff_idf = min(c_idf, u_idf)
-            # Keep motor if high Dual-IDF, OR if it is a high-content entity-modifier (`cg >= 0.55, c_idf >= 8.0`)
-            # whose next motor is high-Dual-IDF (recovers e.g. `日本の` before `首都は`!)
             is_ent_mod = False
             if eff_idf < idf_cut and cg_m >= 0.45 and c_idf >= (mc.tau_idf + 1.2) and u_idf >= 4.4:
                 if idx_m + 1 < len(u_motors):
@@ -259,18 +218,15 @@ class PrefrontalReasoningGraphV90:
         spans: List[bytes] = []
         for rs in raw_spans:
             for sp in _strip_learned_boundaries(rs):
-                # Reject spans that are purely frequent SFT boilerplate (e.g. わかりやす, 始まり, 終わりました)
                 sm = mc.encode(np.frombuffer(sp, dtype=np.uint8)).tolist()
                 if not sm:
                     continue
-                # Score span by max corpus IDF & content-gate
                 max_u = max((float(u_idf_arr[m]) if (u_idf_arr is not None and m < len(u_idf_arr)) else float(mc.motor_idfs[m])) for m in sm)
                 if len(sp) <= 3 and max_u < 11.0:
                     continue
                 if sp not in spans:
                     spans.append(sp)
 
-        # Rank spans by specificity (sum of content-gated corpus IDF * sqrt(len)) so core entities come first!
         def _span_prio(sp: bytes) -> float:
             sm = mc.encode(np.frombuffer(sp, dtype=np.uint8)).tolist()
             if not sm:
@@ -289,8 +245,6 @@ class PrefrontalReasoningGraphV90:
         u_motors: np.ndarray,
         ctx_motors: Optional[np.ndarray] = None,
     ) -> np.ndarray:
-        """Compute 2*D_m Question Reasoning Signature = [0.65 * unit(q_op), 0.35 * unit(q_sem)]
-        (~77.5% structural/interrogative operator cosine, ~22.5% semantic W_qa intent cosine)."""
         D = self.D_m
         u_idf_arr = adapter.user_prompt_idf
         q_op = np.zeros(D, dtype=np.float32)
@@ -332,8 +286,6 @@ class PrefrontalReasoningGraphV90:
         max_nodes: int = 96,
         min_fires_survive: int = 40,
     ) -> Dict[str, object]:
-        """Grow Prefrontal Reasoning Nodes organically from ZERO nodes via Online Competitive Hebbian Growth
-        (Adaptive Resonance) + Metabolic Apoptosis (ZERO Backprop, ZERO Hardcoded Categories!)."""
         if not train_dialogues:
             raise ValueError("train_dialogues is empty; cannot grow Reasoning Graph!")
         if mc.emb_np is None or mc.emb_np.shape != (self.V_m, self.D_m):
@@ -346,10 +298,9 @@ class PrefrontalReasoningGraphV90:
         if adapter.user_prompt_idf is None:
             adapter.compute_user_prompt_idf(mc, train_dialogues)
 
-        # Frequency-weighted information-theoretic boundary + corpus-IDF 65th percentile for genuine rare facts!
         u_idfs = adapter.user_prompt_idf[256:].astype(np.float64)
         max_u = float(u_idfs.max()) if len(u_idfs) > 0 else 10.0
-        obs = u_idfs[u_idfs < (max_u - 0.05)]  # strictly excludes zero-count motors!
+        obs = u_idfs[u_idfs < (max_u - 0.05)]
         if len(obs) > 0:
             w = np.exp(-obs)
             h1_u = float((w * obs).sum() / (w.sum() + 1e-12))
@@ -405,8 +356,6 @@ class PrefrontalReasoningGraphV90:
 
                 ent_spans, ent_mids = self.extract_entity_spans(mc, rc, adapter, u)
                 a_list = a_m.tolist()
-                # Genuine factual-need teacher signal: requires BOTH at least 1 real entity in the prompt
-                # AND >= 3 novel ultra-rare factual concepts (>= corpus p65 IDF!) in the Assistant's answer!
                 u_set = set(u_m.tolist())
                 novel_rare_facts = sum(
                     1 for m in set(a_list)
@@ -489,7 +438,6 @@ class PrefrontalReasoningGraphV90:
         max_answers: int = 3_000,
         ridge_alpha: float = 0.25,
     ) -> Dict[str, object]:
-        """Closed-Form Hebbian Coordinate Bridge `W_l2_to_l1 [D_c, D_m]` (ZERO Backprop!) + Holdout Cosine Check!"""
         if mc.emb_np is None:
             raise ValueError("mc.emb_np is None; cannot train L2->L1 bridge!")
         t0 = time.perf_counter()
@@ -523,8 +471,6 @@ class PrefrontalReasoningGraphV90:
                 return None
             return xl2, yl1
 
-        # Collect all pairs first (3,000 x 256 float32 = ~3 MB!) so we can center `yl1` cleanly
-        # and train `W_l2_to_l1` purely on the SEMANTIC DELTA `yl1 - y_mean` (never biases away from EOT!).
         for d in train_dialogues:
             for _, a in d["turns"]:
                 if used >= max_answers:
@@ -557,7 +503,6 @@ class PrefrontalReasoningGraphV90:
         self._W_bridge_gpu = None
         del xt, yt, yt_c, C_xx, C_xy, W
 
-        # Independent Holdout Val Centered Bridge Alignment Cosine Check (strictly subtracts y_mean!)
         val_cos_c, val_cos_raw_c = [], []
         if val_dialogues:
             ym_dev = torch.from_numpy(self.y_l1_mean).to(dev)
@@ -652,7 +597,6 @@ class PrefrontalReasoningGraphV90:
 
 
 class DeliberativeReasoningBrainV90:
-    """Unified NeuroGraph v9.0 Brain with Strict 1-Factor Ablation Controls inside ONE Identical Decoder!"""
 
     def __init__(self, chat_v80: InstructBrainV80, rgraph: PrefrontalReasoningGraphV90):
         self.chat = chat_v80
@@ -667,7 +611,6 @@ class DeliberativeReasoningBrainV90:
         self.rgraph = rgraph
 
     def _split_evidence_clauses(self, ep_bytes: bytes, min_bytes: int = 24, max_bytes: int = 240) -> List[bytes]:
-        """100% UTF-8-boundary-safe language-agnostic clause extractor (zero mid-character truncation, zero dropped long lines!)."""
         raw_lines = [ln.strip() for ln in ep_bytes.split(b"\n") if len(ln.strip()) >= min_bytes]
         out: List[bytes] = []
         top_term = b""
@@ -721,10 +664,6 @@ class DeliberativeReasoningBrainV90:
         top_k_agenda: int = 2,
         conjunctive: bool = True,
     ) -> Dict[str, object]:
-        """Hop 2 & Hop 3:
-        - `conjunctive=True`: Multi-branch Hippocampus query + Clause-Level Conjunctive Entity Coverage x Intent Competition
-          (prioritizing UNCOVERED entities for slot 2!).
-        - `conjunctive=False`: Control baseline (single joint query, raw top-K episode ranking, zero clause competition)."""
         t0 = time.perf_counter()
         empty = {
             "agenda_bytes": [], "agenda_texts": [], "agenda_sources": [], "agenda_scores": [],
@@ -762,7 +701,6 @@ class DeliberativeReasoningBrainV90:
             empty["hop23_ms"] = round((time.perf_counter() - t0) * 1000.0, 2)
             return empty
 
-        # Non-conjunctive control path (single-query raw top-K episodes, UTF-8 safe!)
         if not conjunctive:
             ranked_raw = sorted(raw_pool.items(), key=lambda x: x[1][0], reverse=True)[:top_k_agenda]
             agenda = []
@@ -834,8 +772,6 @@ class DeliberativeReasoningBrainV90:
 
                     cov_frac = matched_cnt / max(1, n_ents)
                     and_mult = 1.0 + 2.8 * cov_frac + (2.5 if matched_cnt >= 1.9 else 0.0)
-                    # Language-agnostic Subject-Head Positional Bonus: definitional clauses place the queried
-                    # entity near byte 0 (not buried deep inside an incidental mention of another subject!).
                     subj_bonus = 2.0 if min_ent_pos <= 15 else (0.85 if min_ent_pos <= 45 else 0.0)
                     cust_mult = 2.4 if is_cust else 1.0
                     len_bonus = 1.0 if 36 <= len(cl) <= 220 else 0.78
@@ -850,14 +786,12 @@ class DeliberativeReasoningBrainV90:
             agenda = [scored_clauses[0]]
             covered_mask = scored_clauses[0][1] | scored_clauses[0][2]
 
-            # Uncovered-Entity-First Selection for Slot 2 (ensures comparison/multi-entity questions get ALL targets!)
             if top_k_agenda > 1 and len(scored_clauses) > 1:
                 uncovered_cands = [it for it in scored_clauses[1:] if ((it[1] | it[2]) & (~covered_mask)) != 0]
                 if uncovered_cands:
                     agenda.append(uncovered_cands[0])
                     covered_mask |= (uncovered_cands[0][1] | uncovered_cands[0][2])
                 else:
-                    # Fallback corroboration only when score is strong
                     for it in scored_clauses[1:]:
                         if it[3].startswith("custom") and it[0] >= agenda[0][0] * 0.50:
                             agenda.append(it)
@@ -945,9 +879,6 @@ class DeliberativeReasoningBrainV90:
         sft_engram_scale: float = 1.15,
         score_critic: bool = True,
     ) -> Tuple[str, bool, Dict]:
-        """Strict 1-Factor-Switchable 4-Hop Deliberative Reasoning & Articulation Engine!
-        All 3 components (`use_reasoning_node`, `use_conjunctive_hip`, `goal_z_beta`) toggle independently
-        inside the EXACT SAME decoder with IDENTICAL Engram weights and beam parameters!"""
         t0 = time.perf_counter()
         dev = self.device
         mc = self.mc
@@ -969,13 +900,11 @@ class DeliberativeReasoningBrainV90:
         ctx_motor_list.extend(u_motors.tolist())
         ctx_motors_arr = np.array(ctx_motor_list, dtype=np.int32)
 
-        # ---- HOP 1: Prefrontal Reasoning Node Activation & Dual-IDF Entity Extraction ----
         entity_spans, entity_mids = self.rgraph.extract_entity_spans(mc, rc, self.adapter, user_prompt)
         h_qa = self.adapter.predict_qa_intent(rc, ctx_motors_arr)
 
         if use_reasoning_node:
             node, node_sim = self.rgraph.route(mc, rc, self.adapter, u_motors, ctx_motors_arr)
-            # Genuine dynamic routing: Reasoning Node's learned `hip_need_rate` gates Hippocampus!
             has_custom_mounted = any(c.name.startswith("custom") for c in self.hip.cartridges) if self.hip else False
             want_hip = bool(len(entity_spans) > 0 and (node.hip_need_rate >= 0.35 or has_custom_mounted))
             top_k_ag = 2 if (node.multi_entity_rate >= 0.30 or len(entity_spans) >= 2) else 1
@@ -984,7 +913,6 @@ class DeliberativeReasoningBrainV90:
             want_hip = len(entity_spans) > 0
             top_k_ag = 1
 
-        # ---- HOP 2 & HOP 3: Hippocampal Evidence Gathering & Competition ----
         delib = self._conjunctive_hippocampus_deliberate(
             entity_spans, u_bytes, node, h_qa, top_k_agenda=top_k_ag, conjunctive=use_conjunctive_hip
         ) if want_hip else {
@@ -1002,8 +930,6 @@ class DeliberativeReasoningBrainV90:
         ep_trans2 = delib["ep_trans2"]
         ep_4grams = delib["ep_4grams"]
 
-        # Fast-Hebbian Working-Memory Associative Byte Table over retrieved evidence clauses
-        # (100% Zero-Backprop exact suffix -> next-byte binding; identical across all 4 ablation configs!)
         wm_table: Dict[bytes, Dict[int, float]] = {}
         if has_evidence:
             wm_lens = (3, 4, 5, 6, 8, 10)
@@ -1019,7 +945,6 @@ class DeliberativeReasoningBrainV90:
                             d_s = wm_table.setdefault(suf, {})
                             d_s[nxt_b] = d_s.get(nxt_b, 0.0) + wm_w[wl] * src_mult
 
-        # Crystallize CENTERED Layer-1 `goal_z` semantic delta vector (strictly gated by `goal_z_beta > 0`!)
         h_root = mc.compute_root_thought_vec(np.array(entity_mids, dtype=np.int32)) if entity_mids else mc.compute_root_thought_vec(u_motors)
         node_proto = node.ans_concept_proto if node is not None else np.zeros(mc.thought_dim, dtype=np.float32)
         h_plan_l2 = (0.45 * h_qa + 0.55 * delib["h_ev_l2"]) if has_evidence else (0.75 * h_qa + 0.25 * node_proto)
@@ -1055,7 +980,6 @@ class DeliberativeReasoningBrainV90:
             max_topics=8, min_idf=max(5.5, mc.tau_idf - 0.3),
         )
 
-        # ---- HOP 4: UTF-8-Safe Focused ByteSTM Replay + Working Memory + Decaying Centered `goal_z` ----
         st1 = runner.init_batch_state(1)
         if has_evidence:
             replay_safe = trim_utf8_safe(b"\n".join(delib["agenda_bytes"]), 420)
@@ -1064,7 +988,6 @@ class DeliberativeReasoningBrainV90:
                 rx = torch.tensor([replay_b[ri]], dtype=torch.int64, device=dev)
                 ry = torch.tensor([replay_b[ri + 1]], dtype=torch.int64, device=dev)
                 runner.step_batch(st1, rx, next_true=ry, goal_z=None, goal_z_beta=0.0, use_engram=False, is_prompt=True)
-            # Clear transient sensory buffers while keeping ByteSTM factual bindings!
             st1["byte_hist"].fill_(-1)
             st1["hist_ptr"].zero_()
             st1["node_delay"].fill_(-1)
@@ -1111,7 +1034,6 @@ class DeliberativeReasoningBrainV90:
                     wm_np = np.zeros((B_cur, 256), dtype=np.float32)
                     has_wm_hit = False
                     for ri_b in range(B_cur):
-                        # bs24_np[ri_b, 0] is most recent byte, [1] is t-1, ... -> reverse for chronological suffix
                         row_raw = bs24_np[ri_b, :10]
                         valid_n = int(np.sum(row_raw >= 0))
                         if valid_n >= 3:
@@ -1174,7 +1096,6 @@ class DeliberativeReasoningBrainV90:
         }]
         finished_beams: List[Dict] = []
 
-        # Uniform EOT floor across ablations when `use_reasoning_node=False`; node-adaptive when `use_reasoning_node=True`!
         if is_social:
             min_eot_b = 6
         elif node is not None:
@@ -1214,7 +1135,6 @@ class DeliberativeReasoningBrainV90:
                 added_bytes_wi = set()
                 last_b = bm["gen_bytes"][-1] if bm["gen_bytes"] else -1
 
-                # Closure-safe scoring function: explicitly binds parent beam state (_bm, _rec14, _last_b)!
                 def _score_cand(
                     mid_v: int, mb: bytes, base_l2: float, extra_gated: float = 0.0,
                     _bm=bm, _rec14=recent_14, _last_b=last_b,
@@ -1249,7 +1169,6 @@ class DeliberativeReasoningBrainV90:
                             l2_g += cg * 1.45 * cos_plan
                     return l2_b, l2_g, inh_b, cg
 
-                # A) Step-0 Reasoning-Routed Opening vs Subsequent SFT Assistant Macro
                 if step_i == 0:
                     if not is_social and entity_spans:
                         for rk, es in enumerate(entity_spans[:3]):
@@ -1289,7 +1208,6 @@ class DeliberativeReasoningBrainV90:
                         cand_cg.append(cg); cand_keep_prio.append(True); cand_is_l1_esc.append(False)
                         added_bytes_wi.add(mb)
 
-                # B) Base L2 Motor Proposals (strictly conditioned on Assistant's OWN generated motors!)
                 if len(gm) > 0:
                     p_ids, p_sc = mc.predict_topk(
                         np.array(gm[-6:], dtype=np.int32), root_t_ids, root_t_w, topic_ppmi_gain=1.35, top_k=top_k_motor * 2,
@@ -1310,7 +1228,6 @@ class DeliberativeReasoningBrainV90:
                         if taken >= top_k_motor:
                             break
 
-                # C) Verified Thought Agenda Motor Proposals
                 if has_evidence:
                     ev_cands: Dict[int, float] = {}
                     if last2 in ep_trans2:
@@ -1332,7 +1249,6 @@ class DeliberativeReasoningBrainV90:
                         cand_cg.append(cg); cand_keep_prio.append(True); cand_is_l1_esc.append(False)
                         added_bytes_wi.add(mb)
 
-                # D) Layer-1 UTF-8 Escape Hatch
                 if escape_k > 0:
                     lrow = logits_beams[wi].clone()
                     lrow[~runner.lead_mask] = -1e9

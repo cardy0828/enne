@@ -1,4 +1,4 @@
-"""最終決定済みの雑談と数値の発話候補をCPUで構成する。"""
+"""決定済みの雑談と数値の発話候補を CPU で組み立てる（v13.1）。"""
 from dataclasses import dataclass, field
 import math
 from pathlib import Path
@@ -115,4 +115,3 @@ class UtteranceCortex:
             value += unit+self.ending
         return value,dict(utterance_mode=mode,utterance_node_id=node_id,unit_extracted=unit,
                           candidates_count=count,chosen_candidate=value)
-

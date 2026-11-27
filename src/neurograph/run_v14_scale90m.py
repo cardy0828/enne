@@ -1,5 +1,4 @@
-"""NeuroGraph v1.4: Large-Scale Continual Growth (+60M Unseen Shuffled Chars -> 90M Total / ~260M Raw UTF-8 Bytes)
-with Expanded 3.6M bf16 Vessel + Myelination + Mid/Final Sleep Pruning + System 5 Executive + System 6 v1.3b IDF Lateral Wave!"""
+"""本体 DAG の継続学習を実行する（v1.4）。"""
 
 from __future__ import annotations
 
@@ -24,7 +23,6 @@ def load_utf8_slice(
     train_chars: int = 20_000_000,
     val_chars: int = 120_000,
 ) -> UTF8Corpus:
-    """Losslessly slice [start_char : start_char + train_chars] from UTF-32-LE corpus into raw UTF-8 bytes."""
     base = Path(data_dir)
     mm_tr = np.memmap(base / f"{name}.train", dtype=np.uint32, mode="r")
     end_char = min(len(mm_tr), start_char + train_chars)
@@ -79,7 +77,6 @@ def main() -> None:
         device,
         new_pool_capacity=args.pool_capacity,
         cfg_overrides={
-            # Gentle continual-learning rates for shared retina/slots while new neurons grow fast!
             "lr_feat": 0.20,
             "lr_basis": 0.015,
             "lr_sharp": 0.26,
@@ -108,7 +105,6 @@ def main() -> None:
         flush=True,
     )
 
-    # Baseline check right after vessel expansion
     ev0 = eval_3domains(brain, vals, args.val_streams, use_exec=True, use_lat=False)
     print(f"[S0 Transplanted 30M Baseline] {fmt_3domains(ev0)}", flush=True)
 
@@ -127,7 +123,6 @@ def main() -> None:
         ap = brain.apoptosis()
         fu = brain.fuse_similar_neurons(seed=400 + r * 23)
 
-        # Nightly Sleep Pruning after EVERY round -> sweeps 1-hit noise so all 3 domains keep ample LTM room!
         sp_r = brain.ltm.sleep_prune()
         sleep_logs.append({"stage": f"after_round_{r+1}", **sp_r})
         print(
@@ -151,44 +146,37 @@ def main() -> None:
             f"LTM={brain.ltm.count_active()/1e6:.2f}M | {fmt_3domains(ev_r)}",
             flush=True,
         )
-        # Safety checkpoint halfway through so long runs are always resumable!
         if r == (args.rounds // 2 - 1):
             brain.save_full_checkpoint(args.save_ckpt.replace(".pt", "_mid.pt"))
 
-    # Final stats (nightly sleep already ran on final round!)
-    print(f"\n[LTM Post-Sleep Final] {brain.ltm.count_active()/1e6:.2f}M consolidated knowledge neurons!", flush=True)
+    print(f"\n[LTM Post-Sleep Final] {brain.ltm.count_active()/1e6:.2f}M consolidated LTM entries", flush=True)
 
-    # Refit System 5 (24-Mode Executive Critic) on the richer 90M-grown Cortex!
     rt = time.time()
     exec_fit = brain.fit_executive_modes(mixed_unseen[:8_000_000], passage_len=320, max_passages=16_000)
     print(f"[System 5 Executive] Refitted {exec_fit['num_modes']} discourse modes in {time.time()-rt:.1f}s", flush=True)
 
-    # Build System 6 v1.3b (IDF-Gated Lateral Semantic Thought Wave!)
     rt = time.time()
     lat_stats = brain.build_idf_lateral_graph(
         mixed_unseen, doc_len=2048, num_docs_idf=6144, cooc_scan_bytes=20_000_000, cooc_batch_streams=2048
     )
     print(
         f"[System 6 IDF Lateral Graph] {lat_stats['num_concepts']:,} content concepts "
-        f"(clean UTF-8: {lat_stats['clean_utf8_pct']}%), {lat_stats['num_edges']:,} PPMI synapses in {time.time()-rt:.1f}s!",
+        f"(clean UTF-8: {lat_stats['clean_utf8_pct']}%), {lat_stats['num_edges']:,} PPMI synapses in {time.time()-rt:.1f}s",
         flush=True,
     )
 
-    # Probe live 2-hop thought waves
     probes = ["猫", "世界大戦", "東京", "ドイツ", "日本", "学校", "江戸時代", "フランス"]
     waves_log = {}
-    print("\n--- Live 2-Hop IDF Lateral Semantic Thought Waves (90M Brain, Zero Tokenizer!) ---", flush=True)
+    print("\n--- Live 2-Hop IDF Lateral Semantic Thought Waves (90M) ---", flush=True)
     for pr in probes:
         w_res = brain.trace_semantic_wave(pr, top_k=8)
         waves_log[pr] = w_res
         print(f"  [{pr}] ==wave==> " + ", ".join(f"{t}({s:.2f})" for t, s in w_res), flush=True)
 
-    # Full 4-Sys -> 5-Sys -> 6-Sys Ablation across all 3 domains!
     ev_4sys = eval_3domains(brain, vals, args.val_streams, use_exec=False, use_lat=False)
     ev_5sys = eval_3domains(brain, vals, args.val_streams, use_exec=True, use_lat=False)
     ev_6sys = eval_3domains(brain, vals, args.val_streams, use_exec=True, use_lat=True)
 
-    # Also evaluate full 306k easy_ja val for direct apples-to-apples comparison with v1.0 & Transformer baseline!
     c_easy_full = load_utf8_slice(args.data_dir, "easy_ja", start_char=0, train_chars=1000, val_chars=306_000)
     ev_easy_306k = brain.eval_with_idf_lateral_wave(
         c_easy_full.val_bytes, batch_streams=args.val_streams, bytes_per_char=c_easy_full.bytes_per_char_val,
@@ -200,7 +188,7 @@ def main() -> None:
     print(f"v1.3 Ref (30M shuf, D=256)    | easy_ja=4.3019(70.8%) | aozora=5.1329(66.6%) | wikipedia=4.6887(66.7%) | MEAN=4.7078", flush=True)
     print(f"v1.4 4-Sys (90M, 3.6M vessel) | {fmt_3domains(ev_4sys)}", flush=True)
     print(f"v1.4 5-Sys (+24-Mode Exec)    | {fmt_3domains(ev_5sys)}", flush=True)
-    print(f"v1.4 6-Sys (+IDF Lateral!)    | {fmt_3domains(ev_6sys)}", flush=True)
+    print(f"v1.4 6-Sys (+IDF Lateral)     | {fmt_3domains(ev_6sys)}", flush=True)
     print(
         f"v1.4 Full easy_ja 306k Val    | bpb={ev_easy_306k['bpb']:.4f} | bpc_lossless={ev_easy_306k['bpc_lossless']:.4f} "
         f"(ppl={ev_easy_306k['ppl']:.2f}) | byte_top1={ev_easy_306k['byte_top1']*100:.1f}% | top5={ev_easy_306k['byte_top5']*100:.1f}%",
@@ -210,7 +198,6 @@ def main() -> None:
     brain.save_full_checkpoint(args.save_ckpt)
     print(f"Saved full bit-exact 6-system checkpoint: {args.save_ckpt}", flush=True)
 
-    # A/B Generations (4-Sys OFF vs 6-Sys ON)
     prompts = [
         ("Wikipedia歴史", "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて"),
         ("青空文庫文学", "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。"),

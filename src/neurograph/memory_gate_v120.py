@@ -1,4 +1,4 @@
-"""視床ゲート。学習済みの重みとモーター接続頻度を CPU に保持する。"""
+"""検索した根拠を使うかどうかを決める記憶ゲート。重みとモーター接続頻度を CPU に保持する（v12.0）。"""
 import json
 import math
 import pickle
@@ -184,7 +184,6 @@ def _discover_abstention_memory(brain, train_turns, terminators):
             short_qa.append((is_first, u, a, am))
 
     # Pass 2: 質問を「無根拠・数字なし」vs「有根拠または数字あり」に分割し、
-    # 意味分散 (Prompt Semantic Dispersion) × 純粋無事実率 (zrate) × 無根拠リフトで棄権句を抽出する。
     ungr_vecs = defaultdict(list)
     ungr_topics = defaultdict(set)
     ungr_cnt = Counter()

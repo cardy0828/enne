@@ -1,4 +1,4 @@
-"""train の末尾200会話を分離し、弱教師による近傍と出生中心を学習する。"""
+"""ツール選択ノードを弱教師で学習する。train の末尾200会話は剪定用に分ける（v13.0）。"""
 from collections import Counter
 import json
 import os
@@ -213,4 +213,3 @@ def train():
 
 if __name__=="__main__":
     train()
-

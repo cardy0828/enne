@@ -1,4 +1,4 @@
-"""演算の根拠を数量次元、文字特徴のラベル間頻度差、カーネルで集約する。"""
+"""数量の次元、文字特徴、カーネルから算術の演算を推定する（v13.2）。"""
 from collections import Counter
 import math
 import re
@@ -47,6 +47,3 @@ def classify(model,q,features):
     """従来の呼び出しには上位の演算子と近傍支持度を返す。"""
     ranking,support=ranked_operators(model,q,features)
     return ranking[0][0],support
-
-
-

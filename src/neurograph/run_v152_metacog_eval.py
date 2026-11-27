@@ -1,4 +1,4 @@
-"""RTX 3060 で同一脳の一因子比較を実行し、盲検は排他的に一回だけ開く。"""
+"""メタ認知の有無だけを切り替えて評価する。新規問題は凍結検証の後に1回だけ実行する（v15.2）。"""
 from datetime import datetime
 import json
 import os
@@ -180,4 +180,3 @@ if __name__=="__main__":
         freeze()
     else:
         evaluate(sys.argv[1])
-

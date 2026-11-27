@@ -1,16 +1,4 @@
-"""NeuroGraph v5.0: Continuous Thought-Field (256d Hebbian Spectral Latent Space)
-+ Top-Down Inhibitory Gate + Directed Subject->Predicate Layer-2 Motor Cortex!
-
-Combines:
-  [1] Directed Subject->Predicate PPMI + Top-Down Prefrontal-to-Sensory Inhibition
-      (crushes off-topic Layer-1 boilerplate hijacks like '年（昭和 -> JR西日本の駅'!)
-      + Rule-Free IDF-Rhythm Anti-Stacking + Scaled 300M-char Persistent Layer-2!
-  [3] Continuous 256-dim Motor Thought Embeddings (Zero-Backprop Randomized Spectral
-      Oja/Hebbian Eigen-Decomposition on GPU in ~1.5s, < 30 MB static VRAM!)
-      + 4-Timescale Continuous Working-Memory Thought State (h_root, h_long, h_mid, h_short)
-      + Closed-Form Hebbian Predictive Transition Matrix W_pred (256x256, 0 backprop!).
-
-Zero backprop, zero Attention, zero pre-trained tokenizer, zero <UNK>, zero hardcoded rules."""
+"""連続的な思考ベクトル空間と、可変長の出力単位（モーター単位）（v5.0）。"""
 
 from __future__ import annotations
 
@@ -133,10 +121,6 @@ def _load_motor_v50_lib() -> ctypes.CDLL:
 
 
 class ContinuousThoughtCortexV50:
-    """Layer-2 Thought & Motor Cortex v5.0:
-    - Grown Output Motor Nodes (Broca's Area, zero pre-trained tokenizer, zero <UNK>)
-    - 120M-slot Directed Macro-Cortex + Directed Subject->Predicate PPMI (0 MB GPU)
-    - 256-dim Continuous Spectral Hebbian Thought Embeddings E + Predictive W_pred (~25 MB GPU, 0 backprop!)"""
 
     def __init__(
         self,
@@ -159,11 +143,10 @@ class ContinuousThoughtCortexV50:
         self.motor_idfs: np.ndarray = np.full(256, 4.0, dtype=np.float32)
         self.tau_idf: float = 6.2
 
-        # Continuous 256-dim Thought Space (CPU float32 contiguous + optional GPU cache)
-        self.emb_np: Optional[np.ndarray] = None      # [V_m, D_m] L2-normalized
-        self.w_pred_np: Optional[np.ndarray] = None   # [D_m, D_m] Hebbian predictive transition
-        self._pred_xtx: Optional[np.ndarray] = None   # running Hebbian covariance C_xx
-        self._pred_xty: Optional[np.ndarray] = None   # running Hebbian cross-cov C_xy
+        self.emb_np: Optional[np.ndarray] = None
+        self.w_pred_np: Optional[np.ndarray] = None
+        self._pred_xtx: Optional[np.ndarray] = None
+        self._pred_xty: Optional[np.ndarray] = None
 
     def __del__(self):
         try:
@@ -194,15 +177,11 @@ class ContinuousThoughtCortexV50:
         grown_idfs = self.motor_idfs[256:]
         nz = grown_idfs[grown_idfs > 0.1]
         if len(nz) > 0:
-            # Rule-free information-theoretic boundary from unigram Shannon entropy H1:
-            # 0.72 * H1 (~6.45 nats) cleanly separates glue/particles (4.9..5.6) from content nouns (6.8..13.0)!
             w = np.exp(-nz.astype(np.float64))
             h1 = float((w * nz.astype(np.float64)).sum() / (w.sum() + 1e-12))
             self.tau_idf = 0.72 * h1
 
     def content_gate(self, mid: int) -> float:
-        """Smooth rule-free content specificity gate in [0, 1] from corpus IDF alone:
-        ~0.0 for function/glue nodes ('は', 'の', '、', '。'), ~1.0 for content concepts ('量子', 'ドイツ', '駅')."""
         if mid < 256 or mid >= self.V_m:
             return 0.0
         idf = float(self.motor_idfs[mid])
@@ -310,9 +289,6 @@ class ContinuousThoughtCortexV50:
         sample_motor_streams: Optional[List[np.ndarray]] = None,
         power_iters: int = 4,
     ) -> Dict[str, float]:
-        """ZERO-BACKPROP Continuous 256-dim Motor Thought Embeddings via GPU Randomized Spectral
-        Hebbian/Oja Power Iteration on the Symmetric Topic PPMI Graph + Closed-Form Hebbian
-        Predictive Transition Matrix W_pred (256x256)! Uses < 150 MB temp GPU VRAM."""
         t0 = time.time()
         E_cnt = int(self.lib.macro_sym_edge_count_v50(self._mh))
         V_m = self.V_m
@@ -328,12 +304,10 @@ class ContinuousThoughtCortexV50:
             w_np.ctypes.data_as(ctypes.POINTER(ctypes.c_float)),
         )
 
-        # Build STRICTLY SYMMETRIC normalized affinity matrix A = D^{-1/2} (0.5*(P + P^T)) D^{-1/2} on GPU!
         row_counts = np.diff(off_np.astype(np.int64))
         rows_np = np.repeat(np.arange(V_m, dtype=np.int64), row_counts)
         cols_np = dst_np.astype(np.int64)
 
-        # Symmetrize explicitly by adding both (r, c) and (c, r) with 0.5*w
         sym_r = np.concatenate([rows_np, cols_np])
         sym_c = np.concatenate([cols_np, rows_np])
         sym_w = np.concatenate([0.5 * w_np, 0.5 * w_np]).astype(np.float32)
@@ -350,7 +324,6 @@ class ContinuousThoughtCortexV50:
         A = torch.sparse_coo_tensor(indices, vals, size=(V_m, V_m), device=device).coalesce()
         del indices, vals, rows_np, cols_np, sym_r, sym_c, sym_w, norm_w, off_np, dst_np, w_np
 
-        # Randomized Subspace / Orthogonal Oja Power Iteration (6 iters, oversampling p=32) on strictly symmetric A!
         k_over = min(V_m - 1, D_m + 32)
         g = torch.Generator(device=device)
         g.manual_seed(50)
@@ -361,7 +334,6 @@ class ContinuousThoughtCortexV50:
             Z = Z + 0.25 * Q
             Q, _ = torch.linalg.qr(Z, mode="reduced")
 
-        # Small [k_over, k_over] projection Rayleigh-Ritz decomposition
         B_small = Q.T @ torch.sparse.mm(A, Q)
         B_small = 0.5 * (B_small + B_small.T)
         evals, evecs = torch.linalg.eigh(B_small)
@@ -376,18 +348,14 @@ class ContinuousThoughtCortexV50:
 
         self.emb_np = np.ascontiguousarray(E_gpu.cpu().numpy(), dtype=np.float32)
 
-        # Closed-Form Hebbian Predictive Transition Matrix W_pred [D_m, D_m]:
-        # STRICTLY CHUNKED (32,768 motors/chunk -> < 40 MB peak VRAM!) AND aligned with the exact
-        # two-timescale EMA thought state (0.62*h_long + 0.38*h_mid) used during causal evaluation!
         if sample_motor_streams:
             C_xx = torch.zeros((D_m, D_m), device=device, dtype=torch.float32)
             C_xy = torch.zeros((D_m, D_m), device=device, dtype=torch.float32)
             chunk_sz = 32_768
-            # Precompute exponential kernel weights for causal EMA approximation (window 32 content motors)
             k_len = 32
             d_idx = torch.arange(k_len, device=device, dtype=torch.float32)
             ker = 0.62 * (0.07 * ((1.0 - 0.07) ** d_idx)) + 0.38 * (0.24 * ((1.0 - 0.24) ** d_idx))
-            ker = (ker / ker.sum()).flip(0).view(1, 1, k_len)  # causal conv1d kernel [1, 1, K]
+            ker = (ker / ker.sum()).flip(0).view(1, 1, k_len)
 
             idfs_t = torch.from_numpy(self.motor_idfs).to(device)
             cg_all = torch.sigmoid((idfs_t - self.tau_idf) * 2.2)
@@ -404,11 +372,9 @@ class ContinuousThoughtCortexV50:
                     if keep.numel() <= k_len + 2:
                         del m_t, keep
                         continue
-                    em_seq = E_gpu[m_t[keep]]  # [M <= 32768, D_m] (~<= 32 MB VRAM!)
-                    # Causal 1D EMA convolution over strictly past k_len content motors (zero future leakage!)
-                    # em_seq[:-1] predicts em_seq[k_len:]
-                    inp = em_seq[:-1].T.unsqueeze(1)  # [D_m, 1, M-1]
-                    ctx_h = torch.nn.functional.conv1d(inp, ker).squeeze(1).T  # [M - k_len, D_m]
+                    em_seq = E_gpu[m_t[keep]]
+                    inp = em_seq[:-1].T.unsqueeze(1)
+                    ctx_h = torch.nn.functional.conv1d(inp, ker).squeeze(1).T
                     ctx_h = ctx_h / ctx_h.norm(dim=-1, keepdim=True).clamp(min=1e-6)
                     nxt_e = em_seq[k_len:]
                     C_xx += ctx_h.T @ ctx_h
@@ -451,7 +417,6 @@ class ContinuousThoughtCortexV50:
     def load(cls, folder: str) -> "ContinuousThoughtCortexV50":
         p = Path(folder)
         obj = cls()
-        # Destroy initial empty vocab handle before loading
         obj.lib.motor_vocab_destroy(obj._vh)
         obj._vh = None
         vh_p = ctypes.c_void_p()
@@ -477,7 +442,6 @@ class ContinuousThoughtCortexV50:
         return obj
 
     def probe_continuous_thought(self, query: str, top_k: int = 10) -> List[Tuple[str, float]]:
-        """Query the 256-dim Continuous Thought Space for nearest semantic motor concepts!"""
         if self.emb_np is None:
             return []
         ids = self.encode(np.frombuffer(query.encode("utf-8"), dtype=np.uint8))
@@ -494,7 +458,6 @@ class ContinuousThoughtCortexV50:
         return [(self.motor_texts[int(i)], round(float(sims[int(i)]), 3)) for i in top_idx]
 
     def probe_directed_predicates(self, query: str, top_k: int = 10) -> List[Tuple[str, float]]:
-        """Inspect Forward-Directed Subject -> Predicate PPMI associations!"""
         ids = self.encode(np.frombuffer(query.encode("utf-8"), dtype=np.uint8))
         acc: Dict[int, float] = {}
         out_i = np.zeros(32, dtype=np.int32)
@@ -539,18 +502,15 @@ class ContinuousThoughtCortexV50:
             if cg < 0.30:
                 continue
             rec = 1.0 if use_resonance else (1.0 / (1.0 + 0.04 * (L - 1 - idx)))
-            # Multi-byte compositional richness gently favors full concept chunks over tiny phonetic scraps
             len_w = math.log1p(len(self.motor_bytes[mid]))
             seen[mid] = cg * idf * len_w * rec
         if not seen:
             return np.zeros(0, dtype=np.int32), np.zeros(0, dtype=np.float32)
 
-        # Rule-free Constant-Time (K <= 24) Mutual-Resonance Filtering in 256-dim Continuous Thought Space:
-        # Cap to top-24 unique candidates BEFORE resonance -> strictly O(1), ZERO O(K^2) growth!
         if use_resonance and self.emb_np is not None and len(seen) >= 3:
             top_items = sorted(seen.items(), key=lambda x: x[1], reverse=True)[:24]
             mids = [m for m, _ in top_items]
-            E_sub = self.emb_np[mids]  # [<=24, D]
+            E_sub = self.emb_np[mids]
             sim_mat = np.maximum(0.0, E_sub @ E_sub.T)
             np.fill_diagonal(sim_mat, 0.0)
             res = sim_mat.max(axis=1) + 0.35 * sim_mat.mean(axis=1)
@@ -563,12 +523,9 @@ class ContinuousThoughtCortexV50:
         return t_ids, t_w
 
     def compute_root_thought_vec(self, motor_seq: np.ndarray) -> np.ndarray:
-        """Compute the persistent Prefrontal Root Thought Vector h_root in 256-dim space via
-        Constant-Time (K <= 24 unique) Mutual-Resonance Weighting (ZERO O(K^2), ZERO language rules!)."""
         h = np.zeros(self.thought_dim, dtype=np.float32)
         if self.emb_np is None or len(motor_seq) == 0:
             return h
-        # Deduplicate and accumulate weights by unique motor ID, then cap to top-24 -> strictly O(1)!
         uniq_w: Dict[int, float] = {}
         for mid in motor_seq:
             m = int(mid)
@@ -586,7 +543,7 @@ class ContinuousThoughtCortexV50:
         top_u = sorted(uniq_w.items(), key=lambda x: x[1], reverse=True)[:24]
         mids = [m for m, _ in top_u]
         bw = np.array([w for _, w in top_u], dtype=np.float32)
-        E_sub = self.emb_np[mids]  # [<=24, D]
+        E_sub = self.emb_np[mids]
         if len(mids) >= 3:
             sim_mat = np.maximum(0.0, E_sub @ E_sub.T)
             np.fill_diagonal(sim_mat, 0.0)
@@ -644,8 +601,6 @@ class ContinuousThoughtCortexV50:
         cont_gain: float = 1.10,
         inhib_gain: float = 1.20,
     ) -> torch.Tensor:
-        """12-Thread OpenMP C++ 100% STRICTLY CAUSAL Online Marginalization (ZERO FUTURE LEAKAGE!)
-        Passes unified Python tau_idf explicitly to C++. Returns [T-1, B, 256] float16 CPU tensor."""
         arr = np.ascontiguousarray(data_2d_np, dtype=np.uint8)
         B, T = arr.shape
         out_f32 = np.empty((B, T - 1, 256), dtype=np.float32)
@@ -681,8 +636,6 @@ class ContinuousThoughtCortexV50:
 
 
 class HierarchicalBrainV50:
-    """NeuroGraph v5.0: Layer-1 (4.54M Core + 1.084B Engram) + Layer-2 Discrete Macro-Cortex
-    + Layer-2 256-dim Continuous Multi-Timescale Thought Field + Top-Down Inhibitory Gate!"""
 
     def __init__(self, v20: DecoupledBrainV20, cortex_v50: ContinuousThoughtCortexV50, temp_cal: float = 1.08):
         self.v20 = v20
@@ -702,7 +655,6 @@ class HierarchicalBrainV50:
         layer2_scale: float = 0.58,
         temp_cal: float = 1.08,
     ) -> Dict[str, float]:
-        """Fast 3-Way Causal Lossless Raw UTF-8 BPC Evaluation (12-thread C++ marginalizer + GPU core)!"""
         core = self.v20.core
         cfg = core.cfg
         dev = self.device
@@ -758,7 +710,6 @@ class HierarchicalBrainV50:
         ones_B_f = torch.ones(B, dtype=torch.float32, device=dev)
         logits_sharp = torch.empty((B, V), dtype=torch.float32, device=dev)
 
-        # Accumulate metrics on GPU (ZERO per-step .item() CUDA pipeline stalls!)
         total_nll_t = torch.zeros((), dtype=torch.float64, device=dev)
         total_top1_t = torch.zeros((), dtype=torch.int64, device=dev)
         total_top5_t = torch.zeros((), dtype=torch.int64, device=dev)
@@ -882,13 +833,6 @@ class HierarchicalBrainV50:
         inhib_thresh: float = 0.16,
         rhythm_penalty: float = 0.60,
     ) -> Tuple[str, bool, Dict]:
-        """ZERO-COPY-PASTE Pure Free-Form Generative Decoding in Grown Motor Output Node Space!
-        When `use_thought_field=True` and `use_topdown_inhibition=True`:
-          - Persistent Prefrontal Root Thought Anchor `h_root` NEVER decays!
-          - 4-Timescale Continuous Thought State (`h_root`, `h_long`, `h_mid`) + Hebbian `W_pred` guides content!
-          - Top-Down Inhibitory Gate crushes off-topic Layer-1 boilerplate hijacks (`年（昭和 -> JR西日本の駅`)!
-          - Rule-Free IDF-Rhythm prevents noun-string stacking (`物理的性質量子力学的...`)!
-          - Soft high-IDF repetition decay prevents looping!"""
         t0 = time.perf_counter()
         dev = self.device
         runner = self.runner
@@ -899,7 +843,6 @@ class HierarchicalBrainV50:
         p_motors = self.mc.encode(np.frombuffer(prompt_b, dtype=np.uint8))
         prompt_m = p_motors.tolist()
 
-        # Persistent Prefrontal Root Subjects & Continuous Root Thought Vector h_root (Mutual-Resonance Filtered)!
         root_t_ids, root_t_w = self.mc.extract_active_topics(p_motors, max_topics=6, min_idf=5.8, use_resonance=use_thought_field)
         h_root = self.mc.compute_root_thought_vec(p_motors)
         root_mass = sum(
@@ -924,7 +867,6 @@ class HierarchicalBrainV50:
             return ((1.0 - al) * h_l + al * em), ((1.0 - am) * h_m + am * em)
 
         def _combined_thought(h_l: np.ndarray, h_m: np.ndarray) -> Tuple[np.ndarray, Optional[np.ndarray]]:
-            # Prefrontal Root Anchor holds 58% weight so the topic NEVER drifts mid-way!
             h = 0.58 * h_root + 0.26 * h_l + 0.16 * h_m
             nrm = float(np.linalg.norm(h))
             if nrm > 1e-6:
@@ -937,7 +879,6 @@ class HierarchicalBrainV50:
                     h_pred = hp / pn
             return h, h_pred
 
-        # Prefill Layer-1 GPU Core on exact prompt bytes!
         st1 = runner.init_batch_state(1)
         prompt_hs = []
         raw_in = list(prompt_b)
@@ -957,7 +898,6 @@ class HierarchicalBrainV50:
 
         st_beams = st1
         logits_beams = logits1
-        # Fast reverse lookup from raw UTF-8 bytes -> motor ID (for L1 Syntax Escape Hatch!)
         bytes_to_mid: Dict[bytes, int] = {b: i for i, b in enumerate(self.mc.motor_bytes)}
         beams = [{
             "score": 0.0,
@@ -981,7 +921,7 @@ class HierarchicalBrainV50:
             cand_parent: List[int] = []
             cand_mid: List[int] = []
             cand_l2: List[float] = []
-            cand_inh_b: List[float] = []  # Applied EXACTLY ONCE (never double/triple-counted!)
+            cand_inh_b: List[float] = []
             cand_bytes: List[bytes] = []
             cand_cg: List[float] = []
             cand_is_l1_escape: List[bool] = []
@@ -1023,7 +963,6 @@ class HierarchicalBrainV50:
                     elif use_thought_field and cg < 0.25 and c_hi >= 2.1:
                         l2_s += 0.45
 
-                    # Continuous 256-dim Thought-Field Excitation + SINGLE-APPLICATION Top-Down Inhibition!
                     if has_root_vec and mid_v >= 256 and cg > 0.15:
                         em = self.mc.emb_np[mid_v]
                         if float(np.dot(em, em)) > 0.1:
@@ -1037,11 +976,9 @@ class HierarchicalBrainV50:
                             l2_s += cg * cont_align_gain * eff_align
                             if use_topdown_inhibition and eff_align < inhib_thresh:
                                 mismatch = min(1.25, (inhib_thresh - eff_align) / max(0.05, inhib_thresh))
-                                # Applied ONCE (only in `inh_per_byte`, NEVER subtracted from l2_s too!)
                                 inh_per_byte = root_conf * cg * inhib_gain * mismatch
                     return l2_s, inh_per_byte, cg
 
-                # A) Layer-2 Motor Proposals
                 taken = 0
                 for mid_v, sc_v in zip(p_ids.tolist(), p_sc.tolist()):
                     mb = self.mc.motor_bytes[mid_v]
@@ -1060,8 +997,6 @@ class HierarchicalBrainV50:
                     if taken >= top_k_motor:
                         break
 
-                # B) ALWAYS-ON Layer-1 UTF-8-Complete Syntax Escape Hatch (Top-4 from L1 directly!)
-                # Guarantees grammatical glue/particles & ANY arbitrary UTF-8 character (zero <UNK>!) survive to L1 check!
                 lrow = logits_beams[wi].clone()
                 lrow[~runner.lead_mask] = -1e9
                 lrow[0] = -1e9; lrow[10] = -1e9; lrow[13] = -1e9
@@ -1070,7 +1005,6 @@ class HierarchicalBrainV50:
                     if b0 < 0x80:
                         mb = bytes([b0])
                     else:
-                        # Complete valid RFC 3629 multi-byte UTF-8 char via Layer-1's top continuation bytes!
                         clen = 2 if (b0 & 0xE0) == 0xC0 else (3 if (b0 & 0xF0) == 0xE0 else 4)
                         ch_b = bytearray([b0])
                         st_tmp = runner.gather_state(st_beams, torch.tensor([wi], dtype=torch.int64, device=dev))
@@ -1082,7 +1016,6 @@ class HierarchicalBrainV50:
                                 locked_mode_p=locked_mode_p, use_engram=True, engram_mult=0.72, is_prompt=False,
                             )
                             row_u = lg_u[0].clone()
-                            # Mask strictly to RFC 3629 continuation bytes 0x80..0xBF (+ overlong bounds)
                             mask_u = torch.zeros(256, dtype=torch.bool, device=dev)
                             lo, hi = 0x80, 0xBF
                             if ci_u == 1:
@@ -1113,7 +1046,6 @@ class HierarchicalBrainV50:
             if not cand_parent:
                 break
 
-            # Cap candidate frontier to 42 while ALWAYS keeping L1 Syntax Escape Hatch candidates!
             if len(cand_parent) > 42:
                 esc_idx = [i for i, f in enumerate(cand_is_l1_escape) if f][:16]
                 l2_idx = [i for i, f in enumerate(cand_is_l1_escape) if not f]
@@ -1126,7 +1058,6 @@ class HierarchicalBrainV50:
                 cand_bytes = [cand_bytes[i] for i in ord_c]
                 cand_cg = [cand_cg[i] for i in ord_c]
 
-            # Joint Layer-1 GPU Core + 1.084B Engram Batched Verification!
             M = len(cand_parent)
             p_idx = torch.tensor(cand_parent, dtype=torch.int64, device=dev)
             st_c = runner.gather_state(st_beams, p_idx)
@@ -1153,7 +1084,6 @@ class HierarchicalBrainV50:
 
             l1_lp_cpu = cand_l1_lp.cpu().tolist()
 
-            # Score all M candidates with STRICTLY SEPARATED raw L1, raw L2, single-application inhibition, and repetition!
             next_pool = []
             for ci in range(M):
                 bm = beams[cand_parent[ci]]
@@ -1164,7 +1094,6 @@ class HierarchicalBrainV50:
                 l2_step = cand_l2[ci]
                 inh_step = cand_inh_b[ci] * len(mb)
 
-                # If L1 Escape Hatch emitted a rare multi-byte UTF-8 char not in motor vocab, encode its raw bytes for mseq
                 m_add = [mid] if mid >= 0 else list(mb)
                 new_mseq = bm["motor_seq"] + m_add
                 new_seen3 = set(bm["seen_m3"])
@@ -1198,7 +1127,6 @@ class HierarchicalBrainV50:
                 tot_nb = bm["n_bytes"] + len(mb)
                 n_steps = len(bm["gen_motors"]) + 1
 
-                # Clean additive decomposition: Raw L1 fluency + L2 thought - Single Inhibition - Repetition!
                 joint_sc = (
                     (raw_l1 / max(1.0, tot_nb ** 0.90))
                     + 0.58 * (raw_l2 / max(1.0, n_steps ** 0.85))
@@ -1244,7 +1172,6 @@ class HierarchicalBrainV50:
             logits_beams = log_c[ch_idx].clone()
             beams = [nb for (_, _, nb) in chosen]
 
-            # Language-agnostic byte budget stop (ZERO hardcoded Japanese punctuation rules!)
             if beams[0]["n_bytes"] >= 190:
                 break
 
@@ -1258,7 +1185,6 @@ class HierarchicalBrainV50:
             valid_utf8 = False
         flu_bpc = runner.score_text_bpc(full_txt, prompt_prefix_len=len(prompt_b), engram_mult=0.72)
 
-        # Quantitative Topic-Drift Metric: 1st-Half vs 2nd-Half Root Thought-Lock Cosine!
         gen_m = best_bm["gen_motors"]
         c_sims_1, c_sims_2 = [], []
         if self.mc.emb_np is not None and float(np.linalg.norm(h_root)) > 0.1 and len(gen_m) > 0:

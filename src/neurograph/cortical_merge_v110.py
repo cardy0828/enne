@@ -1,24 +1,4 @@
-"""NeuroGraph v11.0: Topology-Aligned Cortical DAG Node Merge (Broca-Strong Single-Brain Fusion!).
-
-ZERO Backprop | ZERO Attention | ZERO Permutation Collapse | 100% Exact Path-Aligned Node Grafting!
-
-Because every hidden neuron in NeuroGraph's Living DAG is content-addressable by its exact structural
-path `(parent_node, cond_kind, cond_id) -> child_node` rooted at raw UTF-8 bytes `0..255`:
-  1. Exact Closed-Form Coordinate-Frame Alignment (`Ridge T: [256, 256]`):
-     Solves `E_broca @ T.T ≈ E_base` so `(h_base @ T) @ E_broca.T ≈ h_base @ E_base.T` (`cos = 0.997+`!).
-     All grafted Base neurons fire seamlessly into Broca's SFT-native sensory basis `E_broca`!
-  2. Depth-Ordered BFS Topological Alignment (`depth = 1..16`):
-     - **Broca-ONLY paths** (SFT turn framing, `\x02User:`, `\x03Assistant:`, `0x04` EOT triggers, dialogue syntax):
-       100% preserved intact at full `1.0x` Broca strength!
-     - **SHARED paths** (existing in BOTH Broca AND Base):
-       Blended weighted **STRONGER toward NEW Broca** (`w_new`, e.g. `0.75`):
-         `W_merged = w_new * W_broca + (1 - w_new) * (W_base @ T)`
-         `sharp_merged = topk8(w_new * sharp_broca + (1 - w_new) * sharp_base)` (vectorized GPU union!)
-     - **Base-ONLY paths** (millions of Wikipedia/Aozora encyclopedic knowledge nodes Broca never saw):
-       Grafted directly onto their aligned parents inside the SINGLE 6M vessel at `alpha_donor` strength!
-  3. Produces ONE single `UnifiedBrainV13b` (`merged_v110_core.pt`, ~4.1 GB static VRAM, 1 Triton launch/step —
-     2x faster than dual parallel runners!) with BOTH SFT mastery AND 3-domain encyclopedic literacy!
-"""
+"""別々に学習した DAG を構造上の経路で対応付けて1つに統合する（v11.0）。"""
 
 from __future__ import annotations
 
@@ -46,27 +26,22 @@ def compute_basis_transport(
     ridge_lam: float = 0.05,
     ortho_control_bytes: Tuple[int, ...] = (2, 3, 4),
 ) -> Tuple[torch.Tensor, Dict[str, float]]:
-    """Solve exact closed-form transport `T [D, D]` so `(h @ T) @ E_broca.T ≈ h @ E_base.T`,
-    then project out the SFT dialogue control-byte subspace `{0x02, 0x03, 0x04}` so grafted Base neurons
-    are strictly orthogonal to EOT (`(W_base @ T) @ E_broca[0x04] == 0.0` — ZERO EOT interference!)."""
     Eb = E_base.to(torch.float64)
     Er = E_broca.to(torch.float64)
     D = Er.shape[1]
     eye = torch.eye(D, dtype=torch.float64, device=Er.device)
     TT = torch.linalg.solve(Er.T @ Er + ridge_lam * eye, Er.T @ Eb)
-    T64 = TT.T  # [D, D]
+    T64 = TT.T
 
-    # Exact QR orthonormalization of SFT control-byte rows in E_broca -> project them out of T64's column space!
     eot_leak_before = float((T64 @ Er[4]).norm().item())
     if ortho_control_bytes:
-        C_sub = Er[list(ortho_control_bytes)].T  # [D, K_ctrl]
-        Q_ctrl, _ = torch.linalg.qr(C_sub, mode="reduced")  # [D, K_ctrl] orthonormal columns
+        C_sub = Er[list(ortho_control_bytes)].T
+        Q_ctrl, _ = torch.linalg.qr(C_sub, mode="reduced")
         P_ortho = eye - (Q_ctrl @ Q_ctrl.T)
         T64 = T64 @ P_ortho
     eot_leak_after = float((T64 @ Er[4]).norm().item())
     T = T64.to(torch.float32)
 
-    # Verify exact logit preservation cosine on non-control bytes (32..255)
     gen = torch.Generator(device=Er.device)
     gen.manual_seed(110)
     h_test = torch.randn((256, D), generator=gen, device=Er.device, dtype=torch.float32)
@@ -95,7 +70,6 @@ def merge_sharp_8_gpu(
     device: torch.device,
     chunk_size: int = 32_768,
 ) -> Tuple[torch.Tensor, torch.Tensor]:
-    """Exact vectorized GPU union-and-Top8 merge of two [N, 8] sharp synapse tables (32 MB temp VRAM!)."""
     N = sd_new.shape[0]
     out_d = torch.full((N, 8), -1, dtype=torch.int16)
     out_w = torch.zeros((N, 8), dtype=torch.bfloat16)
@@ -113,7 +87,6 @@ def merge_sharp_8_gpu(
 
         do = sd_old[s:e].to(device=device, dtype=torch.int64)
         wo = sw_old[s:e].to(device=device, dtype=torch.float32) * float(w_old)
-        # Strictly prevent Donor Base sharp synapses from touching SFT control bytes {0x02, 0x03, 0x04}!
         mo = (do >= 0) & (do < 256) & (do != 2) & (do != 3) & (do != 4)
         buf.scatter_add_(1, do.clamp(0, 255), torch.where(mo, wo, torch.zeros_like(wo)))
 
@@ -127,19 +100,17 @@ def merge_sharp_8_gpu(
 
 @dataclass
 class CorticalMergeTopology:
-    """Precomputed exact BFS path alignment between Host (NEW Broca) and Donor (Base 6M) DAGs."""
     ck_broca: Dict[str, torch.Tensor]
     ck_base: Dict[str, torch.Tensor]
-    T_base_to_broca: torch.Tensor          # [256, 256] float32 (CPU)
+    T_base_to_broca: torch.Tensor
     align_stats: Dict[str, float]
-    total_nodes: int                       # total allocated node IDs (<= pool_capacity)
-    broca_count: int                       # 256 + hidden_broca (Broca IDs packed contiguously [0..broca_count-1])
-    broca_orig_ids: np.ndarray             # [broca_count] original Broca node IDs
-    shared_m_ids: np.ndarray               # [N_shared] merged IDs that exist in BOTH Broca and Base
-    shared_base_ids: np.ndarray            # [N_shared] matching Donor Base node IDs
-    base_only_m_ids: np.ndarray            # [N_base_only] newly allocated merged IDs for Base-only paths
-    base_only_base_ids: np.ndarray         # [N_base_only] corresponding Donor Base node IDs
-    # Canonical metadata arrays for all [total_nodes]
+    total_nodes: int
+    broca_count: int
+    broca_orig_ids: np.ndarray
+    shared_m_ids: np.ndarray
+    shared_base_ids: np.ndarray
+    base_only_m_ids: np.ndarray
+    base_only_base_ids: np.ndarray
     parent: np.ndarray
     cond_kind: np.ndarray
     cond_id: np.ndarray
@@ -147,7 +118,6 @@ class CorticalMergeTopology:
     local_span: np.ndarray
     fires: np.ndarray
     upd_cnt: np.ndarray
-    # All merged edges (Broca primary + secondary + Base-only grafted + Base secondary!)
     edge_parents: np.ndarray
     edge_kinds: np.ndarray
     edge_conds: np.ndarray
@@ -161,14 +131,12 @@ def build_cortical_merge_topology(
     pool_capacity: int = 6_000_000,
     ridge_lam: float = 0.05,
 ) -> CorticalMergeTopology:
-    """Compute exact depth-ordered BFS topological alignment between NEW Broca (Host) and Base 6M (Donor) on CPU."""
     t0 = time.perf_counter()
     ck_r = torch.load(broca_ckpt, map_location="cpu", weights_only=False)
     ck_b = torch.load(base_ckpt, map_location="cpu", weights_only=False)
 
     T_b2r, align_stats = compute_basis_transport(ck_b["E"], ck_r["E"], ridge_lam=ridge_lam)
 
-    # 1) Pack ALL alive Broca nodes contiguously into merged IDs [0 .. broca_count - 1]
     al_r = ck_r["alive"].numpy()
     orig_r_ids = np.nonzero(al_r)[0].astype(np.int64)
     assert np.array_equal(orig_r_ids[:256], np.arange(256, dtype=np.int64)), "Broca roots 0..255 must be alive!"
@@ -185,9 +153,6 @@ def build_cortical_merge_topology(
     f_r = ck_r["fires"].numpy()
     u_r = ck_r["upd_cnt"].numpy()
 
-    # Build fast merged edge lookup:
-    #   k0 (local byte): int64 key = (parent_m << 9) | byte_cond -> child_m
-    #   k1 (context node): tuple (parent_m, cond_m) -> child_m
     k0_map: Dict[int, int] = {}
     k1_map: Dict[Tuple[int, int], int] = {}
     ep_list: List[int] = []
@@ -195,7 +160,6 @@ def build_cortical_merge_topology(
     ec_list: List[int] = []
     ech_list: List[int] = []
 
-    # Insert all Broca saved edges first (highest priority!)
     if "edge_parents" in ck_r:
         r_ep = ck_r["edge_parents"].numpy()
         r_ek = ck_r["edge_kinds"].numpy()
@@ -217,7 +181,6 @@ def build_cortical_merge_topology(
                     k1_map[(pm, cm)] = chm
                     ep_list.append(pm); ek_list.append(1); ec_list.append(cm); ech_list.append(chm)
 
-    # Also ensure every Broca hidden node's canonical parent edge is registered in k0_map/k1_map
     for m_id in range(256, broca_count):
         oid = int(orig_r_ids[m_id])
         pe = int(p_r[oid])
@@ -237,7 +200,6 @@ def build_cortical_merge_topology(
                 k1_map[(pm, cm)] = m_id
                 ep_list.append(pm); ek_list.append(1); ec_list.append(cm); ech_list.append(m_id)
 
-    # 2) Depth-Ordered BFS Alignment of Donor Base 6M Hidden Nodes (`depth = 1..16`)!
     al_b = ck_b["alive"].numpy()
     p_b = ck_b["parent"].numpy()
     k_b = ck_b["cond_kind"].numpy()
@@ -251,7 +213,6 @@ def build_cortical_merge_topology(
     b_old_to_m[:256] = np.arange(256, dtype=np.int64)
 
     hidden_b = np.nonzero(al_b[256:])[0].astype(np.int64) + 256
-    # Sort strictly by (depth ASC, fires DESC) so high-frequency paths get first priority if pool ever nears cap!
     order_b = np.lexsort((-f_b[hidden_b], d_b[hidden_b]))
     hidden_b_sorted = hidden_b[order_b]
 
@@ -314,7 +275,6 @@ def build_cortical_merge_topology(
                 base_only_b.append(uid)
                 ep_list.append(pm); ek_list.append(1); ec_list.append(cm); ech_list.append(mid)
 
-    # Also carry over Base's secondary convergent DAG edges between mapped nodes!
     extra_base_edges = 0
     if "edge_parents" in ck_b:
         b_ep = ck_b["edge_parents"].numpy()
@@ -339,7 +299,6 @@ def build_cortical_merge_topology(
                     ep_list.append(pm); ek_list.append(1); ec_list.append(cm); ech_list.append(chm)
                     extra_base_edges += 1
 
-    # Deduplicate shared_m (if two Base fused paths hit one Broca node, keep highest-fire Base donor!)
     if shared_m:
         best_sh: Dict[int, int] = {}
         for m_i, b_i in zip(shared_m, shared_b):
@@ -356,7 +315,6 @@ def build_cortical_merge_topology(
     base_only_b_arr = np.array(base_only_b, dtype=np.int64)
     total_nodes = next_m_id
 
-    # Build canonical node metadata arrays for [0..total_nodes-1]
     parent_m = np.full(total_nodes, -1, dtype=np.int32)
     kind_m = np.full(total_nodes, -1, dtype=np.int8)
     cond_m = np.full(total_nodes, -1, dtype=np.int32)
@@ -365,7 +323,6 @@ def build_cortical_merge_topology(
     fires_m = np.zeros(total_nodes, dtype=np.int32)
     upd_m = np.zeros(total_nodes, dtype=np.int32)
 
-    # Fill Broca [0..broca_count-1]
     for m_id in range(broca_count):
         oid = int(orig_r_ids[m_id])
         pe = int(p_r[oid])
@@ -379,11 +336,9 @@ def build_cortical_merge_topology(
         fires_m[m_id] = int(f_r[oid])
         upd_m[m_id] = int(u_r[oid])
 
-    # Boost fires on shared nodes
     if len(shared_m_arr) > 0:
         fires_m[shared_m_arr] = np.minimum(2_000_000_000, fires_m[shared_m_arr].astype(np.int64) + f_b[shared_b_arr].astype(np.int64)).astype(np.int32)
 
-    # Fill Base-only [broca_count..total_nodes-1]
     if len(base_only_m_arr) > 0:
         pb_sel = p_b[base_only_b_arr]
         kb_sel = k_b[base_only_b_arr]
@@ -449,7 +404,6 @@ def instantiate_merged_brain_vessel(
     pool_capacity: int = 6_000_000,
     edge_buckets: int = 8_388_608,
 ) -> UnifiedBrainV13b:
-    """Create ONE single 6M-neuron UnifiedBrainV13b vessel and populate its exact merged topology & Broca slots!"""
     cfg = LateralV13bConfig(
         pool_capacity=pool_capacity,
         edge_buckets=edge_buckets,
@@ -459,7 +413,6 @@ def instantiate_merged_brain_vessel(
         enable_lateral=False,
     )
     brain = UnifiedBrainV13b(cfg, device)
-    # Detach internal GPU LTM immediately (saves 268 MB VRAM!)
     for bi in range(brain.ltm.num_banks):
         brain.ltm.sig[bi] = torch.empty((1, 4), dtype=torch.int32, device=device)
         brain.ltm.dst[bi] = torch.full((1, 4), -1, dtype=torch.int16, device=device)
@@ -476,7 +429,6 @@ def instantiate_merged_brain_vessel(
     brain.fires[:N].copy_(torch.from_numpy(topo.fires).to(device))
     brain.upd_cnt[:N].copy_(torch.from_numpy(topo.upd_cnt).to(device))
 
-    # Host = NEW Broca's SFT-native basis, bias, 16 working-memory slots, and 24 Executive modes!
     ck_r = topo.ck_broca
     brain.E.copy_(ck_r["E"].to(device))
     brain.bias.copy_(ck_r["bias"].to(device))
@@ -491,7 +443,6 @@ def instantiate_merged_brain_vessel(
         brain.mode_llr.copy_(ck_r["mode_llr"].to(device))
         brain.mode_ready = True
 
-    # Insert ALL merged edges on GPU in chunks (~1.5s for 5.0M edges!)
     ep_t = torch.from_numpy(topo.edge_parents).to(device=device, dtype=torch.int64)
     ek_t = torch.from_numpy(topo.edge_kinds).to(device=device, dtype=torch.int64)
     ec_t = torch.from_numpy(topo.edge_conds).to(device=device, dtype=torch.int64)
@@ -519,8 +470,6 @@ def apply_merge_weights_inplace(
     alpha_donor: float = 0.55,
     chunk_size: int = 131_072,
 ) -> float:
-    """Apply `(w_new, alpha_donor)` node weights + Top-8 sharp synapses in-place on GPU in ~1.5 seconds!
-    Allows ultra-fast Dev-200 hyperparameter calibration without rebuilding the 6M edge table!"""
     t0 = time.perf_counter()
     dev = brain.device
     ck_r = topo.ck_broca
@@ -534,7 +483,6 @@ def apply_merge_weights_inplace(
     Sb_d = ck_b["sharp_dst"]
     Sb_w = ck_b["sharp_w"]
 
-    # 1) Copy 100% of Broca [0..broca_count-1] at 1.0x (Broca-ONLY nodes remain 100% untouched!)
     r_oids = torch.from_numpy(topo.broca_orig_ids)
     Bc = topo.broca_count
     for s in range(0, Bc, chunk_size):
@@ -544,7 +492,6 @@ def apply_merge_weights_inplace(
         brain.sharp_dst[s:e].copy_(Sr_d[oid_s].to(dev))
         brain.sharp_w[s:e].copy_(Sr_w[oid_s].to(dev))
 
-    # 2) Blend Roots [0..255] + Shared Nodes weighted STRONGER toward NEW Broca (`w_new`)!
     w_old = 1.0 - float(w_new)
     all_sh_m = np.concatenate([np.arange(256, dtype=np.int64), topo.shared_m_ids])
     all_sh_b = np.concatenate([np.arange(256, dtype=np.int64), topo.shared_base_ids])
@@ -560,7 +507,6 @@ def apply_merge_weights_inplace(
         wb_al = Wb_all[bi].to(device=dev, dtype=torch.float32) @ T_gpu
         brain.W_node[mi] = (w_new * wr + w_old * wb_al).to(torch.bfloat16)
 
-    # Vectorized GPU Top-8 sharp merge for roots + shared nodes
     sd_m, sw_m = merge_sharp_8_gpu(
         Sr_d[torch.from_numpy(all_sh_r)], Sr_w[torch.from_numpy(all_sh_r)],
         Sb_d[torch.from_numpy(all_sh_b)], Sb_w[torch.from_numpy(all_sh_b)],
@@ -574,7 +520,6 @@ def apply_merge_weights_inplace(
         brain.sharp_w[mi] = sw_m[s:e].to(dev)
     del sd_m, sw_m
 
-    # 3) Graft Base-ONLY encyclopedic nodes at `alpha_donor` strength (chunked on GPU -> < 150 MB temp VRAM!)
     bo_m = topo.base_only_m_ids
     bo_b = topo.base_only_base_ids
     N_bo = len(bo_m)
@@ -604,7 +549,6 @@ def train_single_core_readout_polish(
     ridge_alpha: float = 0.25,
     eot_weight: float = 3.0,
 ) -> Tuple[np.ndarray, np.ndarray, Dict[str, object]]:
-    """Closed-Form 1-Layer Hebbian Readout Polish on ONE single merged core (ZERO backprop, ~60s!)."""
     t0 = time.perf_counter()
     dev = v20.device
     V, D = 256, v20.core.D
@@ -695,7 +639,6 @@ def eval_single_core_sft_val(
     temp_cal: float = 1.08,
     batch_size: int = 48,
 ) -> Dict[str, object]:
-    """Strictly isolated per-dialogue causal SFT evaluation on ONE single UnifiedBrainV13b (ZERO dual overhead!)."""
     t0 = time.perf_counter()
     dev = v20.device
     runner = BatchedCoreRunner(v20, temp_cal=temp_cal)
@@ -751,7 +694,6 @@ def eval_single_core_sft_val(
                     np.minimum(s_np, 2.8, out=s_np)
                     logits = logits + torch.from_numpy(s_np).to(dev) * (sft_engram_scale * ent_g)
 
-            # Causal post-scoring STM write on prompt bytes
             cfg = v20.core.cfg
             prev_idx = (st["hist_ptr"] - 1) % runner.H_buf
             bs7 = st["byte_hist"][ar.unsqueeze(1), (prev_idx.unsqueeze(1) - runner._ar24[:, :7]) % runner.H_buf]

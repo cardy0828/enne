@@ -1,22 +1,4 @@
-"""NeuroGraph v0.3b: Long-Term Episodic/Knowledge Memory Neurons (Set-Associative Sparse Store).
-
-Separates long-term factual/exception knowledge from generic thinking neurons (cortex)
-and fast one-shot working memory (short-term memory):
-1. Huge pool of fine-grained Long-Term Memory (LTM) neurons organized as a
-   set-associative sparse bank [num_buckets, ways] (e.g. 32k * 8 = 262k neurons per bank,
-   only ~5MB VRAM each!). Only 8 candidate neurons wake up per event -> 99.997% dormant.
-2. Three receptive fields (true non-linear AND coincidence detectors):
-   - Bank A (Local Fact): exact 4-char sequence (c1, c2, c3, c4)
-   - Bank B (Phrase/Chunk Fact): exact (prev_chunk, cur_chunk, c1) binding
-   - Bank C (Topic x Context Fact): salient active topic chunk AND recent (c1, c2)
-3. Surprise-gated storage + Consolidation (zero backprop):
-   - During consolidation passes over training data, LTM neurons only store events where
-     the frozen cortex is surprised (residuals / factual exceptions / proper nouns).
-   - Repeatedly verified memories gain hits & energy; noisy one-offs get evicted or
-     pruned during sleep consolidation (hits < min_hits).
-4. At test time, LTM weights are strictly FROZEN so we cleanly isolate long-term
-   knowledge gains from short-term real-time episodic memory (v0.3a).
-"""
+"""集合連想型の疎な長期記憶ノード（v0.3b）。"""
 
 from __future__ import annotations
 
@@ -34,36 +16,32 @@ from neurograph.model_v2 import NeuroGraphV2
 @dataclass
 class LongTermMemoryConfig:
     enabled: bool = True
-    use_topic_context: bool = True     # Bank C: salient topic AND local context
-    num_buckets: int = 32768           # must be power of 2
-    ways: int = 8                      # 32768 * 8 = 262,144 LTM neurons per bank
-    surprise_threshold: float = 0.40   # only store when cortex + LTM is surprised
+    use_topic_context: bool = True
+    num_buckets: int = 32768
+    ways: int = 8
+    surprise_threshold: float = 0.40
     lr: float = 0.45
-    min_hits_eval: int = 2             # consolidation filter: ignore unverified 1-off noise
+    min_hits_eval: int = 2
     gain_char4: float = 0.95
     gain_chunk_pair: float = 1.15
     gain_topic_ctx: float = 0.75
 
 
 def _mix64(x: torch.Tensor) -> torch.Tensor:
-    """Fast deterministic 64-bit SplitMix-style hash on GPU (int64 bitwise ops)."""
-    # PyTorch int64 bitwise shifts are arithmetic, mask after right-shift for clean mixing
     h = x
     h = h ^ ((h >> 30) & 0x3FFFFFFFF)
-    h = h * (-4658895280553007687)  # 0xbf58476d1ce4e5b9 signed int64
+    h = h * (-4658895280553007687)
     h = h ^ ((h >> 27) & 0x1FFFFFFFFF)
-    h = h * (-7723592293110705685)  # 0x94d049bb133111eb signed int64
+    h = h * (-7723592293110705685)
     h = h ^ ((h >> 31) & 0x1FFFFFFFF)
     return h
 
 
 def make_sig_4(a: torch.Tensor, b: torch.Tensor, c: torch.Tensor, d: torch.Tensor) -> torch.Tensor:
-    """Create a collision-resistant 64-bit AND-binding signature from 4 integer node IDs."""
     h = _mix64(a.to(torch.int64) + 1)
     h = _mix64(h ^ (b.to(torch.int64) + 1000003))
     h = _mix64(h ^ (c.to(torch.int64) + 2000003))
     h = _mix64(h ^ (d.to(torch.int64) + 3000017))
-    # Avoid reserved 0 signature
     return torch.where(h == 0, torch.ones_like(h), h)
 
 
@@ -75,7 +53,6 @@ def make_sig_3(a: torch.Tensor, b: torch.Tensor, c: torch.Tensor) -> torch.Tenso
 
 
 class SetAssociativeLTMBank:
-    """Event-driven bank of [num_buckets, ways] fine-grained long-term memory neurons."""
 
     def __init__(self, num_buckets: int, ways: int, device: torch.device):
         assert (num_buckets & (num_buckets - 1)) == 0, "num_buckets must be power of 2"
@@ -97,20 +74,19 @@ class SetAssociativeLTMBank:
     @torch.no_grad()
     def recall(
         self,
-        keys: torch.Tensor,     # [B] int64 signatures
-        valid: torch.Tensor,    # [B] bool
+        keys: torch.Tensor,
+        valid: torch.Tensor,
         gain: float,
         min_hits: int,
-        logits: torch.Tensor,   # [B, V] float32 (modified in-place)
+        logits: torch.Tensor,
     ) -> None:
-        """O(1) event-driven recall: only wake the `ways` neurons in the matching bucket."""
         if not valid.any():
             return
-        buckets = (keys & self.mask).to(torch.int64)     # [B]
-        b_sig = self.sig[buckets]                        # [B, W]
-        b_tgt = self.target[buckets]                     # [B, W]
-        b_w = self.weight[buckets]                       # [B, W]
-        b_hits = self.hits[buckets]                      # [B, W]
+        buckets = (keys & self.mask).to(torch.int64)
+        b_sig = self.sig[buckets]
+        b_tgt = self.target[buckets]
+        b_w = self.weight[buckets]
+        b_hits = self.hits[buckets]
 
         hit = (
             valid.unsqueeze(1)
@@ -122,21 +98,20 @@ class SetAssociativeLTMBank:
         if not hit.any():
             return
 
-        contrib = (b_w * gain) * hit.to(torch.float32)   # [B, W]
+        contrib = (b_w * gain) * hit.to(torch.float32)
         safe_tgt = b_tgt.clamp(min=0).to(torch.int64)
         logits.scatter_add_(1, safe_tgt, contrib)
 
     @torch.no_grad()
     def local_update(
         self,
-        keys: torch.Tensor,       # [B] int64 signatures
-        valid: torch.Tensor,      # [B] bool
-        y_t: torch.Tensor,        # [B] int64 true next char
-        probs: torch.Tensor,      # [B, V] float32 current combined probs
+        keys: torch.Tensor,
+        valid: torch.Tensor,
+        y_t: torch.Tensor,
+        probs: torch.Tensor,
         lr: float,
         surprise_threshold: float,
     ) -> None:
-        """Surprise-driven local plasticity + automatic weak-memory eviction (zero backprop)."""
         if not valid.any():
             return
 
@@ -146,25 +121,22 @@ class SetAssociativeLTMBank:
         surprise = 1.0 - p_true
 
         buckets = (keys & self.mask).to(torch.int64)
-        b_sig = self.sig[buckets]       # [B, W]
-        b_tgt = self.target[buckets]    # [B, W]
+        b_sig = self.sig[buckets]
+        b_tgt = self.target[buckets]
 
         sig_match = valid.unsqueeze(1) & (b_sig == keys.unsqueeze(1)) & (b_tgt >= 0)
         exact_match = sig_match & (b_tgt == y_t.unsqueeze(1).to(torch.int32))
         wrong_match = sig_match & (b_tgt != y_t.unsqueeze(1).to(torch.int32))
 
-        # 1) Inhibit wrongly recalled LTM neurons for the same signature (prevents interference)
         if wrong_match.any():
             wb, ww = torch.nonzero(wrong_match, as_tuple=True)
             w_bkt = buckets[wb]
             w_tgt = b_tgt[wb, ww].to(torch.int64)
             p_wrong = probs[wb, w_tgt]
-            # Flatten index (bucket * W + way) for race-free scatter_add_
             flat_idx = w_bkt * self.ways + ww
             self.weight.view(-1).scatter_add_(0, flat_idx, -(lr * 0.85) * p_wrong)
             self.weight.clamp_(0.0, 5.5)
 
-        # 2) Reinforce existing matching (sig, y_t) LTM neurons (even on mild surprise -> builds hits!)
         has_exact = exact_match.any(dim=1)
         if has_exact.any():
             eb = torch.nonzero(has_exact, as_tuple=False).squeeze(1)
@@ -177,16 +149,13 @@ class SetAssociativeLTMBank:
             self.weight.clamp_(0.0, 5.5)
             self.energy.clamp_(0.0, 100.0)
 
-        # 3) Mint new LTM neurons ONLY on high surprise when (sig, y_t) is not yet stored
         need_new = valid & (~has_exact) & (surprise >= surprise_threshold) & (y_t > 0)
         if need_new.any():
             nb = torch.nonzero(need_new, as_tuple=False).squeeze(1)
             n_bkt = buckets[nb]
-            # Deduplicate per bucket within this parallel batch step (keep highest surprise)
             order = torch.argsort(surprise[nb], descending=True)
             nb = nb[order]
             n_bkt = n_bkt[order]
-            # Keep first occurrence per bucket
             sort_ord = torch.argsort(n_bkt, stable=True)
             s_bkt = n_bkt[sort_ord]
             s_nb = nb[sort_ord]
@@ -196,16 +165,14 @@ class SetAssociativeLTMBank:
             u_bkt = s_bkt[is_first]
             u_nb = s_nb[is_first]
 
-            # Find empty slot or weakest-energy slot in each target bucket
-            slot_tgt = self.target[u_bkt]       # [U, W]
-            slot_en = self.energy[u_bkt]        # [U, W]
+            slot_tgt = self.target[u_bkt]
+            slot_en = self.energy[u_bkt]
             empty = slot_tgt < 0
             has_empty = empty.any(dim=1)
             empty_slot = empty.to(torch.int32).argmax(dim=1)
             weak_slot = slot_en.argmin(dim=1)
             chosen_slot = torch.where(has_empty, empty_slot, weak_slot)
 
-            # Evict only if empty OR weakest slot has low energy (< 1.8) so consolidated facts stay safe!
             weak_en = slot_en[torch.arange(u_bkt.numel(), device=self.device), chosen_slot]
             can_write = has_empty | (weak_en < 1.8)
             if can_write.any():
@@ -223,7 +190,6 @@ class SetAssociativeLTMBank:
 
     @torch.no_grad()
     def sleep_consolidate(self, min_hits: int = 2, min_weight: float = 0.08) -> Dict[str, int]:
-        """Sleep pruning: discard noisy 1-off memories & weak entries, keeping consolidated facts."""
         occupied = self.target >= 0
         before = int(occupied.sum().item())
         dead = occupied & ((self.hits < min_hits) | (self.weight < min_weight))
@@ -243,7 +209,6 @@ class SetAssociativeLTMBank:
 
 
 class LongTermMemorySystem:
-    """Three-bank long-term episodic/knowledge memory system paired with a thinking cortex."""
 
     def __init__(self, cfg: LongTermMemoryConfig, device: torch.device):
         self.cfg = cfg
@@ -251,7 +216,6 @@ class LongTermMemorySystem:
         self.bank_char4 = SetAssociativeLTMBank(cfg.num_buckets, cfg.ways, device)
         self.bank_chunk = SetAssociativeLTMBank(cfg.num_buckets, cfg.ways, device)
         self.bank_topic = SetAssociativeLTMBank(cfg.num_buckets, cfg.ways, device)
-        # Human-readable sample log of high-hit consolidated memories (populated lightly)
         self.sample_registry: Dict[int, str] = {}
 
     def active_counts(self) -> Dict[str, int]:
@@ -285,11 +249,6 @@ def run_three_system_pass(
     batch_streams: int = 256,
     lr_scale: float = 1.0,
 ) -> Dict[str, float]:
-    """Run frozen Thinking Neurons (Cortex) + optional Long-Term Memory (LTM) + optional Short-Term Memory (STM).
-
-    - When `ltm_train=True`: consolidates surprising residuals into LTM (cortex stays frozen!).
-    - When `ltm_train=False`: both cortex and LTM are completely frozen; STM runs online if enabled.
-    """
     cfg = cortex.cfg
     device = cortex.device
     V = cortex.V
@@ -313,7 +272,6 @@ def run_three_system_pass(
     cur_chunk = torch.full((B,), -1, dtype=torch.int64, device=device)
     prev_chunk = torch.full((B,), -1, dtype=torch.int64, device=device)
 
-    # Track the most salient recent topic chunk per stream (decays slowly over ~40 chars)
     topic_node = torch.full((B,), -1, dtype=torch.int64, device=device)
     topic_score = torch.zeros((B,), dtype=torch.float32, device=device)
 
@@ -359,7 +317,6 @@ def run_three_system_pass(
             completed = (~hit) & (cur_chunk >= 0)
             if completed.any():
                 prev_chunk = torch.where(completed, cur_chunk, prev_chunk)
-                # Update salient topic anchor when a rare, meaningful multi-char chunk completes
                 c_idx = torch.nonzero(completed, as_tuple=False).squeeze(1)
                 pc = prev_chunk[c_idx]
                 sal = cortex._homeostatic_salience(pc)
@@ -379,7 +336,6 @@ def run_three_system_pass(
         char_fatigue.mul_(cfg.char_fatigue_decay)
         char_fatigue[arange_B, x_t] += cfg.char_fatigue_inc
 
-        # Multi-hop thinking wave
         if cfg.n_hops > 0 and membrane is not None and node_fatigue is not None:
             membrane.mul_(cfg.membrane_decay)
             node_fatigue.mul_(cfg.node_fatigue_decay)
@@ -412,7 +368,6 @@ def run_three_system_pass(
                 membrane.clamp_(0.0, 5.0)
                 node_fatigue.clamp_(0.0, 5.0)
 
-        # 1) Thinking Neurons (Cortex) membrane potential
         logits_cortex.copy_(cortex.out_bias.unsqueeze(0))
         for d_idx, d in enumerate(cfg.char_delays):
             src = char_hist[:, (cur_hist_idx - (d - 1)) % max_delay]
@@ -428,14 +383,12 @@ def run_three_system_pass(
             cortex._apply_relay_readout(hop_winners, logits_cortex)
         logits_cortex.sub_(char_fatigue)
 
-        # Cortex entropy for hard-word breakdown
         cortex_lp = torch.log_softmax(logits_cortex, dim=-1)
         cortex_ent = -(torch.exp(cortex_lp) * cortex_lp).sum(dim=-1)
         is_hard = cortex_ent > 3.5
 
         logits_total = logits_cortex.clone()
 
-        # 2) Long-Term Memory Neurons (LTM) O(1) event-driven recall
         sig_c4 = sig_ch = sig_tp = None
         v_c4 = v_ch = v_tp = None
         if ltm is not None and ltm.cfg.enabled:
@@ -452,13 +405,11 @@ def run_three_system_pass(
                 sig_tp = make_sig_3(topic_node, c1, c2)
                 ltm.bank_topic.recall(sig_tp, v_tp, ltm.cfg.gain_topic_ctx, min_hits, logits_total)
 
-        # 3) Short-Term Episodic Memory Neurons (STM) real-time recall
         stm_res = None
         if stm is not None:
             recall_wave, stm_res = stm.recall(c1, c2, c3, cur_chunk, prev_chunk, V, logits_total)
             logits_total = logits_total + recall_wave
 
-        # 4) Causal Evaluation
         log_probs = torch.log_softmax(logits_total, dim=-1)
         nll = -log_probs[arange_B, y_t]
         total_nll += float(nll.sum().item())
@@ -474,7 +425,6 @@ def run_three_system_pass(
             hard_top1 += int(hit1[is_hard].sum().item())
             hard_steps += int(is_hard.sum().item())
 
-        # 5) LTM surprise-gated local consolidation (training phase only)
         if ltm_train and ltm is not None and ltm.cfg.enabled:
             probs = torch.exp(log_probs)
             assert sig_c4 is not None and v_c4 is not None
@@ -484,7 +434,6 @@ def run_three_system_pass(
             if ltm_use_topic and ltm.cfg.use_topic_context and sig_tp is not None and v_tp is not None:
                 ltm.bank_topic.local_update(sig_tp, v_tp, y_t, probs, ltm_lr * 0.8, ltm.cfg.surprise_threshold)
 
-        # 6) STM real-time one-shot binding (test/online reading phase)
         if stm is not None and stm_res is not None:
             p_true = torch.exp(log_probs[arange_B, y_t])
             stm.bind_on_surprise(c1, c2, c3, cur_chunk, prev_chunk, y_t, 1.0 - p_true, stm_res)
@@ -515,7 +464,6 @@ def generate_three_system(
     temperature: float = 0.6,
     top_k: int = 15,
 ) -> List[int]:
-    """Generate text using Thinking Neurons + Long-Term Memory + Short-Term Memory."""
     cfg = cortex.cfg
     device = cortex.device
     V = cortex.V

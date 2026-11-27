@@ -1,11 +1,4 @@
-"""実行環境に依存する設定値。研究時は実験機のパスと GPU を直書きしていたものを、環境変数で与える形にした。
-
-- ENNE_DATA_DIR     事前学習コーパス（easy_ja.train / aozora.train / wikipedia.train など）を置いたディレクトリ
-- ENNE_SFT_RAW_DIR  対話データの元ファイルのディレクトリ
-- ENNE_SFT_DIR      整形済み対話データ（train.jsonl など）のディレクトリ
-- ENNE_GPU_UUID     指定すると、CUDA_VISIBLE_DEVICES がこの UUID であることを検査する
-- ENNE_STRICT_DEVICE=1  研究時と同じく RTX 3060・expandable_segments の固定まで検査する
-"""
+"""実行環境に依存する設定値。研究時は実験機のパスと GPU を直書きしていたものを、環境変数で与える形にした。"""
 from __future__ import annotations
 
 import os

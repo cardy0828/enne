@@ -1,27 +1,4 @@
-"""NeuroGraph v10.0: Broca Syntactic-Prefill & Dedicated SFT-DAG Module (Zero Backprop, Zero Hardcoded Rules!).
-
-Grows TWO brand-new, completely independent cortical prefill modules from ZERO nodes without touching
-the frozen Base Brain (ZERO catastrophic forgetting!):
-
-  Part 1 — BrocaSyntacticParserV100 (Layer-2 Dedicated Boundary-Respecting Grammar-Parsing Prefill Cortex):
-    - Discovers syntactic boundary / function morphemes purely from Document Frequency (DF) and
-      left/right Shannon branching entropy (ZERO hardcoded Japanese characters or language rules!).
-    - Grows a boundary-respecting Content-Chunk vocabulary from 0 nodes strictly INSIDE boundary-delimited
-      spans (`Boundary ∩ Content = ∅` by construction — eliminates particle-noun gluing like `日本の`/`首都は`/`と一`!).
-    - Separates conversational/social prompts from short-fact and multi-entity factual queries cleanly
-      using dual-corpus statistical specificity (SFT prompt DF vs encyclopedic corpus DF).
-
-  Part 2 — BrocaLayer1DAGV100 + DualCortexAdapterV100 (Layer-1 Dedicated SFT-DAG Mini-Brain):
-    - Grows a fresh 600K-neuron bf16 Living DAG Core (`D=256, S=16 slots`) from ZERO hidden neurons
-      exclusively on framed SFT dialogues (`\x02User: ... \x03Assistant: ... \x04`).
-    - Runs in lockstep parallel prefill alongside the frozen 6M Base Core (via fused Triton 16-hop kernel!)
-      with a Closed-Form Joint Hebbian Readout `[h_base, h_broca] -> logits` (`512 -> 256`, ZERO backprop!).
-    - Shares ONE unified `_step_dual()` between isolated causal evaluation and generation (`max_diff < 1e-4`).
-
-  Part 3 — DualBrocaReasoningBrainV100:
-    - Independent 1-factor switches `use_broca_l2_parser` and `use_broca_l1_dag` inside ONE identical
-      deliberative decoder for strict 4-way 1-factor A/B proof!
-"""
+"""文の構文的な前置きの解析と、対話専用 DAG の扱い（v10.0）。"""
 
 from __future__ import annotations
 
@@ -77,14 +54,10 @@ def _shannon_entropy(counts: Dict[str, int]) -> float:
     return h
 
 
-# ==============================================================================
-# PART 1: LAYER-2 BOUNDARY-RESPECTING SYNTACTIC PARSER CORTEX (FROM ZERO NODES)
-# ==============================================================================
-
 @dataclass
 class ParsedSpan:
     text: str
-    kind: str           # "BOUNDARY", "BOILERPLATE", "CONTENT", "ENTITY"
+    kind: str
     left_b: str = ""
     right_b: str = ""
     u_idf: float = 0.0
@@ -93,16 +66,15 @@ class ParsedSpan:
 
 
 class BrocaSyntacticParserV100:
-    """Layer-2 Dedicated Boundary-Respecting Grammar-Parsing Prefill Cortex (ZERO Hardcoded Language Rules!)."""
 
     def __init__(self, seed: int = 100):
         self.seed = seed
         self.boundaries_1: set[str] = set()
         self.boundaries_2: set[str] = set()
         self.boilerplate_frames: set[str] = set()
-        self.content_vocab: Dict[str, int] = {}         # chunk_str -> chunk_id
-        self.chunk_u_idf: Dict[str, float] = {}         # SFT user-prompt IDF
-        self.chunk_wiki_df: Dict[str, int] = {}         # encyclopedic corpus DF
+        self.content_vocab: Dict[str, int] = {}
+        self.chunk_u_idf: Dict[str, float] = {}
+        self.chunk_wiki_df: Dict[str, int] = {}
         self.n_user_docs: int = 0
         self.n_wiki_docs: int = 0
         self.tau_u_idf: float = 5.0
@@ -117,8 +89,6 @@ class BrocaSyntacticParserV100:
         max_prompts: int = 55_000,
         max_vocab: int = 24_000,
     ) -> Dict[str, object]:
-        """Grow syntactic boundaries & boundary-respecting content chunks strictly from unsupervised
-        Role-IDF discovery + Unicode punctuation structure + SFT-vs-Prose statistical lift (ZERO language rules!)."""
         t0 = time.perf_counter()
         prompts = [u.strip() for d in train_dialogues[:max_prompts] for u, _ in d["turns"] if len(u.strip()) >= 2]
         n_u = len(prompts)
@@ -126,10 +96,6 @@ class BrocaSyntacticParserV100:
         prose_sample = prose_texts[:50_000]
         n_ps = max(1, len(prose_sample))
 
-        # ---- Step 1: 100%-Pure Unsupervised 1-Char Syntactic Boundaries (ZERO Kanji/Katakana False Positives!) ----
-        # Source A: 1-codepoint unsupervised structural role markers already discovered by v6.4 RoleBoundThoughtCortexV60
-        #           (`IDF < tau_idf - 0.50` -> strictly pure grammatical particles/delimiters, 0% content nouns!).
-        # Source B: High-frequency Unicode punctuation observed in SFT/prose (universal Unicode category 'P').
         b1: set[str] = set()
         if mc is not None and rc is not None:
             for mid in rc.role_motor_ids.tolist():
@@ -139,7 +105,6 @@ class BrocaSyntacticParserV100:
                     sn = unicodedata.normalize("NFKC", s)
                     if len(sn) == 1:
                         b1.add(sn)
-        # Also include observed Unicode sentence/quote punctuation (`Po/Ps/Pe/Pi/Pf` — excludes word-internal `Pd`/`Pc` hyphens like `X-99`!)
         p_cnt: Counter[str] = Counter()
         for ln in (prompts[:30_000] + prose_sample[:20_000]):
             for ch in ln:
@@ -152,7 +117,6 @@ class BrocaSyntacticParserV100:
                 if len(cn) == 1:
                     b1.add(cn)
 
-        # Discover high-frequency 2..6-char functional/interrogative frames on NFKC-normalized prompts!
         df_u_sub: Counter[str] = Counter()
         for p in prompts:
             pn = unicodedata.normalize("NFKC", p)
@@ -167,13 +131,11 @@ class BrocaSyntacticParserV100:
             for s in seen_sub:
                 df_u_sub[s] += 1
 
-        # 2-char boundaries strictly built from BOTH characters already in b1 (e.g. とは, では, には, かも)
         b2: set[str] = set()
         for sub, cnt in df_u_sub.items():
             if len(sub) == 2 and (cnt / max(1, n_u)) >= 0.015 and (sub[0] in b1 and sub[1] in b1):
                 b2.add(sub)
 
-        # Boilerplate functional/interrogative/greeting frames (NFKC-normalized!):
         df_p_sub: Counter[str] = Counter()
         for ln in prose_sample:
             ln_n = unicodedata.normalize("NFKC", ln)
@@ -189,7 +151,6 @@ class BrocaSyntacticParserV100:
         for sub, u_cnt in df_u_sub.items():
             u_rate = u_cnt / max(1, n_u)
             p_rate = (df_p_sub.get(sub, 0) + 0.5) / n_ps
-            # Purely statistical lift: phrases characteristic of SFT instructions/questions/greetings (NOT encyclopedic prose!)
             if u_rate >= 0.0025 and (u_rate / max(p_rate, 1e-6)) >= 2.5:
                 boiler.add(sub)
             elif u_rate >= 0.025:
@@ -199,7 +160,6 @@ class BrocaSyntacticParserV100:
         self.boundaries_2 = b2
         self.boilerplate_frames = boiler
 
-        # ---- Step 2: Boundary-Respecting Content-Chunk Discovery (Boundary ∩ Content = ∅!) ----
         span_u_df: Counter[str] = Counter()
         span_p_df: Counter[str] = Counter()
         for p in prompts:
@@ -246,7 +206,6 @@ class BrocaSyntacticParserV100:
         return len(cn) == 1 and cn in self.boundaries_1
 
     def _raw_split_content_spans(self, text: str) -> List[str]:
-        """Split text strictly on discovered boundaries (1-char & 2-char, NFKC-aware) so NO content span crosses a boundary."""
         out: List[str] = []
         buf: List[str] = []
         i = 0
@@ -276,7 +235,6 @@ class BrocaSyntacticParserV100:
         return out
 
     def _strip_boilerplate_edges(self, span: str) -> str:
-        """Trim discovered SFT functional/interrogative boilerplate prefixes/suffixes (NFKC-aware!)."""
         s = span.strip()
         if not s:
             return ""
@@ -307,7 +265,6 @@ class BrocaSyntacticParserV100:
         mc: Optional[ContinuousThoughtCortexV50] = None,
         rc: Optional[RoleBoundThoughtCortexV60] = None,
     ) -> Dict[str, object]:
-        """Parse a raw UTF-8 prompt into clean boundary-delimited syntactic spans, entities, and intent mode!"""
         text = user_prompt.strip()
         L = len(text)
         b2 = self.boundaries_2
@@ -356,11 +313,9 @@ class BrocaSyntacticParserV100:
                 continue
 
             cb = cleaned.encode("utf-8")
-            # Reject single-codepoint punctuation/symbols (Unicode category starts with 'P' or 'S')
             if len(cleaned) == 1 and unicodedata.category(cleaned)[0] in ("P", "S"):
                 parsed.append(ParsedSpan(text=cleaned, kind="BOUNDARY"))
                 continue
-            # Also trim leading/trailing punctuation characters (e.g. 『, 』, 「, 」, ！, ？) via universal Unicode category
             while cleaned and unicodedata.category(cleaned[0])[0] in ("P", "S"):
                 cleaned = cleaned[1:]
             while cleaned and unicodedata.category(cleaned[-1])[0] in ("P", "S"):
@@ -382,11 +337,6 @@ class BrocaSyntacticParserV100:
                     c_idf = float(np.mean([float(mc.motor_idfs[m]) for m in ms]))
                     max_cg = max((float(rc.cg_vec[m]) for m in ms if m >= 256), default=(0.8 if any(m < 256 for m in ms) else 0.0))
 
-            # Entity criterion (purely statistical, zero language rules!):
-            #   - OOV / ultra-rare proper noun (len >= 5B, e.g. `アストラX-99`, `東海道新幹線`, `量子重力エンジン`)
-            #   - Encyclopedic content noun (appears in prose/wiki with high content-gate `max_cg >= 0.45` and `u_idf >= 3.2`, e.g. `日本`, `首都`, `夏目漱石`, `吾輩`)
-            #   - Short bounded encyclopedic noun (3B, e.g. `猫`, high wiki DF & role-bounded)
-            #   - Rejects short conversational predicates/adverbs (`調子`, `簡単`, `始まり`, `終わり`) that lack encyclopedic noun lift!
             is_oov_proper = (u_idf >= max_u_idf - 1.0 and len(cb) >= 6)
             is_enc_entity = (
                 len(cb) >= 6
@@ -479,12 +429,7 @@ class BrocaSyntacticParserV100:
         return obj
 
 
-# ==============================================================================
-# PART 2: LAYER-1 DEDICATED SFT-DAG MINI-BRAIN + JOINT DUAL-CORTEX ADAPTER
-# ==============================================================================
-
 def build_sft_growth_stream(train_dialogues: List[Dict], seed: int = 100) -> Tuple[np.ndarray, float]:
-    """Serialize strictly isolated SFT train dialogues with 64-byte zero separators (shuffled once)."""
     rng = np.random.default_rng(seed)
     idx = rng.permutation(len(train_dialogues))
     sep = bytes(64)
@@ -512,8 +457,6 @@ def grow_broca_layer1_dag(
     rounds: int = 3,
     batch_streams: int = 1024,
 ) -> Tuple[UnifiedBrainV13b, Dict[str, object]]:
-    """Grow a brand-new Layer-1 SFT & Dialogue-Syntax DAG Core from ZERO hidden neurons!
-    Detaches internal GPU LTM -> ~380 MB static GPU VRAM!"""
     t0 = time.perf_counter()
     stream, bpc_ratio = build_sft_growth_stream(train_dialogues, seed=100)
     torch.manual_seed(100)
@@ -534,7 +477,6 @@ def grow_broca_layer1_dag(
         enable_lateral=False,
     )
     broca = UnifiedBrainV13b(cfg, device)
-    # Detach internal GPU LTM immediately (saves 268 MB VRAM!)
     for bi in range(broca.ltm.num_banks):
         broca.ltm.sig[bi] = torch.empty((1, 4), dtype=torch.int32, device=device)
         broca.ltm.dst[bi] = torch.full((1, 4), -1, dtype=torch.int16, device=device)
@@ -587,15 +529,13 @@ def grow_broca_layer1_dag(
 
 
 class DualCortexAdapterV100:
-    """Closed-Form Joint Hebbian Readout `[h_base (256d), h_broca (256d)] -> logits` + Calibrated Blend!
-    Guarantees 100% Eval/Gen parity via ONE shared `_step_dual()` and ZERO catastrophic forgetting of Base!"""
 
     def __init__(self, core_dim: int = 256):
         self.D = core_dim
-        self.W_joint: Optional[np.ndarray] = None       # [2*D, 256] float32
-        self.b_joint: Optional[np.ndarray] = None       # [256] float32
-        self.alpha_broca: float = 0.25                  # logit blend weight on broca_logits
-        self.readout_scale: float = 1.6                 # calibrated strictly on dev_200!
+        self.W_joint: Optional[np.ndarray] = None
+        self.b_joint: Optional[np.ndarray] = None
+        self.alpha_broca: float = 0.25
+        self.readout_scale: float = 1.6
         self._W_gpu: Optional[torch.Tensor] = None
         self._b_gpu: Optional[torch.Tensor] = None
 
@@ -619,8 +559,6 @@ class DualCortexAdapterV100:
         ridge_alpha: float = 0.25,
         eot_weight: float = 3.0,
     ) -> Dict[str, object]:
-        """Closed-Form Hebbian Joint Readout on isolated dialogues: fits `[h_base, h_broca]` residual
-        against `(logits_base + alpha_broca * logits_broca)` with Fisher stabilization & exact log-prior shift!"""
         t0 = time.perf_counter()
         dev = runner_base.device
         V, D = 256, self.D
@@ -672,7 +610,7 @@ class DualCortexAdapterV100:
                 resid = -probs
                 resid[ar, y_t] += 1.0
 
-                h_aug = torch.cat([h_b, h_r, ones_col], dim=1)  # [B, 2*D + 1]
+                h_aug = torch.cat([h_b, h_r, ones_col], dim=1)
                 h_w = (h_aug * wt).to(torch.float64)
                 C_hh += h_w.T @ h_aug.to(torch.float64)
                 C_hr += h_w.T @ resid.to(torch.float64)
@@ -742,14 +680,7 @@ class DualCortexAdapterV100:
         return obj
 
 
-# ==============================================================================
-# PART 3: UNIFIED DUAL-CORTEX EVAL + STRICT 1-FACTOR GENERATION ENGINE (v10.0)
-# ==============================================================================
-
 class DualBrocaReasoningBrainV100:
-    """Unified NeuroGraph v10.0 Brain with Strict 1-Factor Switches for:
-      - `use_broca_l2_parser`: NEW Layer-2 Boundary-Respecting Syntactic Parser vs legacy `macro_v70`
-      - `use_broca_l1_dag`:    NEW Layer-1 Dedicated SFT-DAG Parallel Prefill vs frozen Base Layer-1!"""
 
     def __init__(
         self,
@@ -811,7 +742,7 @@ class DualBrocaReasoningBrainV100:
         st_r: Optional[Dict[str, torch.Tensor]],
         x_t: torch.Tensor,
         next_true: Optional[torch.Tensor],
-        mode: str = "dual",             # "base_v8", "broca_only", "dual"
+        mode: str = "dual",
         use_base_engram: bool = True,
         use_sft_engram: bool = True,
         base_engram_mult: float = 0.72,
@@ -825,7 +756,6 @@ class DualBrocaReasoningBrainV100:
         wm_cap: float = 2.6,
         is_prompt: bool = False,
     ) -> torch.Tensor:
-        """SINGLE SHARED DUAL-CORTEX STEP FUNCTION (100% Eval/Gen parity!)."""
         dev = self.device
         if mode == "broca_only":
             assert st_r is not None
@@ -847,9 +777,6 @@ class DualBrocaReasoningBrainV100:
             lg_r, _ = self.runner_broca.step_batch(st_r, x_t, next_true=None, use_engram=False, is_prompt=is_prompt)
             h_r = st_r["last_h_act"]
             alpha_b = self.dual_adapter.alpha_broca if alpha_broca_override is None else alpha_broca_override
-            # Temperature-preserving, log-prior-calibrated CONVEX combination:
-            #   `(1 - w) * (lg_base + b_prior) + w * lg_broca + rs * ([h_base, h_broca] @ W_joint)`
-            # (Broca L1 already has exact native SFT EOT/byte log-odds; Base needs `(1-w)*b_prior`!)
             w_b = max(0.0, min(1.0, float(alpha_b)))
             logits = (1.0 - w_b) * lg_b + w_b * lg_r
             if not is_prompt:
@@ -949,7 +876,6 @@ class DualBrocaReasoningBrainV100:
         alpha_broca_override: Optional[float] = None,
         batch_size: int = 48,
     ) -> Dict[str, object]:
-        """Strictly Isolated Per-Dialogue Causal Evaluation on `val_dialogues` (100% parity with v8.0 harness!)."""
         t0 = time.perf_counter()
         dev = self.device
         batches = _build_isolated_batches(val_dialogues, batch_size=batch_size)
@@ -1027,9 +953,6 @@ class DualBrocaReasoningBrainV100:
         sft_engram_scale: float = 1.15,
         score_critic: bool = True,
     ) -> Tuple[str, bool, Dict]:
-        """Strict 1-Factor-Switchable v10.0 Deliberative Decoder:
-        - `use_broca_l2_parser`: switches ONLY entity/intent syntactic prefill (Broca Parser vs legacy v9.1)
-        - `use_broca_l1_dag`:    switches ONLY Layer-1 prefill+decoding cortex (`dual` vs `base_v8`)"""
         t0 = time.perf_counter()
         dev = self.device
         mc = self.mc
@@ -1043,7 +966,6 @@ class DualBrocaReasoningBrainV100:
         ctx_motor_list = u_motors.tolist()
         ctx_motors_arr = np.array(ctx_motor_list, dtype=np.int32)
 
-        # ---- HOP 1: Syntactic Prefill & Reasoning Routing (1-Factor Switchable!) ----
         h_qa = self.adapter_v80.predict_qa_intent(rc, ctx_motors_arr)
         node, node_sim = self.rgraph.route(mc, rc, self.adapter_v80, u_motors, ctx_motors_arr)
 
@@ -1063,7 +985,6 @@ class DualBrocaReasoningBrainV100:
             is_social = not want_hip
             top_k_ag = 2 if (node.multi_entity_rate >= 0.30 or len(entity_spans) >= 2) else 1
 
-        # ---- HOP 2 & 3: Conjunctive AND Hippocampal Deliberation ----
         delib = self.rbrain._conjunctive_hippocampus_deliberate(
             entity_spans, u_bytes, node, h_qa, top_k_agenda=top_k_ag, conjunctive=True
         ) if want_hip else {
@@ -1083,7 +1004,6 @@ class DualBrocaReasoningBrainV100:
         if not has_evidence and intent_mode == "SOCIAL":
             is_social = True
 
-        # Fast-Hebbian Working Memory over retrieved evidence
         wm_table: Dict[bytes, Dict[int, float]] = {}
         if has_evidence:
             wm_w = {3: 0.45, 4: 0.75, 5: 1.05, 6: 1.35, 8: 1.75, 10: 2.10}
@@ -1129,7 +1049,6 @@ class DualBrocaReasoningBrainV100:
             max_topics=8, min_idf=max(5.5, mc.tau_idf - 0.3),
         )
 
-        # ---- HOP 4: Layer-1 Prefill (Dual Base+Broca vs Frozen Base!) & Decoding ----
         l1_mode = "dual" if use_broca_l1_dag else "base_v8"
         st_b1 = rb.init_batch_state(1)
         st_r1 = rr.init_batch_state(1) if use_broca_l1_dag else None

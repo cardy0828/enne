@@ -1,19 +1,4 @@
-"""NeuroGraph v11.2: Persistent Article-Lead-Prioritized Wikipedia Hippocampus + Single Merged Brain v11.1 Engine!
-
-Zero Backprop | Zero Attention | Zero Hardcoded Language Rules | Ultra-Low RAM Persistent SQLite Index!
-
-Fixes the exact factual-retrieval bottleneck isolated in v9–v10:
-  - Flat 6-gram inverted indexes over raw text streams prefer incidental mentions (`東海道新幹線墨子事件`,
-    `1943年クルスクの戦い`, `豚肉と吾輩は猫である`) over encyclopedic article definitions.
-  - WikiLeadHippocampusV112 streams ALL 1.67 BILLION chars of `wikipedia.train` in 16M-char chunks
-    (< 1.2 GB peak RAM!), detects Article Lead Paragraphs strictly structurally (paragraphs after `\n\n`
-    whose line 0 is a full definitional sentence containing the learned terminator, NOT a short heading line),
-    extracts each article's Subject Head (prefix before first learned bracket/topic role marker), and stores
-    them in a persistent SQLite index (`wiki_lead_v112/wiki_leads.sqlite`) with O(1) exact/prefix + 3-gram lookup!
-  - Uses our OWN persistent Hippocampus to verify encyclopedic entity heads cleanly (prevents greetings like
-    `こんにちは！調子はどうですか？` from triggering Hippocampus while recovering `日本`, `首都`, `吾輩は猫である`!).
-  - Runs on ONE SINGLE v11.1 Merged Brain (`merged_v111_broca_core.pt` + `merged_v111_adapter.pkl`)!
-"""
+"""記事冒頭文を優先する検索索引と、統合モデルの応答処理（v11.2）。"""
 
 from __future__ import annotations
 
@@ -135,12 +120,11 @@ def _extract_subject_head(
 
 
 class WikiLeadHippocampusV112:
-    """Persistent Disk-Backed Article-Lead Hippocampus (< 50 MB RAM at query time, < 2ms latency!)."""
 
     def __init__(self, db_path: str = "wiki_lead_v112/wiki_leads.sqlite"):
         self.db_path = Path(db_path)
         self.conn: Optional[sqlite3.Connection] = None
-        self.custom_facts: List[Tuple[str, str, bytes]] = []  # (name, text, bytes)
+        self.custom_facts: List[Tuple[str, str, bytes]] = []
         self.total_leads: int = 0
         if self.db_path.exists():
             self._open()
@@ -150,7 +134,7 @@ class WikiLeadHippocampusV112:
             self.conn.close()
         self.conn = sqlite3.connect(str(self.db_path))
         self.conn.execute("PRAGMA query_only = ON")
-        self.conn.execute("PRAGMA cache_size = -16000")  # 16 MB page cache
+        self.conn.execute("PRAGMA cache_size = -16000")
         row = self.conn.execute("SELECT COUNT(*) FROM leads").fetchone()
         self.total_leads = int(row[0]) if row else 0
         self.has_senses = bool(self.conn.execute("SELECT 1 FROM sqlite_master WHERE name='senses'").fetchone())
@@ -174,7 +158,7 @@ class WikiLeadHippocampusV112:
     @classmethod
     def build_from_utf32_corpus(
         cls,
-        corpus_paths: Sequence[Tuple[str, str, float]],  # [(name, path, priority)]
+        corpus_paths: Sequence[Tuple[str, str, float]],
         db_path: str,
         head_delims: Sequence[str],
         term_str: str,
@@ -182,8 +166,6 @@ class WikiLeadHippocampusV112:
         max_lead_bytes: int = 1024,
         max_senses: int = 1,
     ) -> Tuple["WikiLeadHippocampusV112", Dict[str, object]]:
-        """Stream full multi-billion-char UTF-32-LE corpora in 16M-char chunks (< 1.2 GB Peak RAM!)
-        and persist an exact + 3-gram indexed Article-Lead SQLite Hippocampus!"""
         t0 = time.perf_counter()
         p = Path(db_path)
         p.parent.mkdir(parents=True, exist_ok=True)
@@ -284,14 +266,12 @@ class WikiLeadHippocampusV112:
                         legacy_write = legacy_ok and h_norm and (not previous or previous[1] < quality)
                         if not legacy_write and max_senses == 1:
                             continue
-                        # Keep opening 1-2 sentences cleanly within max_lead_bytes on UTF-8 boundary!
                         lead_raw = para.replace("\n", " ").strip()
                         first_end = lead_raw.find(term_str) + len(term_str)
                         first_size = len(lead_raw[:first_end].encode())
                         byte_limit = max(max_lead_bytes, min(2 * max_lead_bytes, first_size))
                         lead_b = trim_utf8_safe(lead_raw.encode("utf-8"), byte_limit)
                         lead_s = lead_b.decode("utf-8", errors="ignore").strip()
-                        # Trim cleanly to last sentence terminator if present past 40 chars
                         if term_str:
                             last_t = lead_s.rfind(term_str)
                             if last_t >= 0:
@@ -311,7 +291,6 @@ class WikiLeadHippocampusV112:
                             continue
                         next_id += 1
 
-                        # Index compact 3-char grams of `h_norm` (max 10 grams/head -> fast fuzzy/multi-word lookup!)
                         if len(h_norm) >= 3:
                             grams = set()
                             step = 1 if len(h_norm) <= 12 else 2
@@ -381,7 +360,6 @@ class WikiLeadHippocampusV112:
         }
 
     def has_exact_lead(self, entity: str, min_quality: int = 1, allow_ideograph: bool = False) -> bool:
-        """O(1) < 0.05ms check whether `entity` is an exact encyclopedic article head (or custom fact match)!"""
         en = _norm_key(entity)
         if len(en) < 2:
             if not (allow_ideograph and len(en)==1 and unicodedata.name(en,"").startswith("CJK UNIFIED IDEOGRAPH")):
@@ -410,15 +388,12 @@ class WikiLeadHippocampusV112:
         exclude_entities: Sequence[str] = (),
         exclude_senses: Sequence[str] = (),
     ) -> List[Tuple[float, str, str, bytes]]:
-        """Retrieve prioritized Article Leads matching `entities` (and hot-mounted custom facts!).
-        Returns `[(score, source, head, lead_bytes)]` with Uncovered-Entity-First multi-slot coverage!"""
-        cands: Dict[str, Tuple[float, str, str, bytes, int]] = {}  # lead_str -> (score, src, head, bytes, ent_mask)
+        cands: Dict[str, Tuple[float, str, str, bytes, int]] = {}
         if exclude_entities:
             entities = [e for e in entities if e not in exclude_entities]
         ent_norms = [_norm_key(e) for e in entities if len(_norm_key(e)) >= 2 or (retain_primary and self.has_exact_lead(e,3,True))]
         n_ents = len(ent_norms)
 
-        # 1) Hot-mounted custom facts (top priority!)
         for cname, ctxt, cb in self.custom_facts:
             cn = _norm_key(ctxt)
             mask = 0
@@ -432,18 +407,15 @@ class WikiLeadHippocampusV112:
 
         predicate_hits = []
         if self.conn is not None and ent_norms:
-            # 2) Exact & Combined-Pair Article-Head Match (O(1) B-tree index!)
             exact_queries: List[Tuple[str, float, int]] = []
             for ei, en in enumerate(ent_norms[:5]):
                 exact_queries.append((en, 24.0, 1 << ei))
-            # Also try adjacent pair concatenation (e.g. `日本` + `の` + `首都` -> `日本の首都`!)
             if n_ents >= 2:
                 for i in range(min(3, n_ents)):
                     for j in range(i + 1, min(4, n_ents)):
                         e1, e2 = ent_norms[i], ent_norms[j]
                         m_pair = (1 << i) | (1 << j)
                         exact_queries.append((e1 + e2, 32.0, m_pair))
-                        # Check exact substring in normalized prompt spanning both e1 and e2!
                         pn = _norm_key(full_prompt)
                         p1, p2 = pn.find(e1), pn.find(e2)
                         if p1 >= 0 and p2 >= 0 and abs(p2 - p1) <= 16:
@@ -511,14 +483,12 @@ class WikiLeadHippocampusV112:
                         predicate_hits.append(lead)
                     cands[lead] = (66.0, f"lead:{src}", head, lead.encode(), mask)
 
-            # 3) Prefix & 3-gram Head Fallback ONLY for entities not yet covered by an exact head hit!
             covered_now = 0
             for v in cands.values():
                 covered_now |= v[4]
             for ei, en in enumerate(ent_norms[:4]):
                 if covered_now & (1 << ei):
                     continue
-                # Prefix match on head_norm
                 rows = self.conn.execute(
                     "SELECT head, src, prio, lead FROM leads WHERE head_norm >= ? AND head_norm < ? LIMIT 6",
                     (en, en + "\uffff"),
@@ -559,12 +529,10 @@ class WikiLeadHippocampusV112:
         chosen = [ranked[0]]
         cov = ranked[0][4]
         if top_k > 1 and len(ranked) > 1:
-            # Uncovered-Entity-First selection for slot 2!
             uncov = [it for it in ranked[1:] if (it[4] & (~cov)) != 0]
             if uncov:
                 chosen.append(uncov[0])
             else:
-                # Secondary corroboration if custom fact
                 for it in ranked[1:]:
                     if it[1].startswith("custom") and it[0] >= chosen[0][0] * 0.50:
                         chosen.append(it)
@@ -597,24 +565,13 @@ class WikiLeadHippocampusV112:
         return hits
 
 
-# ==============================================================================
-# SINGLE MERGED BRAIN v11.1 + WIKI LEAD HIPPOCAMPUS DELIBERATIVE ENGINE (v11.2)
-# ==============================================================================
-
 class EntityLookupContext:
     """推論と CPU 学習で共有する見出し・実体照合。"""
 
     def extract_verified_entities(self, user_prompt: str, gated: bool = False) -> Tuple[List[bytes], List[int], str]:
-        """Hippocampus-Verified Boundary-Respecting Entity Extractor (ZERO Hardcoded Language Rules!):
-        1) Extracts any quoted title spans inside paired Unicode open/close quotes (`Ps/Pi ... Pe/Pf`, e.g. `『吾輩は猫である』`, `「アストラX-99」`).
-        2) Runs BrocaSyntacticParserV100 boundary split without breaking short stems (`len >= 2` chars after trim).
-        3) Verifies each candidate span against our OWN WikiLeadHippocampusV112 (`has_exact_lead`) + Dual-IDF:
-           - Recovers high-frequency encyclopedic nouns like `日本`, `首都`, `一般相対性理論`, `量子力学`!
-           - Eliminates chitchat/greeting words (`こんにちは`, `調子`, `簡単`, `わかり`) cleanly -> `SOCIAL`!"""
         text = user_prompt.strip()
         cand_strs: List[str] = []
 
-        # 1) Universal paired quote/bracket span extraction (e.g. 『吾輩は猫である』, 「アストラX-99」)
         i = 0
         L = len(text)
         while i < L:
@@ -629,7 +586,6 @@ class EntityLookupContext:
             i += 1
 
         quoted = set(cand_strs)
-        # 2) Boundary-respecting raw spans from Broca L2 Parser (with safe boilerplate check!)
         def encyclopedic(span: str) -> bool:
             """見出し一致と散文・質問の文書頻度を比較して、頻出名詞を救済する。"""
             df = self.parser.chunk_wiki_df.get(span, 0)
@@ -691,7 +647,6 @@ class EntityLookupContext:
             if len(clean) >= 2 and clean not in frames:
                 cand_strs.append(clean)
 
-        # 3) Verify each candidate strictly via Hippocampus Head Knowledge + Statistical Specificity!
         max_u_idf = math.log(self.parser.n_user_docs + 10.0) if self.parser.n_user_docs > 0 else 10.9
         verified: List[Tuple[float, bytes]] = []
         for cs in cand_strs:
@@ -701,23 +656,14 @@ class EntityLookupContext:
                 continue
             has_lead = self.lead_hip.has_exact_lead(cs, min_quality=min_q)
             u_idf = self.parser.chunk_u_idf.get(cs, max_u_idf)
-            # Check motor-level content gate
             ms = self.mc.encode(np.frombuffer(cb, dtype=np.uint8)).tolist()
             max_cg = max((float(self.rc.cg_vec[m]) for m in ms if m >= 256), default=(0.8 if any(m < 256 for m in ms) else 0.0))
             c_idf = float(np.mean([float(self.mc.motor_idfs[m]) for m in ms])) if ms else 10.0
 
-            # Exclude pure boilerplate fragments even if a rare Wikipedia stub shares the word (e.g. `こんにちは` / `簡単` / `調子`)
-            # Statistical check: conversational/SFT-heavy words have low u_idf (< 6.2) AND low content-gate OR high SFT prompt frequency
-            # EXCEPT high-priority proper encyclopedic nouns (verified by exact Lead AND high corpus specificity / multi-kanji)!
             u_in_boiler = unicodedata.normalize("NFKC", cs) in self.parser.boilerplate_frames
             if u_in_boiler and not encyclopedic(cs):
                 continue
-            # Drop ultra-short hiragana-only / conversational predicates when not an exact quoted proper noun:
-            # Purely statistical: check SFT user-prompt IDF vs prose DF (`w_df`)!
             w_df = self.parser.chunk_wiki_df.get(cs, 0)
-            # A genuine encyclopedic entity is EITHER:
-            #   (a) Exact Article Lead match in WikiLeadHippocampus AND (`max_cg >= 0.45` AND (`len(cb) >= 6` AND (`w_df >= 5` or `u_idf >= 7.2`)))
-            #   (b) OOV / custom proper noun (`u_idf >= max_u_idf - 1.0` and `len(cb) >= 6` and `has_lead`)
             is_enc = has_lead and max_cg >= 0.45 and len(cb) >= 6 and (w_df >= 8 or u_idf >= 7.2)
             is_custom_or_oov = (u_idf >= max_u_idf - 1.0) and len(cb) >= 6 and (has_lead or max_cg >= 0.55)
             if gated and not has_lead and cs not in quoted and cs not in relation_members and not w_df:
@@ -726,7 +672,6 @@ class EntityLookupContext:
                 sc = (c_idf * (0.5 + 0.5 * max_cg) + 0.8 * u_idf) * math.sqrt(len(cb)) * (1.4 if has_lead else 1.0)
                 verified.append((sc, cb))
 
-        # Deduplicate subsumed sub-spans (e.g. drop `吾輩` if `吾輩は猫である` is already verified!)
         verified.sort(key=lambda x: len(x[1]), reverse=True)
         kept: List[Tuple[float, bytes]] = []
         for sc, eb in verified:
@@ -746,7 +691,6 @@ class EntityLookupContext:
         return ent_bytes, ent_mids, intent
 
 class SingleMergedBrainV112(EntityLookupContext):
-    """Fast Single-Core Merged NeuroGraph v11.1 + Persistent Wiki Lead Hippocampus v11.2!"""
 
     def __init__(
         self,
@@ -792,7 +736,6 @@ class SingleMergedBrainV112(EntityLookupContext):
         self.evolution.record("teach", topic, clean(fact_text))
 
     def record_correction(self, prompt, kind, target=""):
-        """例 tool:clock の訂正経験を追記する。"""
         self.evolution.correction(prompt,kind,target)
 
     def sleep_evolve(self, run_curiosity=True, guard_fn=None):
@@ -875,7 +818,6 @@ class SingleMergedBrainV112(EntityLookupContext):
         ctx_motor_list.extend(u_motors.tolist())
         ctx_motors_arr = np.array(ctx_motor_list, dtype=np.int32)
 
-        # ---- HOP 1: Verified Entity Extraction & Intent Routing ----
         h_qa = self.adapter.predict_qa_intent(rc, ctx_motors_arr)
         node, _ = self.rgraph.route(mc, rc, self.adapter, u_motors, ctx_motors_arr)
         entity_spans, entity_mids, intent_mode = self.extract_verified_entities(user_prompt, use_memory_gate)
@@ -927,7 +869,6 @@ class SingleMergedBrainV112(EntityLookupContext):
         want_hip = result is None and hip_enabled and not is_social
         top_k_ag = 2 if len(entity_spans) >= 2 else 1
 
-        # ---- HOP 2 & 3: Evidence Retrieval (1-Factor Switch: NEW WikiLead vs Legacy Flat 6-gram!) ----
         t_h = time.perf_counter()
         agenda_bytes: List[bytes] = []
         agenda_sources: List[str] = []
@@ -944,7 +885,6 @@ class SingleMergedBrainV112(EntityLookupContext):
                     if src.startswith("custom"):
                         has_custom = True
             elif self.flat_hip is not None:
-                # Legacy flat 6-gram baseline on the EXACT SAME entities & single merged brain!
                 q_b = b" ".join(entity_spans[:3])
                 pool: List[Tuple[float, str, bytes]] = []
                 for cart in self.flat_hip.cartridges:
@@ -1187,7 +1127,6 @@ class SingleMergedBrainV112(EntityLookupContext):
                 has_evidence = True
         epi_conf = max(confidences, default=0.) if gate else (0.92 if has_evidence else 0.)
 
-        # Build L2 evidence transitions + Fast-Hebbian Working-Memory Suffix Table!
         ep_concepts: Dict[int, float] = {}
         ep_trans1: Dict[int, Dict[int, float]] = {}
         ep_trans2: Dict[Tuple[int, int], Dict[int, float]] = {}
@@ -1311,7 +1250,6 @@ class SingleMergedBrainV112(EntityLookupContext):
             max_topics=8, min_idf=max(5.5, mc.tau_idf - 0.3),
         )
 
-        # ---- HOP 4: Single-Merged-Core Prefill + Working-Memory-Grounded Articulation ----
         st1 = runner.init_batch_state(1)
         if has_evidence:
             replay_safe = trim_utf8_safe(b"\n".join(agenda_bytes), 480)
@@ -1324,7 +1262,6 @@ class SingleMergedBrainV112(EntityLookupContext):
             st1["node_delay"].fill_(-1); st1["nd_ptr"].zero_()
             st1["c_eng"].zero_()
 
-        # When grounded by verified evidence, keep Base Engram gentle so it never overwrites grounded numbers/dates!
         base_eng_m = 0.32 if has_evidence else 0.45
         sft_eng_s = 0.85 if has_evidence else 1.15
         wm_scale = (2.15 if has_custom else 1.75) * (1. if gate else epi_conf)

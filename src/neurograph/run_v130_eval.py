@@ -1,4 +1,4 @@
-"""同じ統合脳で tools のみ切り替える。盲検は凍結検証後の一回に限定する。"""
+"""同じ統合モデルでツールの有無だけを切り替えて評価する（v13.0）。"""
 import argparse
 from datetime import datetime
 import json
@@ -126,4 +126,3 @@ if __name__=="__main__":
     parser=argparse.ArgumentParser()
     parser.add_argument("--blind",action="store_true")
     evaluate(parser.parse_args().blind)
-

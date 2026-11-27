@@ -1,20 +1,4 @@
-"""NeuroGraph v6.2: Unified Cortico-Hippocampal Living Brain!
-(Zero Backprop | Zero Attention | Zero Pre-trained Tokenizer | Zero <UNK> | Zero Hardcoded Rules)
-
-Unites ALL proven breakthroughs across v1.0 -> v6.1 into one coherent living brain:
-  - Layer 1 (Sensory + External Knowledge):
-      4.54M-alive GPU Cortex + 1.084B mmap Byte-Engram + Always-on L1 UTF-8 Syntax Escape Hatch
-  - Layer 2 (Broca Motor + Continuous 256d Thought + HRR 768d Role Cortex + Dual-Layer Prefrontal Gate):
-      24,832 grown motor nodes + Symmetrized Spectral Oja 256d + Emergent HRR Role-Bound Cortex (19 roles)
-      + Dual-Layer Prefrontal Control (Layer A Hard Topic Gate  ⊥  Layer B HRR Role Predicate Ranker)
-  - Layer 3 (Hippocampal Episodic Concept & Relation Grounding — Grounded Synthesis, NOT Copy-Paste!):
-      Sentence-Aligned C++17 OpenMP Hippocampus recalls Top-K real episodes (~25 ms, 0 MB GPU VRAM),
-      encodes them into Motor Space to extract:
-        1) Grounded Entity Concept Field `ep_concepts[mid]` (overrides 1000:1 Wikipedia boilerplate priors!)
-        2) Grounded Entity Vector `h_epi` (refines Layer-A Topic Anchor cleanly on the exact entity!)
-        3) Dynamic Grounded Motor Candidates (allows hot-swappable custom facts like 'アストラX-99' with ZERO retraining!)
-        4) Explicit Anti-Copy Verbatim Damper (penalizes verbatim 4-motor episode copying so Cortex synthesizes
-           fresh grammatical sentences rather than copy-pasting passages; logs exact `max_verbatim_chars`!)."""
+"""本体 DAG と外部記憶をまとめた統合モデル（v6.2）。"""
 
 from __future__ import annotations
 
@@ -31,7 +15,6 @@ from neurograph.thought_cortex_v50 import HierarchicalBrainV50
 
 
 def _longest_common_substring_chars(gen_text: str, episodes: List[str]) -> int:
-    """Exact audit metric: longest contiguous character substring in `gen_text` matching any recalled episode."""
     if not gen_text or not episodes:
         return 0
     best = 0
@@ -39,7 +22,6 @@ def _longest_common_substring_chars(gen_text: str, episodes: List[str]) -> int:
     for ep in episodes:
         if not ep:
             continue
-        # Fast sliding window check (texts are ~60 chars vs ~90 chars -> < 0.2ms!)
         for i in range(g_len):
             if g_len - i <= best:
                 break
@@ -51,8 +33,6 @@ def _longest_common_substring_chars(gen_text: str, episodes: List[str]) -> int:
 
 
 class UnifiedCorticoHippocampalBrainV62:
-    """Complete NeuroGraph v6.2: Layer-1 (Core + 1.084B Engram) + Layer-2 (Broca + 256d + HRR 768d Roles
-    + Dual-Layer Prefrontal Gate) + Layer-3 (Sentence-Aligned Hippocampal Grounding with Anti-Copy Synthesis!)."""
 
     def __init__(
         self,
@@ -70,7 +50,6 @@ class UnifiedCorticoHippocampalBrainV62:
         prompt_bytes: bytes,
         top_k_ep: int = 5,
     ) -> Dict[str, object]:
-        """Query Hippocampus (~25ms, 0 MB GPU) and project recalled episodes into Motor Output Node Space!"""
         empty = {
             "episodes_txt": [],
             "ep_scores": [],
@@ -89,7 +68,6 @@ class UnifiedCorticoHippocampalBrainV62:
             return empty
 
         t0 = time.perf_counter()
-        # Query every mounted cartridge & merge top-K by score
         hits: List[Tuple[float, str, bytes]] = []
         for cart in self.hip.cartridges:
             hits.extend(cart.query(prompt_bytes, top_k=top_k_ep))
@@ -125,7 +103,6 @@ class UnifiedCorticoHippocampalBrainV62:
             if src.startswith("custom"):
                 has_custom = True
 
-            # Normalized episode relevance weight in (0, 1]
             ew = (sc / top_sc) * (1.0 / (1.0 + 0.25 * rank_i))
             if src.startswith("custom"):
                 ew *= 1.6
@@ -140,7 +117,6 @@ class UnifiedCorticoHippocampalBrainV62:
                         em = mc.emb_np[mid]
                         if float(np.dot(em, em)) > 0.1:
                             h_epi += (ew * cg * float(mc.motor_idfs[mid])) * em
-                # Local grounded transitions inside recalled episodes
                 if i >= 1:
                     p1 = m_ids[i - 1]
                     d1 = ep_trans1.setdefault(p1, {})
@@ -156,9 +132,7 @@ class UnifiedCorticoHippocampalBrainV62:
         if nrm > 1e-6:
             h_epi /= nrm
 
-        # Rank top grounded entity concepts for dynamic candidate injection
         ep_top_motors = sorted(ep_concepts.items(), key=lambda x: x[1], reverse=True)[:48]
-        # Confidence based on recall score strength (saturates smoothly in [0, 1])
         epi_conf = min(1.0, math.tanh(top_sc / 28.0)) if episodes_txt else 0.0
 
         return {
@@ -197,12 +171,6 @@ class UnifiedCorticoHippocampalBrainV62:
         inhib_thresh: float = 0.24,
         rhythm_penalty: float = 0.55,
     ) -> Tuple[str, bool, Dict]:
-        """Strict Single-Factor Unified Generator:
-          - `use_hippocampus=False`: Pure Cortex (v6.0 HRR 768d + v6.1 Dual-Layer Prefrontal Gate)
-          - `use_hippocampus=True, use_syntax_gate=False`: v6.2 Ungated Hippocampal Grounding
-          - `use_hippocampus=True, use_syntax_gate=True`:  v6.3 Syntax-Gated Grounding — Hippocampal & Role
-            bonuses are gated by Layer-1's exact per-byte grammatical probability `g_syn = sigmoid((l1_pb - tau_syn)*2.2)`
-            AFTER Layer-1 verification, preventing ungrammatical noun shoving while keeping factual grounding!"""
         t0 = time.perf_counter()
         dev = self.brain.device
         runner = self.brain.runner
@@ -215,7 +183,6 @@ class UnifiedCorticoHippocampalBrainV62:
         p_motors = mc.encode(np.frombuffer(prompt_b, dtype=np.uint8))
         prompt_m = p_motors.tolist()
 
-        # Layer 3: Hippocampal Episodic Grounding (~25ms, 0 MB GPU VRAM)
         epi = self._extract_hippocampal_grounding(prompt_b, top_k_ep=5) if use_hippocampus else {
             "episodes_txt": [], "ep_scores": [], "ep_sources": [],
             "ep_concepts": {}, "ep_trans1": {}, "ep_trans2": {}, "ep_4grams": set(),
@@ -229,8 +196,6 @@ class UnifiedCorticoHippocampalBrainV62:
         ep_4grams: Set[Tuple[int, int, int, int]] = epi["ep_4grams"]
         has_custom = bool(epi["has_custom"])
 
-        # Layer A (Prefrontal Hard Topic Anchor):
-        # Blend persistent `h_root` with Hippocampal grounded entity vector `h_epi`!
         root_t_ids, root_t_w = mc.extract_active_topics(p_motors, max_topics=6, min_idf=5.8, use_resonance=True)
         h_root = mc.compute_root_thought_vec(p_motors)
         h_epi = epi["h_epi"]
@@ -253,11 +218,9 @@ class UnifiedCorticoHippocampalBrainV62:
         root_conf = min(1.0, max(root_mass / 1.6, epi_conf))
         has_anchor = bool(float(np.linalg.norm(h_anchor)) > 0.1 and root_conf > 0.25)
 
-        # Layer B (v6.0 HRR 768d Role-Bound Prompt Predicate Prediction!)
         p_role_pred = rc.predict_next_concept_vec(p_motors, mode="joint")
         p_role_events = rc.extract_role_events(p_motors)
 
-        # Prefill Layer-1 GPU Core
         st1 = runner.init_batch_state(1)
         prompt_hs = []
         raw_in = list(prompt_b)
@@ -333,9 +296,6 @@ class UnifiedCorticoHippocampalBrainV62:
                 last2 = (bm["motor_seq"][-2], bm["motor_seq"][-1]) if len(bm["motor_seq"]) >= 2 else (-1, -1)
 
                 def _score_cand(mid_v: int, mb: bytes, base_l2: float, ep_trans_bonus: float = 0.0) -> Tuple[float, float, float, float]:
-                    """Returns (l2_base, l2_syntax_gated_bonus, inh_per_byte, cg).
-                    In v6.3 Syntax-Gated mode, `l2_syntax_gated_bonus` (Hippocampal concept + Role bonus) is
-                    ONLY applied in proportion to Layer-1's verified per-byte grammatical probability!"""
                     cg = float(rc.cg_vec[mid_v]) if 0 <= mid_v < mc.V_m else 0.0
                     l2_base = float(base_l2)
                     l2_gated = float(ep_trans_bonus)
@@ -348,7 +308,6 @@ class UnifiedCorticoHippocampalBrainV62:
                     elif cg < 0.25 and c_hi >= 2.1:
                         l2_base += 0.45
 
-                    # Layer 3: Hippocampal Grounded Concept Field Bonus (syntax-gated in v6.3!)
                     ep_w = ep_concepts.get(mid_v, 0.0) if epi_conf > 0.20 else 0.0
                     if ep_w > 0.0:
                         l2_gated += epi_conf * epi_concept_gain * math.tanh(ep_w)
@@ -356,7 +315,6 @@ class UnifiedCorticoHippocampalBrainV62:
                     if has_anchor and mid_v >= 256 and cg > 0.15:
                         em = mc.emb_np[mid_v]
                         if float(np.dot(em, em)) > 0.1:
-                            # LAYER A (HARD TOPIC GATE — always active!)
                             cos_anc = float(np.dot(em, h_anchor))
                             dir_aff = mc.directed_affinity(mid_v, root_t_ids, root_t_w)
                             gate_align = cos_anc + 0.18 * math.tanh(dir_aff) + (0.35 * epi_conf * math.tanh(ep_w))
@@ -366,7 +324,6 @@ class UnifiedCorticoHippocampalBrainV62:
                             elif epi_conf > 0.55 and ep_w == 0.0 and cg > 0.70 and cos_anc < 0.42:
                                 inh_b = 0.45 * epi_conf * cg * (0.42 - cos_anc)
 
-                            # LAYER B (HRR 768d ROLE PREDICATE RANKER — syntax-gated in v6.3!)
                             cos_role = float(np.dot(em, role_pred_vec))
                             disc_r = 0.0
                             for _, smid, op, scg in p_role_events[-6:]:
@@ -377,7 +334,6 @@ class UnifiedCorticoHippocampalBrainV62:
                             l2_gated += cg * role_rank_gain * (cos_role + 0.25 * math.tanh(disc_r))
                     return l2_base, l2_gated, inh_b, cg
 
-                # A) Layer-2 Motor Proposals
                 taken = 0
                 for mid_v, sc_v in zip(p_ids.tolist(), p_sc.tolist()):
                     mb = mc.motor_bytes[mid_v]
@@ -402,7 +358,6 @@ class UnifiedCorticoHippocampalBrainV62:
                     if taken >= top_k_motor:
                         break
 
-                # B) Layer-3 Hippocampal Dynamic Motor Injection
                 if epi_conf > 0.20:
                     epi_cands: Dict[int, float] = {}
                     if last2 in ep_trans2:
@@ -428,8 +383,6 @@ class UnifiedCorticoHippocampalBrainV62:
                         cand_cg.append(cg); cand_keep_prio.append(True); cand_is_l1_esc.append(False)
                         added_bytes_wi.add(mb)
 
-                # C) Collect raw lead bytes for BATCHED Layer-1 UTF-8 Syntax Escape Hatch (zero serial B=1 loops!)
-                # (ASCII leads added immediately; multi-byte leads batched across ALL beams below in 2-3 GPU calls!)
                 if escape_k > 0:
                     lrow = logits_beams[wi].clone()
                     lrow[~runner.lead_mask] = -1e9
@@ -448,7 +401,6 @@ class UnifiedCorticoHippocampalBrainV62:
                             clen = 2 if (b0 & 0xE0) == 0xC0 else (3 if (b0 & 0xF0) == 0xE0 else 4)
                             mb_escape_jobs.append((wi, b0, clen, added_bytes_wi, _score_cand))
 
-            # BATCHED Multi-Byte UTF-8 Escape Completion (replaces ~48 serial B=1 calls with 2-3 batched GPU calls!)
             if mb_escape_jobs:
                 J = len(mb_escape_jobs)
                 j_parents = torch.tensor([x[0] for x in mb_escape_jobs], dtype=torch.int64, device=dev)
@@ -473,7 +425,6 @@ class UnifiedCorticoHippocampalBrainV62:
                         )
                         for k_st in st_esc.keys():
                             st_esc[k_st][act_et] = st_esub[k_st]
-                    # Vectorized RFC 3629 continuation mask [len(act_e), 256]
                     mask_e = torch.zeros((len(act_e), 256), dtype=torch.bool, device=dev)
                     for row_i, ji in enumerate(act_e):
                         b0 = mb_escape_jobs[ji][1]
@@ -511,8 +462,6 @@ class UnifiedCorticoHippocampalBrainV62:
                 break
 
             if len(cand_parent) > frontier_cap:
-                # v6.4 Hardening: ALWAYS reserve top-1 L1 Escape candidate per active beam BEFORE L2/Hip pruning
-                # so L1's own grammatical continuation can NEVER be silently pruned before L1 scores it!
                 reserved: List[int] = []
                 seen_esc_beam = set()
                 for i in range(len(cand_parent)):
@@ -542,7 +491,6 @@ class UnifiedCorticoHippocampalBrainV62:
             log_c = logits_beams[p_idx].clone()
             max_blen = max(len(mb) for mb in cand_bytes)
             cand_l1_lp = torch.zeros(M, dtype=torch.float32, device=dev)
-            # v7.0 Zero-Rule Worst-Char Log-Prob Tracker (catches abrupt boundary/bracket/grammar collisions!)
             cand_cur_clp = torch.zeros(M, dtype=torch.float32, device=dev)
             cand_min_clp = torch.zeros(M, dtype=torch.float32, device=dev)
             cand_has_chr = torch.zeros(M, dtype=torch.bool, device=dev)
@@ -585,11 +533,9 @@ class UnifiedCorticoHippocampalBrainV62:
                         st_c[k_st][act_t] = st_sub[k_st]
                     log_c[act_t] = log_sub
 
-            # Finalize last UTF-8 character's log-prob into cand_min_clp!
             cand_min_clp = torch.where(cand_has_chr, torch.minimum(cand_min_clp, cand_cur_clp), cand_l1_lp)
             l1_lp_cpu = cand_l1_lp.cpu().tolist()
             min_clp_cpu = cand_min_clp.cpu().tolist()
-            # Syntax Gate threshold: slightly relaxed ONLY for unseen hot-swapped custom entities!
             tau_syn = -2.75 if has_custom else -1.85
             tau_wch = -5.80 if has_custom else -3.95
             next_pool = []
@@ -601,8 +547,6 @@ class UnifiedCorticoHippocampalBrainV62:
                 l1_step = l1_lp_cpu[ci]
                 worst_c = min_clp_cpu[ci]
 
-                # v6.3 + v7.0 DUAL SYNTAX-GATED GROUNDING (Average-Byte x Worst-Char Zero-Rule Gate!):
-                # Blocks sudden single-character grammatical/bracket collisions even inside multi-char motors!
                 if use_syntax_gate:
                     l1_pb = l1_step / max(1, len(mb))
                     z_syn = max(-12.0, min(12.0, (l1_pb - tau_syn) * 2.2))
@@ -712,7 +656,6 @@ class UnifiedCorticoHippocampalBrainV62:
         flu_bpc = runner.score_text_bpc(full_txt, prompt_prefix_len=len(prompt_b), engram_mult=0.72) if score_critic else -1.0
         critic_elapsed = time.perf_counter() - t_cr
 
-        # Transparent audit metrics: common `h_root` 2nd-half lock + grounded concept rate + max verbatim chars!
         gen_m = best_bm["gen_motors"]
         c_sims_1, c_sims_2 = [], []
         n_content_gen = 0

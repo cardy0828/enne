@@ -1,25 +1,4 @@
-"""NeuroGraph v3.1: Speculative Clause-Bridge Decoder (Zero Backprop | Zero Attention | Zero Tokenizer | Zero Rules).
-
-Fuses the TWO breakthroughs proved in v3.0:
-  - Stage 1's textbook-grade 2-Hop Deliberative Thought Agenda (~75 ms over 5.29M episodes)
-  - Tier 1's crisp Character-Atomic Beam Search (1.198 BPC fluency, 100% RFC 3629 valid UTF-8)
-WITHOUT v3.0 Tier 2's byte-level logit tug-of-war ('マイナス2世' / '国際宇宙塵' eliminated completely!).
-
-How v3.1 works:
-1. Sentence-Boundary-Aligned Episodic Clauses:
-   - Snaps episode & clause splits cleanly to natural sentence endings ('。', '\n', '！', '？') -> ZERO chopped facts!
-2. Prefill-Critic-Guided Thought Ordering (Uses our 4.58-BPC Core+1.08B Engram Prefill as the Reasoning Verifier!):
-   - Scores candidate clauses by [Episodic Relevance + Cortex Semantic Similarity + Exact Conditional Prefill BPC]
-     so Goal_1 -> Goal_2 -> Goal_3 follow a natural causal/logical narrative order!
-3. Two-Mode Speculative Clause-Bridge Decoding (8x faster: ~3s per 3-sentence response!):
-   - Mode A (Open Prompt / Bridge Realization): Uses GPU-batched Character-Atomic Beam (W=6) to smoothly finish
-     an open prompt clause or generate natural Cortex-proposed discourse bridges (ZERO hardcoded conjunctions!).
-   - Mode B (Speculative Fact Articulation + Parallel Prefill Verification): Proposes Goal_k's factual clause
-     (splicing cleanly if Goal_k overlaps the prompt, or testing direct vs Cortex-generated bridges in parallel
-     on GPU) and selects the exact combination minimizing NeuroGraph Prefill NLL!
-   - Coherence Rejection Gate: If a candidate Goal_k clashes with the prompt/discourse (high conditional BPC),
-     it is rejected rather than awkwardly force-stitched!
-"""
+"""節をつなぐ候補を先読みするデコーダ（v3.1）。"""
 
 from __future__ import annotations
 
@@ -48,9 +27,6 @@ def slice_episodes_sentence_aligned(
     max_lookahead: int = 160,
     boundary_patterns: Optional[Sequence[bytes]] = None,
 ) -> np.ndarray:
-    """Language-agnostic episode slicer (ZERO hardcoded Japanese rules!):
-    Snaps cleanly to universal newline ('\\n' = 0x0A) + optional data-discovered boundary byte patterns,
-    falling back strictly to valid UTF-8 codepoint boundaries (never splitting a multi-byte character)."""
     N = len(raw_bytes)
     if N <= target_len + max_lookahead:
         return np.array([0, N], dtype=np.uint64)
@@ -79,7 +55,6 @@ def slice_episodes_sentence_aligned(
             break
         while bi < nb and bounds[bi] < pos + min_len:
             bi += 1
-        # Pick closest sentence boundary to want within [pos + min_len, pos + target_len + max_lookahead]
         best_b = -1
         best_dist = 10**9
         j = bi
@@ -107,7 +82,6 @@ def slice_episodes_sentence_aligned(
 
 
 class SentenceAlignedEpisodicCartridge(EpisodicCartridge):
-    """EpisodicCartridge with sentence-boundary-aligned slicing -> ZERO chopped factual clauses!"""
 
     def __init__(
         self,
@@ -148,7 +122,6 @@ class SentenceAlignedEpisodicCartridge(EpisodicCartridge):
 
 
 def split_complete_sentences(ep_b: bytes, min_chars: int = 12, max_chars: int = 95) -> List[bytes]:
-    """Extract ONLY complete, well-formed UTF-8 sentences (ending in sentence punctuation) from an episode."""
     txt = ep_b.decode("utf-8", errors="ignore")
     out: List[bytes] = []
     buf: List[str] = []
@@ -159,10 +132,8 @@ def split_complete_sentences(ep_b: bytes, min_chars: int = 12, max_chars: int = 
         buf.append(ch)
         if ch in ("。", "！", "？", "!", "?"):
             s = "".join(buf).strip()
-            # Clean leading bullet/dash artifacts if any
             s = s.lstrip("・-― 　")
             if min_chars <= len(s) <= max_chars:
-                # Reject unbalanced quotes/brackets that signal a broken fragment
                 if s.count("（") == s.count("）") and s.count("「") == s.count("」") and s.count("『") == s.count("』"):
                     out.append(s.encode("utf-8"))
             buf = []
@@ -170,8 +141,6 @@ def split_complete_sentences(ep_b: bytes, min_chars: int = 12, max_chars: int = 
 
 
 def find_overlap_splice(prefix_str: str, clause_str: str, min_ov_chars: int = 3) -> Optional[str]:
-    """If prefix_str's suffix overlaps clause_str's prefix (or clause_str contains prefix_str's tail),
-    return the clean non-overlapping remainder of clause_str to splice seamlessly!"""
     p = prefix_str.strip()
     c = clause_str.strip()
     max_k = min(len(p), len(c))
@@ -181,7 +150,6 @@ def find_overlap_splice(prefix_str: str, clause_str: str, min_ov_chars: int = 3)
             rem = c[k:].lstrip()
             if len(rem) >= 6:
                 return rem
-    # 2) Tail of prompt appears inside opening of clause (e.g., prompt='...1939年から1945年にかけて', clause='第二次世界大戦は1939年から1945年にかけて戦われた...')
     for tail_k in range(min(18, len(p)), 5, -1):
         tail = p[-tail_k:]
         pos = c.find(tail)
@@ -193,7 +161,6 @@ def find_overlap_splice(prefix_str: str, clause_str: str, min_ov_chars: int = 3)
 
 
 class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
-    """NeuroGraph v3.1: Prefill-Critic-Guided Thought Ordering + Speculative Clause-Bridge Decoder!"""
 
     @torch.no_grad()
     def score_continuations_batched(
@@ -203,14 +170,12 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
         locked_mode_p: Optional[torch.Tensor],
         candidates: List[bytes],
     ) -> List[float]:
-        """Exact GPU-Batched NeuroGraph Prefill Critic NLL (in BPC) for M candidate continuations in ~15 ms!"""
         M = len(candidates)
         if M == 0:
             return []
         dev = self.device
         runner = self.runner
 
-        # Replicate base_state [1] -> [M]
         idx0 = torch.zeros(M, dtype=torch.int64, device=dev)
         st = runner.gather_state(base_state, idx0)
         cur_logits = base_logits.expand(M, -1).clone()
@@ -223,7 +188,6 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
             active_m = [i for i in range(M) if t < len(candidates[i])]
             if not active_m:
                 break
-            # Score byte t for all active candidates!
             lp = torch.log_softmax(cur_logits, dim=-1)
             next_x = torch.zeros(M, dtype=torch.int64, device=dev)
             for i in active_m:
@@ -231,13 +195,11 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
                 nll_sum[i] += -lp[i, yb]
                 n_cnt[i] += 1.0
                 next_x[i] = yb
-            # Advance batch (only needed if t + 1 < max_len)
             if t + 1 < max_len:
                 cur_logits, _ = runner.step_batch(
                     st, next_x, locked_mode_p=locked_mode_p, use_engram=True, engram_mult=0.75, is_prompt=False
                 )
 
-        # Convert exact byte NLL to Lossless BPC per candidate
         out_bpc: List[float] = []
         nll_cpu = nll_sum.cpu().tolist()
         cnt_cpu = n_cnt.cpu().tolist()
@@ -259,7 +221,6 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
         seq_bytes: bytes,
         is_prompt: bool = False,
     ) -> Tuple[Dict[str, torch.Tensor], torch.Tensor]:
-        """Advance a single B=1 brain state cleanly through seq_bytes -> returns (st, last_logits)."""
         dev = self.device
         runner = self.runner
         raw = list(seq_bytes)
@@ -282,9 +243,6 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
         mode: str = "close_prompt",
         beam_width: int = 5,
     ) -> List[bytes]:
-        """Use our own GPU-Batched Character-Atomic Beam (ZERO hardcoded templates!) to generate either:
-        - mode='close_prompt': natural short completion (6..22 chars) ending cleanly at '。' to close an open prompt!
-        - mode='connector': Top-3 short natural discourse connectors (2..6 chars ending in '、') generated by Cortex!"""
         dev = self.device
         runner = self.runner
 
@@ -302,7 +260,6 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
                     continue
                 lrow = log_b[wi].clone()
                 lrow[~runner.lead_mask] = -1e9
-                # Disallow newline in short bridge
                 lrow[10] = -1e9
                 lp = torch.log_softmax(lrow, dim=-1)
                 tv, ti = torch.topk(lp, k=5)
@@ -376,8 +333,8 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
                 nlp = old["lp"] + lpa
                 nn = old["n"] + len(bl)
                 sc = nlp / max(1.0, nn ** 0.85)
-                is_maru = (len(bl) == 3 and bl[0] == 0xE3 and bl[1] == 0x80 and bl[2] == 0x82)  # '。'
-                is_touten = (len(bl) == 3 and bl[0] == 0xE3 and bl[1] == 0x80 and bl[2] == 0x81)  # '、'
+                is_maru = (len(bl) == 3 and bl[0] == 0xE3 and bl[1] == 0x80 and bl[2] == 0x82)
+                is_touten = (len(bl) == 3 and bl[0] == 0xE3 and bl[1] == 0x80 and bl[2] == 0x81)
 
                 if mode == "close_prompt" and is_maru and step_c >= 4:
                     completed.append((sc, bytes(ng)))
@@ -420,17 +377,12 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
         max_total_chars: int = 160,
         coherence_bpc_cap: float = 5.4,
     ) -> Tuple[str, bool, Dict[str, object]]:
-        """NeuroGraph v3.1 Speculative Clause-Bridge Decoder:
-        1. 2-Hop Deliberative Recall -> Complete-Sentence Candidate Pool
-        2. Prefill-Critic Verified Ordering + Overlap Splice / Cortex-Generated Bridge Weaving
-        3. Exact End-to-End Fluency & Coherence Verification!"""
         t0 = time.perf_counter()
         dev = self.device
         runner = self.runner
         prompt_b = prompt.encode("utf-8")
         small_names = {c.name for c in self.ep_rack.cartridges if c.num_episodes < 10_000}
 
-        # 1) Prefill Prompt -> Lock Discourse Mode + Initial GPU State!
         st_cur = runner.init_batch_state(1)
         prompt_hs = []
         raw_in = list(prompt_b)
@@ -448,7 +400,6 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
             if runner.core.mode_ready else None
         )
 
-        # 2) Stage 1: 2-Hop Hippocampal Recall -> Complete-Sentence Candidate Pool!
         t_p0 = time.perf_counter()
         hop1 = self.ep_rack.query(prompt_b, top_k=8)
         bridge_buf = bytearray()
@@ -470,7 +421,6 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
         prompt_z = runner.encode_text_h(prompt_b)
         prompt_ents = set(self._extract_clause_entities(prompt_b, max_ents=14))
 
-        # Collect complete, balanced sentences ONLY!
         pool: List[dict] = []
         seen_s = set()
         for hop_i, ep_sc, cname, eb in tagged_eps:
@@ -480,8 +430,6 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
                 s_txt = s_b.decode("utf-8", errors="ignore").strip()
                 if s_txt[:18] in seen_s or s_txt == prompt.strip():
                     continue
-                # Pure language-agnostic contrasting-title guard: if s_txt shares >=50% of prompt's opening 6-byte spans
-                # (same topic suffix) yet starts with a different 3-byte prefix while ending the title the same way, penalize!
                 seen_s.add(s_txt[:18])
                 ents = self._extract_clause_entities(s_b, max_ents=10)
                 if not ents:
@@ -501,21 +449,17 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
                     "bytes": s_b, "text": s_txt, "ents": ents, "z": z_v, "base_sc": base_sc,
                 })
 
-        # Keep Top-10 highest-relevance candidate sentences for Prefill-Critic sequential selection!
         pool.sort(key=lambda x: x["base_sc"], reverse=True)
         pool = pool[:10]
         plan_ms = (time.perf_counter() - t_p0) * 1000.0
 
-        # 3) Stage 2: Speculative Clause-Bridge Decoding!
         out_str = prompt
         used_indices: set = set()
         covered_ents = set(prompt_ents)
         trace_steps: List[dict] = []
 
-        # Step 3a: Handle OPEN prompt (does not end with '。'/'！'/'？'/'\n')!
         prompt_open = not out_str.rstrip().endswith(("。", "！", "？", "!", "?", "\n"))
         if prompt_open:
-            # First check if ANY top candidate sentence has a clean exact overlap splice with the open prompt!
             splice_cands = []
             for idx_p, item in enumerate(pool):
                 rem_s = find_overlap_splice(out_str, item["text"])
@@ -523,7 +467,6 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
                     splice_cands.append((idx_p, rem_s.encode("utf-8"), item))
 
             if splice_cands:
-                # Score all overlap splices in ONE batched GPU Prefill-Critic call!
                 bpcs = self.score_continuations_batched(st_cur, logits_cur, locked_mode_p, [c[1] for c in splice_cands])
                 best_si = min(range(len(splice_cands)), key=lambda i: bpcs[i] - (1.8 if splice_cands[i][2]["is_custom"] else 0.0))
                 if bpcs[best_si] <= coherence_bpc_cap or splice_cands[best_si][2]["is_custom"]:
@@ -538,7 +481,6 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
                     })
                     prompt_open = False
 
-            # If still open (e.g., indirect paraphrased prompt!), let GPU Core + Char-Atomic Beam close the prompt cleanly!
             if prompt_open:
                 top_z = pool[0]["z"] if pool else None
                 bridges = self.generate_short_cortex_bridges(st_cur, logits_cur, locked_mode_p, top_z, mode="close_prompt", beam_width=5)
@@ -553,20 +495,16 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
                         "added": br_b.decode("utf-8"),
                     })
 
-        # Step 3b: Sequentially weave up to num_goals factual clauses via Cortex-Proposed Bridges + Prefill-Critic Verification!
         goals_woven = len([x for x in trace_steps if x["kind"] == "overlap_splice"])
         while goals_woven < num_goals and len(out_str) - len(prompt) < max_total_chars:
             rem_pool = [(i, it) for i, it in enumerate(pool) if i not in used_indices]
             if not rem_pool:
                 break
 
-            # Generate 2 short natural discourse connectors directly from GPU Cortex (ZERO hardcoded list!) + empty bridge ''
             top_z = rem_pool[0][1]["z"]
             cortex_conns = self.generate_short_cortex_bridges(st_cur, logits_cur, locked_mode_p, top_z, mode="connector", beam_width=4)
             bridge_opts: List[bytes] = [b""] + cortex_conns[:2]
 
-            # Build (bridge + clause) candidates for top-5 remaining pool items -> ONE batched GPU Prefill-Critic score!
-            # ZERO hardcoded conjunction rules: our 4.58-BPC Prefill Critic automatically picks '' when clause already opens smoothly!
             cand_packs: List[Tuple[int, bytes, bytes, dict]] = []
             for idx_p, item in rem_pool[:5]:
                 for br in bridge_opts:
@@ -574,18 +512,16 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
 
             bpcs = self.score_continuations_batched(st_cur, logits_cur, locked_mode_p, [cp[2] for cp in cand_packs])
 
-            # Pick the candidate maximizing [Prefill Fluency + Novelty + Relevance] (lower combined cost wins!)
             best_ci = -1
             best_cost = 1e9
             for ci, (idx_p, br, full_c, item) in enumerate(cand_packs):
                 new_ents = sum(1 for e in item["ents"] if e not in covered_ents)
-                # Penalize low-novelty redundancy; reward clean Prefill BPC and custom/relevant facts!
                 cost = (
                     bpcs[ci]
                     - 0.22 * min(new_ents, 6)
                     - 0.12 * min(item["base_sc"], 12.0)
                     - (1.4 if item["is_custom"] else 0.0)
-                    + (0.15 if len(br) > 0 else 0.0)  # tiny parsimony preference for direct flow when equally fluent
+                    + (0.15 if len(br) > 0 else 0.0)
                 )
                 if cost < best_cost:
                     best_cost = cost
@@ -596,7 +532,6 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
             idx_p, br, full_c, item = cand_packs[best_ci]
             cand_bpc = bpcs[best_ci]
 
-            # Coherence Rejection Gate: reject mismatched non-custom quotes if Prefill Critic says BPC > cap!
             if (not item["is_custom"]) and cand_bpc > coherence_bpc_cap:
                 used_indices.add(idx_p)
                 continue
@@ -615,7 +550,6 @@ class SpeculativeBridgeBrainV31(DeliberativeBrainV30):
                 "added": full_c.decode("utf-8"),
             })
 
-        # 4) Exact End-to-End Fluency BPC across the ENTIRE generated continuation!
         e2e_bpc = runner.score_text_bpc(out_str, prompt_prefix_len=len(prompt_b))
         decode_sec = time.perf_counter() - t0
         return out_str, True, {

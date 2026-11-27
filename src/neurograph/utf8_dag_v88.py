@@ -1,18 +1,4 @@
-"""NeuroGraph v0.8.8: Pure Raw UTF-8 Byte-Level Living Convergent DAG (V = 256, Zero Tokenizer, Zero <UNK>).
-
-Infinite extensibility:
-- Atomic sensory neurons = ONLY 256 raw byte neurons (0x00 .. 0xFF).
-- ZERO pre-trained tokenizer, ZERO vocabulary cap, ZERO <UNK> forever!
-  Japanese, English, rare kanji, Emoji, math symbols, source code, or arbitrary binary streams
-  flow natively through the exact same 256 sensory neurons.
-- Starts with ZERO hidden neurons:
-  1. Multi-byte UTF-8 characters (3 bytes in Japanese) crystallize organically at depth 1..2.
-  2. Multi-character words & syntax branch up to depth 16 (5+ full Japanese chars / 16 ASCII chars).
-  3. Emergent Multi-Byte Salient Context (kind=1): rare crystallized hidden neurons (depth 2..5)
-     automatically serve as long-range semantic context keys over ~90 bytes—NO Unicode decoder needed!
-  4. Selective Asymmetric Synaptic Fusion + Pain-Triggered Auto-Divorce + DAG Apoptosis operate
-     directly across byte depths, naturally merging synonymous multi-byte characters & morphemes!
-"""
+"""UTF-8 の256バイトだけを入力とする成長 DAG（v0.8.8）。"""
 
 from __future__ import annotations
 
@@ -29,8 +15,8 @@ from neurograph.growing_graph_v8 import DynamicEdgeTable, _edge_sig
 
 @dataclass
 class UTF8Corpus:
-    train_bytes: np.ndarray      # uint8 [N_train_bytes]
-    val_bytes: np.ndarray        # uint8 [N_val_bytes]
+    train_bytes: np.ndarray
+    val_bytes: np.ndarray
     train_num_chars: int
     val_num_chars: int
     bytes_per_char_train: float
@@ -43,12 +29,10 @@ def load_utf8_from_utf32(
     train_chars: int = 2_400_000,
     val_chars: int = 80_000,
 ) -> UTF8Corpus:
-    """Losslessly convert UTF-32-LE corpus files directly into raw UTF-8 byte streams (0..255, zero <UNK>)."""
     base = Path(data_dir)
     tr_u32 = np.memmap(base / f"{name}.train", dtype=np.uint32, mode="r")[:train_chars]
     va_u32 = np.memmap(base / f"{name}.val", dtype=np.uint32, mode="r")[:val_chars]
 
-    # Fast exact UTF-32-LE -> str -> UTF-8 bytes conversion
     tr_str = np.array(tr_u32, dtype="<u4").tobytes().decode("utf-32-le", errors="ignore")
     va_str = np.array(va_u32, dtype="<u4").tobytes().decode("utf-32-le", errors="ignore")
 
@@ -66,25 +50,21 @@ def load_utf8_from_utf32(
 
 @dataclass
 class UTF8DAGConfig:
-    vocab_size: int = 256            # Fixed 256 raw byte sensory neurons (0x00..0xFF)!
-    pool_capacity: int = 280_000     # Starts at 0 hidden neurons; grows/merges/prunes organically
-    feat_dim: int = 96               # Shared byte feature basis E [256, 96] (only 98 KB!)
-    max_hops: int = 16               # Spans 5+ Japanese chars (15 bytes) or 16 ASCII chars!
+    vocab_size: int = 256
+    pool_capacity: int = 280_000
+    feat_dim: int = 96
+    max_hops: int = 16
     enable_long_branch: bool = True
     enable_apoptosis: bool = True
     enable_merge: bool = True
     enable_divorce: bool = True
-    # Hash table for unbounded dynamic fan-out
     edge_buckets: int = 524_288
     edge_ways: int = 4
-    # Neurogenesis (faster spawning since bytes are 2.8x denser than chars)
     birth_surprise_thresh: float = 0.40
     birth_pain_thresh: float = 1.8
     max_births_per_step: int = 128
-    # Apoptosis
     min_fires_survive: int = 4
     min_utility_survive: float = 0.015
-    # Selective Asymmetric Synaptic Fusion (v0.8.6)
     merge_min_src_fires: int = 4
     merge_max_src_fires: int = 96
     merge_min_lead_fires: int = 16
@@ -95,13 +75,11 @@ class UTF8DAGConfig:
     merge_max_norm_ratio: float = 2.4
     merge_lsh_bits: int = 10
     merge_rounds: int = 3
-    merge_min_depth: int = 2         # Merge emergent char/morpheme nodes (depth >= 2), keep raw 1-byte prefixes crisp!
-    # Pain-triggered reversible auto-divorce
+    merge_min_depth: int = 2
     divorce_surprise_thresh: float = 0.45
     divorce_align_thresh: float = -0.02
     divorce_pain_thresh: float = 2.0
     max_divorces_per_step: int = 16
-    # Local plasticity (zero backprop)
     lr_feat: float = 0.22
     lr_basis: float = 0.04
     lr_sharp: float = 0.28
@@ -110,16 +88,14 @@ class UTF8DAGConfig:
 
 
 class UTF8LivingDAG:
-    """Pure Raw UTF-8 Byte-Level Living Convergent DAG (0 hidden neurons -> emergent chars -> words -> DAG)."""
 
     def __init__(self, cfg: UTF8DAGConfig, device: torch.device):
         self.cfg = cfg
         self.device = device
-        self.V = cfg.vocab_size  # 256
+        self.V = cfg.vocab_size
         self.P = cfg.pool_capacity
         self.D = cfg.feat_dim
 
-        # Only 256 atomic byte neurons alive at birth; 0 hidden neurons!
         self.alive = torch.zeros(self.P, dtype=torch.bool, device=device)
         self.alive[: self.V] = True
 
@@ -135,7 +111,6 @@ class UTF8LivingDAG:
         self.utility = torch.zeros(self.P, dtype=torch.float32, device=device)
         self.age = torch.zeros(self.P, dtype=torch.int32, device=device)
 
-        # Edge hash table + lossless DAG metadata + per-edge divorce pain
         self.edges = DynamicEdgeTable(cfg.edge_buckets, cfg.edge_ways, device)
         self.edge_parents = torch.full((cfg.edge_buckets, cfg.edge_ways), -1, dtype=torch.int32, device=device)
         self.edge_kinds = torch.full((cfg.edge_buckets, cfg.edge_ways), -1, dtype=torch.int8, device=device)
@@ -146,7 +121,6 @@ class UTF8LivingDAG:
         self.out_degree = torch.zeros(self.P, dtype=torch.int32, device=device)
         self.divorce_immune = torch.zeros(self.P, dtype=torch.bool, device=device)
 
-        # Ultra-tiny byte feature basis E [256, D] + bias [256]
         self.E = torch.zeros((self.V, self.D), dtype=torch.float32, device=device)
         self.bias = torch.zeros(self.V, dtype=torch.float32, device=device)
 
@@ -167,7 +141,6 @@ class UTF8LivingDAG:
 
     @torch.no_grad()
     def init_sensory_basis(self, train_bytes: np.ndarray, sample_len: int = 3_000_000) -> None:
-        """Self-organize byte feature basis E [256, D] purely from raw byte co-occurrence distances (1..3)."""
         V, D = self.V, self.D
         seq = torch.from_numpy(train_bytes[: min(sample_len, len(train_bytes))].astype(np.int64)).to(self.device)
 
@@ -182,7 +155,6 @@ class UTF8LivingDAG:
         rs = cooc.sum(dim=1, keepdim=True).clamp(min=1.0)
         cs = cooc.sum(dim=0, keepdim=True).clamp(min=1.0)
         ppmi = torch.relu(torch.log((cooc * tot) / (rs * cs) + 1e-8))
-        # Also add tiny identity so unseen bytes (e.g. rare ASCII/Emoji lead bytes) get clean orthogonal directions!
         ppmi.add_(torch.eye(V, device=self.device) * 0.25)
         U, S, _ = torch.svd_lowrank(ppmi, q=min(D + 12, V - 1), niter=4)
         E_init = U[:, :D] * torch.sqrt(S[:D].clamp(min=1e-6)).unsqueeze(0)
@@ -192,7 +164,6 @@ class UTF8LivingDAG:
         self.bias.copy_(torch.log((counts + 1.0) / (counts.sum() + V)))
 
     def describe_byte_neuron(self, nid: int) -> str:
-        """Render a grown byte neuron's lineage as UTF-8 text (with hex fallback for partial byte sequences)."""
         if nid < 0 or nid >= self.P or not bool(self.alive[nid].item()):
             return "<DEAD>"
         if nid < self.V:
@@ -217,17 +188,14 @@ class UTF8LivingDAG:
             cur = int(self.parent[cur].item())
             guard += 1
         if 0 <= cur < 256:
-            # local_bytes were added from furthest-left (deepest) to closest-left; cur is the rightmost (current) byte!
             raw = bytes(local_bytes + [cur])
         else:
             raw = bytes(local_bytes)
 
-        # Try clean UTF-8 decode; if partial leading/trailing UTF-8 continuation bytes, decode valid interior cleanly!
         try:
             txt = raw.decode("utf-8")
             label = repr(txt)
         except UnicodeDecodeError:
-            # Find longest valid UTF-8 subslice for human readability
             dec = raw.decode("utf-8", errors="ignore")
             label = f"«{dec}»({raw.hex()[:12]})" if dec else f"0x{raw.hex()}"
 
@@ -457,7 +425,6 @@ class UTF8LivingDAG:
 
     @torch.no_grad()
     def apoptosis(self) -> Dict[str, int]:
-        """DAG-aware metabolic cell death & orphan pruning."""
         if not self.cfg.enable_apoptosis:
             return {"died": 0, "alive_hidden": self.num_hidden_alive, "edges": self.edges.count()}
 
@@ -545,7 +512,6 @@ class UTF8LivingDAG:
 
     @torch.no_grad()
     def fuse_similar_neurons(self, seed: int = 100) -> Dict[str, int]:
-        """Selective Asymmetric Synaptic Fusion on emergent multi-byte neurons (depth >= merge_min_depth)."""
         cfg = self.cfg
         if not cfg.enable_merge:
             return {"merged": 0, "alive_hidden": self.num_hidden_alive, "edges": self.edges.count()}
@@ -758,7 +724,6 @@ class UTF8LivingDAG:
         lr_scale: float = 1.0,
         bytes_per_char: float = 2.8,
     ) -> Dict[str, float]:
-        """Event-driven 16-hop raw byte traversal with emergent multi-byte context & reversible DAG."""
         cfg = self.cfg
         device = self.device
         V, D = self.V, self.D
@@ -779,7 +744,6 @@ class UTF8LivingDAG:
         byte_hist = torch.full((B, H_buf), -1, dtype=torch.int64, device=device)
         hist_ptr = 0
 
-        # Emergent multi-byte long-range context: delay ring of 12 bytes storing crystallized hidden neuron IDs!
         D_ctx = 12
         node_delay = torch.full((B, D_ctx), -1, dtype=torch.int64, device=device)
         nd_ptr = 0
@@ -813,13 +777,11 @@ class UTF8LivingDAG:
             cur_idx = hist_ptr
             hist_ptr = (hist_ptr + 1) % H_buf
 
-            # Update emergent multi-byte salient long-range context (purely from grown hidden nodes, zero decoder!)
             ctx_score.mul_(0.985)
             if t >= D_ctx:
                 u_old = node_delay[:, nd_ptr]
                 ok_u = (u_old >= V) & self.alive[u_old.clamp(min=0)]
                 if ok_u.any():
-                    # Rare crystallized multi-byte neurons = salient content kanji/words!
                     f_old = self.fires[u_old.clamp(min=0)].to(torch.float32)
                     sal_old = torch.where(ok_u, 1.8 / torch.sqrt(1.0 + f_old * 0.02), torch.zeros_like(f_old))
                     already = (ctx_node[:, 0] == u_old) | (ctx_node[:, 1] == u_old)
@@ -840,7 +802,6 @@ class UTF8LivingDAG:
             stream_max_depth = torch.zeros(B, dtype=torch.int32, device=device)
             deepest_leaf = x_t.clone()
             deepest_span = torch.zeros(B, dtype=torch.int64, device=device)
-            # Track emergent char/morpheme node (depth 2..5) for long-range context memory
             emergent_ctx_cand = torch.full((B,), -1, dtype=torch.int64, device=device)
 
             for hop in range(1, cfg.max_hops + 1):
@@ -928,7 +889,6 @@ class UTF8LivingDAG:
 
                 frontier = next_front
 
-            # Push emergent multi-byte neuron into delay buffer
             node_delay[:, nd_ptr] = emergent_ctx_cand
             nd_ptr = (nd_ptr + 1) % D_ctx
 
@@ -938,7 +898,6 @@ class UTF8LivingDAG:
             if cur_md > max_depth_seen:
                 max_depth_seen = cur_md
 
-            # Hierarchical residual readout into 256-byte space (blazing fast!)
             h = torch.zeros((B, D), dtype=torch.float32, device=device)
             logits_sharp.zero_()
             n_vis_step = 0
@@ -1083,7 +1042,6 @@ class UTF8LivingDAG:
 
     @torch.no_grad()
     def generate_utf8(self, prompt: str, max_new_bytes: int = 180, temperature: float = 0.72, top_k: int = 24) -> Tuple[str, bool]:
-        """Generate raw UTF-8 bytes directly from ANY prompt (Japanese, English, Emoji, Code — zero <UNK>!)."""
         cfg = self.cfg
         device = self.device
         raw_in = list(prompt.encode("utf-8"))
@@ -1176,7 +1134,6 @@ class UTF8LivingDAG:
             gen_only.append(nxt_b)
             logits = step_one(nxt_b, len(raw_in) + s)
 
-        # Check whether generated bytes (trimming up to 2 incomplete trailing bytes at cutoff) form 100% VALID UTF-8!
         raw_gen = bytes(gen_only)
         valid_utf8 = False
         for trim in (0, 1, 2):
@@ -1205,7 +1162,6 @@ class UTF8LivingDAG:
         return items[:top_k]
 
     def sample_deep_neurons(self, min_depth: int = 6, top_k: int = 12) -> List[Dict[str, object]]:
-        """Show the deepest organically crystallized multi-byte UTF-8 words/phrases!"""
         mask = self.alive & (torch.arange(self.P, device=self.device) >= self.V) & (self.depth >= min_depth) & (self.fires >= 15)
         ids = torch.nonzero(mask, as_tuple=False).squeeze(1)
         if ids.numel() == 0:

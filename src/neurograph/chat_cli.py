@@ -1,4 +1,4 @@
-"""保存済み NeuroGraph 統合脳を使う対話端末。"""
+"""保存済みの統合モデルを使う対話端末。"""
 import argparse
 import contextlib
 import json

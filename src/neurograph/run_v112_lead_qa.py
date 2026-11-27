@@ -1,15 +1,4 @@
-"""NeuroGraph v11.2 (Stage 2): Build Persistent Full-Wikipedia (1.67B chars!) Article-Lead Hippocampus
-+ Strict 1-Factor QA Ablation on our SINGLE Merged v11.1 Brain!
-
-Runs in ~2 minutes total (< 6 GB GPU VRAM, < 2 GB RAM for the persistent SQLite Lead Hippocampus!):
-  1. Streams ALL 1.67B chars of `wikipedia.train` + 31M chars of `easy_ja.train` in 16M-char chunks
-     -> builds `wiki_lead_v112/wiki_leads.sqlite` (persistent on disk, < 50 MB RAM at query time!).
-  2. Loads ONE single `merged_v111_broca_core.pt` + `merged_v111_adapter.pkl`.
-  3. Runs strict 1-factor A/B inside the EXACT SAME Single Merged Brain & Decoder:
-       - `H0_Flat6gram`: Legacy flat 6-gram Hippocampus (30M wiki + 31M easy_ja)
-       - `H1_WikiLead`:  NEW Persistent Full-Wikipedia Article-Lead Hippocampus!
-  4. Evaluates ALL 6 open-world strict novel-fact QA tests + Greeting check + 2 Custom Zero-Shot `アストラX-99` QA!
-"""
+"""記事冒頭文索引の構築と統合モデルの読み込み・評価（v11.2）。"""
 
 from __future__ import annotations
 
@@ -41,7 +30,6 @@ def load_brain(build_index=False):
     import os
     require_gpu()
     device = torch.device("cuda")
-    # 1) Mount Single Merged v11.1 Brain + L2 Assets (~5s, ~5.0 GB GPU VRAM!)
     t0 = time.perf_counter()
     with open("merged_v111_adapter.pkl", "rb") as f:
         ad111 = pickle.load(f)
@@ -63,8 +51,6 @@ def load_brain(build_index=False):
     parser = BrocaSyntacticParserV100.load("broca_v100")
     print(f"[Mounted Single Merged v11.1 Core ({core.num_hidden_alive:,}N)] in {time.perf_counter()-t0:.2f}s | mem={_mem_snapshot(device)}", flush=True)
 
-    # 2) Build Persistent Full-Wikipedia (1.67B chars!) Article-Lead Hippocampus (ZERO hardcoded language rules!)
-    # Learn terminator & subject-head delimiters directly from our unsupervised models!
     db_path = "wiki_lead_v112/wiki_leads.sqlite"
     flat_hip = None
     lead_stat = {}
@@ -75,7 +61,6 @@ def load_brain(build_index=False):
             default=(-1, 0.0),
         )[0]
         term_str = mc.motor_bytes[term_mid].decode("utf-8", errors="ignore") if term_mid >= 256 else ""
-        # Use unsupervised role markers discovered by RoleBoundThoughtCortexV60 as subject-head boundary delimiters!
         head_delims = []
         for mid in rc.role_motor_ids.tolist():
             s = mc.motor_bytes[int(mid)].decode("utf-8", errors="ignore")
@@ -95,7 +80,6 @@ def load_brain(build_index=False):
         )
         print(f"  [Persistent WikiLead Index Built] {lead_stat} | mem={_mem_snapshot(device)}", flush=True)
 
-        # Mount lightweight legacy flat 6-gram Hippocampus (50M wiki + 31M easy_ja) for fair 1-factor H0 baseline
         learned_bounds = [mc.motor_bytes[int(m)] for m in rc.role_motor_ids[:3]]
         flat_hip = EpisodicRack()
         for dname, nch, bkts, prio in (("wikipedia", 50_000_000, 1 << 20, 1.3), ("easy_ja", 31_000_000, 1 << 18, 0.95)):
@@ -137,7 +121,6 @@ def main() -> None:
     brain, lead_stat = load_brain(build_index=True)
     device = brain.device
     lead_hip = brain.lead_hip
-    # 3) Strict 1-Factor QA Ablation (H0 Flat 6-gram vs H1 Full-Wiki Lead Hippocampus!)
     test_suite = [
         ("挨拶", "こんにちは！調子はどうですか？", []),
         ("用語説明(鉄道)", "東海道新幹線とは何ですか？簡単に教えてください。", ["東京", "新大阪", "高速", "JR"]),
@@ -189,7 +172,6 @@ def main() -> None:
             flush=True,
         )
 
-    # 4) Hot-Mounted Custom Zero-Shot Fact QA (アストラX-99)
     fact_txt = (
         "量子重力エンジン「アストラX-99」は2042年に日本のつくば研究所で開発された次世代推進装置である。\n"
         "アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。\n"

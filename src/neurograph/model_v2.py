@@ -1,21 +1,4 @@
-"""NeuroGraph v0.2 (fast + top-down priming): Multi-hop Neuron-to-Neuron Relay Propagation.
-
-Core mechanisms (100% backprop-free):
-1. Fine-grained neurons (sensory chars + bottom-up crystallized chunks) with continuous
-   Leaky Integrate-and-Fire (LIF) membrane potential & refractory fatigue.
-2. Lateral neuron-to-neuron sparse graph (lat_bank: u -> w) wired automatically by
-   physical chunk distance, modulated by strong homeostatic plasticity so rare semantic
-   concepts wire strongly to each other instead of collapsing onto stopwords.
-3. Multi-hop relay propagation (Hop 0 -> 1 -> ... -> H) with top-k lateral inhibition
-   (k-WTA) and refractory push so waves collide at conceptual intersections and spread
-   forward without ping-pong oscillation.
-4. Top-Down Predictive Priming + Normalized Relay Readout:
-   When a multi-hop relayed chunk neuron w (e.g. '戦車', '歴史', 'ドイツ') fires,
-   it sends a top-down expectation wave directly to its own onset character
-   (chunk_first_char[w], e.g. '戦', '歴', 'ド') AND contributes normalized associative
-   readout signals—boosting semantic content-word prediction without drowning out
-   local grammar.
-"""
+"""多段のノード間伝播と上位からの予測プライミング（v0.2）。"""
 
 from __future__ import annotations
 
@@ -36,38 +19,31 @@ class NeuroGraphV2Config:
     k_readout: int = 48
     k_lateral: int = 24
     char_delays: Tuple[int, ...] = (1, 2, 3, 4, 6)
-    # Multi-hop relay settings
     n_hops: int = 2
     k_wta: int = 8
     membrane_decay: float = 0.84
     hop_decay: float = 0.75
     node_fatigue_decay: float = 0.86
     node_fatigue_inc: float = 0.70
-    # Lateral auto-wiring by physical chunk distance
     lateral_window: int = 5
     lateral_lr: float = 0.10
     credit_lr: float = 0.05
-    # Local surprise plasticity (zero backprop)
     lr: float = 0.24
     neg_top_m: int = 8
     weight_decay: float = 0.9999
     prune_threshold: float = 0.03
-    # Chunk crystallization
     chunk_min_count: int = 14
     chunk_add_per_round: int = 3500
-    # Gains
     gain_char_base: float = 1.0
     gain_chunk: float = 1.30
     gain_prev_chunk: float = 0.75
     gain_relay_out: float = 0.45
     gain_topdown_prime: float = 0.35
-    # Output char fatigue
     char_fatigue_decay: float = 0.85
     char_fatigue_inc: float = 0.14
 
 
 class NeuroGraphV2:
-    """Backprop-free, multi-hop spreading-activation + top-down priming neural graph."""
 
     def __init__(self, cfg: NeuroGraphV2Config, device: torch.device):
         self.cfg = cfg
@@ -78,32 +54,25 @@ class NeuroGraphV2:
 
         self.out_bias = torch.zeros(self.V, dtype=torch.float32, device=device)
 
-        # 1) Sensory character delay readout banks
         self.char_banks: List[SparseSynapseBank] = [
             SparseSynapseBank(self.V, cfg.k_readout, device)
             for _ in cfg.char_delays
         ]
 
-        # 2) Crystallized chunk registry
         self.pair_keys = torch.empty(0, dtype=torch.int64, device=device)
         self.pair_vals = torch.empty(0, dtype=torch.int32, device=device)
         self.chunk_pairs: List[Tuple[int, int]] = []
         self.chunk_len = torch.ones(self.max_nodes, dtype=torch.int32, device=device)
-        # First character of every node (for top-down predictive priming!)
         self.chunk_first_char = torch.zeros(self.max_nodes, dtype=torch.int64, device=device)
         self.chunk_first_char[: self.V] = torch.arange(self.V, dtype=torch.int64, device=device)
 
-        # Direct chunk & prev-chunk readout banks
         self.chunk_bank = SparseSynapseBank(self.max_nodes, cfg.k_readout, device)
         self.prev_chunk_bank = SparseSynapseBank(self.max_nodes, cfg.k_readout // 2, device)
 
-        # 3) NEURON-TO-NEURON Lateral Synapse Graph (node -> node)
         self.lat_bank = SparseSynapseBank(self.max_nodes, cfg.k_lateral, device)
         self.relay_out_bank = SparseSynapseBank(self.max_nodes, cfg.k_readout // 2, device)
-        # Adaptive per-hop top-down priming & relay readout gains (learned locally!)
         self.prime_scale = torch.full((max(1, cfg.n_hops),), cfg.gain_topdown_prime, dtype=torch.float32, device=device)
 
-        # Homeostatic firing frequency counter per node
         self.node_freq = torch.ones(self.max_nodes, dtype=torch.float32, device=device)
         self.total_chunk_events = 1.0
         self.total_chars_seen = 0
@@ -220,24 +189,20 @@ class NeuroGraphV2:
 
     @torch.no_grad()
     def _homeostatic_salience(self, node_ids: torch.Tensor) -> torch.Tensor:
-        """Strong homeostatic scaling (freq^-0.75) + length bonus so semantic words
-        dominate associative waves rather than high-frequency punctuation/particles."""
         safe = node_ids.clamp(0, self.max_nodes - 1)
         freq = self.node_freq[safe]
         avg_f = max(1.0, self.total_chunk_events / max(1, self.num_active_nodes))
-        # Stronger damping on ultra-frequent stopwords
         sal = ((avg_f / (freq + 4.0)) ** 0.70).clamp(0.05, 2.2)
-        # Multi-char chunks carry richer semantics than raw single chars
         len_bonus = torch.where(self.chunk_len[safe] >= 2, 1.15, 0.70)
         return sal * len_bonus
 
     @torch.no_grad()
     def _propagate_lateral_hop(
         self,
-        src_ids: torch.Tensor,      # [B, S] int64
-        src_act: torch.Tensor,      # [B, S] float32
-        membrane: torch.Tensor,     # [B, N] float32 (modified in-place)
-        node_fatigue: torch.Tensor, # [B, N] float32 (modified in-place)
+        src_ids: torch.Tensor,
+        src_act: torch.Tensor,
+        membrane: torch.Tensor,
+        node_fatigue: torch.Tensor,
         k_wta: int,
     ) -> Tuple[torch.Tensor, torch.Tensor]:
         B, S = src_ids.shape
@@ -251,8 +216,8 @@ class NeuroGraphV2:
             )
 
         safe_src = src_ids.clamp(0, N - 1)
-        dst = self.lat_bank.dst[safe_src]       # [B, S, K_lat]
-        w = self.lat_bank.weight[safe_src]      # [B, S, K_lat]
+        dst = self.lat_bank.dst[safe_src]
+        w = self.lat_bank.weight[safe_src]
 
         mask = valid_src.unsqueeze(-1) & (dst >= 0) & (dst < N) & (w > 0.0)
         wave = (w * src_act.unsqueeze(-1)) * mask.to(w.dtype)
@@ -261,7 +226,6 @@ class NeuroGraphV2:
         wave_flat = wave.reshape(B, -1)
         membrane.scatter_add_(1, dst_flat, wave_flat)
 
-        # Lateral inhibition (k-WTA) over (membrane - fatigue)
         eff = membrane - node_fatigue
         k_eff = min(k_wta, N)
         top_v, top_i = torch.topk(eff, k=k_eff, dim=-1)
@@ -269,7 +233,6 @@ class NeuroGraphV2:
         fired_mask = top_v > 0.10
         next_ids = torch.where(fired_mask, top_i, torch.full_like(top_i, -1))
         raw_act = torch.where(fired_mask, torch.tanh(top_v * 0.6), torch.zeros_like(top_v))
-        # Normalize per-stream hop energy so adding hops never blows up logit variance!
         norm_act = raw_act / (raw_act.sum(dim=1, keepdim=True) + 1.0)
 
         safe_next = top_i.clamp(0, N - 1)
@@ -282,18 +245,15 @@ class NeuroGraphV2:
         hop_winners: List[Tuple[torch.Tensor, torch.Tensor]],
         logits: torch.Tensor,
     ) -> None:
-        """Apply both top-down predictive priming (chunk -> onset char) and associative readout."""
         cfg = self.cfg
         for h_idx, (w_ids, w_act) in enumerate(hop_winners):
             h_scale = 1.0 / (1.0 + 0.35 * h_idx)
-            # (1) Learned associative readout wave (normalized so it stays clean)
             self.relay_out_bank.propagate(w_ids, w_act * (cfg.gain_relay_out * h_scale), logits)
-            # (2) Zero-shot Top-Down Predictive Priming: relayed chunk primes its own first char!
             if cfg.gain_topdown_prime > 0:
                 valid = (w_ids >= 0) & (w_ids < self.max_nodes) & (w_act > 1e-4)
                 if valid.any():
                     safe_ids = w_ids.clamp(0, self.max_nodes - 1)
-                    first_ch = self.chunk_first_char[safe_ids]  # [B, k_wta]
+                    first_ch = self.chunk_first_char[safe_ids]
                     prime_amp = (w_act * (self.prime_scale[h_idx] * h_scale)) * valid.to(w_act.dtype)
                     logits.scatter_add_(1, first_ch, prime_amp)
 
@@ -371,7 +331,6 @@ class NeuroGraphV2:
                         )
                         self.total_chunk_events += float(comp_nodes.numel())
 
-                        # Batched single-call lateral auto-wiring across all physical chunk distances!
                         dst_sal = self._homeostatic_salience(comp_nodes)
                         lat_srcs, lat_dsts, lat_dels = [], [], []
                         for dist in range(1, W):
@@ -406,7 +365,6 @@ class NeuroGraphV2:
             char_fatigue.mul_(cfg.char_fatigue_decay)
             char_fatigue[arange_B, x_t] += cfg.char_fatigue_inc
 
-            # 3) MULTI-HOP NEURON-TO-NEURON RELAY PROPAGATION
             if cfg.n_hops > 0 and membrane is not None and node_fatigue is not None:
                 membrane.mul_(cfg.membrane_decay)
                 node_fatigue.mul_(cfg.node_fatigue_decay)
@@ -418,7 +376,6 @@ class NeuroGraphV2:
                     pc = prev_chunk[c_idx].clamp(0, N - 1)
                     membrane[c_idx, pc] += 1.15 * self._homeostatic_salience(pc)
 
-                # Update multi-hop spreading activation every 2 steps (smooth carry-over)
                 if t % 2 == 0:
                     hop_winners = []
                     seed_ids = torch.stack([cur_chunk, prev_chunk], dim=1)
@@ -446,7 +403,6 @@ class NeuroGraphV2:
                     membrane.clamp_(0.0, 5.0)
                     node_fatigue.clamp_(0.0, 5.0)
 
-            # 4) READOUT WAVE CONVERGENCE
             logits.copy_(self.out_bias.unsqueeze(0))
 
             for d_idx, d in enumerate(cfg.char_delays):
@@ -475,7 +431,6 @@ class NeuroGraphV2:
 
             logits.sub_(char_fatigue)
 
-            # 5) CAUSAL EVALUATION
             log_probs = torch.log_softmax(logits, dim=-1)
             nll = -log_probs[arange_B, y_t]
             total_nll += float(nll.sum().item())
@@ -488,7 +443,6 @@ class NeuroGraphV2:
             if not train:
                 continue
 
-            # 6) BACKPROP-FREE SURPRISE-DRIVEN LOCAL PLASTICITY
             probs = torch.exp(log_probs)
             p_true = probs[arange_B, y_t]
             pos_surprise = 1.0 - p_true
@@ -536,7 +490,6 @@ class NeuroGraphV2:
                 )
                 update_bank(self.prev_chunk_bank, prev_chunk, pc_amp, scale=0.7)
 
-            # Batched single-call update for ALL multi-hop relayed neurons!
             if hop_winners:
                 r_srcs, r_dsts, r_dels = [], [], []
                 M2 = min(3, cfg.neg_top_m)
@@ -559,12 +512,10 @@ class NeuroGraphV2:
                         * neg_err[:, :M2].unsqueeze(1).expand(B, k_upd, M2).reshape(-1)
                     )
 
-                    # Locally adapt top-down priming gain per hop based on onset-char hit vs miss!
                     valid_p = (w_ids >= 0) & (w_ids < self.max_nodes) & (w_act > 1e-4)
                     if valid_p.any():
                         first_ch = self.chunk_first_char[w_ids.clamp(0, self.max_nodes - 1)]
                         hit_y = (first_ch == y_t.unsqueeze(1)) & valid_p
-                        # Local gradient of priming scale: positive when onset matches y_t, negative by probs[first_ch]
                         p_fc = probs.gather(1, first_ch)
                         err_fc = hit_y.to(torch.float32) - p_fc
                         g_prime = (err_fc * w_act * valid_p.to(torch.float32)).sum() / B
@@ -577,7 +528,6 @@ class NeuroGraphV2:
                     allow_sprout=True,
                 )
 
-                # Three-factor credit on Hop-1 lateral synapses (every 2 steps)
                 if t % 2 == 0 and cfg.credit_lr > 0:
                     w0, a0 = hop_winners[0][0][:, 0], hop_winners[0][1][:, 0]
                     mod = (p_true - 0.33) * a0 * (cfg.credit_lr * lr_scale)

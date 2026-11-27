@@ -1,13 +1,4 @@
-"""Fused Triton GPU Kernel for NeuroGraph Cortex Multi-Hop DAG Traversal + Readout + Sharp Synapses.
-
-Replaces the 16-hop Python DAG loop (which incurred ~40 GPU->CPU CUDA syncs and ~150 kernel launches
-per byte step = ~9.0 ms/step!) with a SINGLE fused Triton kernel launch (~0.05 ms/step -> ~150x faster!)
-that is numerically identical to the reference Python implementation.
-
-Each Triton program (1 block per batch item b in 0..B-1) keeps its 4-slot frontier in scalar registers,
-traverses up to max_hops dynamically with zero warp divergence, cooperatively loads W_node[u, 0..255]
-into register accumulator h_acc, and scatters sharp_dst/sharp_w into logits_sharp[b, 0..255].
-"""
+"""DAG の多段走査と読み出しを1つにまとめた Triton GPU カーネル。"""
 
 from __future__ import annotations
 
@@ -45,7 +36,6 @@ def _edge_lookup_4way(p_id, kind, cond, sig_ptr, child_ptr, EDGE_MASK: tl.conste
     s3 = tl.load(sig_ptr + base + 3)
     c3 = tl.load(child_ptr + base + 3).to(tl.int64)
 
-    # First matching slot (matches Python argmax on bool hit mask!)
     found = tl.full((), -1, tl.int64)
     found = tl.where((s3 == sig) & (c3 >= 0), c3, found)
     found = tl.where((s2 == sig) & (c2 >= 0), c2, found)
@@ -65,21 +55,21 @@ def _add_sharp_8(u, gv, b, sharp_dst_ptr, sharp_w_ptr, logits_sharp_ptr):
 
 @triton.jit
 def dag_step_fused_kernel(
-    x_t_ptr,            # [B] int64
-    byte_hist_ptr,      # [B, H_BUF] int64
-    cur_idx_ptr,        # [B] int64 (ignored if CUR_IS_SCALAR)
-    cur_idx_scalar,     # int64 (used if CUR_IS_SCALAR)
-    top_ctx_ptr,        # [B] int64
-    local_span_ptr,     # [P] int16
-    alive_ptr,          # [P] bool (uint8)
-    edge_sig_ptr,       # [num_buckets, 4] int64
-    edge_child_ptr,     # [num_buckets, 4] int32
-    W_node_ptr,         # [P, 256] bf16/fp32
-    sharp_dst_ptr,      # [P, 8] int16
-    sharp_w_ptr,        # [P, 8] bf16/fp32
-    out_h_dag_ptr,      # [B, 256] fp32
-    out_sharp_ptr,      # [B, 256] fp32 (must be zero-initialized by caller)
-    out_emergent_ptr,   # [B] int64
+    x_t_ptr,
+    byte_hist_ptr,
+    cur_idx_ptr,
+    cur_idx_scalar,
+    top_ctx_ptr,
+    local_span_ptr,
+    alive_ptr,
+    edge_sig_ptr,
+    edge_child_ptr,
+    W_node_ptr,
+    sharp_dst_ptr,
+    sharp_w_ptr,
+    out_h_dag_ptr,
+    out_sharp_ptr,
+    out_emergent_ptr,
     H_BUF: tl.constexpr,
     MAX_HOPS: tl.constexpr,
     ENABLE_LONG: tl.constexpr,
@@ -97,7 +87,6 @@ def dag_step_fused_kernel(
     tc = tl.load(top_ctx_ptr + b).to(tl.int64)
     bh_base = b * H_BUF
 
-    # Hop 0: root sensory byte neuron x
     h_acc = tl.load(W_node_ptr + x * 256 + d).to(tl.float32)
     _add_sharp_8(x, 1.0, b, sharp_dst_ptr, sharp_w_ptr, out_sharp_ptr)
 
@@ -119,7 +108,6 @@ def dag_step_fused_kernel(
             do_ctx = ENABLE_LONG and (hop >= 2) and (hop <= 5) and (tc >= 256)
             do_em = (hop >= 2) and (hop <= 4)
 
-            # ---- Slot ff = 0 -> loc->nf0, ctx->nf1 ----
             if f0 >= 0:
                 p_span = tl.load(local_span_ptr + f0).to(tl.int64)
                 dist = tl.minimum(p_span + 1, H_BUF - 1)
@@ -147,7 +135,6 @@ def dag_step_fused_kernel(
                             h_acc += tl.load(W_node_ptr + rc * 256 + d).to(tl.float32) * gv
                             _add_sharp_8(rc, gv, b, sharp_dst_ptr, sharp_w_ptr, out_sharp_ptr)
 
-            # ---- Slot ff = 1 -> loc->nf2, ctx->nf3 ----
             if f1 >= 0:
                 p_span = tl.load(local_span_ptr + f1).to(tl.int64)
                 dist = tl.minimum(p_span + 1, H_BUF - 1)
@@ -175,7 +162,6 @@ def dag_step_fused_kernel(
                             h_acc += tl.load(W_node_ptr + rc * 256 + d).to(tl.float32) * gv
                             _add_sharp_8(rc, gv, b, sharp_dst_ptr, sharp_w_ptr, out_sharp_ptr)
 
-            # ---- Slot ff = 2 -> loc->nf0, ctx->nf1 ----
             if f2 >= 0:
                 p_span = tl.load(local_span_ptr + f2).to(tl.int64)
                 dist = tl.minimum(p_span + 1, H_BUF - 1)
@@ -203,7 +189,6 @@ def dag_step_fused_kernel(
                             h_acc += tl.load(W_node_ptr + rc * 256 + d).to(tl.float32) * gv
                             _add_sharp_8(rc, gv, b, sharp_dst_ptr, sharp_w_ptr, out_sharp_ptr)
 
-            # ---- Slot ff = 3 -> loc->nf2, ctx->nf3 ----
             if f3 >= 0:
                 p_span = tl.load(local_span_ptr + f3).to(tl.int64)
                 dist = tl.minimum(p_span + 1, H_BUF - 1)
@@ -249,7 +234,6 @@ def run_fused_dag_step(
     top_ctx_all: torch.Tensor,
     logits_sharp_buf: torch.Tensor | None = None,
 ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
-    """Single-launch Triton replacement for the 16-hop Python DAG loop + h_dag + logits_sharp."""
     B = x_t.shape[0]
     dev = x_t.device
     if not x_t.is_contiguous():

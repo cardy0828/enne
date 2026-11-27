@@ -1,4 +1,4 @@
-"""棄権の出典照合と、訓練区間の明示的な等式を使う自習。"""
+"""棄権した質問の出典照合と、訓練区間の明示的な等式を使う自習（v14.0）。"""
 from itertools import islice
 import json
 from pathlib import Path
@@ -94,4 +94,3 @@ def explore(brain, rows):
             train.append(dict(kind="discovery",prompt=q,target=result.text))
             entry.update(promoted=True,evidence=result.text,head=heads[0])
     return train, dict(discoveries=audit,oracle_total=len(mined),held_out=held)
-

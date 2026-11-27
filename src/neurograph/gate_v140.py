@@ -1,4 +1,4 @@
-"""固定回帰と経験の進歩を、実際の発話とツール観測で判定する。"""
+"""固定回帰と経験による改善を、実際の発話とツール観測で判定する（v14.0）。"""
 from contextlib import contextmanager
 import hashlib
 import json
@@ -12,7 +12,6 @@ ROOT = Path("memory_gate_v120")
 
 
 def check_device():
-    """GPU の構成を検査する。ENNE_STRICT_DEVICE=1 のときは研究時と同じ RTX 3060 固定の条件を要求する。"""
     import torch
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA を使える GPU が必要です")
@@ -97,4 +96,3 @@ def failures(before, after):
     if after["scores"]["progress"]<=before["scores"]["progress"]:
         reasons.append("検証済みの正味改善なし")
     return reasons
-

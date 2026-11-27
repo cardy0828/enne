@@ -1,20 +1,4 @@
-"""NeuroGraph v2.0: Decoupled Context-Gated Engram Architecture (Zero-VRAM External Knowledge Cartridges).
-
-Core Architectural Breakthrough:
-- Completely decouples Reasoning/Fluency/Working-Memory (GPU Core Brain, frozen ~3.5 GB VRAM) from
-  Encyclopedic/Domain Knowledge (CPU RAM / mmap External Engram Cartridges, 0 MB GPU VRAM!).
-- Hot-Swappable Cartridges: Mount, unmount, or stack independent .eng cartridges live
-  (e.g., easy_ja.eng + aozora.eng + wikipedia_200m.eng [260M slots!] + custom_user.eng) with ZERO Cortex retraining!
-- True Engram Context-Aware Gating (Zero Backprop, Zero Tokenizer):
-  Every Engram slot stores a 16-D quantized Semantic Trigram + Cortex-Basis Context Fingerprint (int8).
-  At inference, cosine similarity gates each knowledge injection:
-      g = gate_min + (1 - gate_min) * sigmoid(alpha * (cos(c_now, c_engram) - tau))
-  Eliminating hash-collision & cross-domain false-positive NLL spikes!
-- Surprise-Only Residual Distillation:
-  Uses the frozen GPU Cortex's fast 2-hop predictor to skip predictable grammar (~55-65% of bytes),
-  dedicating 100% of Engram capacity to pure encyclopedic facts, proper nouns, dates, and rare terminology!
-- Deterministic O(1) Prefetch via OpenMP C++17 native kernel (ingests 200M chars / 580M bytes in minutes!).
-"""
+"""本体と分離した外部記憶カートリッジ（文脈ゲート付き、CPU / mmap）（v2.0）。"""
 
 from __future__ import annotations
 
@@ -35,7 +19,6 @@ from neurograph.lateral_v13b import UnifiedBrainV13b
 from neurograph.memory_v3b import _mix64
 
 
-# ---- Compile / Load Native OpenMP C++17 Engram Kernel ----
 _LIB_CACHE: Optional[ctypes.CDLL] = None
 
 
@@ -87,10 +70,7 @@ def load_engram_lib() -> ctypes.CDLL:
     return lib
 
 
-# ---- Shared Deterministic Multi-Scale Raw UTF-8 Key & 16-D Context Fingerprint Encoder ----
 class EngramContextEncoder:
-    """Computes deterministic 6-scale raw UTF-8 Engram keys (6B, 9B, 12B, 15B, 18B, 24B) AND
-    a 16-D quantized Semantic Trigram + Cortex-Basis Context Fingerprint (bit-exact between build & inference!)."""
 
     SPANS = (6, 9, 12, 15, 18, 24)
     CDIM = 16
@@ -109,36 +89,26 @@ class EngramContextEncoder:
         gen = torch.Generator(device=device)
         gen.manual_seed(seed)
 
-        # Project frozen Cortex sensory basis E [256, D] -> [256, 16] via fixed orthogonal basis
         P_e = torch.randn((D, self.CDIM), generator=gen, device=device) / math.sqrt(D)
         E_proj = cortex_E.to(torch.float32) @ P_e
-        self.E_proj = E_proj / E_proj.norm(dim=1, keepdim=True).clamp(min=1e-5)  # [256, 16]
+        self.E_proj = E_proj / E_proj.norm(dim=1, keepdim=True).clamp(min=1e-5)
 
-        # Fixed Johnson-Lindenstrauss projection table for raw 3-byte UTF-8 trigrams [8192, 16]
-        # Every Japanese kanji (3 bytes) or 3-char ASCII trigram maps to its own unit direction in R^16!
         H_tri = torch.randn((8192, self.CDIM), generator=gen, device=device)
         self.H_tri = H_tri / H_tri.norm(dim=1, keepdim=True).clamp(min=1e-5)
 
-        # Causal exponential smoothing kernel for batched GPU conv1d: [16, 1, WIN]
-        # Matches exact step-by-step recurrence c_t = DECAY * c_{t-1} + (1 - DECAY) * v_t!
         lags = torch.arange(self.WIN - 1, -1, -1, dtype=torch.float32, device=device)
         kern = (1.0 - self.DECAY) * (self.DECAY ** lags)
         self.conv_kern = kern.view(1, 1, self.WIN).expand(self.CDIM, 1, self.WIN).contiguous()
 
     @torch.no_grad()
     def compute_keys_1d(self, x_gpu: torch.Tensor) -> List[torch.Tensor]:
-        """Compute all 6 raw UTF-8 Engram keys in parallel for a contiguous 1D byte sequence x_gpu [N] (int64).
-        Position i predicts target x_gpu[i + 1] using bytes ending at x_gpu[i] (i.e. x[i], x[i-1], ...).
-        Returns 6 tensors of shape [N - 1] int64 (0 where prefix length < span)."""
         N = x_gpu.shape[0]
         M = N - 1
-        # Rolling hash across offsets d = 0..23: at position i, byte d back is x_gpu[i - d]
         h = _mix64(x_gpu[:M] + self.PRIMES[0])
         out: List[torch.Tensor] = []
         span_set = set(self.SPANS)
         idx = torch.arange(M, device=self.device)
         for d in range(1, 24):
-            # Shifted byte: for i >= d -> x_gpu[i - d], else 0
             shifted = torch.zeros(M, dtype=torch.int64, device=self.device)
             shifted[d:] = x_gpu[: M - d]
             h = _mix64(h ^ ((shifted + 31 * d) * self.PRIMES[d]))
@@ -149,8 +119,6 @@ class EngramContextEncoder:
 
     @torch.no_grad()
     def compute_keys_2d(self, data_2d: torch.Tensor) -> List[torch.Tensor]:
-        """Compute all 6 raw UTF-8 Engram keys in parallel for [B, T] int64 streams.
-        Returns 6 tensors of shape [B, T - 1] int64."""
         B, T = data_2d.shape
         M = T - 1
         h = _mix64(data_2d[:, :M] + self.PRIMES[0])
@@ -168,37 +136,33 @@ class EngramContextEncoder:
 
     @torch.no_grad()
     def compute_context_q_1d(self, x_gpu: torch.Tensor) -> torch.Tensor:
-        """Compute quantized 16-D context fingerprint int8 [N - 1, 16] in parallel via causal GPU conv1d!"""
         M = x_gpu.shape[0] - 1
         b0 = x_gpu[:M]
         b1 = torch.zeros_like(b0); b1[1:] = x_gpu[: M - 1]
         b2 = torch.zeros_like(b0); b2[2:] = x_gpu[: M - 2]
         h3 = (_mix64(b0 + 23) ^ ((b1 + 41) * 1315423911) ^ ((b2 + 67) * 2654435761)) & 8191
-        v = 0.35 * self.E_proj[b0] + 0.65 * self.H_tri[h3]  # [M, 16]
-        # Causal depthwise conv1d: [1, 16, M]
+        v = 0.35 * self.E_proj[b0] + 0.65 * self.H_tri[h3]
         inp = F.pad(v.T.unsqueeze(0), (self.WIN - 1, 0))
-        c = F.conv1d(inp, self.conv_kern, groups=self.CDIM).squeeze(0).T  # [M, 16]
+        c = F.conv1d(inp, self.conv_kern, groups=self.CDIM).squeeze(0).T
         c = c / c.norm(dim=1, keepdim=True).clamp(min=1e-5)
         return torch.round(c * 127.0).clamp(-127, 127).to(torch.int8)
 
     @torch.no_grad()
     def compute_context_q_2d(self, data_2d: torch.Tensor) -> torch.Tensor:
-        """Compute quantized 16-D context fingerprint int8 [B, T - 1, 16] via causal GPU conv1d!"""
         B, T = data_2d.shape
         M = T - 1
         b0 = data_2d[:, :M]
         b1 = torch.zeros_like(b0); b1[:, 1:] = data_2d[:, : M - 1]
         b2 = torch.zeros_like(b0); b2[:, 2:] = data_2d[:, : M - 2]
         h3 = (_mix64(b0 + 23) ^ ((b1 + 41) * 1315423911) ^ ((b2 + 67) * 2654435761)) & 8191
-        v = 0.35 * self.E_proj[b0] + 0.65 * self.H_tri[h3]  # [B, M, 16]
+        v = 0.35 * self.E_proj[b0] + 0.65 * self.H_tri[h3]
         inp = F.pad(v.permute(0, 2, 1), (self.WIN - 1, 0))
-        c = F.conv1d(inp, self.conv_kern, groups=self.CDIM).permute(0, 2, 1)  # [B, M, 16]
+        c = F.conv1d(inp, self.conv_kern, groups=self.CDIM).permute(0, 2, 1)
         c = c / c.norm(dim=2, keepdim=True).clamp(min=1e-5)
         return torch.round(c * 127.0).clamp(-127, 127).to(torch.int8)
 
     @torch.no_grad()
     def step_context_single(self, c_state: torch.Tensor, b0: int, b1: int, b2: int) -> Tuple[torch.Tensor, np.ndarray]:
-        """O(1) single-step context update for live generation (matches conv1d bit-identically!)."""
         b1c = max(0, b1)
         b2c = max(0, b2)
         h3 = int((_mix64(torch.tensor(b0 + 23, device=self.device)) ^ ((b1c + 41) * 1315423911) ^ ((b2c + 67) * 2654435761)).item()) & 8191
@@ -210,7 +174,6 @@ class EngramContextEncoder:
 
     @torch.no_grad()
     def step_keys_single(self, byte_hist: torch.Tensor, cur_idx: int, H_buf: int) -> np.ndarray:
-        """O(1) single-step 6-scale Engram key computation for live generation -> int64[6]."""
         bs = [int(byte_hist[0, (cur_idx - d) % H_buf].item()) for d in range(24)]
         b_t = torch.tensor([max(0, b) for b in bs], dtype=torch.int64, device=self.device)
         h = _mix64(b_t[0] + self.PRIMES[0])
@@ -225,16 +188,13 @@ class EngramContextEncoder:
         return out
 
 
-# ---- Decoupled Hot-Swappable CPU/mmap External Engram Cartridge ----
 @dataclass
 class EngramCartridgeConfig:
     name: str = "engram"
-    # 6 multi-scale raw UTF-8 banks (6B, 9B, 12B, 15B, 18B, 24B), all powers of 2
     bank_buckets: Tuple[int, ...] = (524_288, 1_048_576, 2_097_152, 2_097_152, 2_097_152, 1_048_576)
     bank_scales: Tuple[float, ...] = (0.26, 0.52, 0.90, 1.25, 1.55, 1.85)
     min_infer_w: Tuple[int, ...] = (2, 2, 2, 1, 1, 1)
     prune_min_w: Tuple[int, ...] = (2, 2, 2, 2, 2, 2)
-    # Context-Aware Gate parameters (Engram core!)
     gate_alpha: float = 5.0
     gate_tau: float = 0.22
     gate_min: float = 0.22
@@ -242,8 +202,6 @@ class EngramCartridgeConfig:
 
 
 class EngramCartridge:
-    """Independent CPU-RAM / mmap-able Knowledge Cartridge (0 MB GPU VRAM!).
-    Can be built once, saved to disk, mounted/unmounted live, and stacked with other cartridges!"""
 
     WAYS = 4
     CDIM = 16
@@ -281,7 +239,6 @@ class EngramCartridge:
         return tot
 
     def ingest_chunk(self, keys_list: Sequence[np.ndarray], targets_u8: np.ndarray, c_q_i8: np.ndarray) -> None:
-        """Ingest one pre-filtered chunk of (keys[6], targets_u8, c_q_i8) into CPU RAM using 12 OpenMP threads!"""
         N = int(targets_u8.shape[0])
         if N == 0:
             return
@@ -325,7 +282,6 @@ class EngramCartridge:
         scale_mult: float = 1.0,
         min_infer_override: Optional[int] = None,
     ) -> Tuple[int, float]:
-        """Accumulate this cartridge's Engram knowledge into out_boost[M, 256] (in-place!)."""
         M = int(c_q_i8.shape[0])
         cq_ptr = c_q_i8.ctypes.data_as(ctypes.POINTER(ctypes.c_int8))
         ob_ptr = out_boost.ctypes.data_as(ctypes.POINTER(ctypes.c_float))
@@ -357,7 +313,6 @@ class EngramCartridge:
         return total_hits, total_gate_sum
 
     def save(self, folder: str) -> None:
-        """Save cartridge as zero-copy mmap-ready binary files on disk."""
         p = Path(folder)
         p.mkdir(parents=True, exist_ok=True)
         meta = {
@@ -375,7 +330,6 @@ class EngramCartridge:
 
     @classmethod
     def load(cls, folder: str, mmap_mode: Optional[str] = "r") -> "EngramCartridge":
-        """Instant 0.01s mount via mmap (or RAM copy if mmap_mode=None)!"""
         p = Path(folder)
         meta = json.loads((p / "meta.json").read_text(encoding="utf-8"))
         c = meta["cfg"]
@@ -393,7 +347,6 @@ class EngramCartridge:
 
 
 class EngramRack:
-    """Hot-swappable multi-cartridge Engram mount rack (0 MB GPU VRAM!)."""
 
     def __init__(self, max_boost: float = 3.2):
         self.cartridges: List[Tuple[EngramCartridge, float, Optional[int]]] = []
@@ -413,7 +366,6 @@ class EngramRack:
         return [c.cfg.name for (c, _, _) in self.cartridges]
 
     def hash_bytes24_batch(self, bs24_i32: np.ndarray) -> List[np.ndarray]:
-        """Ultra-fast C++ 6-scale raw UTF-8 rolling hash (bit-exact with GPU encoder, ~0.01ms vs 2.46ms!)."""
         arr = np.ascontiguousarray(bs24_i32, dtype=np.int32)
         B = int(arr.shape[0])
         out = np.empty((6, B), dtype=np.int64)
@@ -442,8 +394,6 @@ class EngramRack:
             h, gs = cart.lookup_into(keys_list, c_q_i8, out, use_context_gate=use_context_gate, scale_mult=wt, min_infer_override=miw)
             tot_hits, tot_gsum = h, gs
         else:
-            # Anti-double-counting cartridge fusion: strongest matching cartridge wins + gentle 0.12 corroboration!
-            # Scales cleanly to 3, 10, or 50 mounted cartridges with ZERO logit explosion!
             buf = np.empty((M, 256), dtype=np.float32)
             for idx_c, (cart, wt, miw) in enumerate(self.cartridges):
                 buf.fill(0.0)
@@ -460,15 +410,11 @@ class EngramRack:
         return out, tot_hits, tot_gsum
 
 
-# ---- Decoupled GPU Core Brain + External CPU Engram Integration ----
 class DecoupledBrainV20:
-    """Wraps a FROZEN GPU Core Brain (stripped of internal LTM -> pure Reasoning/Fluency Cortex!)
-    with an external hot-swappable CPU/mmap EngramRack!"""
 
     def __init__(self, core: UnifiedBrainV13b):
         self.core = core
         self.device = core.device
-        # Detach & free ALL internal GPU LTM memory! Knowledge now lives 100% outside GPU in Engram cartridges!
         for bi in range(core.ltm.num_banks):
             core.ltm.sig[bi] = torch.empty((1, 4), dtype=torch.int32, device=self.device)
             core.ltm.dst[bi] = torch.full((1, 4), -1, dtype=torch.int16, device=self.device)
@@ -480,9 +426,6 @@ class DecoupledBrainV20:
 
     @torch.no_grad()
     def _fast_cortex_surprise_mask(self, x_gpu: torch.Tensor, surp_thresh: float = 0.28, sub_chunk: int = 131_072) -> torch.Tensor:
-        """Surprise-Only Residual Distillation filter (chunked 131k -> < 200 MB VRAM, >50M bytes/sec!):
-        Computes fast 2-hop Cortex prediction for ALL M positions -> skips predictable grammar
-        so 100% of Engram slots store genuinely surprising facts, proper nouns, dates, and idioms!"""
         core = self.core
         M = x_gpu.shape[0] - 1
         surp = torch.empty(M, dtype=torch.bool, device=self.device)
@@ -537,7 +480,6 @@ class DecoupledBrainV20:
         use_surprise_filter: bool = True,
         verbose: bool = True,
     ) -> Dict[str, object]:
-        """Distill a massive raw UTF-8 stream (even 580M bytes!) into a CPU EngramCartridge at ~20-40M B/s!"""
         t0 = time.time()
         N_tot = len(raw_bytes)
         kept_tot = 0
@@ -555,7 +497,6 @@ class DecoupledBrainV20:
             cq_gpu = self.encoder.compute_context_q_1d(x_gpu)
             y_gpu = x_gpu[1:]
 
-            # Slice away overlap prefix
             keys_gpu = [k[skip_head:] for k in keys_gpu]
             cq_gpu = cq_gpu[skip_head:]
             y_gpu = y_gpu[skip_head:]
@@ -597,7 +538,6 @@ class DecoupledBrainV20:
         use_engram: bool = True,
         use_context_gate: bool = True,
     ) -> Dict[str, float]:
-        """Evaluate Frozen GPU Core Brain + Deterministic Prefetched External CPU Engram Rack!"""
         core = self.core
         cfg = core.cfg
         device = self.device
@@ -612,20 +552,16 @@ class DecoupledBrainV20:
         ).to(device)
         B, T = data.shape
 
-        # ---- DETERMINISTIC O(1) PREFETCH OF ALL ENGRAM BOOSTS FOR ENTIRE EVAL STREAM! ----
-        # Because raw UTF-8 Engram keys + 16-D context fingerprints depend ONLY on input bytes,
-        # we prefetch all (B, T-1) Engram lookups across 12 CPU threads in ONE single ~0.08s pass!
         eng_boost_all: Optional[torch.Tensor] = None
         eng_hits = 0
         eng_gate_mean = 0.0
         if eng_on:
-            keys_2d = self.encoder.compute_keys_2d(data)          # 6 x [B, T-1]
-            cq_2d = self.encoder.compute_context_q_2d(data)       # [B, T-1, 16]
+            keys_2d = self.encoder.compute_keys_2d(data)
+            cq_2d = self.encoder.compute_context_q_2d(data)
             keys_np = [k.reshape(-1).cpu().numpy() for k in keys_2d]
             cq_np = cq_2d.reshape(-1, 16).cpu().numpy()
             boost_np, eng_hits, gsum = self.rack.lookup_batch(keys_np, cq_np, use_context_gate=use_context_gate)
             eng_gate_mean = gsum / max(1, eng_hits)
-            # Keep on CPU as [T-1, B, 256] float16 (~64 MB) and stream each step t to GPU (0 extra VRAM!)
             eng_boost_all = torch.from_numpy(boost_np.reshape(B, T - 1, 256)).permute(1, 0, 2).to(torch.float16).contiguous()
             del boost_np, keys_2d, cq_2d, keys_np, cq_np
 
@@ -681,7 +617,6 @@ class DecoupledBrainV20:
                         ctx_score[rb, ws[rb]] = sal_old[rb]
             top_ctx_all = ctx_node[arange_B, ctx_score.argmax(dim=1)]
 
-            # System 1: Frozen GPU Cortex DAG
             vis_b_list = [arange_B]
             vis_u_list = [x_t]
             vis_g_list = [ones_B_f]
@@ -741,7 +676,6 @@ class DecoupledBrainV20:
                     accumulate=True,
                 )
 
-            # System 2: S=16 Autonomous Slots
             h_norm = h_dag / h_dag.norm(dim=1, keepdim=True).clamp(min=1.0)
             e_norm = core.E[x_t] / core.E[x_t].norm(dim=1, keepdim=True).clamp(min=1.0)
             x_slot = 0.65 * h_norm + 0.35 * e_norm
@@ -755,11 +689,9 @@ class DecoupledBrainV20:
             h_act = torch.tanh((h_dag * (1.0 + 0.35 * torch.tanh(m_sum)) + r_sum) * 0.35) * 2.85
             logits = h_act @ core.E.T + core.bias.unsqueeze(0) + logits_sharp
 
-            # System 3 (DECOUPLED!): External CPU/mmap Context-Gated Engram Rack!
             if eng_boost_all is not None:
                 logits = logits + eng_boost_all[t].to(device=device, dtype=torch.float32, non_blocking=True)
 
-            # System 4: 1-Shot ByteSTM
             k4, k7 = core._compute_stm_keys(byte_hist, cur_idx, H_buf)
             stm_str.mul_(cfg.stm_decay)
             if t >= 4:
@@ -772,7 +704,6 @@ class DecoupledBrainV20:
                     stm_boost.index_put_((hb, stm_val[hb, hs]), hw[hb, hs], accumulate=True)
                     logits = logits + stm_boost.clamp(max=cfg.stm_max_boost)
 
-            # System 5: 24-Mode Executive Critic
             if exec_on and exec_vec is not None:
                 exec_vec.mul_(cfg.mode_ema_decay).add_(h_dag, alpha=1.0 - cfg.mode_ema_decay)
                 if t >= 24:
@@ -828,7 +759,6 @@ class DecoupledBrainV20:
         use_engram: bool = True,
         use_context_gate: bool = True,
     ) -> Tuple[str, bool, float]:
-        """Live Raw UTF-8 Generation with GPU Core Brain + <50us CPU Engram Cartridge Lookup!"""
         core = self.core
         cfg = core.cfg
         device = self.device
@@ -943,7 +873,6 @@ class DecoupledBrainV20:
             h_act = torch.tanh((h_dag * (1.0 + 0.35 * torch.tanh(m_sum)) + r_sum) * 0.35) * 2.85
             logits = h_act @ core.E.T + core.bias + logits_s
 
-            # External CPU Engram lookup (<50us!)
             if eng_on:
                 t_e0 = time.perf_counter()
                 ks = self.encoder.step_keys_single(st["byte_hist"], cur_idx, H_buf)
@@ -954,7 +883,6 @@ class DecoupledBrainV20:
                 eng_calls += 1
                 logits = logits + torch.from_numpy(eb_np[0]).to(device)
 
-            # ByteSTM
             k4, k7 = core._compute_stm_keys(st["byte_hist"], cur_idx, H_buf)
             st["stm_str"].mul_(cfg.stm_decay)
             if step_i >= 4:
@@ -967,7 +895,6 @@ class DecoupledBrainV20:
                     boost.index_add_(0, st["stm_val"][0, idx_h], hw[idx_h])
                     logits = logits + boost.clamp(max=cfg.stm_max_boost)
 
-            # Executive Critic
             st["exec_vec"].mul_(cfg.mode_ema_decay).add_(h_dag.unsqueeze(0), alpha=1.0 - cfg.mode_ema_decay)
             if core.mode_ready:
                 ev_n = st["exec_vec"] / st["exec_vec"].norm(dim=1, keepdim=True).clamp(min=1e-6)

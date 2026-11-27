@@ -1,4 +1,4 @@
-"""CPU 上で語義候補と対話意図を評価する閉形式パネル。"""
+"""語義候補と対話意図を評価する CPU 上の閉形式パネル（v12.4）。"""
 import math
 import pickle
 from collections import Counter
@@ -76,4 +76,3 @@ class ConsensusPanel:
         design = np.column_stack((np.ones(len(votes)), votes, -spread, votes.min(axis=1)))
         scores = np.clip(design @ self.aggregate,0.,1.)
         return votes, spread, scores
-

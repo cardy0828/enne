@@ -1,21 +1,4 @@
-"""NeuroGraph v1.3: Unified 6-System Raw UTF-8 Living Brain (D=256, S=16 Slots, 3M bf16 DAG, 33.6M LTM, Executive, Lateral Semantic Wave).
-
-Zero Backprop | Zero Attention | Zero Tokenizer | Zero <UNK> | Zero Hardcoded Rules.
-Starts from 256 atomic raw byte sensory neurons and 0 hidden neurons.
-
-Six cooperating biological systems:
-1. Cortex: 3M-neuron bfloat16 Living Convergent DAG (D=256, 16-hop, selective merge + auto-divorce + myelination).
-2. Working Memory: S=16 Homeostatic Autonomous Gated Slots (D=256, geometric timescales ~3B to ~400B).
-3. Long-Term Knowledge Memory: 8-Bank MegaByteLTM (33.55M knowledge neurons in 268 MB + Sleep Pruning).
-4. Short-Term Episodic Memory: 1-Shot ByteSTM (192 slots/stream, instant online binding of unseen UTF-8 strings).
-5. Executive Discourse Critic: 24-Mode Unsupervised Discourse Critic (analytical smoothed byte LLR).
-6. Lateral Semantic Thought Wave (NEW!):
-   - Extracts K=24,000 crystallized multi-byte content neurons directly from the DAG (zero tokenizer!).
-   - Wires a sparse Hebbian PPMI Lateral Association Graph across a 180-byte passage window (24 neighbors/concept).
-   - 2-hop spreading activation lights up semantically associated multi-byte concepts BEFORE they appear,
-     proactively priming their exact byte transitions (boosting val BPB!) AND guiding Prefrontal Rollouts
-     so multi-sentence generation stays truly ON-TOPIC!
-"""
+"""6系統を統合したバイト DAG と、多バイト単位の連想グラフ（v1.3）。"""
 
 from __future__ import annotations
 
@@ -32,50 +15,41 @@ from neurograph.memory_v3b import _mix64
 
 @dataclass
 class UnifiedBrainV13Config(MegaBrainV12Config):
-    # Wider shared representation + 2x more working-memory slots!
-    pool_capacity: int = 3_000_000      # 3M bfloat16 neurons x D=256 = 1.50 GB VRAM!
-    edge_buckets: int = 4_194_304       # 16.78M dynamic edge slots
-    feat_dim: int = 256                 # 2x wider feature space (eliminates v1.2 D=128 bottleneck!)
-    num_slots: int = 16                 # 2x more autonomous working-memory slots (~3B to ~400B!)
+    pool_capacity: int = 3_000_000
+    edge_buckets: int = 4_194_304
+    feat_dim: int = 256
+    num_slots: int = 16
     max_hops: int = 16
     max_births_per_step: int = 256
-    # Full fresh balanced training LRs (no domain-drift penalty when trained on shuffled 3-domain mix!)
     lr_feat: float = 0.22
     lr_basis: float = 0.035
     lr_sharp: float = 0.28
     lr_slot_read: float = 0.12
     lr_slot_mod: float = 0.07
     lr_slot_gate: float = 0.045
-    # System 6: Lateral Multi-Byte Semantic Association Graph (Zero Tokenizer, Zero Rules!)
     enable_lateral: bool = True
-    sem_vocab_max: int = 24_000         # top emergent crystallized multi-byte concept neurons
-    sem_min_depth: int = 5              # >= 5 bytes (~2+ Japanese chars = real content morphemes/words!)
+    sem_vocab_max: int = 24_000
+    sem_min_depth: int = 5
     sem_max_depth: int = 14
     sem_min_fires: int = 12
-    sem_max_fires: int = 6000           # excludes ultra-common stop-phrases like 'いました。'
-    lat_k_neighbors: int = 24           # top-24 PPMI semantic neighbors per concept
-    lat_window_concepts: int = 10       # ~180-byte semantic co-occurrence window
-    lat_prime_scale: float = 0.65       # gentle proactive byte-transition priming boost
+    sem_max_fires: int = 6000
+    lat_k_neighbors: int = 24
+    lat_window_concepts: int = 10
+    lat_prime_scale: float = 0.65
     lat_max_boost: float = 2.4
 
 
 class UnifiedBrainV13(MegaUTF8BrainV12):
-    """Complete 6-System Raw UTF-8 Living Brain with D=256, S=16 Slots, and 2-Hop Lateral Semantic Thought Wave."""
 
     def __init__(self, cfg: UnifiedBrainV13Config, device: torch.device):
-        # Override S=16 geometric priors cleanly before calling super? Super assumes [:S] from len-8 tensor!
-        # Let's initialize cleanly by calling super with num_slots=8 then expanding S=16 slots right here.
         base_cfg = type(cfg)(**{**cfg.__dict__, "num_slots": 8})
         super().__init__(base_cfg, device)
         self.cfg = cfg
         S, D = cfg.num_slots, cfg.feat_dim
 
-        # Re-initialize S=16 geometric multi-timescale Autonomous Working-Memory Slots (~2.5B to ~400B half-life!)
-        # Geometric half-lives from 2.2 bytes to 380 bytes (~130 Japanese chars!)
         half_lives = torch.exp(torch.linspace(math.log(2.2), math.log(380.0), S, device=device))
         keep_priors = torch.exp(-math.log(2.0) / half_lives).clamp(0.65, 0.9982)
         self.keep_bias = torch.log(keep_priors / (1.0 - keep_priors))
-        # Target write rates geometrically spaced from 0.25 down to 0.008 (ALL 16 slots awake!)
         self.target_write_rate = torch.exp(torch.linspace(math.log(0.25), math.log(0.008), S, device=device))
         self.write_bias = torch.log(self.target_write_rate / (1.0 - self.target_write_rate))
 
@@ -88,24 +62,18 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
         self.rms_read = torch.full((S,), 1e-3, dtype=torch.float32, device=device)
         self.rms_mod = torch.full((S,), 1e-3, dtype=torch.float32, device=device)
 
-        # System 6: Lateral Semantic Association Graph (populated after Cortex crystallizes concepts!)
         self.node_to_sem = torch.full((self.P,), -1, dtype=torch.int32, device=device)
         self.sem_to_node: List[int] = []
         self.sem_texts: List[str] = []
         self.sem_raw_bytes: List[bytes] = []
-        # Sparse lateral neighbors: [K_sem, lat_k]
         self.lat_dst = torch.empty((0, cfg.lat_k_neighbors), dtype=torch.int32, device=device)
         self.lat_w = torch.empty((0, cfg.lat_k_neighbors), dtype=torch.float32, device=device)
-        # Compact byte-transition priming signatures per concept:
-        # For each concept s = b0 b1 b2 b3 b4..., store up to 4 internal (k3_hash -> next_byte) transitions
-        # so firing concept s in the lateral wave proactively primes ALL of its distinctive byte transitions!
         self.sem_prime_k3 = torch.empty((0, 4), dtype=torch.int64, device=device)
         self.sem_prime_y = torch.empty((0, 4), dtype=torch.int16, device=device)
         self.sem_ready = False
 
     @torch.no_grad()
     def init_sensory_basis(self, train_bytes: np.ndarray, sample_len: int = 4_000_000) -> None:
-        """Self-organize byte feature basis E [256, D=256] from distance-1..3 raw byte co-occurrence."""
         V, D = self.V, self.D
         seq = torch.from_numpy(train_bytes[: min(sample_len, len(train_bytes))].astype(np.int64)).to(self.device)
         cooc = torch.zeros((V, V), dtype=torch.float32, device=self.device)
@@ -119,7 +87,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
         cs = cooc.sum(dim=0, keepdim=True).clamp(min=1.0)
         ppmi = torch.relu(torch.log((cooc * tot) / (rs * cs) + 1e-8))
         ppmi.add_(torch.eye(V, device=self.device) * 0.30)
-        # Full rank 256x256 SVD when D == 256!
         U, S_val, _ = torch.linalg.svd(ppmi)
         E_init = U[:, :D] * torch.sqrt(S_val[:D].clamp(min=1e-5)).unsqueeze(0)
         self.E.copy_((E_init / E_init.norm(dim=1, keepdim=True).clamp(min=1e-5)) * 1.35)
@@ -128,7 +95,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
         self.bias.copy_(torch.log((counts + 1.0) / (counts.sum() + V)))
 
     def _extract_neuron_bytes(self, nid: int) -> bytes:
-        """Walk parent pointers back to root byte to reconstruct the exact raw UTF-8 byte sequence of node nid."""
         out: List[int] = []
         cur = nid
         guard = 0
@@ -145,7 +111,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
 
     @staticmethod
     def _hash3_tensor(b0: torch.Tensor, b1: torch.Tensor, b2: torch.Tensor) -> torch.Tensor:
-        """Bit-exact 3-byte hash shared by both build_lateral_semantic_graph and _compute_k3_gpu."""
         h = _mix64(b0 + 23)
         h = _mix64(h ^ ((b1 + 41) * 1315423911))
         h = _mix64(h ^ ((b2 + 67) * 2654435761))
@@ -166,13 +131,10 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
         scan_bytes: int = 16_000_000,
         batch_streams: int = 2048,
     ) -> Dict[str, object]:
-        """System 6: Discover emergent multi-byte concepts from our OWN Living DAG and wire a
-        sparse 2-hop Hebbian PPMI Lateral Semantic Association Graph (ZERO tokenizer, ZERO rules!)."""
         cfg = self.cfg
         device = self.device
         V = self.V
 
-        # 1) Select top K_sem crystallized content-like multi-byte neurons from the Living DAG
         idx_all = torch.arange(self.P, device=device)
         cand_mask = (
             self.alive
@@ -189,12 +151,10 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
 
         f_c = self.fires[cand_ids].to(torch.float32)
         d_c = self.depth[cand_ids].to(torch.float32)
-        # Prefer rich multi-byte content words (mid-frequency, deeper bytes) over generic stop-phrases
         score = d_c * torch.log1p(f_c) / (1.0 + f_c / 350.0)
         k_take = min(cfg.sem_vocab_max, int(cand_ids.numel()))
         top_ids = cand_ids[torch.topk(score, k=k_take).indices].cpu().tolist()
 
-        # Reconstruct exact UTF-8 byte strings & deduplicate by clean decoded text
         self.node_to_sem.fill_(-1)
         self.sem_to_node = []
         self.sem_texts = []
@@ -204,14 +164,12 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
         prime_b2_list: List[List[int]] = []
         prime_y_list: List[List[int]] = []
 
-        # Pull parent/cond arrays to CPU once for blazing-fast lineage extraction!
         pa_cpu = self.parent.cpu().numpy()
         kd_cpu = self.cond_kind.cpu().numpy()
         cd_cpu = self.cond_id.cpu().numpy()
 
         seen_raw = set()
         for nid in top_ids:
-            # Fast CPU walk
             bs_l: List[int] = []
             cur = nid
             guard = 0
@@ -225,7 +183,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
             raw = bytes(bs_l)
             if len(raw) < 5 or raw in seen_raw:
                 continue
-            # Require at least one clean multi-byte or meaningful substring (skip pure whitespace/punct)
             dec = raw.decode("utf-8", errors="ignore").strip()
             if len(dec) < 2:
                 continue
@@ -235,14 +192,12 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
             self.sem_texts.append(dec)
             self.sem_raw_bytes.append(raw)
 
-            # Build up to 4 internal 3-byte -> next-byte priming pairs for this concept!
             pb0, pb1, pb2 = [-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1]
             py = [-1, -1, -1, -1]
             slot_j = 0
             for pos in range(3, len(raw)):
                 if slot_j >= 4:
                     break
-                # At step t we look back (b0=raw[pos-1], b1=raw[pos-2], b2=raw[pos-3]) -> predict raw[pos]!
                 pb0[slot_j] = raw[pos - 1]
                 pb1[slot_j] = raw[pos - 2]
                 pb2[slot_j] = raw[pos - 3]
@@ -267,7 +222,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
         self.sem_prime_k3 = self._hash3_tensor(tb0, tb1, tb2)
         self.sem_prime_y = torch.tensor(prime_y_list, dtype=torch.int16, device=device)
 
-        # 2) Fast GPU streaming co-occurrence scan over mixed_bytes (180-byte passage window!)
         use_len = min(scan_bytes, len(mixed_bytes))
         stream_len = use_len // batch_streams
         data = torch.from_numpy(
@@ -280,13 +234,11 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
         hist_ptr = 0
         arange_B = torch.arange(B, device=device)
 
-        # Per-stream ring of last W_sem semantic concepts fired (with byte timestamp to skip self-overlap < 12B!)
         W_sem = cfg.lat_window_concepts
         sem_ring = torch.full((B, W_sem), -1, dtype=torch.int32, device=device)
         sem_time = torch.full((B, W_sem), -999, dtype=torch.int32, device=device)
         sem_ptr = torch.zeros(B, dtype=torch.int64, device=device)
 
-        # Collect co-occurrence pairs in compact GPU hash/list chunks -> aggregate on CPU/GPU cleanly
         sem_counts = torch.zeros(K_sem, dtype=torch.int64, device=device)
         pair_a_chunks: List[torch.Tensor] = []
         pair_b_chunks: List[torch.Tensor] = []
@@ -299,7 +251,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
             cur_idx = hist_ptr
             hist_ptr = (hist_ptr + 1) % H_buf
 
-            # Walk exact local spine up to max_depth and record deepest matching semantic concept!
             frontier = x_t
             hit_sem = torch.full((B,), -1, dtype=torch.int32, device=device)
             for hop in range(1, cfg.sem_max_depth + 1):
@@ -322,10 +273,9 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
             fs = hit_sem[fb].to(torch.int64)
             sem_counts.scatter_add_(0, fs, torch.ones(fs.numel(), dtype=torch.int64, device=device))
 
-            # Pair fs with past concepts in sem_ring[fb] that occurred 12..180 bytes ago!
             if total_pairs_collected < MAX_PAIRS_COLLECT:
-                past_s = sem_ring[fb].to(torch.int64)     # [M, W_sem]
-                dt_ring = t - sem_time[fb]                 # [M, W_sem]
+                past_s = sem_ring[fb].to(torch.int64)
+                dt_ring = t - sem_time[fb]
                 valid_p = (past_s >= 0) & (past_s != fs.unsqueeze(1)) & (dt_ring >= 12) & (dt_ring <= 180)
                 if valid_p.any():
                     pm, pw = torch.nonzero(valid_p, as_tuple=True)
@@ -335,7 +285,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
                     pair_b_chunks.append(pb_v.cpu())
                     total_pairs_collected += int(pa_v.numel())
 
-            # Write fired concept into per-stream ring
             wp = sem_ptr[fb]
             sem_ring[fb, wp] = hit_sem[fb]
             sem_time[fb, wp] = t
@@ -345,15 +294,12 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
             self.sem_ready = False
             return {"num_concepts": K_sem, "num_edges": 0}
 
-        # 3) Compute Symmetric PPMI & keep top-K_lat neighbors per concept (fast vectorized sort on CPU/GPU!)
         pa_all = torch.cat(pair_a_chunks).to(torch.int64)
         pb_all = torch.cat(pair_b_chunks).to(torch.int64)
-        # Symmetrize so concept A <-> concept B associate bidirectionally
         src_all = torch.cat([pa_all, pb_all])
         dst_all = torch.cat([pb_all, pa_all])
         keys = src_all * K_sem + dst_all
         uniq_k, cnt_k = torch.unique(keys, return_counts=True)
-        # Filter co-occurrences >= 2 to remove noise
         keep = cnt_k >= 2
         uniq_k, cnt_k = uniq_k[keep], cnt_k[keep].to(torch.float32)
 
@@ -361,16 +307,13 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
         u_dst = uniq_k % K_sem
         sc_cpu = sem_counts.cpu().to(torch.float32).clamp(min=1.0)
         tot_c = float(cnt_k.sum().item()) + 1.0
-        # Smoothed PPMI weighted gently by log1p(count) so reliable associations win over 2-hit flukes!
         pmi = torch.relu(torch.log((cnt_k * tot_c) / (sc_cpu[u_src] * sc_cpu[u_dst] + 25.0) + 1e-8))
         score_e = pmi * torch.log1p(cnt_k)
 
-        # Group by u_src and keep top lat_k_neighbors
         K_lat = cfg.lat_k_neighbors
         lat_dst_np = np.full((K_sem, K_lat), -1, dtype=np.int32)
         lat_w_np = np.zeros((K_sem, K_lat), dtype=np.float32)
 
-        # Sort by (u_src asc, score_e desc)
         ord_sc = torch.argsort(score_e, descending=True)
         u_src = u_src[ord_sc]
         u_dst = u_dst[ord_sc]
@@ -380,7 +323,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
         u_dst_n = u_dst[ord_src].numpy()
         sc_n = score_e[ord_src].numpy()
 
-        # Vectorized boundary slicing per unique source
         if len(u_src_n) > 0:
             starts = np.r_[0, np.flatnonzero(u_src_n[1:] != u_src_n[:-1]) + 1]
             ends = np.r_[starts[1:], len(u_src_n)]
@@ -389,7 +331,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
                 take = min(K_lat, e_i - s_i)
                 lat_dst_np[src_id, :take] = u_dst_n[s_i : s_i + take]
                 w_sl = sc_n[s_i : s_i + take]
-                # Normalize outgoing lateral weights cleanly
                 lat_w_np[src_id, :take] = w_sl / (float(w_sl[0]) + 1e-5)
 
         self.lat_dst = torch.from_numpy(lat_dst_np).to(device)
@@ -400,31 +341,26 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
 
     @torch.no_grad()
     def trace_semantic_wave(self, query_substr: str, top_k: int = 10) -> List[Tuple[str, float]]:
-        """Show 2-hop Lateral Semantic Thought Wave radiating from any crystallized UTF-8 word!"""
         if not self.sem_ready:
             return []
-        # Find concept matching query_substr
         matches = [i for i, txt in enumerate(self.sem_texts) if query_substr in txt]
         if not matches:
             return []
-        # Seed wave on matching concept(s)
         K_sem = len(self.sem_texts)
         wave = torch.zeros(K_sem, dtype=torch.float32, device=self.device)
         for m in matches[:3]:
             wave[m] = 1.0
-        # 2-hop lateral spreading activation
         w1 = torch.zeros_like(wave)
         for hop_scale in (1.0, 0.45):
             active = torch.nonzero(wave > 0.05, as_tuple=False).squeeze(1)
             if active.numel() == 0:
                 break
-            dst = self.lat_dst[active]   # [A, K]
+            dst = self.lat_dst[active]
             wt = self.lat_w[active] * wave[active].unsqueeze(1) * hop_scale
             ok = dst >= 0
             if ok.any():
                 w1.scatter_add_(0, dst[ok].to(torch.int64), wt[ok])
             wave = w1.clone()
-        # Exclude seed matches themselves
         for m in matches:
             wave[m] = 0.0
         tv, ti = torch.topk(wave, k=min(top_k, K_sem))
@@ -439,7 +375,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
         use_executive: bool = True,
         use_lateral: bool = True,
     ) -> Dict[str, float]:
-        """Full 6-System Eval (Cortex DAG + 16 Slots + 33.6M LTM + ByteSTM + 24-Mode Executive + Lateral Semantic Priming!)."""
         cfg = self.cfg
         device = self.device
         V, D, S = self.V, self.D, cfg.num_slots
@@ -466,7 +401,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
         exec_vec = torch.zeros((B, D), dtype=torch.float32, device=device) if exec_on else None
         ltm_boost = torch.zeros((B, V), dtype=torch.float32, device=device)
 
-        # STM
         N_stm = cfg.stm_slots
         stm_k4 = torch.zeros((B, N_stm), dtype=torch.int64, device=device)
         stm_k7 = torch.zeros((B, N_stm), dtype=torch.int64, device=device)
@@ -475,8 +409,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
         stm_ptr = torch.zeros(B, dtype=torch.int64, device=device)
         stm_boost = torch.zeros((B, V), dtype=torch.float32, device=device)
 
-        # System 6 Proactive Lateral Priming Cache per stream: holds up to 96 primed (k3 -> y) byte transitions
-        # populated proactively by the 1-hop/2-hop lateral semantic wave BEFORE those words appear!
         N_lat_c = 96
         if lat_on:
             lp_k3 = torch.zeros((B, N_lat_c), dtype=torch.int64, device=device)
@@ -518,7 +450,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
                         ctx_score[rb, ws[rb]] = sal_old[rb]
             top_ctx_all = ctx_node[arange_B, ctx_score.argmax(dim=1)]
 
-            # System 1: Cortex DAG Traversal
             vis_b_list = [arange_B]
             vis_u_list = [x_t]
             vis_g_list = [ones_B_f]
@@ -586,7 +517,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
                     accumulate=True,
                 )
 
-            # System 2: S=16 Autonomous Slots
             h_norm = h_dag / h_dag.norm(dim=1, keepdim=True).clamp(min=1.0)
             e_norm = self.E[x_t] / self.E[x_t].norm(dim=1, keepdim=True).clamp(min=1.0)
             x_slot = 0.65 * h_norm + 0.35 * e_norm
@@ -600,12 +530,10 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
             h_act = torch.tanh((h_dag * (1.0 + 0.35 * torch.tanh(m_sum)) + r_sum) * 0.35) * 2.85
             logits = h_act @ self.E.T + self.bias.unsqueeze(0) + logits_sharp
 
-            # System 3: 8-Bank MegaByteLTM
             lk, lv = self.ltm.compute_keys(byte_hist, cur_idx, H_buf, top_ctx_all)
             self.ltm.lookup_boost(lk, lv, ltm_boost, max_boost=cfg.ltm_max_boost, ltm_scale=cfg.ltm_scale)
             logits = logits + ltm_boost
 
-            # System 4: 1-Shot ByteSTM
             k4, k7 = self._compute_stm_keys(byte_hist, cur_idx, H_buf)
             stm_str.mul_(cfg.stm_decay)
             if t >= 4:
@@ -618,7 +546,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
                     stm_boost.index_put_((hb, stm_val[hb, hs]), hw[hb, hs], accumulate=True)
                     logits = logits + stm_boost.clamp(max=cfg.stm_max_boost)
 
-            # System 5: 24-Mode Executive Discourse Critic
             if exec_on and exec_vec is not None:
                 exec_vec.mul_(cfg.mode_ema_decay).add_(h_dag, alpha=1.0 - cfg.mode_ema_decay)
                 if t >= 24:
@@ -626,10 +553,8 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
                     mp = torch.softmax((ev_n @ self.mode_centroids.T) / cfg.mode_temp, dim=-1)
                     logits = logits + (mp @ self.mode_llr) * cfg.mode_llr_scale
 
-            # System 6: Proactive Lateral Semantic Wave Byte-Transition Priming!
             if lat_on:
-                lp_w.mul_(0.9965)  # half-life ~200 bytes (~70 Japanese chars)
-                # (a) First check if current 3-byte context matches any proactively primed associated concept!
+                lp_w.mul_(0.9965)
                 if t >= 3:
                     k3_now = self._compute_k3_gpu(byte_hist, cur_idx, H_buf)
                     ml = (lp_k3 == k3_now.unsqueeze(1)) & (k3_now.unsqueeze(1) != 0) & (lp_y >= 0) & (lp_w > 0.08)
@@ -640,14 +565,12 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
                         logits = logits + lat_boost.clamp(max=cfg.lat_max_boost)
                         total_lat_hits += int(ml.any(dim=1).sum().item())
 
-                # (b) When a semantic concept fires, proactively prime its top-6 lateral neighbors' byte transitions!
                 has_fs = fired_sem >= 0
                 if has_fs.any():
                     fs_b = torch.nonzero(has_fs, as_tuple=False).squeeze(1)
                     fs_s = fired_sem[fs_b].to(torch.int64)
-                    # Top-4 strongest lateral neighbors x 2 distinctive internal byte transitions each = 8 primes!
-                    nb_ids = self.lat_dst[fs_s, :4]  # [M, 4]
-                    nb_wt = self.lat_w[fs_s, :4]     # [M, 4]
+                    nb_ids = self.lat_dst[fs_s, :4]
+                    nb_wt = self.lat_w[fs_s, :4]
                     for j in range(4):
                         nj = nb_ids[:, j]
                         ok_j = nj >= 0
@@ -656,8 +579,7 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
                         jb = fs_b[ok_j]
                         js = nj[ok_j].to(torch.int64)
                         jw = nb_wt[ok_j, j]
-                        # Prime first 2 byte transitions of neighbor concept js
-                        pk0 = self.sem_prime_k3[js, :2]  # [M2, 2]
+                        pk0 = self.sem_prime_k3[js, :2]
                         py0 = self.sem_prime_y[js, :2].to(torch.int64)
                         for pj in range(2):
                             ok_p = (pk0[:, pj] != 0) & (py0[:, pj] >= 0)
@@ -715,7 +637,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
         rollout_chunk_bytes: int = 42,
         use_semantic_exec: bool = True,
     ) -> Tuple[str, bool, Dict[str, object]]:
-        """6-System Raw UTF-8 Generation guided by 2-Hop Lateral Semantic Wave + 24-Mode Executive Rollout!"""
         cfg = self.cfg
         device = self.device
         V, D, S = self.V, self.D, cfg.num_slots
@@ -725,7 +646,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
         N_stm = cfg.stm_slots
         K_sem = len(self.sem_texts)
 
-        # Build the prompt's 2-hop Lateral Semantic Topic Wave BEFORE generating!
         prompt_wave = torch.zeros(max(1, K_sem), dtype=torch.float32, device=device)
         prompt_seeds: List[str] = []
 
@@ -751,7 +671,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
             return {k: (v.clone() if isinstance(v, torch.Tensor) else v) for k, v in st.items()}
 
         ltm_b = torch.zeros((1, V), dtype=torch.float32, device=device)
-        # Proactive lateral byte-transition primes from the prompt's 2-hop semantic wave!
         lat_prime_map: Dict[int, List[Tuple[int, float]]] = {}
 
         def step_state(st, b_val: int, next_true: int = -1, locked_mode_p=None):
@@ -849,7 +768,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
                     boost.index_add_(0, st["stm_val"][0, idx_h], hw[idx_h])
                     logits = logits + boost.clamp(max=cfg.stm_max_boost)
 
-            # System 5: Discourse Mode Modulation
             st["exec_vec"].mul_(cfg.mode_ema_decay).add_(h_dag.unsqueeze(0), alpha=1.0 - cfg.mode_ema_decay)
             if use_semantic_exec and self.mode_ready:
                 ev_n = st["exec_vec"] / st["exec_vec"].norm(dim=1, keepdim=True).clamp(min=1e-6)
@@ -857,7 +775,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
                 mp = (0.60 * locked_mode_p + 0.40 * cur_mp) if locked_mode_p is not None else cur_mp
                 logits = logits + (mp @ self.mode_llr)[0] * (cfg.mode_llr_scale * 1.15)
 
-            # System 6: Proactive Lateral Semantic Wave Byte-Transition Priming!
             if use_semantic_exec and lat_prime_map and step_i >= 3:
                 k3_val = int(self._compute_k3_gpu(st["byte_hist"], cur_idx, H_buf)[0].item())
                 if k3_val in lat_prime_map:
@@ -877,7 +794,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
             st["step_i"] = step_i + 1
             return logits, h_dag, fired_sem_id
 
-        # 1) Prime on prompt, collect emergent semantic concepts, and launch 2-Hop Lateral Thought Wave!
         st = init_state()
         prompt_hs = []
         logits = None
@@ -890,7 +806,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
                 if self.sem_texts[f_sid] not in prompt_seeds:
                     prompt_seeds.append(self.sem_texts[f_sid])
 
-        # Propagate 2-hop Lateral Semantic Wave from prompt's fired concepts!
         top_wave_words: List[str] = []
         if use_semantic_exec and self.sem_ready and (prompt_wave > 0).any():
             w_acc = prompt_wave.clone()
@@ -909,7 +824,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
                 cur_w = nxt_w
             prompt_wave = w_acc / w_acc.max().clamp(min=1e-5)
 
-            # Preload top-40 lit-up semantic concepts' byte transitions into lat_prime_map!
             tv, ti = torch.topk(prompt_wave, k=min(40, K_sem))
             for val, idx_s in zip(tv.cpu().tolist(), ti.cpu().tolist()):
                 if val < 0.12:
@@ -929,7 +843,6 @@ class UnifiedBrainV13(MegaUTF8BrainV12):
             if (use_semantic_exec and self.mode_ready) else None
         )
 
-        # 2) Prefrontal Rollout Generation guided by TRUE 2-Hop Lateral Semantic Resonance!
         out_bytes = list(raw_in)
         gen_only: List[int] = []
         recent_ngrams: set = set()

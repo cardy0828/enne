@@ -1,4 +1,4 @@
-"""受理された発話候補の温度抽選と、短い SFT 発話の検索。"""
+"""確定した発話候補の温度抽選と、短い対話応答の検索（v12.3）。"""
 import json
 import math
 import unicodedata
@@ -87,4 +87,3 @@ def social_options(prompt):
     if not ranked:
         ranked = matching_question
     return sorted(ranked.items(), key=lambda x: -x[1])[:MAX_SOCIAL_OPTIONS]
-

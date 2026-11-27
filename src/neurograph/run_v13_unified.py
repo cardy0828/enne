@@ -1,6 +1,4 @@
-"""Run NeuroGraph v1.3: Unified 6-System Raw UTF-8 Living Brain (D=256, S=16 Slots, 3M bf16 DAG,
-33.6M 8-Bank LTM, 1-Shot STM, 24-Mode Executive, 2-Hop Lateral Semantic Thought Wave)
-trained on a FULLY SHUFFLED 3-Domain Balance (10M easy_ja + 10M aozora + 10M wikipedia = 30M chars / ~86M raw bytes)!"""
+"""6系統統合モデルの学習と評価を実行する（v1.3）。"""
 
 from __future__ import annotations
 
@@ -24,7 +22,6 @@ def build_shuffled_multidomain_bytes(
     block_bytes: int = 4096,
     seed: int = 42,
 ) -> np.ndarray:
-    """Slice all 3 domains into 4 KB passage blocks and shuffle them completely -> ZERO recency domain drift!"""
     blocks = []
     for arr in (c_easy, c_aozora, c_wiki):
         n_b = len(arr) // block_bytes
@@ -73,8 +70,8 @@ def main() -> None:
     mixed_train = build_shuffled_multidomain_bytes(c_easy.train_bytes, c_aozora.train_bytes, c_wiki.train_bytes, block_bytes=4096, seed=42)
     avg_bpc_tr = (c_easy.bytes_per_char_train + c_aozora.bytes_per_char_train + c_wiki.bytes_per_char_train) / 3.0
     print(
-        f"Built SHUFFLED 3-Domain Raw UTF-8 Stream (ZERO <UNK>, V=256): {len(mixed_train):,}B "
-        f"({args.chars_per_domain*3/1e6:.1f}M chars across easy_ja + aozora + wikipedia, 4KB shuffled blocks!)",
+        f"Built SHUFFLED 3-Domain Raw UTF-8 Stream (V=256): {len(mixed_train):,}B "
+        f"({args.chars_per_domain*3/1e6:.1f}M chars across easy_ja + aozora + wikipedia, 4KB shuffled blocks)",
         flush=True,
     )
 
@@ -83,7 +80,7 @@ def main() -> None:
     brain = UnifiedBrainV13(UnifiedBrainV13Config(), device)
     brain.init_sensory_basis(mixed_train)
     print(
-        f"Born from ZERO hidden neurons! Specs: D={brain.D}, S={brain.cfg.num_slots} slots, "
+        f"Initialized with 0 hidden nodes. Specs: D={brain.D}, S={brain.cfg.num_slots} slots, "
         f"Pool={brain.P:,} (bf16), LTM={sum(b*4 for b in brain.ltm.bank_buckets):,} (8 banks), ByteSTM={brain.cfg.stm_slots}",
         flush=True,
     )
@@ -116,48 +113,42 @@ def main() -> None:
             flush=True,
         )
 
-    # Sleep Pruning on 8-bank MegaByteLTM
     sleep_stats = brain.ltm.sleep_prune()
-    print(f"\n[Sleep Pruning] Pruned {sleep_stats['pruned']:,}/{sleep_stats['before']:,} ({sleep_stats['prune_pct']}%) -> {sleep_stats['after']/1e6:.2f}M LTM!", flush=True)
+    print(f"\n[Sleep Pruning] Pruned {sleep_stats['pruned']:,}/{sleep_stats['before']:,} ({sleep_stats['prune_pct']}%) -> {sleep_stats['after']/1e6:.2f}M LTM", flush=True)
 
-    # Fit System 5 (24-Mode Unsupervised Executive Critic)
     rt = time.time()
     exec_fit = brain.fit_executive_modes(mixed_train[:6_000_000], passage_len=320, max_passages=12_000)
     print(f"[System 5 Executive] Fitted {exec_fit['num_modes']} discourse modes in {time.time()-rt:.1f}s", flush=True)
 
-    # Build System 6 (Lateral Multi-Byte Semantic Association Graph — ZERO tokenizer!)
     rt = time.time()
     lat_stats = brain.build_lateral_semantic_graph(mixed_train, scan_bytes=16_000_000, batch_streams=2048)
     print(
         f"[System 6 Lateral Semantic Graph] Extracted {lat_stats['num_concepts']:,} emergent multi-byte concepts, "
-        f"{lat_stats['num_edges']:,} PPMI semantic synapses in {time.time()-rt:.1f}s!",
+        f"{lat_stats['num_edges']:,} PPMI semantic synapses in {time.time()-rt:.1f}s",
         flush=True,
     )
 
-    # Inspect live 2-hop Lateral Semantic Thought Waves!
     probes = ["世界大戦", "東京", "ドイツ", "日本", "猫", "学校"]
     waves_log = {}
-    print("\n--- Live 2-Hop Lateral Semantic Thought Waves (Zero Tokenizer, Pure Raw UTF-8!) ---", flush=True)
+    print("\n--- Live 2-Hop Lateral Semantic Thought Waves ---", flush=True)
     for pr in probes:
         w_res = brain.trace_semantic_wave(pr, top_k=8)
         waves_log[pr] = w_res
         w_str = ", ".join(f"{t}({s:.2f})" for t, s in w_res)
         print(f"  [{pr}] ==wave==> {w_str}", flush=True)
 
-    # Clean 3-Stage Causal Ablation across ALL 3 Domains!
     ev_4sys = eval_3domains(brain, vals, args.val_streams, use_exec=False, use_lat=False)
     ev_5sys = eval_3domains(brain, vals, args.val_streams, use_exec=True, use_lat=False)
     ev_6sys = eval_3domains(brain, vals, args.val_streams, use_exec=True, use_lat=True)
 
-    print("\n================ NEUROGRAPH v1.3 UNIFIED 6-SYSTEM RESULTS (SHUFFLED 3-DOMAIN, ZERO <UNK>) ================", flush=True)
+    print("\n================ NEUROGRAPH v1.3 UNIFIED 6-SYSTEM RESULTS (SHUFFLED 3-DOMAIN) ================", flush=True)
     print(f"v1.2 Ref (sequential 52M)   | easy_ja=4.3983(70.6%) | aozora=5.3076(66.5%) | wikipedia=4.9649(66.5%) | MEAN=4.8903", flush=True)
     print(f"v1.3 4-Sys (DAG+16Sl+LTM+STM)| {fmt_3domains(ev_4sys)}", flush=True)
     print(f"v1.3 5-Sys (+24-Mode Exec)  | {fmt_3domains(ev_5sys)}", flush=True)
-    print(f"v1.3 6-Sys (+Lateral Wave!) | {fmt_3domains(ev_6sys)}", flush=True)
+    print(f"v1.3 6-Sys (+Lateral)      | {fmt_3domains(ev_6sys)}", flush=True)
     lat_hits_str = " | ".join(f"{k}_lat_hit={ev_6sys[k]['lat_hit_rate']*100:.1f}%" for k in ("easy_ja", "aozora", "wikipedia"))
     print(f"  Proactive Lateral Semantic Priming Hits: {lat_hits_str}", flush=True)
 
-    # Save v1.3 Unified 6-System Checkpoint!
     torch.save(
         {
             "cfg": brain.cfg.__dict__,
@@ -181,7 +172,6 @@ def main() -> None:
     )
     print("Saved 6-system brain: brain_v13_unified_6sys.pt", flush=True)
 
-    # Semantic Wave + Executive Rollout A/B Generations!
     prompts = [
         ("Wikipedia歴史", "第二次世界大戦（だいにじせかいたいせん）は、1939年から1945年にかけて"),
         ("青空文庫文学", "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。"),

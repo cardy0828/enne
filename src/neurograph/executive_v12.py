@@ -1,27 +1,4 @@
-"""NeuroGraph v1.2: 5-Million-Neuron bfloat16 Mega Living Brain + 33.6M 8-Bank LTM + Raw UTF-8 Executive System.
-
-Zero Backprop | Zero Attention | Zero Tokenizer | Zero <UNK> | Zero Hardcoded Rules.
-
-Five cooperating biological systems:
-1. Cortex (5,000,000-Neuron bfloat16 Living Convergent DAG, 16.8M Edge Slots):
-   - Transplants existing 1M brain_v11_lifelong_1m.pt losslessly into a 5M-neuron vessel!
-   - bfloat16 W_node + sharp_w / int16 sharp_dst cuts Cortex footprint in half (~2.0 GB for 5M neurons!).
-   - Myelination-protected Apoptosis + Chunked Selective Asymmetric Merge + Pain-Triggered Auto-Divorce.
-2. Working Memory (Rule-Free Autonomous Gated Slots, S=8):
-   - Multi-timescale (~3B to ~200B) dendritic modulation & readout.
-3. Long-Term Knowledge Memory (8-Bank MegaByteLTM — 33,554,432 Knowledge Neurons in 268 MB!):
-   - Preserves all 6 banks from v1.1 bit-exact (6B, 9B, 12B, 6B+skip, 15B, 9B+skip = 16.78M slots)
-   - Adds Bank 6 (18B ~6-char ultra-deep encyclopedic phrases, 8.39M slots) &
-     Bank 7 (12B + salient long-range emergent node, 8.39M slots)!
-4. Short-Term Episodic Memory (1-Shot ByteSTM, N=192):
-   - Instant online 1-shot recall of unseen proper nouns, rare kanji, emoji, or code.
-5. Executive / Prefrontal Control System (System 5 — NEW for Raw UTF-8!):
-   - Unsupervised 24-Mode Discourse Critic (spherical k-means on passage-level Cortex h_dag +
-     analytical smoothed byte Log-Likelihood Ratios -> zero-overfit genre/style coherence & off-mode brake!).
-   - Prefrontal Topic-Locking & Rollout Selection during generation: locks salient multi-byte topic
-     vectors from the prompt and selects among K=4 short clause rollouts maximizing
-     [Fluency + Discourse Mode Coherence + Topic Resonance - Repetition]!
-"""
+"""bfloat16 の大規模 DAG、多バンク長期記憶、作業記憶とモード制御（v1.2）。"""
 
 from __future__ import annotations
 
@@ -37,11 +14,6 @@ from neurograph.memory_v3b import _mix64
 
 
 class MegaByteLTMBanks:
-    """8-bank Raw UTF-8 LTM (33,554,432 slots in ~268 MB VRAM!):
-      Banks 0..3 (524k x 4 = 2.10M each): 6B, 9B, 12B, 6B+skip (bit-exact from v1.0/v1.1!)
-      Banks 4..5 (1.05M x 4 = 4.19M each): 15B, 9B+skip        (bit-exact from v1.1!)
-      Banks 6..7 (2.10M x 4 = 8.39M each): 18B (~6ch deep facts), 12B+skip (NEW in v1.2!)
-    """
 
     def __init__(self, device: torch.device):
         self.num_banks = 8
@@ -228,8 +200,8 @@ class MegaByteLTMBanks:
 @dataclass
 class MegaBrainV12Config:
     vocab_size: int = 256
-    pool_capacity: int = 5_000_000      # 5 MILLION dynamic bfloat16 neurons!
-    edge_buckets: int = 4_194_304       # 4.19M x 4 = 16.78M dynamic edge slots!
+    pool_capacity: int = 5_000_000
+    edge_buckets: int = 4_194_304
     edge_ways: int = 4
     feat_dim: int = 128
     max_hops: int = 16
@@ -238,14 +210,12 @@ class MegaBrainV12Config:
     enable_apoptosis: bool = True
     enable_merge: bool = True
     enable_divorce: bool = True
-    # Neurogenesis & Myelination
     birth_surprise_thresh: float = 0.38
     birth_pain_thresh: float = 1.8
     max_births_per_step: int = 256
     min_fires_survive: int = 4
     min_utility_survive: float = 0.015
-    myelin_fires_thresh: int = 18       # Mature neurons immune to domain-shift apoptosis!
-    # Selective Asymmetric Fusion
+    myelin_fires_thresh: int = 18
     merge_min_src_fires: int = 4
     merge_max_src_fires: int = 96
     merge_min_lead_fires: int = 16
@@ -257,23 +227,19 @@ class MegaBrainV12Config:
     merge_lsh_bits: int = 11
     merge_rounds: int = 2
     merge_min_depth: int = 2
-    # Auto-Divorce
     divorce_surprise_thresh: float = 0.45
     divorce_align_thresh: float = -0.02
     divorce_pain_thresh: float = 2.0
     max_divorces_per_step: int = 16
-    # Local Plasticity (gentle on shared retina/slots during continual learning)
     lr_feat: float = 0.22
     lr_basis: float = 0.008
     lr_sharp: float = 0.28
     metaplasticity: float = 0.015
-    # Autonomous Working-Memory Slots
     enable_slots: bool = True
     num_slots: int = 8
     lr_slot_read: float = 0.045
     lr_slot_mod: float = 0.025
     lr_slot_gate: float = 0.015
-    # LTM & STM
     ltm_max_boost: float = 3.2
     ltm_scale: float = 0.70
     enable_stm: bool = True
@@ -283,16 +249,14 @@ class MegaBrainV12Config:
     stm_w7: float = 2.35
     stm_decay: float = 0.9975
     stm_max_boost: float = 4.2
-    # System 5: Executive Discourse Mode Critic & Topic Lock (Zero Rules!)
     enable_executive: bool = True
     num_modes: int = 24
-    mode_ema_decay: float = 0.992       # ~86-byte discourse horizon (~30 Japanese chars)
+    mode_ema_decay: float = 0.992
     mode_temp: float = 0.28
-    mode_llr_scale: float = 0.42        # analytical zero-overfit mode logit modulation
+    mode_llr_scale: float = 0.42
 
 
 class MegaUTF8BrainV12:
-    """5-Million-Neuron bfloat16 Raw UTF-8 Living Brain with 5 Cooperating Biological Systems."""
 
     def __init__(self, cfg: MegaBrainV12Config, device: torch.device):
         self.cfg = cfg
@@ -302,7 +266,6 @@ class MegaUTF8BrainV12:
         self.D = cfg.feat_dim
         S = cfg.num_slots
 
-        # System 1: 5M-Neuron bfloat16 Living Convergent DAG
         self.alive = torch.zeros(self.P, dtype=torch.bool, device=device)
         self.alive[: self.V] = True
 
@@ -332,12 +295,10 @@ class MegaUTF8BrainV12:
         self.E = torch.zeros((self.V, self.D), dtype=torch.float32, device=device)
         self.bias = torch.zeros(self.V, dtype=torch.float32, device=device)
 
-        # Native Ampere bfloat16 weights -> 5,000,000 neurons in ONLY 1.25 GB!
         self.W_node = torch.zeros((self.P, self.D), dtype=torch.bfloat16, device=device)
         self.sharp_dst = torch.full((self.P, cfg.k_sharp), -1, dtype=torch.int16, device=device)
         self.sharp_w = torch.zeros((self.P, cfg.k_sharp), dtype=torch.bfloat16, device=device)
 
-        # System 2: Rule-Free Autonomous Gated Working-Memory Slots (S=8)
         keep_priors = torch.tensor([0.68, 0.80, 0.88, 0.93, 0.96, 0.98, 0.990, 0.995], dtype=torch.float32, device=device)[:S]
         self.keep_bias = torch.log(keep_priors / (1.0 - keep_priors))
         self.target_write_rate = torch.tensor([0.24, 0.16, 0.11, 0.07, 0.045, 0.030, 0.020, 0.012], dtype=torch.float32, device=device)[:S]
@@ -351,10 +312,8 @@ class MegaUTF8BrainV12:
         self.rms_read = torch.full((S,), 1e-3, dtype=torch.float32, device=device)
         self.rms_mod = torch.full((S,), 1e-3, dtype=torch.float32, device=device)
 
-        # System 3: 8-Bank MegaByteLTM (33.55M knowledge neurons in 268 MB!)
         self.ltm = MegaByteLTMBanks(device)
 
-        # System 5: Executive Discourse Mode Critic (24 unsupervised discourse modes, analytical LLR!)
         M = cfg.num_modes
         self.mode_centroids = torch.zeros((M, self.D), dtype=torch.float32, device=device)
         self.mode_llr = torch.zeros((M, self.V), dtype=torch.float32, device=device)
@@ -431,7 +390,6 @@ class MegaUTF8BrainV12:
 
     @torch.no_grad()
     def transplant_from_v11_checkpoint(self, ckpt_path: str) -> Dict[str, int]:
-        """Losslessly transplant 1M-neuron brain_v11_lifelong_1m.pt into this 5M-neuron / 33.6M-LTM Mega Vessel!"""
         ck = torch.load(ckpt_path, map_location="cpu", weights_only=False)
         old_P = ck["alive"].shape[0]
         assert old_P <= self.P
@@ -460,7 +418,6 @@ class MegaUTF8BrainV12:
         self.W_read.copy_(ck["W_read"].to(self.device))
         self.W_mod.copy_(ck["W_mod"].to(self.device))
 
-        # Re-hash all alive edges into 16.78M-slot edge table!
         idx_all = torch.arange(old_P, device=self.device)
         alive_h = self.alive[:old_P] & (idx_all >= self.V) & (self.parent[:old_P] >= 0) & (self.cond_kind[:old_P] >= 0)
         h_ids = torch.nonzero(alive_h, as_tuple=False).squeeze(1)
@@ -481,7 +438,6 @@ class MegaUTF8BrainV12:
             rem[r_idx[ins]] = False
         self._recompute_degrees()
 
-        # Bit-exact preserve all 6 existing LTM banks (Banks 6 & 7 start fresh!)
         n_ck_banks = len(ck["ltm_sig"])
         for bi in range(min(n_ck_banks, self.ltm.num_banks)):
             self.ltm.sig[bi].copy_(ck["ltm_sig"][bi].to(self.device))
@@ -503,8 +459,6 @@ class MegaUTF8BrainV12:
     def _allocate_free_ids(self, count: int) -> torch.Tensor:
         if count <= 0:
             return torch.empty(0, dtype=torch.int64, device=self.device)
-        # Fast chunked search so we don't allocate a 5M nonzero array every step!
-        # Start scanning from a rolling cursor
         if not hasattr(self, "_alloc_cursor"):
             self._alloc_cursor = self.V
         chunk = 131_072
@@ -668,7 +622,6 @@ class MegaUTF8BrainV12:
 
     @torch.no_grad()
     def apoptosis(self) -> Dict[str, int]:
-        """Myelination-Protected Apoptosis over 5M pool (fast & memory-safe)."""
         if not self.cfg.enable_apoptosis:
             return {"died": 0, "alive_hidden": self.num_hidden_alive, "edges": self.edges.count()}
 
@@ -677,7 +630,6 @@ class MegaUTF8BrainV12:
         self.age[hidden_alive] = (self.age[hidden_alive] + 1).clamp(max=30000)
 
         myelinated = self.fires >= self.cfg.myelin_fires_thresh
-        # Check weak candidates ONLY among non-myelinated aged hidden neurons (avoids 5M norm allocation!)
         cand_mask = hidden_alive & (~myelinated) & (self.age >= 1)
         dead = torch.zeros(self.P, dtype=torch.bool, device=self.device)
         cand_ids = torch.nonzero(cand_mask, as_tuple=False).squeeze(1)
@@ -764,7 +716,6 @@ class MegaUTF8BrainV12:
 
     @torch.no_grad()
     def fuse_similar_neurons(self, seed: int = 100) -> Dict[str, int]:
-        """Chunked memory-safe Selective Asymmetric Synaptic Fusion over 5M bfloat16 pool."""
         cfg = self.cfg
         if not cfg.enable_merge:
             return {"merged": 0, "alive_hidden": self.num_hidden_alive, "edges": self.edges.count()}
@@ -789,7 +740,6 @@ class MegaUTF8BrainV12:
             if cand_ids.numel() < 2:
                 break
 
-            # Filter out near-zero norm nodes
             w_c = self.W_node[cand_ids].to(torch.float32)
             w_c_norm = w_c.norm(dim=1)
             nz = w_c_norm >= cfg.merge_min_norm
@@ -972,9 +922,6 @@ class MegaUTF8BrainV12:
 
     @torch.no_grad()
     def fit_executive_modes(self, mixed_bytes: np.ndarray, passage_len: int = 320, max_passages: int = 12_000) -> Dict[str, object]:
-        """System 5 (Zero-Rule Unsupervised Discourse Mode Critic):
-        Collects passage-level mean Cortex h_dag vectors over mixed domains, clusters them into M=24
-        emergent discourse modes via spherical k-means, and computes analytical smoothed byte LLR!"""
         cfg = self.cfg
         device = self.device
         M, D, V = cfg.num_modes, self.D, self.V
@@ -1003,7 +950,6 @@ class MegaUTF8BrainV12:
                 cur_idx = hist_ptr
                 hist_ptr = (hist_ptr + 1) % H_buf
 
-                # Fast local Cortex traversal (up to 8 hops for discourse fingerprint)
                 h = self.W_node[x_t].to(torch.float32)
                 frontier = x_t
                 for hop in range(1, 9):
@@ -1015,7 +961,6 @@ class MegaUTF8BrainV12:
                     ok_i = torch.nonzero(ok, as_tuple=False).squeeze(1)
                     h[ok_i] += self.W_node[ch[ok_i]].to(torch.float32) * (1.0 / (1.0 + 0.10 * hop))
                     frontier = torch.where(ok, ch, torch.full_like(ch, -1))
-                    # Break early if almost all stopped
                 h_sum += h
                 b_cnt.scatter_add_(1, y_t.unsqueeze(1), ones_B.unsqueeze(1))
 
@@ -1023,11 +968,10 @@ class MegaUTF8BrainV12:
             pass_vecs.append(p_v)
             pass_byte_counts.append(b_cnt)
 
-        X = torch.cat(pass_vecs, dim=0)        # [N_p, D]
-        C_mat = torch.cat(pass_byte_counts, 0) # [N_p, V]
+        X = torch.cat(pass_vecs, dim=0)
+        C_mat = torch.cat(pass_byte_counts, 0)
         N_p = X.shape[0]
 
-        # Unsupervised spherical k-means++ into M=24 Discourse Modes
         gen = torch.Generator(device=device)
         gen.manual_seed(77)
         cents = torch.empty((M, D), dtype=torch.float32, device=device)
@@ -1051,12 +995,11 @@ class MegaUTF8BrainV12:
 
         self.mode_centroids.copy_(cents)
 
-        # Analytical smoothed Log-Likelihood Ratio per mode [M, V] (ZERO overfitting!)
         global_c = C_mat.sum(dim=0) + 1.0
-        p_glob = global_c / global_c.sum()  # [V]
+        p_glob = global_c / global_c.sum()
         mode_c = torch.zeros((M, V), dtype=torch.float32, device=device)
         mode_c.index_add_(0, assign, C_mat)
-        alpha = 60.0  # Dirichlet prior toward global distribution
+        alpha = 60.0
         p_mode = (mode_c + alpha * p_glob.unsqueeze(0)) / (mode_c.sum(dim=1, keepdim=True) + alpha)
         llr = torch.log(p_mode / p_glob.unsqueeze(0)).clamp(-1.4, 1.4)
         self.mode_llr.copy_(llr)
@@ -1079,7 +1022,6 @@ class MegaUTF8BrainV12:
         use_executive: Optional[bool] = None,
         populate_ltm: bool = True,
     ) -> Dict[str, float]:
-        """Full 5-System Raw UTF-8 Living Brain pass (5M bfloat16 DAG + 8 Slots + 33.6M LTM + STM + Executive!)."""
         cfg = self.cfg
         device = self.device
         V, D, S = self.V, self.D, cfg.num_slots
@@ -1115,7 +1057,6 @@ class MegaUTF8BrainV12:
         slot_state = torch.zeros((B, S, D), dtype=torch.float32, device=device)
         slot_last_x = torch.zeros((B, S, D), dtype=torch.float32, device=device)
 
-        # System 5 Executive Discourse EMA state
         exec_vec = torch.zeros((B, D), dtype=torch.float32, device=device) if exec_on else None
 
         ltm_boost = torch.zeros((B, V), dtype=torch.float32, device=device) if ltm_infer else None
@@ -1176,7 +1117,6 @@ class MegaUTF8BrainV12:
 
             top_ctx_all = ctx_node[arange_B, ctx_score.argmax(dim=1)]
 
-            # System 1: Batched 16-Hop Living Convergent DAG Traversal
             vis_b_list: List[torch.Tensor] = [arange_B]
             vis_u_list: List[torch.Tensor] = [x_t]
             vis_g_list: List[torch.Tensor] = [ones_B_f]
@@ -1290,7 +1230,6 @@ class MegaUTF8BrainV12:
                 w_rep = (sw_all * (all_g * 0.65).unsqueeze(1))[sm_all]
                 logits_sharp.index_put_((b_rep, d_rep), w_rep, accumulate=True)
 
-            # System 2: Autonomous Working-Memory Slots
             if slots_on:
                 h_norm = h_dag / h_dag.norm(dim=1, keepdim=True).clamp(min=1.0)
                 e_cur = self.E[x_t]
@@ -1314,7 +1253,6 @@ class MegaUTF8BrainV12:
             h_act = torch.tanh(h_total * 0.35) * 2.85
             logits = h_act @ self.E.T + self.bias.unsqueeze(0) + logits_sharp
 
-            # System 3: 8-Bank MegaByteLTM
             if ltm_infer or ltm_write:
                 ltm_keys, ltm_valids = self.ltm.compute_keys(byte_hist, cur_idx, H_buf, top_ctx_all)
                 if ltm_infer and ltm_boost is not None:
@@ -1323,7 +1261,6 @@ class MegaUTF8BrainV12:
                 if ltm_write:
                     self.ltm.update(ltm_keys, ltm_valids, y_t)
 
-            # System 4: 1-Shot ByteSTM
             if stm_on:
                 k4, k7 = self._compute_stm_keys(byte_hist, cur_idx, H_buf)
                 stm_str.mul_(cfg.stm_decay)
@@ -1339,7 +1276,6 @@ class MegaUTF8BrainV12:
                         stm_boost.clamp_(max=cfg.stm_max_boost)
                         logits = logits + stm_boost
 
-            # System 5: Executive Discourse Mode Modulation (Analytical LLR — Zero Overfit!)
             if exec_on and exec_vec is not None:
                 exec_vec.mul_(cfg.mode_ema_decay).add_(h_dag, alpha=1.0 - cfg.mode_ema_decay)
                 if t >= 24:
@@ -1347,7 +1283,6 @@ class MegaUTF8BrainV12:
                     mode_p = torch.softmax((ev_n @ self.mode_centroids.T) / cfg.mode_temp, dim=-1)
                     logits = logits + (mode_p @ self.mode_llr) * cfg.mode_llr_scale
 
-            # Causal Evaluation
             log_p = torch.log_softmax(logits, dim=-1)
             nll = -log_p[arange_B, y_t]
             total_nll += float(nll.sum().item())
@@ -1376,7 +1311,6 @@ class MegaUTF8BrainV12:
             if not train:
                 continue
 
-            # Local Zero-Backprop Plasticity
             probs = torch.exp(log_p)
             surprise = 1.0 - probs[arange_B, y_t]
             e_feat = self.E[y_t] - (probs @ self.E)
@@ -1508,7 +1442,6 @@ class MegaUTF8BrainV12:
         rollout_chunk_bytes: int = 42,
         use_executive: bool = True,
     ) -> Tuple[str, bool, Dict[str, float]]:
-        """5-System Raw UTF-8 Generation with Prefrontal Topic-Locking & Lookahead Rollout Selection!"""
         cfg = self.cfg
         device = self.device
         V, D, S = self.V, self.D, cfg.num_slots
@@ -1604,7 +1537,6 @@ class MegaUTF8BrainV12:
             st["node_delay"][0, st["nd_ptr"]] = emergent_cand
             st["nd_ptr"] = (st["nd_ptr"] + 1) % D_ctx
 
-            # Slots
             h_n = h_dag / h_dag.norm().clamp(min=1.0)
             e_n = self.E[b_val] / self.E[b_val].norm().clamp(min=1.0)
             xs = (0.65 * h_n + 0.35 * e_n).unsqueeze(0)
@@ -1619,12 +1551,10 @@ class MegaUTF8BrainV12:
             h_act = torch.tanh(h_tot * 0.35) * 2.85
             logits = h_act @ self.E.T + self.bias + logits_s
 
-            # LTM
             lk, lv = self.ltm.compute_keys(st["byte_hist"], cur_idx, H_buf, top_ctx)
             self.ltm.lookup_boost(lk, lv, ltm_b, max_boost=cfg.ltm_max_boost, ltm_scale=cfg.ltm_scale)
             logits = logits + ltm_b[0]
 
-            # STM
             k4, k7 = self._compute_stm_keys(st["byte_hist"], cur_idx, H_buf)
             st["stm_str"].mul_(cfg.stm_decay)
             if step_i >= 4:
@@ -1637,7 +1567,6 @@ class MegaUTF8BrainV12:
                     boost.index_add_(0, st["stm_val"][0, idx_h], hw[idx_h])
                     logits = logits + boost.clamp(max=cfg.stm_max_boost)
 
-            # System 5: Executive Discourse Mode Modulation
             st["exec_vec"].mul_(cfg.mode_ema_decay).add_(h_dag.unsqueeze(0), alpha=1.0 - cfg.mode_ema_decay)
             if use_executive and self.mode_ready:
                 if locked_mode_p is not None:
@@ -1662,7 +1591,6 @@ class MegaUTF8BrainV12:
             st["step_i"] = step_i + 1
             return logits, h_dag, salient_topic_vec
 
-        # 1) Prime on prompt & lock Executive Topic Centroid + Discourse Mode Posterior!
         st = init_state()
         prompt_h_list = []
         topic_vecs = []
@@ -1683,7 +1611,6 @@ class MegaUTF8BrainV12:
             if (use_executive and self.mode_ready) else None
         )
 
-        # 2) Generate chunks with Prefrontal Lookahead Rollout Selection (K=4 candidates per chunk!)
         out_bytes = list(raw_in)
         gen_only: List[int] = []
         recent_ngrams: set = set()
@@ -1713,7 +1640,6 @@ class MegaUTF8BrainV12:
                     nxt_b = int(ti[int(torch.multinomial(probs, 1).item())].item())
                     lp_sum += float(lp_all[nxt_b].item())
                     c_bytes.append(nxt_b)
-                    # Mild 9-byte repetition detector
                     if len(c_bytes) >= 9:
                         ng = tuple(c_bytes[-9:])
                         if ng in local_seen:
@@ -1722,7 +1648,6 @@ class MegaUTF8BrainV12:
                     clog, chd, _ = step_state(cst, nxt_b, locked_mode_p=locked_mode_p)
                     c_hs.append(chd)
 
-                # Check UTF-8 structural health (zero broken interior sequences!)
                 raw_c = bytes(c_bytes)
                 utf8_bonus = 0.0
                 for trim in (0, 1, 2):
@@ -1740,7 +1665,6 @@ class MegaUTF8BrainV12:
                 mode_sim = float((c_mean_n @ prompt_mode_vec).item())
                 fluency = lp_sum / max(1, c_len)
 
-                # Prefrontal score: Fluency + Topic Resonance + Discourse Mode Coherence - Repetition
                 score = fluency + 1.15 * topic_sim + 0.85 * mode_sim + utf8_bonus - rep_pen
                 if score > best_score:
                     best_score = score
