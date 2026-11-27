@@ -173,14 +173,17 @@ figures/        README の図（scripts/make_figures.py で results/ から生�
 results/        各版の結果JSON（評価の一次資料）
 scripts/        図の生成スクリプト
 examples/       考え方を示す簡略サンプル（研究本体の実装ではない）
+src/neurograph/ v15.2 時点の研究コード（現行版の動作に必要な部分）
 ```
 
 ## ソースコードについて
 
-研究途中のため、研究本体のソースコードは現時点では公開していません（簡略サンプルのみ公開）。方式は [docs/architecture.md](docs/architecture.md) で説明し、数値の根拠として各版の結果JSONを `results/` に置いています。学習済みモデル、学習データ、検索索引も含めていません。コードは研究がまとまった段階で公開する予定です。
+v15.2 時点の研究コードのうち、現行の対話システムと DAG 統合を動かすのに必要な部分を `src/neurograph/` に置いています。研究時のコードから変えたのは、実験機のパスと GPU の指定を環境変数にした点だけです。構成・動作環境・入口は [docs/source.md](docs/source.md) にまとめました。
+
+学習済みモデル、記憶カートリッジ、検索索引、学習データは含みません。そのため、このリポジトリだけでは対話システムは動きません。仕組みを手元で試すには [サンプルコード](#サンプルコード) を使ってください。
 
 ## データとライセンス
 
-このリポジトリの文書・図・スクリプトは [MIT License](LICENSE) です。
+このリポジトリの文書・図・スクリプト・ソースコードは [MIT License](LICENSE) です。
 
 学習・評価にはWikipedia日本語版、青空文庫、やさしい日本語コーパス、公開の日本語対話データ（magpie_ja、wiki_conv_ja、oasst1_ja、dolly_ja）を使いました。`results/` の出力例にはWikipedia本文に由来する文が含まれます。これらは [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) の下にあり、MIT Licenseの対象外です。

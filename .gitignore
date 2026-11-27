@@ -5,3 +5,6 @@ __pycache__/
 *.eng
 *.sqlite
 *.jsonl
+*.so
+*.egg-info/
+build/
