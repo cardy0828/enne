@@ -44,6 +44,28 @@ ENNE_ROOT=/path/to/assets cargo run --release -- think "1袋4個入りのパン�
 ENNE_ROOT=/path/to/assets cargo run --release -- explain "富士山と北岳の標高差は何m？"
 ```
 
+### 学習・構築サブコマンド（Rust 版）
+
+各器官の学習用コーパスは `scripts/corpus/build_v{190,220,240,245,250}_*.py` で生成し、`ENNE_ROOT` 配下に配置した状態で `enne-rs/src/main.rs` の学習・構築サブコマンドを実行します。
+
+| サブコマンド | 実装モジュール | 用途・学習内容 |
+|---|---|---|
+| `train <size> <batch> [pool_cap] [data_path] [basis_path]` | `core_dag.rs` | `NeurogenesisGraph` によるバイト成長 DAG のストリーム学習（同クラスに `apoptosis` 剪定を実装） |
+| `mega-train <train_bin> <val_bin> <out_json> [cap] [batch] [max_bytes] [ckpt_path]` | `mega_core.rs` | BF16 ストリーム成長 DAG（ノード成長・`gentle_apoptosis` 剪定）の学習・計測 |
+| `v190-save [corpus_dir] [ckpt_path] [epochs]` / `v190-bench [corpus_dir] [out_json] [cap]` | `reasoning_core.rs` | 推論言語コア DAG の学習・保存およびベンチマーク |
+| `v220-train [corpus_dir] [ckpt_path] [out_json] [epochs]` | `executive_core.rs` | 司令塔（5モード分類・4演算分類・計算 BIO タガー）の学習・評価 |
+| `v230-build [ckpt_path] [out_json]` | `hippocampus_core.rs` | 連想海馬（DG→CA3）の構築・評価 |
+| `v240-train [corpus_dir] [ckpt_path] [out_json] [epochs]` | `reasoner_core.rs` | 関係推論野（述語記憶・多問評価）の学習・評価 |
+| `v245-train [corpus_dir] [ckpt_path] [out_json] [epochs]` | `syntax_core.rs` | 10種 BIO 文字構文・節境界知覚モデルの学習・評価 |
+| `v250-train [corpus_dir] [out_json]` | `broca_core.rs` / `metacog.rs` | メタ認知・`FactDistiller`・`DialogueIntentHead`・`BrocaDAG` の学習・評価 |
+
+```sh
+# 例: v25.0 発話・メタ認知の学習（v250_broca_metacog 配下のコーパスを使用）
+python -X utf8 scripts/corpus/build_v250_broca_corpus.py /path/to/assets
+cd enne-rs
+ENNE_ROOT=/path/to/assets cargo run --release -- v250-train
+```
+
 ### 主な環境変数（Rust 版 / コーパススクリプト）
 
 | 変数 | 既定値 | 内容 |
