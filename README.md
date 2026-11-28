@@ -1,5 +1,7 @@
 # ENNE — Engineering Neural Network Engine
 
+**日本語** | [English](README.en.md)
+
 ENNEは、知能を「巨大なモデルを一度学習して完成させるもの」ではなく、「設計し、育て、後から機能を足していくシステム」として作る試みです。日本語を対象にv0.1からv25.0まで開発してきました。
 
 この README は最新の **v25.0 純 Rust CPU テキスト経路（`enne-rs/`）** について説明しています。初期の Python / GPU 研究版（v0.1〜v15.2、`src/neurograph/`）の経緯・図表・実験記録は [docs/archive-v15.md](docs/archive-v15.md) に分離しています。
@@ -7,8 +9,6 @@ ENNEは、知能を「巨大なモデルを一度学習して完成させるも�
 1. **手元の CPU だけで部品を育てられる。** 高価なGPUクラスタも、大規模な事前学習済みモデルも外部トークナイザーも使わず、CPU だけで独自の部品群を学習・実行します。
 2. **知能を学習するだけでなく、設計できる。** 司令塔・記憶・文字構文解析・関係推論・メタ認知・発話生成を独立した機構に分け、それぞれに適した学習則を採用します。個別の部品だけを差し替えたり再学習したりできます。
 3. **知能を完成品ではなく、成長するシステムとして扱う。** 会話中の仮前提や未知実体に対して推論ごとに作業記憶グラフを動的に構築し、セッション終了時に前提履歴を消去するほか、オンライン教示や学習による更新ができます。
-
-> **English abstract.** ENNE treats an AI system not as a monolithic pretrained network, but as modular components designed, grown, and updated independently without backprop, pretrained LLMs, or external tokenizers. This README documents the latest **v25.0 pure-CPU Rust text pipeline (`enne-rs/`, 0 bytes GPU)**; historical Python/GPU work from v0.1 to v15.2 (`src/neurograph/`) is archived in [docs/archive-v15.md](docs/archive-v15.md). In v25.0, seven CPU organs — two-layer Oja-Hebbian executive router + `CalcSpanTagger`, sealed DG-to-CA3 sparse associative hippocampus (`756,941` leads), character-level BIO Viterbi syntax parser, recursive spiking TTFS working-memory reasoner (`320/320`), metacognitive store/grounding gates, Broca distiller/utterance DAG, and pointer-based trace generator — are each trained on CPU in seconds to minutes. During multi-turn reasoning, `ReasonerCore` retains transient premises in `turns` and dynamically constructs a local `NeuralWorkingGraph` per query via `SyntaxCore` and recursive TTFS propagation, emitting outputs via native `<P>`/`<V>`/`<ANS>` pointers while clearing `turns` on reset (`apoptosis`) with zero cross-session bleed. The `v250-verify` integration check passes 31/31 cases in 140.9 ms load time and 271.0 MiB peak RSS (`0.27–6.19 ms/turn`, `dialogue_unique: 4`; cargo unit/E2E suites are defined in `enne-rs/` separately). Evaluation sets are author-written and outputs are limited to studied task modes and 7-intent polite dialogue rather than open-ended generation. Source code (`enne-rs/`, corpus builders in `scripts/corpus/`, archived `src/neurograph/`) and result JSONs are included; trained weights, corpora, work-in-progress audio modules, and detached persona modules are omitted.
 
 ---
 

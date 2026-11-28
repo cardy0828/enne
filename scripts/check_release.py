@@ -3,7 +3,8 @@
     python -X utf8 scripts/check_release.py
 
 ソースを更新したら、pyproject.toml の version、enne-rs/Cargo.toml の version、
-README の「現在の到達点（vX.Y）」、docs/source.md の「vX.Y（…）時点」を同じ版にそろえてから実行する。
+README の「現在の到達点（vX.Y）」、README.en.md の「Current Status (vX.Y)」、
+docs/source.md の「vX.Y（…）時点」を同じ版にそろえてから実行する。
 """
 from __future__ import annotations
 
@@ -64,6 +65,17 @@ def main() -> int:
         errors.append(f"README 冒頭の開発範囲が {short} になっていない")
     if f"{short} 時点" not in readme:
         errors.append(f"README のソースコードの節が {short} 時点になっていない")
+    readme_en_path = ROOT / "README.en.md"
+    if not readme_en_path.is_file():
+        errors.append("README.en.md が存在しない")
+    else:
+        readme_en = readme_en_path.read_text(encoding="utf-8")
+        if f"## Current Status ({short})" not in readme_en:
+            errors.append(f"README.en.md の「Current Status」が {short} になっていない")
+        if f"v0.1 through {short}" not in readme_en:
+            errors.append(f"README.en.md 冒頭の開発範囲が {short} になっていない")
+        if f"as of {short}" not in readme_en:
+            errors.append(f"README.en.md のソースコード節が {short} になっていない")
     if f"{short}（" not in (ROOT / "docs" / "source.md").read_text(encoding="utf-8"):
         errors.append(f"docs/source.md が {short} 時点になっていない")
     if f"| {short} |" not in (ROOT / "docs" / "history.md").read_text(encoding="utf-8"):
