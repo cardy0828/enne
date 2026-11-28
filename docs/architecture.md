@@ -98,3 +98,46 @@ GPU上の本体とは別に、CPU RAMやmmap上に「カートリッジ」とし
 ## 用語について
 
 結果JSONに出てくる Cortex、Hippocampus、Broca、Thalamus などの名前は設計上の比喩で、脳の計算機構を再現したという主張ではありません。結果JSON内の説明文やキー名には開発中の呼び方が残っていますが、根拠として読む場合は [results.md](results.md) を優先してください。
+
+---
+
+## v19.0〜v25.0：純 Rust CPU テキスト経路（`enne-rs/`）
+
+v18 以降では GPU を使わず、CPU のみで動作する Rust 実装（`enne-rs/`）へテキスト経路の学習・推論を移しました。各モジュールは誤差逆伝播や事前学習済み言語モデルを使わず、競合オヤ・ヘブ学習、局所デルタ則、疎分散連想記憶、BF16 成長グラフのいずれかで学習し、バイナリチェックポイントから読み込みます。コード内の次元数・学習率・閾値はすべて明示的な設計値です。
+
+```mermaid
+flowchart LR
+  IN["入力<br/>UTF-8文字列"] --> EXEC["司令塔 v22/v25 (CPU)<br/>ExecutiveCore + CalcSpanTagger"]
+  EXEC -- "時計 / 計算 / 雑談 / 棄権" --> BROCA["発話野 v25 (CPU)<br/>BrocaCore (FactDistiller / DialogueIntent / BrocaDAG)"]
+  EXEC -- "事実 / 推論" --> META["メタ認知 v25 (CPU)<br/>MetacogCore (保持・採択ゲート)"]
+  META -- "前提記憶" --> SYN["文字構文 v24.5 (CPU)<br/>SyntaxCore (10種BIO + Viterbi)"]
+  SYN --> REASON["関係推論野 v24 (CPU)<br/>ReasonerCore (TTFS作業記憶グラフ + 述語記憶)"]
+  META -- "記憶検索" --> HIP["連想海馬 v23 (CPU)<br/>HippocampusCore (DG-CA3 BF16 CSR)"]
+  HIP -- "量的比較" --> REASON
+  HIP -- "定義文 / 教示根拠" --> BROCA
+  REASON -- "短答要素" --> BROCA
+  REASON -- "ReasoningPlan" --> RC["推論言語コア v19 (CPU)<br/>ReasoningCore (内部思考トレース)"]
+```
+
+### テキスト経路の各部品（`enne-rs` v25.0）
+
+| 部品 | 学習・推論手法 | 学習・構築時間（CPU） | チェックポイント容量 | 形式 |
+|---|---|---|---|---|
+| 司令塔（`ExecutiveCore`） | 文字 1..4-gram + 構造特徴上の競合オヤ・ヘブ k-WTA（128素子・top-16）と局所デルタ分類、5タグ BIO Viterbi 抽出（`CalcSpanTagger`） | 2.53秒（v22.0） | 1.58 MiB | `NGEC2501` |
+| 連想海馬（`HippocampusCore`） | オフライン索引（756,941 見出し）を DG（1,048,576細胞）→ CA3 BF16 CSR（6,753,200辺）へ封印、NMS + ヘブ数値/単位/比較読み出し、`teach` オンライン書込 | 9.23秒（v23.0） | 366.87 MiB | `NGHC2301` |
+| 文字構文解析（`SyntaxCore`） | 文字窓・文字種遷移上の競合オヤ・ヘブ k-WTA（64素子・top-8）＋ 10種 BIO（SEP/FUNC/ENT/ATTR/NUM/PRED）遷移行列 Viterbi 復号 | 5.76秒（v24.5） | 1.28 MiB | `NGSX2451` |
+| 関係推論野（`ReasonerCore`） | 再帰スパイキング TTFS 作業記憶グラフ（$\gamma = 0.75$）による閉路・到達・順位計算、対照ヘブ述語記憶、3種読み出し頭 | 1.09秒（v24.0） | 1.95 MiB | `NGRC2451` |
+| メタ認知制御（`MetacogCore`） | 単一節前提の保持判定（64素子・top-8）と 7次元想起テレメトリ上の根拠採択パーセプトロン | `BrocaCore` と合わせ 25.99秒（v25.0） | 0.16 MiB | `NGMC2501` |
+| 発話野（`BrocaCore`） | 定義文蒸留（4タグ BIO `FactDistiller`）、7意図分類（`DialogueIntentHead`）、14行動・ネイティブポインター語彙 260 の BF16 DAG（`BrocaDAG`、1,714ノード） | 25.99秒に含む（v25.0） | 23.40 MiB | `NGBC2501` |
+| 推論言語コア（`ReasoningCore`） | ネイティブポインター語彙 260・UTF-8 文字 14 ホップ BF16 DAG（11,135 生存ノード）・命令キューバンク（内部説明 `explain` 用に任意マウント） | 920.33秒（96,000件, v19.0） | — | — |
+
+### 一時キャッシュノード（作業記憶グラフの動的構築と前提消去）
+
+会話中の一時前提や未知実体を扱うため、`ReasonerCore` は固定サイズのスロット枠ではなく、セッション前提の保持配列とクエリ単位の動的グラフを組み合わせて推論します。
+
+1. **セッション内前提の保持（`observe_turn`）**: 複数ターンで入力された前提文は `turns: Vec<String>` に保持されます。
+2. **節復号とローカルグラフ構築（`reason_plan`）**: 推論ごとに `SyntaxCore` が `turns` と現在入力を再解析して節と `Entity` / `Attr` / `Num` / `Pred` / `Func` スパンに分解し、文脈に応じてローカルな `NeuralWorkingGraph` を動的に確保して一時シナプス（有向順序・同値・所属・抑制・数値など）で結びます。
+3. **TTFS 伝播とポインター直結**: シナプス行列積の再帰伝播（初到達スパイク電位 $H_{ij} = \gamma^{t-1},\ \gamma = 0.75$）で閉路（矛盾）・到達性・順位・差分を計算したあと、ローカルグラフは関数終了時に解放されます。特定した実体や数値は長期重みに書き込まず `ReasoningPlan` 経由で `<P>`・`<V>`・`<ANS>` のポインターとして `BrocaCore`（短答）や `ReasoningCore`（思考トレース）へ渡します（`results_v190.json` の `nocache_contains: 0` は、同一の `ReasoningPlan` を与えて生成器側の `use_cache` を切った条件で、320件の出力中に正解文字列を含むものが 0 件だったことを示す計測値です）。
+4. **セッション終了時の前提消去（`reset_history` / `apoptosis`）**: 会話や問題の区切りで `reset_history`（内部で `apoptosis()`）を呼ぶと `turns.clear()` により一時前提が破棄され、次セッションには引き継がれません。
+
+なお、現在開発途中の音声入出力（`ear` / `repair` / `audio`）および分離中の人格モジュール（`persona*`）は、公開用 `enne-rs/` の収録対象から除いています。

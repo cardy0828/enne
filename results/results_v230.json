@@ -1,0 +1,87 @@
+{
+ "avg_compare_ms": 0.13144475000000003,
+ "avg_recall_ms": 0.22630516666666667,
+ "build_elapsed_s": 9.229566023,
+ "ckpt_mib": 366.8742570877075,
+ "compare_probes": [
+  {
+   "expected": "583.12m",
+   "ok": true,
+   "pred": "583.12m",
+   "query": "富士山と北岳の標高差は何m？"
+  },
+  {
+   "expected": "596.12m",
+   "ok": true,
+   "pred": "596.12m",
+   "query": "富士山と北岳と槍ヶ岳の標高差は何m？"
+  },
+  {
+   "expected": "富士山",
+   "ok": true,
+   "pred": "富士山",
+   "query": "富士山と槍ヶ岳はどちらが標高が高い？"
+  },
+  {
+   "expected": "583.12m",
+   "ok": true,
+   "pred": "583.12m",
+   "query": "富士山と北岳の高さの差ってどれくらい？"
+  }
+ ],
+ "compare_probes_ok": "4/4",
+ "load_ms": 59.847179,
+ "n_edges": 6753200,
+ "n_leads": 756941,
+ "n_slots": 1207438,
+ "peak_rss_mib": 538.73046875,
+ "recall_probes": [
+  {
+   "head": "東京都",
+   "ok": true,
+   "query": "日本の首都とは何ですか？",
+   "score": 0.9342571496963501,
+   "source": "wiki_predicate"
+  },
+  {
+   "head": "東京都",
+   "ok": true,
+   "query": "日本の首都ってどこだっけ？",
+   "score": 0.9342571496963501,
+   "source": "wiki_predicate"
+  },
+  {
+   "head": "東京都",
+   "ok": true,
+   "query": "日本の首都を知ってる？",
+   "score": 0.9342571496963501,
+   "source": "wiki_predicate"
+  },
+  {
+   "head": "富士山",
+   "ok": true,
+   "query": "富士山について知りたい",
+   "score": 0.959906816482544,
+   "source": "wiki_exact"
+  },
+  {
+   "head": "光合成",
+   "ok": true,
+   "query": "光合成の仕組みを説明して",
+   "score": 0.9487729072570801,
+   "source": "wiki_exact"
+  },
+  {
+   "head": "北岳",
+   "ok": true,
+   "query": "北岳とは何ですか？",
+   "score": 0.8292852640151978,
+   "source": "wiki_exact"
+  }
+ ],
+ "recall_probes_ok": "6/6",
+ "rss_mib": 538.73046875,
+ "val_cmp_acc": 1.0,
+ "val_num_acc": 0.99975,
+ "val_unit_acc": 0.999375
+}

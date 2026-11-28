@@ -1,0 +1,253 @@
+{
+ "avg_infer_us": 24.143846153846155,
+ "calc_probe_extract_ok": "7/7",
+ "ckpt_mib": 1.5761041641235352,
+ "hidden_neurons": 128,
+ "load_ms": 0.205316,
+ "probes": [
+  {
+   "gold_mode": "Clock",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Clock",
+   "pred_op": null,
+   "text": "今の時刻を教えて"
+  },
+  {
+   "gold_mode": "Clock",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Clock",
+   "pred_op": null,
+   "text": "時計だと何時ごろ？"
+  },
+  {
+   "gold_mode": "Clock",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Clock",
+   "pred_op": null,
+   "text": "現在何時何分ですか？"
+  },
+  {
+   "gold_mode": "Clock",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Clock",
+   "pred_op": null,
+   "text": "いま何時？"
+  },
+  {
+   "gold_mode": "Calc",
+   "gold_op": "Mul",
+   "mode_ok": true,
+   "op_ok": true,
+   "pred_mode": "Calc",
+   "pred_op": "Mul",
+   "text": "1袋4個入りのパンを5袋買うと全部で何個？"
+  },
+  {
+   "gold_mode": "Calc",
+   "gold_op": "Add",
+   "mode_ok": true,
+   "op_ok": true,
+   "pred_mode": "Calc",
+   "pred_op": "Add",
+   "text": "850円と320円を合わせると何円ですか？"
+  },
+  {
+   "gold_mode": "Calc",
+   "gold_op": "Div",
+   "mode_ok": true,
+   "op_ok": true,
+   "pred_mode": "Calc",
+   "pred_op": "Div",
+   "text": "24本の鉛筆を6人で分けると1人何本？"
+  },
+  {
+   "gold_mode": "Calc",
+   "gold_op": "Sub",
+   "mode_ok": true,
+   "op_ok": true,
+   "pred_mode": "Calc",
+   "pred_op": "Sub",
+   "text": "120枚あった紙から45枚使うと残りは何枚？"
+  },
+  {
+   "gold_mode": "Calc",
+   "gold_op": "Mul",
+   "mode_ok": true,
+   "op_ok": true,
+   "pred_mode": "Calc",
+   "pred_op": "Mul",
+   "text": "18 * 7 ="
+  },
+  {
+   "gold_mode": "Calc",
+   "gold_op": "Div",
+   "mode_ok": true,
+   "op_ok": true,
+   "pred_mode": "Calc",
+   "pred_op": "Div",
+   "text": "144 / 12"
+  },
+  {
+   "gold_mode": "Calc",
+   "gold_op": "Mul",
+   "mode_ok": true,
+   "op_ok": true,
+   "pred_mode": "Calc",
+   "pred_op": "Mul",
+   "text": "3つの箱に2個ずつりんごを入れたら全部で何個？"
+  },
+  {
+   "gold_mode": "Abstain",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Abstain",
+   "pred_op": null,
+   "text": "明日の株価はどうなりますか？"
+  },
+  {
+   "gold_mode": "Abstain",
+   "gold_op": null,
+   "mode_ok": false,
+   "op_ok": null,
+   "pred_mode": "Fact",
+   "pred_op": null,
+   "text": "次の試合でどのチームが優勝する？"
+  },
+  {
+   "gold_mode": "Abstain",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Abstain",
+   "pred_op": null,
+   "text": "存在しない都市の人口は何人？"
+  },
+  {
+   "gold_mode": "Abstain",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Abstain",
+   "pred_op": null,
+   "text": "まだ発表されていない新製品の価格は？"
+  },
+  {
+   "gold_mode": "Abstain",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Abstain",
+   "pred_op": null,
+   "text": "架空の測定値は？"
+  },
+  {
+   "gold_mode": "Dialogue",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Dialogue",
+   "pred_op": null,
+   "text": "今日すごく楽しかったんだよね。"
+  },
+  {
+   "gold_mode": "Dialogue",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Dialogue",
+   "pred_op": null,
+   "text": "最近ちょっと眠れなくてさ。"
+  },
+  {
+   "gold_mode": "Dialogue",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Dialogue",
+   "pred_op": null,
+   "text": "ねえ、少し話を聞いてくれる？"
+  },
+  {
+   "gold_mode": "Dialogue",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Dialogue",
+   "pred_op": null,
+   "text": "おつかれさま、今日もいい天気だね。"
+  },
+  {
+   "gold_mode": "Fact",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Fact",
+   "pred_op": null,
+   "text": "日本の首都とは何ですか？"
+  },
+  {
+   "gold_mode": "Fact",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Fact",
+   "pred_op": null,
+   "text": "富士山と北岳の標高差は何m？"
+  },
+  {
+   "gold_mode": "Fact",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Fact",
+   "pred_op": null,
+   "text": "富士山と槍ヶ岳はどちらが標高が高い？"
+  },
+  {
+   "gold_mode": "Fact",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Fact",
+   "pred_op": null,
+   "text": "光合成とは何ですか？"
+  },
+  {
+   "gold_mode": "Fact",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Fact",
+   "pred_op": null,
+   "text": "甲は乙より速い。乙は丙より速い。一番速いのは誰？"
+  },
+  {
+   "gold_mode": "Fact",
+   "gold_op": null,
+   "mode_ok": true,
+   "op_ok": null,
+   "pred_mode": "Fact",
+   "pred_op": null,
+   "text": "佐藤の担当は開発。"
+  }
+ ],
+ "top_k": 16,
+ "train_elapsed_s": 2.52506542,
+ "train_episodes": 9426,
+ "unseen_probe_mode": "25/26",
+ "unseen_probe_op": "7/7",
+ "val_calc_char_acc": 1.0,
+ "val_calc_span_f1": 1.0,
+ "val_episodes": 1538,
+ "val_mode_acc": 0.9928478543563068,
+ "val_op_acc": 1.0
+}

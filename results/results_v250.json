@@ -1,0 +1,82 @@
+{
+ "broca_alive_nodes": 1714,
+ "broca_ckpt_mib": 23.401394844055176,
+ "broca_load_ms": 4.17203,
+ "broca_val_bpt": 0.012714474307115073,
+ "cog_outputs": {
+  "abstain": "情報がありません。",
+  "ack": "了解しました。一時記憶に保持しました。",
+  "calc_bare": "126です。",
+  "calc_with_unit": "6unitです。",
+  "clock": "現在は12時34分です。",
+  "short_ans": "OK"
+ },
+ "dialogue_probes": [
+  {
+   "expected_intent": 2,
+   "pred_intent": 2,
+   "reply": "お疲れさまです。無理をなさらず、少し休んでくださいね。",
+   "text": "今日はちょっと疲れたよ。"
+  },
+  {
+   "expected_intent": 3,
+   "pred_intent": 3,
+   "reply": "緊張しますよね。これまで準備したことを信じて落ち着いて進みましょう。",
+   "text": "明日の発表が緊張するなあ。"
+  },
+  {
+   "expected_intent": 4,
+   "pred_intent": 4,
+   "reply": "それは素晴らしいですね。努力が実を結んで本当によかったです。",
+   "text": "試験に合格してすごく嬉しい！"
+  },
+  {
+   "expected_intent": 1,
+   "pred_intent": 1,
+   "reply": "お役に立ててよかったです。ほかに必要なことはありますか。",
+   "text": "ありがとう、すごく助かったよ。"
+  },
+  {
+   "expected_intent": 6,
+   "pred_intent": 6,
+   "reply": "お話しいただきありがとうございます。気になる点があればおっしゃってください。",
+   "text": "こえしゅーどっく"
+  }
+ ],
+ "dlg_unseen_intent_ok": "5/5",
+ "dlg_val_intent_acc": 0.9112903225806451,
+ "fact_probes": [
+  {
+   "distilled": "静岡県と山梨県に跨る活火山",
+   "explain": "富士山は、静岡県と山梨県に跨る活火山です。",
+   "head": "富士山"
+  },
+  {
+   "distilled": "光エネルギーを化学エネルギーに変換して生体に必要な有機物質を作り出す反応過程",
+   "explain": "光合成は、光エネルギーを化学エネルギーに変換して生体に必要な有機物質を作り出す反応過程です。",
+   "head": "光合成"
+  },
+  {
+   "distilled": "山梨県南アルプス市にある標高3193 mの山",
+   "explain": "北岳は、山梨県南アルプス市にある標高3193 mの山です。",
+   "head": "北岳"
+  },
+  {
+   "distilled": "2006年9月に結成された日本のバンド、音楽プロジェクト",
+   "explain": "相対性理論は、2006年9月に結成された日本のバンド、音楽プロジェクトです。",
+   "head": "相対性理論"
+  },
+  {
+   "distilled": "マターと素粒子の原子レベルでの物理的現実を記述する原理の集合",
+   "explain": "量子力学は、マターと素粒子の原子レベルでの物理的現実を記述する原理の集合です。",
+   "head": "量子力学"
+  }
+ ],
+ "fact_val_char_acc": 0.9991486424298205,
+ "metacog_ckpt_mib": 0.15702533721923828,
+ "metacog_load_ms": 0.022442,
+ "metacog_unseen_store_ok": "7/7",
+ "metacog_val_act_acc": 0.9992821249102656,
+ "metacog_val_conf_acc": 1.0,
+ "train_elapsed_s": 25.992593385
+}

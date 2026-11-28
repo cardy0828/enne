@@ -1,0 +1,258 @@
+{
+ "cases": [
+  {
+   "category": "Calc",
+   "internal_trace": null,
+   "ms": 0.326914,
+   "ok": true,
+   "prompt": "18 * 7 =",
+   "reply": "126です。"
+  },
+  {
+   "category": "Calc",
+   "internal_trace": null,
+   "ms": 0.274156,
+   "ok": true,
+   "prompt": "12.5 + 3.5",
+   "reply": "16です。"
+  },
+  {
+   "category": "Calc",
+   "internal_trace": null,
+   "ms": 0.309261,
+   "ok": true,
+   "prompt": "3つの箱に2個ずつりんごを入れたら全部で何個？",
+   "reply": "6個です。"
+  },
+  {
+   "category": "Calc",
+   "internal_trace": null,
+   "ms": 0.291488,
+   "ok": true,
+   "prompt": "1袋4個入りのパンを5袋買うと全部で何個？",
+   "reply": "20個です。"
+  },
+  {
+   "category": "Calc",
+   "internal_trace": null,
+   "ms": 0.289474,
+   "ok": true,
+   "prompt": "24本の鉛筆を6人で分けると1人何本？",
+   "reply": "4本です。"
+  },
+  {
+   "category": "Clock",
+   "internal_trace": null,
+   "ms": 0.49505000000000005,
+   "ok": true,
+   "prompt": "今の時刻を教えて",
+   "reply": "現在は20時18分です。"
+  },
+  {
+   "category": "Wiki",
+   "internal_trace": "与えられた対応関係を確認すると、東京都に結び付く記録は東京都となります。",
+   "ms": 4.614952000000001,
+   "ok": true,
+   "prompt": "日本の首都とは何ですか？",
+   "reply": "東京都"
+  },
+  {
+   "category": "Wiki",
+   "internal_trace": "与えられた対応関係を確認すると、東京都に結び付く記録は東京都となります。",
+   "ms": 4.2448879999999996,
+   "ok": true,
+   "prompt": "日本の首都とは何ですか",
+   "reply": "東京都"
+  },
+  {
+   "category": "Wiki",
+   "internal_trace": "与えられた対応関係を確認すると、富士山に結び付く記録は富士山は、静岡県と山梨県に跨る活火山です。となります。",
+   "ms": 4.999906,
+   "ok": true,
+   "prompt": "富士山について知りたい",
+   "reply": "富士山は、静岡県と山梨県に跨る活火山です。"
+  },
+  {
+   "category": "Wiki",
+   "internal_trace": "与えられた対応関係を確認すると、光合成に結び付く記録は光合成は、光エネルギーを化学エネルギーに変換して生体に必要な有機物質を作り出す反応過程です。となります。",
+   "ms": 5.0567329999999995,
+   "ok": true,
+   "prompt": "光合成の仕組みを説明して",
+   "reply": "光合成は、光エネルギーを化学エネルギーに変換して生体に必要な有機物質を作り出す反応過程です。"
+  },
+  {
+   "category": "Wiki",
+   "internal_trace": "与えられた対応関係を確認すると、北岳に結び付く記録は北岳は、山梨県南アルプス市にある標高3193 mの山です。となります。",
+   "ms": 4.519894,
+   "ok": true,
+   "prompt": "北岳とは何ですか？",
+   "reply": "北岳は、山梨県南アルプス市にある標高3193 mの山です。"
+  },
+  {
+   "category": "TeachCompare",
+   "internal_trace": "根拠となる値は朱塔（180m）、蒼塔（420m）です。二つの数値の差を算出すると、答えは240mになります。",
+   "ms": 5.469679,
+   "ok": true,
+   "prompt": "蒼塔と朱塔の高さの差は何m？",
+   "reply": "240m"
+  },
+  {
+   "category": "TeachCompare",
+   "internal_trace": "根拠となる測定値は朱塔（180m）と蒼塔（420m）です。数値を直接比べると、結論は蒼塔になります。",
+   "ms": 5.162312,
+   "ok": true,
+   "prompt": "蒼塔と朱塔はどちらが高い？",
+   "reply": "蒼塔"
+  },
+  {
+   "category": "Reasoning",
+   "internal_trace": "根拠となる値は北岳（3193m）、富士山（3776m）です。二つの数値の差を算出すると、答えは583mになります。",
+   "ms": 5.511227,
+   "ok": true,
+   "prompt": "富士山は3776mで、北岳は3193m。高さの差は何m？",
+   "reply": "583m"
+  },
+  {
+   "category": "Reasoning",
+   "internal_trace": "比較の連鎖を確認します。太郎、花子、次郎の並びから端点を特定すると、結果は太郎となります。",
+   "ms": 5.492312,
+   "ok": true,
+   "prompt": "太郎は花子より速く、花子は次郎より速い。一番速いのは誰？",
+   "reply": "太郎"
+  },
+  {
+   "category": "Reasoning",
+   "internal_trace": "一つずつ外していくと赤と青が消え、条件に合うものとして緑が残ります。",
+   "ms": 4.593713,
+   "ok": true,
+   "prompt": "赤、青、緑が対象で、赤は除外、青も除外。残るのは？",
+   "reply": "緑"
+  },
+  {
+   "category": "Reasoning",
+   "internal_trace": "対応の連鎖を確認すると、田中→佐藤と繋がっています。元の値を引き継ぐと結果は開発となります。",
+   "ms": 5.815248,
+   "ok": true,
+   "prompt": "佐藤の担当は開発で、田中は佐藤と同じ担当。田中の担当は何？",
+   "reply": "開発"
+  },
+  {
+   "category": "Reasoning",
+   "internal_trace": "三段論法で所属関係を確認します。鯱、鯨、哺乳類という連鎖が成り立つことから、結論ははいとなります。",
+   "ms": 6.191546,
+   "ok": true,
+   "prompt": "鯨の全員が哺乳類に属し、鯱の所属は鯨。鯱を哺乳類の一員と言い切れる？",
+   "reply": "はい"
+  },
+  {
+   "category": "Reasoning",
+   "internal_trace": "条件を繋ぎ合わせると甲、乙、丙、甲というループが生じます。整合しないため答えは矛盾になります。",
+   "ms": 6.051553,
+   "ok": true,
+   "prompt": "甲は乙より重く、乙は丙より重く、丙は甲より重い。一番重いのは誰？",
+   "reply": "矛盾"
+  },
+  {
+   "category": "MultiTurn",
+   "internal_trace": null,
+   "ms": 1.134502,
+   "ok": true,
+   "prompt": "富士山の標高は3776m",
+   "reply": "了解しました。一時記憶に保持しました。"
+  },
+  {
+   "category": "MultiTurn",
+   "internal_trace": null,
+   "ms": 1.1355339999999998,
+   "ok": true,
+   "prompt": "北岳の標高は3193m。",
+   "reply": "了解しました。一時記憶に保持しました。"
+  },
+  {
+   "category": "MultiTurn",
+   "internal_trace": "根拠となる値は北岳（3193m）、富士山（3776m）です。二つの数値の差を算出すると、答えは583mになります。",
+   "ms": 5.467895,
+   "ok": true,
+   "prompt": "富士山と北岳の標高差は何m？",
+   "reply": "583m"
+  },
+  {
+   "category": "Copy",
+   "internal_trace": null,
+   "ms": 1.0633789999999999,
+   "ok": true,
+   "prompt": "追跡キー＝砂時計印",
+   "reply": "了解しました。一時記憶に保持しました。"
+  },
+  {
+   "category": "Copy",
+   "internal_trace": "与えられた対応関係を確認すると、追跡キーに結び付く記録は砂時計印となります。",
+   "ms": 4.254706,
+   "ok": true,
+   "prompt": "追跡キー＝",
+   "reply": "砂時計印"
+  },
+  {
+   "category": "PostReset",
+   "internal_trace": "根拠となる値は北岳（3193m）、富士山（3776.12m）です。二つの数値の差を算出すると、答えは583.12mになります。",
+   "ms": 5.350215,
+   "ok": true,
+   "prompt": "富士山と北岳の標高差は何m？",
+   "reply": "583.12m"
+  },
+  {
+   "category": "Abstain",
+   "internal_trace": null,
+   "ms": 0.47461200000000003,
+   "ok": true,
+   "prompt": "架空の測定値は？",
+   "reply": "情報がありません。"
+  },
+  {
+   "category": "Abstain",
+   "internal_trace": null,
+   "ms": 0.46510399999999996,
+   "ok": true,
+   "prompt": "明日の株価はどうなりますか？",
+   "reply": "情報がありません。"
+  },
+  {
+   "category": "Dialogue",
+   "internal_trace": null,
+   "ms": 1.353824,
+   "ok": true,
+   "prompt": "今日はちょっと疲れたよ。",
+   "reply": "お疲れさまです。無理をなさらず、少し休んでくださいね。"
+  },
+  {
+   "category": "Dialogue",
+   "internal_trace": null,
+   "ms": 1.403077,
+   "ok": true,
+   "prompt": "ありがとう、すごく助かったよ。",
+   "reply": "お役に立ててよかったです。ほかに必要なことはありますか。"
+  },
+  {
+   "category": "Dialogue",
+   "internal_trace": null,
+   "ms": 1.689685,
+   "ok": true,
+   "prompt": "明日の発表が緊張するなあ。",
+   "reply": "緊張しますよね。これまで準備したことを信じて落ち着いて進みましょう。"
+  },
+  {
+   "category": "Dialogue",
+   "internal_trace": null,
+   "ms": 1.504577,
+   "ok": true,
+   "prompt": "試験に合格してすごく嬉しい！",
+   "reply": "それは素晴らしいですね。努力が実を結んで本当によかったです。"
+  }
+ ],
+ "dialogue_unique": 4,
+ "load_ms": 140.901937,
+ "passed": 31,
+ "peak_rss_mib": 270.9921875,
+ "rss_mib": 270.9921875,
+ "total": 31
+}

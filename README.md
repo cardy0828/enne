@@ -1,253 +1,169 @@
 # ENNE — Engineering Neural Network Engine
 
-ENNEは、知能を「巨大なモデルを一度学習して完成させるもの」ではなく、「設計し、育て、後から機能を足していくシステム」として作る試みです。日本語を対象に、個人のGPU（RTX 3060 12GB）1枚でv0.1からv15.2まで開発してきました。
+ENNEは、知能を「巨大なモデルを一度学習して完成させるもの」ではなく、「設計し、育て、後から機能を足していくシステム」として作る試みです。日本語を対象にv0.1からv25.0まで開発してきました。
 
-1. **個人でもゼロから知能を育てられる。** 高価なGPUクラスタも、大規模な事前学習済みモデルも使いません。家庭用GPUで独自のモデルを構築します。
-2. **知能を学習するだけでなく、設計できる。** 記憶・言語・判断などの機能を分け、それぞれに適した技術を採用します。独立した機構は交換や改良ができます。
-3. **知能を完成品ではなく、成長するシステムとして扱う。** 固定されたパラメータを調整するだけでなく、学習に伴って神経回路そのものが変化します。知識や認知機能を後から追加できます。
+この README は最新の **v25.0 純 Rust CPU テキスト経路（`enne-rs/`）** について説明しています。初期の Python / GPU 研究版（v0.1〜v15.2、`src/neurograph/`）の経緯・図表・実験記録は [docs/archive-v15.md](docs/archive-v15.md) に分離しています。
 
-> **English abstract.** ENNE treats a language model not as a monolithic network trained once, but as a system that is designed, grown, and extended. (1) **Built from scratch on one consumer GPU:** the core starts from only 256 UTF-8 byte nodes and grows without backprop, pretrained models, or an external tokenizer; peak VRAM stays at or below 8.4 GiB even at its largest 6M-node configuration on an RTX 3060. (2) **Designed, not only trained:** memory, language, and decision-making are separate mechanisms using different techniques — a growing byte-level graph, swappable CPU-side memories (mounting one drops BPC on a fictional document from 5.92 to 3.40; unmounting restores 5.92), a lead-sentence retrieval index, a local arbiter choosing *grounded answer / abstain / chit-chat*, plug-in tools (calculator, clock, article lookup), and an experimental metacognition module — each trained separately in milliseconds to minutes, and each switchable for ablation. (3) **Grown, not finished:** nodes are born, pruned, and merged as the model learns; because each node is addressed by its structural path, a separately trained 525k-node dialogue graph (87.6% path overlap) was merged into the base graph in 13.8 s without gradients. Facts taught during a conversation are consolidated in a "sleep" step into a new generation that is adopted only if it passes fixed checks; a deliberately false teaching was rejected automatically, and any generation can be rolled back. The core's raw BPC still trails a small Transformer's, yet the assembled system answers from retrieved sources, answers about newly added knowledge, and abstains on unknowns. On frozen, newly written 10-question sets it currently scores 5–6/10. Research code for v15.2 and result JSONs are included; trained models and data are not.
+1. **手元の CPU だけで部品を育てられる。** 高価なGPUクラスタも、大規模な事前学習済みモデルも外部トークナイザーも使わず、CPU だけで独自の部品群を学習・実行します。
+2. **知能を学習するだけでなく、設計できる。** 司令塔・記憶・文字構文解析・関係推論・メタ認知・発話生成を独立した機構に分け、それぞれに適した学習則を採用します。個別の部品だけを差し替えたり再学習したりできます。
+3. **知能を完成品ではなく、成長するシステムとして扱う。** 会話中の仮前提や未知実体に対して推論ごとに作業記憶グラフを動的に構築し、セッション終了時に前提履歴を消去するほか、オンライン教示や学習による更新ができます。
 
-## ① 個人でもゼロから知能を育てられる
+> **English abstract.** ENNE treats an AI system not as a monolithic pretrained network, but as modular components designed, grown, and updated independently without backprop, pretrained LLMs, or external tokenizers. This README documents the latest **v25.0 pure-CPU Rust text pipeline (`enne-rs/`, 0 bytes GPU)**; historical Python/GPU work from v0.1 to v15.2 (`src/neurograph/`) is archived in [docs/archive-v15.md](docs/archive-v15.md). In v25.0, seven CPU organs — two-layer Oja-Hebbian executive router + `CalcSpanTagger`, sealed DG-to-CA3 sparse associative hippocampus (`756,941` leads), character-level BIO Viterbi syntax parser, recursive spiking TTFS working-memory reasoner (`320/320`), metacognitive store/grounding gates, Broca distiller/utterance DAG, and pointer-based trace generator — are each trained on CPU in seconds to minutes. During multi-turn reasoning, `ReasonerCore` retains transient premises in `turns` and dynamically constructs a local `NeuralWorkingGraph` per query via `SyntaxCore` and recursive TTFS propagation, emitting outputs via native `<P>`/`<V>`/`<ANS>` pointers while clearing `turns` on reset (`apoptosis`) with zero cross-session bleed. The `v250-verify` integration check passes 31/31 cases in 140.9 ms load time and 271.0 MiB peak RSS (`0.27–6.19 ms/turn`, `dialogue_unique: 4`; cargo unit/E2E suites are defined in `enne-rs/` separately). Evaluation sets are author-written and outputs are limited to studied task modes and 7-intent polite dialogue rather than open-ended generation. Source code (`enne-rs/`, corpus builders in `scripts/corpus/`, archived `src/neurograph/`) and result JSONs are included; trained weights, corpora, work-in-progress audio modules, and detached persona modules are omitted.
 
-**ゼロから。** 本体は、UTF-8の256バイトに対応する感覚ノードだけから始まり、中間のノードは0個です。事前学習済みのモデルや外部のトークナイザーは使わず、学習しながらノードが生まれていきます。
+---
 
-**家庭用GPU 1枚で。** 開発はすべてRTX 3060（12GB）1枚で行いました。数百万ノード規模の学習でも、GPUのピーク使用量は次の程度です。
+## ① 手元の CPU だけで学習・実行できる（GPU 0 bytes）
 
-| 実験 | 規模 | GPUピーク |
-|---|---|---:|
-| v1.4 継続学習（9,000万文字） | 生存ノード約314万 | 5,256 MiB |
-| v1.2 500万ノード枠 | 500万ノード | 5,725 MiB |
-| v2.2 600万ノード枠（最大構成） | 生存ノード約454万 | 8,562 MiB |
-| v15.2 推論時（記憶・索引・ツール・メタ認知込み） | — | 7,323 MiB |
+**外部モデル・逆伝播を使わず、CPU だけで動作します。** 感覚入力は UTF-8 バイト列や文字 n-gram・文字種遷移の特徴から構成し、競合オヤ・ヘブ学習・局所デルタ則・対照ヘブ記憶・BF16 成長グラフで学習します（誤差逆伝播や事前学習済みトークナイザー不使用）。
 
-誤差逆伝播を使わないため、勾配やオプティマイザの状態を保持する必要がありません。
+**部品ごとの学習が短時間で済み、軽量に常駐できます。**
 
-**機能を足すときは、短い学習で済みます。**
+| 部品 | 版 | CPU 学習・構築時間 | チェックポイント容量 | 検証精度 / 指標 |
+|---|---|---|---|---|
+| 司令塔（`ExecutiveCore`） | v22.0 / v25.0 | 2.53 秒 | 1.58 MiB | 5モード `99.28%`・4演算 `100%`・計算 Span F1 `1.00` |
+| 連想海馬（`HippocampusCore`） | v23.0 | 9.23 秒 | 366.87 MiB | 756,941 見出し・比較精度 `100%`・想起 `6/6` |
+| 関係推論野（`ReasonerCore`） | v24.0 | 1.09 秒 | 1.95 MiB | 関係推論ベンチ `320/320`・白紙再学習 `320/320` |
+| 文字構文解析（`SyntaxCore`） | v24.5 | 5.76 秒 | 1.28 MiB | BIO 文字精度 `99.99%`・Span F1 `99.99%`・未知構文 `12/12` |
+| メタ認知・発話野（`MetacogCore` / `BrocaCore`） | v25.0 | 25.99 秒 | 0.16 MiB + 23.40 MiB | 保持判定 `99.93%`・定義 BIO `99.91%`・対話意図 `91.13%` |
+| 推論言語コア（`ReasoningCore`、任意） | v19.0 | 920.33 秒（96,000件） | — | 11,135 生存ノード・根拠トレース包含 `320/320`・Peak RSS `165.26 MiB` |
 
-![部品ごとの学習時間](figures/fig0_modules.png)
+全テキスト器官を同時に読み込んだ結合構成でも、起動時間 **140.90 ms**、Peak RSS **270.99 MiB** で動作します。特定の機構を直したい場合は該当部品だけを数秒で再学習でき、全体の作り直しはいりません。
 
-新しい部品の学習・構築は数ミリ秒から数分で終わり、全体の再学習はいりません。記憶カートリッジ、索引、記憶ゲート、仲裁層、ツール選択、発話、世代管理、メタ認知はCPUだけで動きます（これらの部品の学習・実行で追加されるCUDA割当は0 bytes）。
+---
 
-## ② 知能を学習するだけでなく、設計できる
+## ② 機能ごとに分けて設計・交換できる（v25.0 テキスト経路）
 
-ENNEは1つの巨大なネットワークにすべてを学習させるのではなく、機能ごとに機構を分け、それぞれに合った技術を使います。
+ENNE のテキスト経路は、役割の異なる 7 つの独立器官に分かれています。コード内の次元数・学習率・閾値はすべて明示的な設計値です。
 
-| 機能 | 機構 | 採用した技術 |
+| 機能 | 機関（`enne-rs/src/`） | 採用した技術 |
 |---|---|---|
-| 言語 | 本体（成長するバイトDAG） | 局所予測誤差によるノードの新生・削除・統合 |
-| 言語（対話） | 対話用DAG、対話記憶、読み出し適応 | 対話データだけで別に育てたDAG、局所的な読み出し適応 |
-| 記憶 | 記憶カートリッジ | CPU RAM / mmap上の文脈統計。着脱可能 |
-| 記憶（事実） | 記事冒頭文索引 | 記事の定義文を優先するSQLite索引 |
-| 判断 | 記憶ゲート、成長型仲裁層 | ridge回帰、十分統計を使う局所回帰。根拠回答・棄権・雑談を選ぶ |
-| 行動 | ツール（計算・時計・本文検索） | プラグインとして登録。どのツールを使うかは弱教師の閉形式学習で育てたノードが選ぶ |
-| 発話 | 発話ノード | 決定済みの内容に合う発話候補を、対話データから育てたノードで選ぶ |
-| 自己監視 | メタ認知（試作） | 発話前に根拠を監査し、再検索・棄権と自信度を決める |
-| 推論 | 応答意図への経路選択（v9） | 探索段階。比較の説明はまだできない |
+| 司令塔・Span 抽出 | `ExecutiveCore`（`executive_core.rs`, `executive.rs`） | 文字 1..4-gram＋構造特徴の 2層オヤ・ヘブ k-WTA（128素子）と局所デルタ分類、5タグ BIO Viterbi 抽出（`CalcSpanTagger`） |
+| 連想海馬 | `HippocampusCore`（`hippocampus_core.rs`, `hippocampus.rs`） | オフライン索引を DG（1,048,576細胞）→ CA3 BF16 CSR（6,753,200辺）へ封印、NMS とヘブ数値/比較読み出し、`teach` オンライン書込 |
+| 文字構文・節境界 | `SyntaxCore`（`syntax_core.rs`） | 文字窓・文字種遷移上のオヤ・ヘブ k-WTA（64素子）＋ 10種 BIO 遷移行列 Viterbi 復号 |
+| 関係推論 | `ReasonerCore`（`reasoner_core.rs`, `reasoner.rs`） | 再帰スパイキング TTFS 作業記憶グラフ（$\gamma = 0.75$）と対照ヘブ述語記憶、数値/順位/前提読み出し頭 |
+| メタ認知制御 | `MetacogCore`（`metacog.rs`） | 単一節前提の保持判定（64素子・top-8）と 7次元想起テレメトリ上の根拠採択パーセプトロン |
+| 定義蒸留・発話生成 | `BrocaCore`（`broca_core.rs`, `planner.rs`） | 4タグ BIO 定義核抽出（`FactDistiller`）、7意図対話分類（`DialogueIntentHead`）、14行動・ネイティブポインター語彙 260 の BF16 `BrocaDAG` |
+| 内部推論トレース | `ReasoningCore`（`reasoning_core.rs`） | UTF-8 文字 14ホップ BF16 DAG（語彙 260）による `explain` 根拠過程生成（任意マウント） |
 
-**機構は交換できます。** 知識は本体の外の記憶カートリッジに置いているので、本体を再学習せずに差し替えられます。
+各段階の中間結果と根拠トレースを分離しているため、誤分類が起きた箇所（たとえば句点なし宣言文の司令塔ルーティングや三段論法パターン）を特定し、該当モジュールと非重複コーパスだけを調整して直せます。詳細は [docs/architecture.md](docs/architecture.md) を参照してください。
 
-![外部記憶の着脱](figures/fig2_memory.png)
+---
 
-架空の設定文から記憶カートリッジを作るのに3.9ミリ秒でした。装着すると設定文のBPCは5.92から3.40に下がり、外すと5.92に戻ります。Wikipedia記憶の収録量を5,000万文字から2億文字に増やすと、本体を固定したままBPCが4.693から4.660に下がりました。
+## ③ 成長するシステムと一時キャッシュノード
 
-**機構は個別に改良できます。** 検索の機構だけを、単純な6-gram索引から記事冒頭文を優先する索引に替えたところ、小規模QAで回答に含まれる評価語句が1/15から10/15に増えました。
+**推論ごとに作業記憶グラフを動的に構築し、終了後に前提履歴を消去します（一時キャッシュノード）。** `ReasonerCore` は、会話中の仮前提を `turns: Vec<String>` としてセッション内に保持し、推論（`reason_plan`）のたびに `SyntaxCore` が `turns` と質問を再解析します。そして文脈に現れた実体や関係数に応じたローカルな作業記憶グラフ（`NeuralWorkingGraph`）をその場で生成し、一時シナプス（有向順序・同値・所属・抑制・数値など）で結んで再帰 TTFS 伝播（閉路・到達性・順位・数値差）を実行したあと、ローカルグラフを破棄します。
 
-![冒頭文検索](figures/fig3_lead_qa.png)
+特定した実体名や数値は重みに書き込まず、`ReasoningPlan` を介して `<P>`・`<V>`・`<ANS>` のポインターとして `BrocaCore` や `ReasoningCore` へ渡します。なお、[results/results_v190.json](results/results_v190.json) では同じ計算済み `plan` を与えたまま生成器（`ReasoningCore`）側のポインターキャッシュ参照（`use_cache`）だけを無効化した比較を行っており、有効時は `320/320` が正答文字列を含んだのに対し、無効時は `nocache_contains: 0`（320件の出力中、正答文字列を含むものが 0 件）でした。セッション区切り（`reset_history` / `apoptosis`）で `turns` を消去するため、一時的な仮前提は次セッションへ引き継がれません。`v250-verify`（[results/results_v250_integration.json](results/results_v250_integration.json)）では仮前提 `富士山の標高は3776m` で `583m` と答えた後、リセット後に海馬の値に基づく `583.12m` へ戻ることを確認しており、`追跡キー＝砂時計印` のリセット後非残留は `bleed: false`（[results/results_v190.json](results/results_v190.json)）および E2E テスト（[enne-rs/tests/e2e.rs](enne-rs/tests/e2e.rs)）で検証しています。
 
-**機構を後から足し、その効果を分けて測れます。** v13では、計算・時計・本文検索をツールとして登録できるようにし、どのツールを使うかを選ぶ部品（A）と、発話を組み立てる部品（B）を別々に足しました。部品ごとに有効・無効を切り替えられるので、同じ問題でそれぞれの寄与を測れます。問題は、コードとモデルを凍結した後に新しく作り、一度だけ評価しました。
+**学習時の神経新生とオンライン更新も併存します。** 発話野（`BrocaDAG`：1,714 生存ノード）や推論言語コア（`ReasoningCore`：11,135 生存ノード）は文字ホップ型の BF16 DAG として学習時にノードを増減させ、海馬 `teach`（単回エピソード書込）や推論野 `learn_relation`（未知反意対・端点のオンライン学習）により、全体を再学習せず新しい知識・関係をその場で追加できます。
 
-| 構成（v13.1） | 新規10問の正答 |
-|---|---:|
-| どちらもなし | 2/10 |
-| Aだけ | 4/10 |
-| Bだけ | 2/10 |
-| A＋B | 5/10 |
+---
 
-A＋Bで新たに正答したのは、数式・単位付きの加算・時刻の3問でした。どちらの部品も、追加で使うCUDA割当は0 bytesです。
+## 現在の到達点（v25.0）：CPU のみのテキスト経路で統合動作
 
-**パーツごとにデバッグして直せます。** 応答の間違いがどの機構から来たかを特定し、その機構だけを直せます。1つの大きなネットワークでは原因の場所を特定しにくく、直すには再学習が必要になります。
+v25.0（`enne-rs/`）では、GPU を使わず CPU のみで、コマンドルーティング・連想記憶・文字構文解析・関係推論・メタ認知制御・定義文蒸留・発話生成までのテキスト経路を一体として動かしています。統合検証コマンド `v250-verify` の一次記録 [results/results_v250_integration.json](results/results_v250_integration.json) では 31 項目中 **31/31**（`dialogue_unique: 4`）を通過しています（読込 **140.90 ms**、Peak RSS **270.99 MiB**、応答 **0.27〜6.19 ms/件**）。別途、`enne-rs/` には単体テスト 10 件（外部資産不要）と E2E・ソース監査テスト 12 件（要外部資産）を収録しています。
 
-- v11.2：6-gram索引が記事の本題ではなく「ついでの言及」を拾うことが原因だと特定し、索引だけを替えて回答を改善しました（上の図）。
-- v12.0→v12.2：記憶ゲートが回答に必要な根拠まで閉じてしまい、回答中の評価語句が16/21から6/21に減りました。棄権、冒頭文の品質、複数対象の扱いを個別に直しました。
-- v12.5以降：仲裁層・ツール・メタ認知がそれぞれ何を判断したかを、応答ごとにtraceとして記録しています。どの機構の判断で答えが決まったかを追えます。
-- v13.1：計算の候補を選んだのに本文検索の得点がわずかに上回って棄権に戻る、という失敗をtraceから特定しました。ツールの選択と記憶の判断を別の軸に分けると（v13.2、演算の学習も同時に変更）、既存の文章題7問の数値がすべて正しくなりました。
-- v14.0：経験からの更新を試したとき、既存の算術（机7台に付箋4枚ずつ）が28枚から11枚に退行しました。世代の採否を決める固定検査がこれを検出して更新を棄却し、演算の転移を制限してから再評価しました。
+```text
+Q: 1袋4個入りのパンを5袋買うと全部で何個？                        [0.29 ms]
+A: 20個です。
 
-各機構の詳細は [docs/architecture.md](docs/architecture.md) を参照してください。
+Q: 今の時刻を教えて                                                  [0.50 ms]
+A: 現在は20時18分です。
 
-## ③ 知能を完成品ではなく、成長するシステムとして扱う
+Q: 光合成の仕組みを説明して                                          [5.06 ms]
+A: 光合成は、光エネルギーを化学エネルギーに変換して生体に必要な有機物質を作り出す反応過程です。
 
-**神経回路そのものが変化します。** 本体は学習中に、予測を外した箇所でノードを新生し、役に立たないノードを削除し、似たノードを統合します。
+Q: 蒼塔と朱塔の高さの差は何m？（オンライン教示後）                   [5.47 ms]
+A: 240m   (explain: 根拠となる値は朱塔（180m）、蒼塔（420m）です。二つの数値の差を算出すると、答えは240mになります。)
 
-![本体の成長](figures/fig1_growth.png)
+Q: 鯨の全員が哺乳類に属し、鯱の所属は鯨。鯱を哺乳類の一員と言い切れる？ [6.19 ms]
+A: はい   (explain: 三段論法で所属関係を確認します。鯱、鯨、哺乳類という連鎖が成り立つことから、結論ははいとなります。)
 
-9,000万文字までの継続学習では、各段階で57万〜166万のノードが生まれ、45万〜100万のノードが削除されながら、生存ノードが約259万から約314万に増えました。BPCはこの範囲ではほぼ横ばいです。
+Q: 追跡キー＝砂時計印 → 追跡キー＝                                   [1.06 ms / 4.25 ms]
+A: 了解しました。一時記憶に保持しました。 → 砂時計印
 
-**別々に育てた回路を、後から1つに統合できます。** ENNEのノードは、256バイトを根とする「どの条件をたどって生まれたか」という経路で特定できます。そのため、別々に学習したDAG同士でも、同じ経路のノードを対応付けて重ね合わせられます。通常のニューラルネットの重みは、別々に学習するとニューロンの並び順が揃わず、そのままでは足し合わせられません。
+Q: 架空の測定値は？ / 明日の株価はどうなりますか？                    [0.47 ms / 0.47 ms]
+A: 情報がありません。
 
-v11では、対話データだけで別に育てた対話用DAGを、文章で育てた基盤DAGに統合しました。
-
-| 項目 | 値 |
-|---|---:|
-| 対話用DAGのノード | 524,838 |
-| うち基盤DAGと経路が一致したノード | 459,515（87.6%） |
-| 対話用DAGにしかないノード | 65,323 |
-| 基盤DAGから移植したノード | 4,051,411 |
-| 対応が取れずに外したノード | 16 |
-| 経路の対応付けにかかった時間 | 13.8秒（勾配計算なし） |
-
-2つのDAGの表現の向きは、256×256の座標変換（ridge回帰で一度解くだけ）でそろえました。変換後の出力の一致度（logitのcos類似度）は0.988です。
-
-| 構成 | GPU割当 | 対話本文BPC | 終了予測 EOT bits |
-|---|---:|---:|---:|
-| 対話用DAG単体（記憶あり） | — | 3.9794 | 3.145 |
-| 2つのDAGを並べて使う（v10.1） | 7,323 MiB | 3.8261 | 2.519 |
-| 1つに統合（v11.1） | 5,023 MiB | 3.8727 | 0.840 |
-
-統合でGPU割当は約3割減り、対話の予測は対話用DAG単体より良くなりました。2つを並べて使う構成と比べると、本文BPCはわずかに悪く、終了予測は大きく改善しました（v11.1では統合後に終了予測の読み出しを399秒かけて調整しています）。一方で、統合後の一般文章の予測（3分野平均BPC 5.47）には課題が残っています。
-
-**目指していること：能力ごとに育てたパーツを組み立てる。** 伸ばしたい能力のデータだけで専門のDAGを育て、経路で本体に統合すれば、全体を学習し直さずに、その能力だけを伸ばしたモデルを組み立てられるはずです。会話のパターンを持つデータで会話用のパーツを、特定分野の文章でその分野のパーツを育てる、といった使い方です。v11の統合はこの方向の最初の実証で、対話の予測は改善しましたが、一般文章の予測は落ちました。統合しても他の能力を落とさないことが、今後の一番の課題です。
-
-**判断の機構も成長します。** v12.5の仲裁層は、学習中に33ノードが生まれ、10ノードが削除されて23ノードに落ち着きました。v13.1のツール選択ノードは549生まれて80、発話ノードは815生まれて390が残りました。
-
-**使いながら覚え、間違った更新は戻せます（v14）。** 対話中に事実を教えたり（`/teach`）、答えを訂正したり（`/correct`）すると、経験として記録されます。「睡眠」（`/sleep`）でそれらをまとめた新しい世代の候補を作り、固定の検査（既存の回答・棄権・算術が崩れていないか）を通ったときだけ採用します。世代はいつでも前に戻せます（`/rollback`）。
-
-| 試したこと | 結果 |
-|---|---|
-| 架空の事実を2件教え、時計と加算の誤りを1件ずつ訂正 | 別プロセスで読み直しても、言い換えた質問に答えた（「点検する星紡ぎ試験機は何色でしたか？」→「星紡ぎ試験機の識別色は薄紫色です。」）。訂正していない加算（6km＋9km）にも「15キロメートルです。」と答えた |
-| 何も教えずに睡眠 | 棄権した4問のうち、太陽の半径の1問について、本文から根拠を自分で見つけて記憶に加えた |
-| 架空の町の町長について、わざと嘘を教える | 候補の世代はその嘘を答えたが、固定検査の棄権問題が15/15から14/15に下がったため、自動で棄却された |
-| 最初の世代に戻す | 初期の4問の発話・ツール値・出典が、初期の結果と完全に一致した |
-
-固定検査の外にある嘘まで見抜ける保証はありません。世代管理の部品が追加で使うCUDA割当は0 bytesです。
-
-**知識や認知機能を後から足してきました。** 外部記憶（v2.0）、文章検索（v2.1）、役割表現（v6）、対話（v8〜v11）、冒頭文索引（v11.2）、棄権と判断（v12）、ツールと発話（v13）、教示・睡眠・世代管理（v14）、メタ認知（v15）と、版ごとに機能を追加しています。流れは [docs/history.md](docs/history.md) にあります。
-
-## 現在の到達点（v15.2）：BPCは高めでも、応答はできる
-
-**ENNEでは、本体のBPC（1文字あたりのビット数）は最終的な性能の基準になりません。** 応答は検索・選択・判断の組み合わせで決まるため、本体の予測損失と応答の質は連動しません。記録にもそれが表れています。
-
-- v11.2で検索を冒頭文索引に替えると、回答中の評価語句は1/15から10/15に増えましたが、同じ実験の平均BPCは5.26から5.40に悪化しました。
-- v9では、自己採点のBPCが低い回答（平均2.82）を選んでも、回答語句の一致は15個中1個でした。
-
-そのためENNEは、BPCではなく応答の結果で評価します。本体単独のBPCは小さなTransformerの参考値より悪い値ですが（限界を参照）、機構を組み合わせたシステムとしては質問に答えられます。以下はv15.2の実際の出力です。
-
-```
-Q: 富士山とは何ですか？簡単に教えてください。
-A: 富士山は、静岡県（富士宮市、富士市、裾野市、御殿場市、駿東郡小山町）と山梨県（富士吉田市、
-   南都留郡鳴沢村）に跨る活火山である。標高3776.12 m、日本最高峰（剣ヶ峰）の独立峰で、…
-
-Q: 第二次世界大戦はいつ始まり、いつ終わりましたか？
-A: 第二次世界大戦は、1939年（昭和14年）9月1日から1945年（昭和20年）8月15日または9月2日まで
-   約6年にわたって続いた…
-
-Q: アストラX-99の最大推力はどのくらいですか？          ← 後から足した記憶にだけある架空の設定
-A: アストラX-99の最大推力は従来のイオンエンジンの約400倍であり、火星までの航行時間をわずか18日間に短縮できる。
-
-Q: 架空の都市「ネオアトランティス2099」の市長は誰ですか？
-A: ネオアトランティス2099については情報がありません。
-
-Q: こんにちは！調子はどうですか？
-A: うまくいってるよ。
-
-Q: (74 - 26) * 3 / 8                                    ← 以下2問は凍結後に作った新規問題
-A: 18です。
-
-Q: 作業台に封筒を17枚並べました。さらに6枚の封筒を加えたら、全部で何枚になりますか。
-A: 23枚です。
+Q: 今日はちょっと疲れたよ。                                          [1.35 ms]
+A: お疲れさまです。無理をなさらず、少し休んでくださいね。
 ```
 
-苦手な問題もはっきりしています。
+### 各指標の詳細・結果 JSON
 
+| 対象 | 主な結果 | 一次資料 |
+|---|---|---|
+| テキスト通貫結合（31項目） | `31/31`（Calc 5/5, Clock 1/1, Wiki 5/5, TeachCompare 2/2, Reasoning 6/6, MultiTurn 3/3, Copy 2/2, PostReset 1/1, Abstain 2/2, Dialogue 4/4） | [results/results_v250_integration.json](results/results_v250_integration.json) |
+| `ExecutiveCore`（v22/v25） | 検証 1,538件 `val_mode_acc: 0.9928` / `val_op_acc: 1.0` / `val_calc_span_f1: 1.0`、未知 26問 `25/26`（演算 `7/7`, 抽出 `7/7`） | [results/results_v220.json](results/results_v220.json) |
+| `HippocampusCore`（v23） | 756,941 見出し、`val_num_acc: 0.99975` / `val_unit_acc: 0.999375` / `val_cmp_acc: 1.0`、想起 `6/6`・比較 `4/4` | [results/results_v230.json](results/results_v230.json) |
+| `ReasonerCore`（v24） | 関係推論 `320/320`、白紙再学習 `320/320`、未知推論 `16/16`、未知構文 `12/12` | [results/results_v240.json](results/results_v240.json) |
+| `SyntaxCore`（v24.5） | 検証 2,402系列 `val_char_acc: 0.9999` / `val_sep_f1: 0.9999` / `val_span_f1: 0.9999` | [results/results_v245.json](results/results_v245.json) |
+| `MetacogCore` + `BrocaCore`（v25） | 保持判定 `0.9993`（未知 `7/7`）・採択 `1.0`、定義 BIO `0.9991`、対話意図 `0.9113`（未知 `5/5`）、`BrocaDAG val_bpt: 0.0127` | [results/results_v250.json](results/results_v250.json) |
+| `ReasoningCore`（v19） | `bench_320`: 短答・根拠包含 `320/320`、`val_mode_acc: 0.9944`、`val_bpc: 0.0340`、未知言い換え `5/8` | [results/results_v190.json](results/results_v190.json) |
+| CPU 大規模実験（v18.4・対照） | 3,500万ノード枠（3.33億バイト学習）`val_bpc: 1.6011`、Peak RSS `20,168.08 MiB` | [results/results_v184_mega_35m.json](results/results_v184_mega_35m.json) |
+
+全数値と考察は [docs/results.md](docs/results.md) を参照してください。
+
+---
+
+## 試す（外部データ・学習済み重みなしで動く範囲）
+
+学習済みモデルやコーパスは収録していないため、対話 CLI や全量 E2E テストには外部資産が必要です（配置方法は [docs/source.md](docs/source.md) を参照）。外部資産なしで動作を確認できる範囲は次の 2 つです。
+
+1. **Rust 部品別ユニットテスト（10 件）** — 各ニューラルコアの小規模学習・推論・シリアライズ往復を検証
+
+```sh
+cd enne-rs
+cargo test --release --lib
 ```
-Q: 朝に14枚の切符を用意し、昼に9枚を追加しました。いま切符は合計何枚ですか？
-A: 5枚です。                                            ← 足し算を引き算と取り違える
 
-Q: おはよう！ 今朝はどんな調子で過ごしていますか？
-A: 宇宙の答えは不合理ではない。                          ← 質問に合わない文を選ぶ
-```
+2. **簡易サンプルコード（約 200 行の概念実装）** — バイト単位成長・外部記憶着脱・DAG 統合の基本原理を CPU で約 1 秒で実行
 
-**未見の問題での結果。** 版ごとに、コード・モデル・索引を凍結した後で新しい10問を作り、一度だけ評価しています。
-
-| 版 | 比べた条件 | 新規10問の正答 |
-|---|---|---:|
-| v13.0 | ツールなし → あり | 2 → 4 |
-| v13.1 | 部品なし / Aだけ / Bだけ / A＋B | 2 / 4 / 2 / 5 |
-| v13.2 | ツールなし / 混合 / 二軸 | 1 / 1 / 3 |
-| v15.0 | メタ認知なし → あり | 1 → 3 |
-| v15.1 | メタ認知なし → あり | 5 → 4 |
-| v15.2 | メタ認知なし → あり | 6 → 5 |
-
-問題は版ごとに作り直しているため、版をまたいだ点数は比べられません。v15.0〜v15.2の「メタ認知なし」はほぼ同じモデルですが、問題によって1/10から6/10までばらつきました。
-
-既知の31問（回帰評価）では、厳格な採点で25/31、架空の対象への棄権5/5、UTF-8として正しい出力とEOTでの終了31/31です。
-
-**メタ認知は試作の段階です。** v15では、発話の前に根拠を監査して、再検索・棄権と自信度を決める部品を足しました。開発用の50問では、自信度が高い回答ほど正答率が高くなりました（HIGH 10/13、MEDIUM 2/10、LOW 1/27）。新規10問では、無関係な文を返していた2問を棄権に変えた一方、正答していた琵琶湖と霞ヶ浦の比較も棄権にしてしまい、正答はメタ認知なしの6/10より少ない5/10でした。
-
-全出力は [results/results_v152_metacog.json](results/results_v152_metacog.json) にあります。
-
-## サンプルコード
-
-[examples/toy_enne.py](examples/toy_enne.py) は、ENNEの考え方を約200行で示す簡略版です。研究本体の実装ではありません。依存ライブラリなし、CPUだけで1秒ほどで動きます。
-
-```
+```sh
 python examples/toy_enne.py
 ```
 
-```
-1. ゼロから育てる（誤差逆伝播なし）
-   開始時: 感覚ノード 256 / 中間ノード 0
-   ラウンド1: 中間ノード   211（累計 新生   270 / 削除    59）  未見文のBPC 5.58
-   ラウンド4: 中間ノード   424（累計 新生   624 / 削除   200）  未見文のBPC 4.82
-
-2. 知識を本体の外に置き、着脱する（本体は再学習しない）
-   架空の設定文のBPC  装着前 22.33 → 装着中 2.29 → 取り外し後 22.33
-
-3. 別々に育てたグラフを 1 つに統合する
-   対話グラフの中間ノードのうち、文章グラフと同じ経路を持つもの: 37.2%
-                     文章のBPC    対話のBPC
-   文章だけ                4.87     13.70
-   対話だけ               17.71      4.52
-   統合後                 5.56      4.19
-```
-
-サンプルでは、ノードを可変長の文脈統計として素朴に実装しています。研究本体の連続表現、作業記憶、GPUカーネル、ゲートや仲裁の学習、統合時の座標変換は含みません。数値は数百文字の短い文章での結果で、研究本体の結果とは別物です。
+---
 
 ## 限界
 
-- **本体の予測性能はまだ低いです。** 587万パラメータのTransformerを約5分学習した参考値はBPC 3.80で、ENNE本体は4.23でした。ただしTransformerはやさしい日本語だけを学習した専用モデルで、まれな文字を`<UNK>`にまとめて評価しているため、Transformerに有利な比較です。
-- **Transformerとの学習コストの公平な比較は、まだしていません。** 保存済みの参考比較は、学習データ（Transformerはやさしい日本語のみ、ENNEは3分野）、入力（Transformerは4,096文字の語彙で残りを`<UNK>`にまとめる、ENNEは全バイトを扱う）、計時の範囲（ENNEは評価や枝刈りの時間を含む）が異なります。
-- **本体を大きくしたら悪化しました。** 600万ノード枠への拡張と追加学習で、3分野とも本体のBPCが悪化しました（例：Wikipedia 4.75→4.85）。
-- **知識を問う回答の多くは、検索した冒頭文をほぼそのまま返したものです。** 違いを説明する問い（「PythonとC++の違い」など）では定義を並べるだけで、比較できていません。本文に答えがあっても、見出しや語義の選択を誤ると棄権します。
-- **文章題の演算の選び方が不安定です。** 計算そのものは検算していますが、どの演算を使うかを文から選び間違えることがあります（「14枚に9枚を追加」→「5枚です。」）。
-- **雑談の応答が質問に合わないことがあります。** 学習した発話から選ぶため、挨拶に無関係な文を返すことがあります。
-- **仲裁層とメタ認知はまだ優位性を示していません。** v12.5の31問では、単一ゲート・静的合議・成長型仲裁の3方式に差がありませんでした。メタ認知は、新規問題の正答をv15.0では2問増やしましたが、v15.1・v15.2ではどちらも1問減らしました。
-- **応答の評価がまだ小さいです。** 未見の問題での評価は始めましたが、各版10問、単一seedです。作問と採点は同じ担当者が行っていて、外部の採点者はいません。正答は5〜6/10にとどまります。結果で評価する以上、これが一番の弱点です。次は問題数を増やし、外部の採点者を入れます。関連研究との比較も未実施です。
+- **評価集合が内部作成かつ小規模です。** 結合検証 31 項目・関係推論ベンチマーク 320 問・未知プローブ群（26問・16問・12問・7問・5問）はいずれも開発者自身の作問であり、外部公開ベンチマークや第三者による採点は未実施です。
+- **未知入力の分類や発話には制約があります。** `ExecutiveCore` の未知プローブ 26 問のうち 1 問（「次の試合でどのチームが優勝する？」）は `Abstain` ではなく `Fact` に誤分類しました。また、`BrocaCore` の日常対話出力は 7 意図分類に基づく定型・丁寧応答、`ReasoningCore` の思考トレースは 12 モード×6 文体の範囲に収束した生成であり、自由な長文生成・雑談には対応していません。
+- **音声と人格はこの版に収録していません。** 開発途中の音声モジュール（`ear` / `repair` / `audio`）および分離中の人格モジュール（`persona*`）は `enne-rs/` から除外し、テキスト経路のみをまとめています。
+- **外部資産は同梱していません。** `.bin` チェックポイント、SQLite 索引、学習コーパスは含まれないため、このリポジトリ単体では対話 CLI や `tests/e2e.rs` は実行できません。
 
-詳細は [docs/results.md](docs/results.md)、開発の流れは [docs/history.md](docs/history.md) にあります。結果JSONに出てくる Cortex、Hippocampus、Broca などの名前は設計上の比喩で、脳を再現したという主張ではありません。
+結果の解釈上の注意点やモジュール名の扱い（「Cortex」「Hippocampus」「Broca」等は設計上の比喩であり生体脳の再現主張ではないこと）は [docs/results.md](docs/results.md) を参照してください。v0.1〜v15.2 時点の記録と限界は [docs/archive-v15.md](docs/archive-v15.md) にまとめています。
 
-## リポジトリ構成
+---
+
+## リポジトリ構成・関連資料
 
 ```
-docs/           方式・結果と限界・開発履歴
-figures/        README の図（scripts/make_figures.py で results/ から生成）
-results/        各版の結果JSON（評価の一次資料）
-scripts/        図の生成スクリプト
-examples/       考え方を示す簡略サンプル（研究本体の実装ではない）
-src/neurograph/ v15.2 時点の研究コード（現行版の動作に必要な部分）
+enne-rs/         v25.0 時点のテキスト経路・純 Rust CPU 実装（22 ファイル + tests/e2e.rs）
+scripts/corpus/  v19〜v25 学習・検証コーパス構築スクリプト（5 本）
+docs/            設計・結果・履歴・ソース案内・v15.2 以前アーカイブ
+results/         各版の結果JSON（評価の一次資料）
+examples/        考え方を示す簡略サンプル（研究本体の実装ではない）
+figures/         v0.1〜v15.2 の記録図（scripts/make_figures.py で生成）
+src/neurograph/  v15.2 時点の Python/GPU 研究コード（アーカイブ）
 ```
+
+| 資料 | 内容 |
+|---|---|
+| [docs/architecture.md](docs/architecture.md) | テキスト経路の全体構造、各コアの学習則・ハイパーパラメータ、一時キャッシュノードの仕組み |
+| [docs/results.md](docs/results.md) | 全実験の結果数値、言えること・言えないこと |
+| [docs/source.md](docs/source.md) | `enne-rs/` のビルド・環境変数・CLI 入口、アーカイブされた `src/neurograph/` の構成 |
+| [docs/history.md](docs/history.md) | v0.1〜v25.0 の開発履歴 |
+| [docs/archive-v15.md](docs/archive-v15.md) | 過去の Python / GPU 版（v0.1〜v15.2）の設計説明・図表・詳細結果と限界 |
 
 ## ソースコードについて
 
-v15.2 時点の研究コードのうち、現行の対話システムと DAG 統合を動かすのに必要な部分を `src/neurograph/` に置いています。研究時のコードから変えたのは、実験機のパスと GPU の指定を環境変数にした点と、コメントを整理した点だけです。構成・動作環境・入口は [docs/source.md](docs/source.md) にまとめました。
+v25.0 時点のテキスト経路を動かす Rust CPU コード（`enne-rs/` 22 ファイル＋結合テスト＋コーパス構築スクリプト 5 本）を中心に収めています（過去の Python/GPU 版 `src/neurograph/` も参照用に保持）。実験機のパスと GPU の指定は環境変数（`ENNE_ROOT` / `ENNE_DATA_DIR` 等）を参照する形にし、コメントを整理しています。
 
-README・docs・結果JSONは、`src/neurograph/` と同じ v15.2 時点の内容にそろえています。ソースを更新するときは、README も同時に更新します。
-
-学習済みモデル、記憶カートリッジ、検索索引、学習データは含みません。そのため、このリポジトリだけでは対話システムは動きません。仕組みを手元で試すには [サンプルコード](#サンプルコード) を使ってください。
+README・docs・結果JSON・バージョン表記は、v25.0 時点の内容にそろえています。ソースを更新するときは、README と docs も同時に更新します。
 
 ## データとライセンス
 
 このリポジトリの文書・図・スクリプト・ソースコードは [MIT License](LICENSE) です。
 
-学習・評価にはWikipedia日本語版、青空文庫、やさしい日本語コーパス、公開の日本語対話データ（magpie_ja、wiki_conv_ja、oasst1_ja、dolly_ja）を使いました。`results/` の出力例にはWikipedia本文に由来する文が含まれます。これらは [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) の下にあり、MIT Licenseの対象外です。
+学習・評価にはWikipedia日本語版、青空文庫、やさしい日本語コーパス、公開の日本語対話データ（magpie_ja、wiki_conv_ja、oasst1_ja、dolly_ja、RealPersonaChat、PersonaCast-JA）を使いました。`results/` の出力例にはWikipedia本文に由来する文が含まれます。これらは [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) の下にあり、MIT Licenseの対象外です。

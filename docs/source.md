@@ -1,6 +1,63 @@
 # ソースコード
 
-`src/neurograph/` は、v15.2（進化世代 gen_002）時点の研究コードのうち、現行の対話システムと DAG 統合を動かすのに必要なファイルだけを抜き出したものです。研究用リポジトリには試行錯誤した版を含めて135ファイルありますが、現行版の入口（対話端末・睡眠統合・メタ認知の学習と評価）から import をたどって到達する45ファイル、DAG 統合の3ファイル、C++ カーネル3つ、設定用の `settings.py` を収録しました。
+このリポジトリには 2 系統の実装を収録しています。
+
+1. **`enne-rs/`（v25.0（テキスト経路・純 Rust CPU 版）時点）**: 本リポジトリ現在の主力実装です。CPU のみで動作し、外部トークナイザー・深層学習フレームワーク・GPU を使わず、命令ルーティング・連想記憶・文字構文解析・関係推論・メタ認知・発話生成までをテキスト経路として統合しています。
+2. **`src/neurograph/`（v15.2 時点の Python/GPU 研究版）**: バイト成長 DAG 統合および GPU 学習の経緯を含む従来版です。
+
+テキスト経路への一本化と構造検証のため、現在開発途中の音声モジュール（`audio.rs` / `ear.rs` / `repair.rs`）および分離した人格モジュール（`persona.rs` / `persona_core.rs`）は `enne-rs/` には含めていません。
+
+---
+
+## Rust 版（`enne-rs/`、v25.0 時点）
+
+### 構成・ファイル対応（22 ファイル + 結合テスト + コーパス構築 5 本）
+
+| 分類 | ファイル | 内容 |
+|---|---|---|
+| エントリ・統合 | `enne-rs/src/lib.rs`, `main.rs`, `brain.rs` | クレート公開、CLI サブコマンド、`Brain` 統合経路 |
+| 司令塔（v22.0 / v25.0） | `executive.rs`, `executive_core.rs` | 5モード分類・4演算分類・文字単位 `CalcSpanTagger`（`NGEC2501`） |
+| 連想海馬（v23.0） | `hippocampus.rs`, `hippocampus_core.rs` | オフライン封印型 DG→CA3 疎分散連想記憶と量的比較（`NGHC2301`） |
+| 構文解析（v24.5） | `syntax_core.rs` | 10種 BIO 文字構文・節境界知覚（`NGSX2451`） |
+| 関係推論野（v24.0） | `reasoner.rs`, `reasoner_core.rs`, `learning.rs` | TTFS 再帰作業記憶グラフと対照ヘブ述語記憶（`NGRC2451`） |
+| メタ認知・発話（v25.0） | `metacog.rs`, `planner.rs`, `broca_core.rs` | 記憶保持・根拠採択ゲート（`NGMC2501`）、`FactDistiller` / `DialogueIntentHead` / `BrocaDAG`（`NGBC2501`） |
+| 推論トレース・DAG 基盤 | `reasoning_core.rs`, `core_dag.rs`, `inference.rs`, `cache_gen.rs`, `cache_bench.rs`, `mega_core.rs` | v19.0 推論言語コア、BF16 Byte-DAG 学習・推論基盤 |
+| 計測・結合テスト | `memory.rs`, `suite.rs`, `tests/e2e.rs` | RSS 計測、320問再学習検証、テキスト通貫 E2E・ソース監査テスト |
+| クレート固定情報 | `enne-rs/Cargo.toml`, `enne-rs/Cargo.lock` | クレート定義および依存バージョン固定用ロックファイル（再現ビルド用に収録） |
+| コーパス構築（オフライン学習用） | `scripts/corpus/build_v{190,220,240,245,250}_*.py` | リーク検査付きの訓練・検証コーパス生成スクリプト |
+
+※ チェックポイント形式の互換性を保つため、バイナリファイルのマジックヘッダ（`NGEC2501`, `NGHC2301`, `NGRC2451`, `NGSX2451`, `NGMC2501`, `NGBC2501` 等）は従来名称を維持しています。各コード内の閾値・次元数・学習率は明示的な設計値です。
+
+### ビルドとテスト（Rust 2024 / CPU 専用）
+
+```sh
+# 外部資産なしで実行できるビルドおよび単体テスト（10件）
+cd enne-rs
+cargo build --release
+cargo test --release --lib
+
+# 学習済み .bin 等を配置したディレクトリを指定して全 E2E・検証を実行
+ENNE_ROOT=/path/to/assets cargo test --release
+ENNE_ROOT=/path/to/assets cargo run --release -- v250-verify
+ENNE_ROOT=/path/to/assets cargo run --release -- status
+ENNE_ROOT=/path/to/assets cargo run --release -- think "1袋4個入りのパンを5袋買うと全部で何個？"
+ENNE_ROOT=/path/to/assets cargo run --release -- explain "富士山と北岳の標高差は何m？"
+```
+
+### 主な環境変数（Rust 版 / コーパススクリプト）
+
+| 変数 | 既定値 | 内容 |
+|---|---|---|
+| `ENNE_ROOT`（Rust 版） | `NEUROGRAPH_ROOT` → コンパイル時 `CARGO_MANIFEST_DIR` の親 | `rust_bench_v182/` や `v220_executive_core/` 等を置く基点ディレクトリ |
+| `ENNE_ROOT`（Python コーパス 5 本） | 第1位置引数 → `ENNE_ROOT` → カレントディレクトリ `.` | 同上（位置引数が最優先、未指定時に環境変数 `ENNE_ROOT` を参照） |
+
+学習済み `.bin` 重み、`v124.sqlite`（記事冒頭文索引）、`sft_raw/` や生コーパス等のデータ資産はリポジトリに含めていません。
+
+---
+
+## Python / GPU 版（`src/neurograph/`、v15.2 時点）
+
+`src/neurograph/` は、v15.2（進化世代 gen_002）時点の研究コードのうち、初期の対話システムと DAG 統合を動かすのに必要なファイルだけを抜き出したものです。研究用リポジトリには試行錯誤した版を含めて135ファイルありましたが、対話端末・睡眠統合・メタ認知の学習と評価から import をたどって到達する45ファイル、DAG 統合の3ファイル、C++ カーネル3つ、設定用の `settings.py` を収録しました。
 
 パッケージ名は `neurograph` のままです。学習済みの pickle がこの名前でクラスを参照しているためです。
 

@@ -9,3 +9,7 @@ __pycache__/
 *.egg-info/
 build/
 .leak-patterns
+enne-rs/target/
+*.bin
+*.wav
+*.pcm

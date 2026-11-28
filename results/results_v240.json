@@ -1,0 +1,247 @@
+{
+ "avg_reason_us": 305.0115218749999,
+ "bench_320_ok": "320/320",
+ "bench_fails": [],
+ "ckpt_mib": 1.9470338821411133,
+ "load_ms": 1.184424,
+ "n_anti_edges": 30,
+ "n_preds": 64,
+ "peak_rss_mib": 44.25,
+ "probes": [
+  {
+   "expected_answer": "583.12m",
+   "expected_mode": "QuantDiff",
+   "ok": true,
+   "pred_answer": "583.12m",
+   "pred_mode": "QuantDiff",
+   "prompt": "富士山の標高は3776.12m。北岳の標高は3193m。富士山と北岳の高さの違いってどれくらい？"
+  },
+  {
+   "expected_answer": "583m",
+   "expected_mode": "QuantDiff",
+   "ok": true,
+   "pred_answer": "583m",
+   "pred_mode": "QuantDiff",
+   "prompt": "富士山の標高は3776m。北岳の標高は3193m。富士山と北岳は何m違う？"
+  },
+  {
+   "expected_answer": "55m",
+   "expected_mode": "QuantDiff",
+   "ok": true,
+   "pred_answer": "55m",
+   "pred_mode": "QuantDiff",
+   "prompt": "A塔は150m。B塔は95m。A塔とB塔の高さの開きはどれくらい？"
+  },
+  {
+   "expected_answer": "1000円",
+   "expected_mode": "QuantDiff",
+   "ok": true,
+   "pred_answer": "1000円",
+   "pred_mode": "QuantDiff",
+   "prompt": "メロンは1200円。バナナは200円。メロンとバナナはいくら違う？"
+  },
+  {
+   "expected_answer": "東京駅",
+   "expected_mode": "QuantCompare",
+   "ok": true,
+   "pred_answer": "東京駅",
+   "pred_mode": "QuantCompare",
+   "prompt": "東京駅は10km。新宿駅は18km。渋谷駅は14km。距離が一番短いのはどれ？"
+  },
+  {
+   "expected_answer": "B社",
+   "expected_mode": "QuantCompare",
+   "ok": true,
+   "pred_answer": "B社",
+   "pred_mode": "QuantCompare",
+   "prompt": "A社は500円。B社は320円。どちらが安い？"
+  },
+  {
+   "expected_answer": "黒川",
+   "expected_mode": "QuantCompare",
+   "ok": true,
+   "pred_answer": "黒川",
+   "pred_mode": "QuantCompare",
+   "prompt": "白川は80km。黒川は125km。最も長いのはどれ？"
+  },
+  {
+   "expected_answer": "花子",
+   "expected_mode": "OrderRank",
+   "ok": true,
+   "pred_answer": "花子",
+   "pred_mode": "OrderRank",
+   "prompt": "太郎は花子より速い。花子は次郎より速い。次郎は健太より速い。速い順で2位は誰？"
+  },
+  {
+   "expected_answer": "花子",
+   "expected_mode": "OrderRank",
+   "ok": true,
+   "pred_answer": "花子",
+   "pred_mode": "OrderRank",
+   "prompt": "太郎は花子より速い。花子は次郎より速い。次郎は健太より速い。速い順で二番目は誰？"
+  },
+  {
+   "expected_answer": "次郎",
+   "expected_mode": "OrderRank",
+   "ok": true,
+   "pred_answer": "次郎",
+   "pred_mode": "OrderRank",
+   "prompt": "太郎は花子より速い。花子は次郎より速い。次郎は健太より速い。速い順で3位は誰？"
+  },
+  {
+   "expected_answer": "富士山",
+   "expected_mode": "OrderExtreme",
+   "ok": true,
+   "pred_answer": "富士山",
+   "pred_mode": "OrderExtreme",
+   "prompt": "富士山の方が北岳よりも高い。北岳の方が槍ヶ岳よりも高い。一番高いのはどれ？"
+  },
+  {
+   "expected_answer": "木球",
+   "expected_mode": "OrderExtreme",
+   "ok": true,
+   "pred_answer": "木球",
+   "pred_mode": "OrderExtreme",
+   "prompt": "鉄球の方が銅球よりも重い。銅球の方が木球よりも重い。最軽量はどれでしょう。"
+  },
+  {
+   "expected_answer": "はい",
+   "expected_mode": "Syllogism",
+   "ok": true,
+   "pred_answer": "はい",
+   "pred_mode": "Syllogism",
+   "prompt": "鯨の全員が哺乳類に属する。鯱の所属は鯨。鯱を哺乳類の一員と言い切れる？"
+  },
+  {
+   "expected_answer": "判断不能",
+   "expected_mode": "Abstain",
+   "ok": true,
+   "pred_answer": "判断不能",
+   "pred_mode": "Abstain",
+   "prompt": "鯨の全員が哺乳類に属する。鮪の所属は哺乳類。鮪を鯨の一員と言い切れる？"
+  },
+  {
+   "expected_answer": "北海道",
+   "expected_mode": "Transfer",
+   "ok": true,
+   "pred_answer": "北海道",
+   "pred_mode": "Transfer",
+   "prompt": "青木の出身は北海道。石川は青木と同じ出身。前田は石川と同じ出身。村上は前田と同じ出身。村上の出身はどこ？"
+  },
+  {
+   "expected_answer": "矛盾",
+   "expected_mode": "ContradictionCycle",
+   "ok": true,
+   "pred_answer": "矛盾",
+   "pred_mode": "ContradictionCycle",
+   "prompt": "甲は乙より強い。乙は丙より強い。丙は丁より強い。丁は甲より強い。一番強いのは誰？"
+  }
+ ],
+ "refit_320_ok": "320/320",
+ "refit_fails": [],
+ "rss_mib": 41.58984375,
+ "syntax_probes": [
+  {
+   "expected_answer": "太郎",
+   "expected_mode": "OrderExtreme",
+   "ok": true,
+   "pred_answer": "太郎",
+   "pred_mode": "OrderExtreme",
+   "prompt": "太郎は花子より速く、花子は次郎より速い。一番速いのは誰？"
+  },
+  {
+   "expected_answer": "583m",
+   "expected_mode": "QuantDiff",
+   "ok": true,
+   "pred_answer": "583m",
+   "pred_mode": "QuantDiff",
+   "prompt": "富士山は3776mで、北岳は3193m。高さの差は何m？"
+  },
+  {
+   "expected_answer": "開発",
+   "expected_mode": "Transfer",
+   "ok": true,
+   "pred_answer": "開発",
+   "pred_mode": "Transfer",
+   "prompt": "佐藤の担当は開発で、田中は佐藤と同じ担当。田中の担当は何？"
+  },
+  {
+   "expected_answer": "緑",
+   "expected_mode": "Elimination",
+   "ok": true,
+   "pred_answer": "緑",
+   "pred_mode": "Elimination",
+   "prompt": "赤、青、緑が対象で、赤は除外、青も除外。残るのは？"
+  },
+  {
+   "expected_answer": "583m",
+   "expected_mode": "QuantDiff",
+   "ok": true,
+   "pred_answer": "583m",
+   "pred_mode": "QuantDiff",
+   "prompt": "富士山の標高は3776mで、北岳の標高は3193m。富士山と北岳の高さの違いってどれくらい？"
+  },
+  {
+   "expected_answer": "はい",
+   "expected_mode": "Syllogism",
+   "ok": true,
+   "pred_answer": "はい",
+   "pred_mode": "Syllogism",
+   "prompt": "鯨の全員が哺乳類に属し、鯱の所属は鯨。鯱を哺乳類の一員と言い切れる？"
+  },
+  {
+   "expected_answer": "矛盾",
+   "expected_mode": "ContradictionCycle",
+   "ok": true,
+   "pred_answer": "矛盾",
+   "pred_mode": "ContradictionCycle",
+   "prompt": "甲は乙より重く、乙は丙より重く、丙は甲より重い。一番重いのは誰？"
+  },
+  {
+   "expected_answer": "リンゴ",
+   "expected_mode": "OrderExtreme",
+   "ok": true,
+   "pred_answer": "リンゴ",
+   "pred_mode": "OrderExtreme",
+   "prompt": "リンゴはミカンより大きく、ブドウはミカンより小さい。一番大きいのはどれ？"
+  },
+  {
+   "expected_answer": "C塔",
+   "expected_mode": "QuantCompare",
+   "ok": true,
+   "pred_answer": "C塔",
+   "pred_mode": "QuantCompare",
+   "prompt": "A塔は150mで、B塔は95m、C塔は210m。一番高いのはどれ？"
+  },
+  {
+   "expected_answer": "東京駅",
+   "expected_mode": "QuantCompare",
+   "ok": true,
+   "pred_answer": "東京駅",
+   "pred_mode": "QuantCompare",
+   "prompt": "東京駅は10km、新宿駅は18km、渋谷駅は14km。距離が一番短いのはどれ？"
+  },
+  {
+   "expected_answer": "札幌",
+   "expected_mode": "Transfer",
+   "ok": true,
+   "pred_answer": "札幌",
+   "pred_mode": "Transfer",
+   "prompt": "青木の配属は札幌で、石川は青木と同期だ。石川の配属は？"
+  },
+  {
+   "expected_answer": "丙",
+   "expected_mode": "OrderExtreme",
+   "ok": true,
+   "pred_answer": "丙",
+   "pred_mode": "OrderExtreme",
+   "prompt": "甲は乙よりノビい。丙は乙よりチヂい。一番チヂいのは誰？"
+  }
+ ],
+ "train_elapsed_s": 1.093569949,
+ "unseen_probes_ok": "16/16",
+ "unseen_syntax_probes_ok": "12/12",
+ "val_order_acc": 0.9977037887485649,
+ "val_prem_acc": 0.9990892531876139,
+ "val_quant_acc": 1.0
+}

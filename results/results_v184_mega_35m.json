@@ -1,0 +1,260 @@
+{
+ "cap": 35000000,
+ "buckets": 33554432,
+ "dim": 256,
+ "batch": 1024,
+ "threads": 12,
+ "train_bytes": 332658595,
+ "val_bytes": 1904924,
+ "total_elapsed_s": 927.918764004,
+ "avg_bytes_per_s": 358499.69620677485,
+ "final_alive_neurons": 33961078,
+ "final_allocated_nodes": 33961334,
+ "final_synaptic_params": 8965724592,
+ "final_val_bpc": 1.6011030024010453,
+ "infer_b1_median_ms": 2.911874,
+ "infer_b1_ms_per_byte": 0.04853123333333333,
+ "rss_mib": 20164.734375,
+ "peak_rss_mib": 20168.08203125,
+ "milestones": [
+  {
+   "bytes_seen": 0,
+   "elapsed_s": 0.909372802,
+   "chunk_bytes_per_s": 0.0,
+   "alive_neurons": 0,
+   "allocated_nodes": 256,
+   "synaptic_params": 67584,
+   "chunk_train_bpc": 4.953259685386642,
+   "val_bpc": 4.953259685386642,
+   "rss_mib": 328.36328125,
+   "peak_rss_mib": 328.36328125,
+   "apoptosis_events": 0
+  },
+  {
+   "bytes_seen": 5000000,
+   "elapsed_s": 16.29485519,
+   "chunk_bytes_per_s": 351371.1764234647,
+   "alive_neurons": 843764,
+   "allocated_nodes": 844020,
+   "synaptic_params": 222753696,
+   "chunk_train_bpc": 2.124469740755919,
+   "val_bpc": 2.3077273052008063,
+   "rss_mib": 2277.79296875,
+   "peak_rss_mib": 2281.0625,
+   "apoptosis_events": 0
+  },
+  {
+   "bytes_seen": 15000000,
+   "elapsed_s": 40.40110781,
+   "chunk_bytes_per_s": 436503.8298002265,
+   "alive_neurons": 2271628,
+   "allocated_nodes": 2271884,
+   "synaptic_params": 599709792,
+   "chunk_train_bpc": 1.8536037626760384,
+   "val_bpc": 2.1630850901992464,
+   "rss_mib": 3089.234375,
+   "peak_rss_mib": 3092.58203125,
+   "apoptosis_events": 0
+  },
+  {
+   "bytes_seen": 35000000,
+   "elapsed_s": 89.286280677,
+   "chunk_bytes_per_s": 420230.3360046161,
+   "alive_neurons": 4856638,
+   "allocated_nodes": 4856894,
+   "synaptic_params": 1282152432,
+   "chunk_train_bpc": 1.7469330118560054,
+   "val_bpc": 2.0871067675311585,
+   "rss_mib": 4482.34765625,
+   "peak_rss_mib": 4485.67578125,
+   "apoptosis_events": 0
+  },
+  {
+   "bytes_seen": 70000000,
+   "elapsed_s": 176.816585491,
+   "chunk_bytes_per_s": 405679.4212713341,
+   "alive_neurons": 8988124,
+   "allocated_nodes": 8988380,
+   "synaptic_params": 2372864736,
+   "chunk_train_bpc": 1.6847078150835384,
+   "val_bpc": 1.9331425932488921,
+   "rss_mib": 6708.51171875,
+   "peak_rss_mib": 6711.734375,
+   "apoptosis_events": 0
+  },
+  {
+   "bytes_seen": 110000000,
+   "elapsed_s": 279.407298048,
+   "chunk_bytes_per_s": 394773.4418471369,
+   "alive_neurons": 13306426,
+   "allocated_nodes": 13306682,
+   "synaptic_params": 3512896464,
+   "chunk_train_bpc": 1.6282410850713371,
+   "val_bpc": 1.9965022632141416,
+   "rss_mib": 9035.33203125,
+   "peak_rss_mib": 9039.00390625,
+   "apoptosis_events": 0
+  },
+  {
+   "bytes_seen": 160000000,
+   "elapsed_s": 410.84768455,
+   "chunk_bytes_per_s": 384307.3271846936,
+   "alive_neurons": 18477524,
+   "allocated_nodes": 18477780,
+   "synaptic_params": 4878066336,
+   "chunk_train_bpc": 1.6139491760393931,
+   "val_bpc": 1.8063802664988684,
+   "rss_mib": 11821.66015625,
+   "peak_rss_mib": 11825.08984375,
+   "apoptosis_events": 0
+  },
+  {
+   "bytes_seen": 215000000,
+   "elapsed_s": 556.23998395,
+   "chunk_bytes_per_s": 381671.7679396116,
+   "alive_neurons": 23711309,
+   "allocated_nodes": 23711565,
+   "synaptic_params": 6259785576,
+   "chunk_train_bpc": 1.5581184024763781,
+   "val_bpc": 1.9640613272852252,
+   "rss_mib": 14641.79296875,
+   "peak_rss_mib": 14645.02734375,
+   "apoptosis_events": 0
+  },
+  {
+   "bytes_seen": 270000000,
+   "elapsed_s": 702.310994793,
+   "chunk_bytes_per_s": 379889.84959592426,
+   "alive_neurons": 28636156,
+   "allocated_nodes": 28636412,
+   "synaptic_params": 7559945184,
+   "chunk_train_bpc": 1.5241712743559845,
+   "val_bpc": 1.8403120237380828,
+   "rss_mib": 17295.45703125,
+   "peak_rss_mib": 17298.67578125,
+   "apoptosis_events": 0
+  },
+  {
+   "bytes_seen": 332658595,
+   "elapsed_s": 874.401049586,
+   "chunk_bytes_per_s": 374452.4318069107,
+   "alive_neurons": 33961078,
+   "allocated_nodes": 33961334,
+   "synaptic_params": 8965724592,
+   "chunk_train_bpc": 1.5082876375025078,
+   "val_bpc": 1.6011030024010453,
+   "rss_mib": 20164.671875,
+   "peak_rss_mib": 20168.08203125,
+   "apoptosis_events": 0
+  }
+ ],
+ "stage_samples": [
+  [
+   "15MB / 2.27M neurons",
+   [
+    {
+     "prompt": "日本の首都は",
+     "greedy": "マリー・ポッターを務め、アメリカのアルバム『サイズ」という言葉は、アメリカのアル",
+     "sampled": "リアートマルマリノイズミオカール・ファンタジアム、平和の調節に属する。これらのカ"
+    },
+    {
+     "prompt": "富士山は",
+     "greedy": "、アメリカのアルバム『サイズ」という言葉は、アメリカのアルバム『サイズ」という言",
+     "sampled": "ジェームズ・ロック」、交通の規定により作成された。\n"
+    },
+    {
+     "prompt": "人工知能とは",
+     "greedy": "、イタリア共和国ピエモンテ州に属する。 大阪市高速電気軌道 (Osaka Metro) の駅。駅番号11",
+     "sampled": "、アルコール・ファイアーカインターチェンジ（いずれも、セルビアンガー、エンジンの"
+    },
+    {
+     "prompt": "京都府は",
+     "greedy": "、アメリカのアルバム『サイズ」という言葉は、アメリカのアルバム『サイズ」という言",
+     "sampled": "ジェームズ・ロック」、交通の規定により作成された。\n"
+    },
+    {
+     "prompt": "江戸時代は",
+     "greedy": "、アメリカのアルバム『サイズ」という言葉は、アメリカのアルバム『サイズ」という言",
+     "sampled": "スイスタント・ファイアーカインターチェンジ（いずれも、セルビアンガー、エンジンの"
+    },
+    {
+     "prompt": "物理学において",
+     "greedy": "、シャーロック・ホームズシリーズ」の略。 アーバンネットワークを含む。\n",
+     "sampled": "も、『月刊コミックスを提供している。 2005年（平成15年）10月の最寄り駅である。 日本 ("
+    }
+   ]
+  ],
+  [
+   "110MB / 13.31M neurons",
+   [
+    {
+     "prompt": "日本の首都は",
+     "greedy": "アルファベットを使っても、公式サイトを経て、1999年にアメリカン・アルバム『アビイ (",
+     "sampled": "リアセンブラートピア。大手町の本町にある郵便取り、年、1999年に同校から、2007年2月146"
+    },
+    {
+     "prompt": "富士山は",
+     "greedy": "、大阪府大阪市北区にある公立小学校。 1972年、フランス・イタリア・アルバム『アビイ ",
+     "sampled": "使われる。\n生鮮食品添加物、コンピュータ将棋、1961年10月10日に大阪府出身。日本大学グ"
+    },
+    {
+     "prompt": "人工知能とは",
+     "greedy": "、スウェーデンのストーリー。フジテレビアニメ。テレビアニメ。テレビアニメ。テレビ",
+     "sampled": "、アルファベット行政共同事業作品。\n"
+    },
+    {
+     "prompt": "京都府は",
+     "greedy": "「宮崎県立宮古文書』『新唐書』を原作として、同年10月、大坂加番に任じられる。 アイ",
+     "sampled": "ルーンゴルフトーナメント、アール・エアクラフト社である。略称は「アジアカット。\n"
+    },
+    {
+     "prompt": "江戸時代は",
+     "greedy": "、大阪府大阪市北区にある公立小学校。 1972年、フランス・イタリア・アルバム『アビイ ",
+     "sampled": "以下の通り。\n近藤 小児科われる）。 アイスランドでもファイルを指す。 バスケットボ ("
+    },
+    {
+     "prompt": "物理学において",
+     "greedy": "、全国の各都道府県・岩手県、南はイギリス・アイ・エス）は、フランス・イタリア・ア",
+     "sampled": "、アートディレクター、プログレッシブルームブランドを同じくアメリカ・イギリスのコ"
+    }
+   ]
+  ],
+  [
+   "333MB / 33.96M neurons",
+   [
+    {
+     "prompt": "日本の首都は",
+     "greedy": "バンダイナムコエンターテインメントより2021年1月1日にアメリカン・コミックス・バファ",
+     "sampled": "ルイス・バローズで、アメリカ合衆国のアクション。 世界で最も普及したものである。 2"
+    },
+    {
+     "prompt": "富士山は",
+     "greedy": "、アメリカン・コミックス・バファローズ所属。\n",
+     "sampled": "ロシアのウクライナ東部時間が本来持ち、宮城県仙台市宮城野区にある公立中学校。\n"
+    },
+    {
+     "prompt": "人工知能とは",
+     "greedy": "、アメリカン・コミックス・バファローズ所属。\n",
+     "sampled": "、アルゼンチンとチリの大成功を収めた。 レースは2018年に「絵柄の大部分を占める。 コ"
+    },
+    {
+     "prompt": "京都府は",
+     "greedy": "、古代ギリシアのアルゴリズムは、全国の各都市である。フィリピンのミュージック・ジ",
+     "sampled": "ルーズグループと同様、歩兵第7潜水戦隊はスタンドアロンによる日本の漫画。『週刊少 2"
+    },
+    {
+     "prompt": "江戸時代は",
+     "greedy": "大学の学生が在籍していた。\n",
+     "sampled": "広く、古いドーム状について、本土最強、桜花賞、優駿牝馬。競走馬を切る。これらのシ"
+    },
+    {
+     "prompt": "物理学において",
+     "greedy": "、各々のコンテンツを提供している。\n",
+     "sampled": "レイ・バンド。 全日本ジュニアユースによるイギリスの男爵、貴族。連合王国準男爵位14"
+    }
+   ]
+  ]
+ ],
+ "checkpoint_path": "../mega_core_v184/mega_core_35m.bin",
+ "checkpoint_bytes": 19120492194
+}

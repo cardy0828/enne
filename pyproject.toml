@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "enne"
-version = "15.2.0"
-description = "ENNE (Engineering Neural Network Engine): backprop-free growing byte-DAG language system (research code)"
+version = "25.0.0"
+description = "ENNE (Engineering Neural Network Engine): backprop-free growing byte-DAG language system (Python v15.2 + Rust CPU v25.0)"
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.10"

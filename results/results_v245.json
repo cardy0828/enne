@@ -1,0 +1,13 @@
+{
+ "avg_parse_us": 141.84439,
+ "ckpt_mib": 1.2844018936157227,
+ "load_ms": 0.23927900000000002,
+ "peak_rss_mib": 341.375,
+ "rss_mib": 137.5546875,
+ "train_elapsed_s": 5.759604561,
+ "train_sequences": 14262,
+ "val_char_acc": 0.999888977295857,
+ "val_sep_f1": 0.9998921832884097,
+ "val_sequences": 2402,
+ "val_span_f1": 0.9998999899989999
+}
